@@ -1,0 +1,10 @@
+
+[
+{"pk_i_id":"1","fk_i_emp_id":"7","fk_i_vac_type":"2024","s_emp_name":"منتصر ياسين","dt_start_at":"2022-02-02","dt_end_at":"2022-02-02","fk_i_created_by":"7","dt_created_at":"2022-02-02 08:21:23","s_note":"اجازة ليوم واحد لقضاء حاجات ضرورة في مدينة نابلس.وذلك يوم الاربعاء الموافق 2\/2\/2022","fk_i_dept_id":"24"},
+{"pk_i_id":"2","fk_i_emp_id":"8","fk_i_vac_type":"2025","s_emp_name":"صفاء ياسين","dt_start_at":"2022-02-05","dt_end_at":"2022-02-05","fk_i_created_by":"8","dt_created_at":"2022-02-05 10:22:53","s_note":"مرضية","fk_i_dept_id":"24"},
+{"pk_i_id":"3","fk_i_emp_id":"8","fk_i_vac_type":"2025","s_emp_name":"منتصر ياسين","dt_start_at":"2022-02-26","dt_end_at":"2022-02-26","fk_i_created_by":"8","dt_created_at":"2022-02-26 08:28:39","s_note":"اجازة مرضية ","fk_i_dept_id":"24"},
+{"pk_i_id":"6","fk_i_emp_id":"8","fk_i_vac_type":"2025","s_emp_name":"منتصر ياسين","dt_start_at":"2022-02-26","dt_end_at":"2022-02-26","fk_i_created_by":"8","dt_created_at":"2022-02-27 10:50:42","s_note":"مرضية ","fk_i_dept_id":"24"},
+{"pk_i_id":"5","fk_i_emp_id":"6","fk_i_vac_type":"2024","s_emp_name":"Expand","dt_start_at":"2022-02-26","dt_end_at":"2022-02-27","fk_i_created_by":"6","dt_created_at":"2022-02-26 08:40:23","s_note":"تست ","fk_i_dept_id":"24"},
+{"pk_i_id":"7","fk_i_emp_id":"7","fk_i_vac_type":"2024","s_emp_name":"منتصر ياسين","dt_start_at":"2022-03-06","dt_end_at":"2022-03-06","fk_i_created_by":"7","dt_created_at":"2022-03-05 11:33:33","s_note":"اجازة سنوية لمدة يوم واحد الاحد الموافق 6\/3\/2022.\r\n لقضاء اعمال ضرورية في مدينة نابلس.","fk_i_dept_id":"24"},
+{"pk_i_id":"8","fk_i_emp_id":"7","fk_i_vac_type":"2024","s_emp_name":"منتصر ياسين","dt_start_at":"2022-03-20","dt_end_at":"2022-03-20","fk_i_created_by":"7","dt_created_at":"2022-03-19 11:23:32","s_note":"قضاء حاجات ضرورية في مدينة نابلس.","fk_i_dept_id":"24"}
+]

