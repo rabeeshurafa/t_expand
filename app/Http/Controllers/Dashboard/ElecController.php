@@ -112,6 +112,7 @@ class ElecController extends Controller
             $elec->user_id   = $request->customerId;
 
             $elec->region   = $request->region;
+            $elec->beneficiary   = $request->beneficiary;
 
             $elec->save();
 
@@ -160,7 +161,7 @@ class ElecController extends Controller
             $elec->user_id   = $request->customerId;
 
             $elec->region   = $request->region;
-
+            $elec->beneficiary   = $request->beneficiary;
             $elec->save();
 
          }

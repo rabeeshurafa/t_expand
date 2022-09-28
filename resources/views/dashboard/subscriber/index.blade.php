@@ -203,115 +203,94 @@
                                         </div>
 
                                         <div class="col-lg-5 col-md-12">
-
                                             <div class="form-group">
-
                                                 <div class="input-group">
-
                                                     <div class="input-group-prepend">
-
                                                         <span class="input-group-text" id="basic-addon1">
-
-                                                            {{ trans('admin.subscriber_num') }}
-
+                                                            رقم جواز السفر
                                                         </span>
-
                                                     </div>
 
-                                                    <input type="text" id="formDataCutomerNo" name="formDataCutomerNo"
-
+                                                    <input type="text" id="passport_number" name="passport_number"
                                                         class="form-control"
-
-                                                        placeholder="{{ trans('admin.subscriber_num') }}"
-
+                                                        placeholder=""
                                                         aria-describedby="basic-addon1">
-
-                                                    <div class="input-group-append" style="visibility: hidden;"
-
-                                                        onclick="QuickAdd(9,'formDataProfessionID','Profession')">
-
-                                                        <span class="input-group-text input-group-text2">
-
-                                                            <i class="fa fa-external-link"></i>
-
-                                                        </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+            
+                                    <div class="row">
+                                        <div class="col-lg-7 col-md-12 pr-s-12">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-12 pr-s-12 pr-0">
+                                                    <div class="form-group">
+                                                        <div class="input-group w-s-87">
+                                                            <div class="input-group-prepend">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text" id="basic-addon1">
+                                                                        {{ trans('admin.subscriber_num') }}
+                                                                    </span>
+                                                                </div>
+            
+                                                                <input type="text" id="formDataCutomerNo" name="formDataCutomerNo"
+                                                                    class="form-control"
+                                                                    placeholder="{{ trans('admin.subscriber_num') }}"
+                                                                    aria-describedby="basic-addon1">
+                                                                <div class="input-group-append" style="visibility: hidden;"
+                                                                    onclick="QuickAdd(9,'formDataProfessionID','Profession')">
+                                                                    <span class="input-group-text input-group-text2">
+                                                                        <i class="fa fa-external-link"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-12 padding_right10" style="padding-left: 14px;">
+                                                    <div class="form-group">
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend"> <span class="input-group-text"
+                                                                    id="basic-addon1"> {{ trans('admin.job_title') }} </span> </div>
+                                                            <select type="text" id="formDataProfessionID" name="formDataProfessionID"
+                                                                class="form-control formDataProfessionID">
+                                                                <option value=""> -- {{trans('admin.select')}} --</option>
+                                                                @foreach ($jobTitle as $job)
+                                                                    <option value="{{ $job->id }}"> {{ $job->name }} </option>
+                                                                @endforeach
+                                                            </select>
+                                                            <div class="input-group-append"
+                                                                onclick="ShowConstantModal(74,'formDataProfessionID','نوع الوظيفة')"> 
+                                                                <span
+                                                                    class="input-group-text input-group-text2"> <i
+                                                                        class="fa fa-external-link"></i>
+                                                                </span>
+                                                            </div>
+                                                        </div>
 
                                                     </div>
 
                                                 </div>
-
                                             </div>
-
-                                        </div>
-
-                                    </div>
-
-                                    <div class="row">
-
-                                        <div class="col-lg-7 col-md-12 pr-0 pr-s-12">
-
-                                            <div class="form-group">
-
-                                                <div class="input-group widthmail">
-
-                                                    <div class="input-group-prepend"> <span
-
-                                                            class="input-group-text input-group-text1" id="basic-addon1">
-
-                                                            <img src="https://db.expand.ps/images/mailico35.jpg"
-
-                                                                style="max-width: 35px;"> </span> </div> <input type="email"
-
-                                                        id="formDataEmailAddress" onkeydown="returnCd(event,this)"
-
-                                                        onkeyup="ClearArabic($(this))" name="formDataEmailAddress"
-
-                                                        class="form-control noleft" placeholder="Example@domain.com">
-
-                                                </div>
-
-                                            </div>
-
                                         </div>
 
                                         <div class="col-lg-5 col-md-12">
-
                                             <div class="input-group">
+                                                <div class="input-group-prepend"> <span
 
-                                                <div class="input-group-prepend"> <span class="input-group-text"
+                                                        class="input-group-text input-group-text1" id="basic-addon1">
 
-                                                        id="basic-addon1"> {{ trans('admin.job_title') }} </span> </div>
+                                                        <img src="https://db.expand.ps/images/mailico35.jpg"
 
-                                                <select type="text" id="formDataProfessionID" name="formDataProfessionID"
+                                                            style="max-width: 35px;"> </span> </div> <input type="email"
 
-                                                    class="form-control formDataProfessionID">
+                                                    id="formDataEmailAddress" onkeydown="returnCd(event,this)"
 
-                                                    <option value=""> -- {{trans('admin.select')}} --</option>
+                                                    onkeyup="ClearArabic($(this))" name="formDataEmailAddress"
 
-                                                    @foreach ($jobTitle as $job)
-
-                                                        <option value="{{ $job->id }}"> {{ $job->name }} </option>
-
-                                                    @endforeach
-
-                                                </select>
-
-                                                <div class="input-group-append"
-
-                                                    onclick="ShowConstantModal(74,'formDataProfessionID','نوع الوظيفة')"> 
-
-                                                    <span
-
-                                                        class="input-group-text input-group-text2"> <i
-
-                                                            class="fa fa-external-link"></i>
-
-                                                    </span>
-
-                                                </div>
+                                                    class="form-control noleft" placeholder="Example@domain.com">
 
                                             </div>
-
                                         </div>
 
                                     </div>
@@ -778,9 +757,11 @@
                             <h4 class="card-title"> <img src="https://db.expand.ps/images/maps-icon.png" width="32"
 
                                     height="32"> {{ trans('admin.address') }}</h4>
-
-                            <!-- <a class="heading-elements-toggle">                        <i class="ft-align-justify font-medium-3"></i></a> -->
-
+                            <div class="heading-elements1">
+                                <a class="" onclick="ShowsendModal()">
+                                    <img style="width: 35px;" src="https://template.expand.ps/images/mob32.png">
+                                </a>
+                            </div>
                         </div>
 
                         <div class="card-content collapse show">
@@ -848,7 +829,107 @@
     </section>
 
     
-
+<div class="modal fade text-left" id="memperSMSModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+	<div class="modal-dialog entermob"  role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="myModalLabel1">إرسالة رسالة نصية قصيرة</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			
+			<div class="modal-body">
+				<div class="form-body">
+                    <form id="SMSFormData" >
+                        <table width="100%" class="detailsTB table engTbl">
+    						<tr class="mobileNos ">
+    							<td>
+                                        أدخل رقم الموبايل
+    							</td>
+    						</tr>
+    						<tr class="mobileNos ">
+    							<td>
+    							    <div class="row">
+    							        <input type="hidden" name="sendForAll" id="sendForAll" value="1" />
+    							        {{--<input type="text" name="smsNo" id="smsNo" class="form-control"  />
+    							        <input type="text" name="smsNo" id="smsNo" class="form-control"  />
+    							        <input type="text" name="smsNo" id="smsNo" class="form-control"  />--}}
+                                        <div class="col-md-6">
+                                            <input type="radio" name="checkedSMSNo" id="radio-1" class="jui-radio-buttons" value="1" checked="" onclick="setSelectedPhone(1);">
+                                            <input type="hidden" name="selectedPhone" id="selectedPhone" class="form-control" value="1"  />
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text input-group-text1" id="basic-addon1">
+                                                            <img src="https://db.expand.ps/images/jawwal35.png">
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" id="smsNo1" maxlength="10" name="smsNo1"
+                                                        class="form-control noleft numFeild"
+                                                        placeholder="0590000000" aria-describedby="basic-addon1">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="radio" name="checkedSMSNo" id="radio-2" class="jui-radio-buttons" value="2" onclick="setSelectedPhone(2);">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend"> 
+                                                        <span class="input-group-text input-group-text1" id="basic-addon1"> 
+                                                            <img src="https://db.expand.ps/images/w35.png" style="max-width: 35px;">
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" id="smsNo2" maxlength="10" name="smsNo2"
+                                                        class="form-control noleft numFeild"
+                                                        placeholder="0560000000" aria-describedby="basic-addon1">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{--<div class="col-md-4">
+                                            <input type="radio" name="checkedSMSNo" id="radio-3" class="jui-radio-buttons" value="3" onclick="setSelectedPhone(3);">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text input-group-text1"
+                                                            id="basic-addon1">
+                                                            <img src="https://c.palexpand.ps/assets/images/ico/new_phone1.png">
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" id="smsNo3" maxlength="10" name="smsNo3"
+                                                        class="form-control noleft numFeild"
+                                                        placeholder="0590000000" aria-describedby="basic-addon1">
+                                                </div>
+                                            </div>
+                                        </div>--}}
+    							    </div>
+    							</td>
+    						</tr>
+    						<tr>
+    							<td>
+    							    أدخل نص الرسالة
+    							</td>
+    						</tr>
+    						<tr>
+    							<td>
+                                    <textarea type="text" id="smsText11" class="form-control"
+                                    value="" name="smsText11" style="height: 60px;"></textarea>
+    							</td>
+    						</tr>
+    						<tr>
+    							<td colspan="4" style="text-align: center!important;">
+    							    <button type="button" class="btn btn-primary text-center" id="" style="" onclick="sendSMS()">
+    							    إرسال    
+    							    </button>
+    							</td>        						
+							</tr>
+    					</table>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="modal fade text-left" id="OnOffItem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
     <div class="modal-dialog modal-dialog1" role="document" style="margin-top: 15%;">
         <div class="modal-content">
@@ -1181,7 +1262,66 @@
     </div>
 
 </div>
-
+<div class="content-body resultTblaa">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12">
+            <div class="card" >
+                <div class="card-header" style="direction: rtl;">
+                    <h4 class="card-title datatable_header"><img class="hidemob" src="{{asset('assets/images/ico/report32.png')}}" /> 
+                        {{ trans('admin.subscribers') }}
+                    </h4>
+                    <div class="heading-elements1 onOffArea form-group mt-1" style="height: 20px; margin: 0px !important" title="ارسال رسالة نصية">
+                        <img src="https://template.expand.ps/images/mob32.png" height="40px" onclick="smsWarning();/*$('#readSMSModal').modal('show');*/" style="cursor:pointer">
+                            
+                        <div class="form-group">
+                            <a onclick="smsWarning();/*$('#readSMSModal').modal('show');*/" style="color:#000000">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-body">
+                        {{--<div class="d-flex align-items-center position-relative col-md-3">
+                            <input type="text" data-kt-ecommerce-product-filter="search"
+                                   class="form-control form-control-solid w-250px ps-14" placeholder="إبحث هنا..."/>
+                        </div>--}}
+                        <div class="row" id="resultTblaa">
+                            <div class="col-xl-12 col-lg-12">
+                                <table style="width:100%; margin-top: -10px;direction: rtl;text-align: right" id="kt_ecommerce_products_table" class="detailsTB table ">
+                                    <thead>
+                                        <tr style="text-align:center !important;background: #00A3E8;">
+                                            <th width="50px">
+                                            #
+                                            </th>
+                                            <th>
+                                            {{trans('admin.subscriber_name')}}
+                                            </th>
+                                            <th>
+                                                {{trans('admin.phone')}}
+                                            </th>
+                                            <th>
+                                                {{trans('admin.emp_id')}} 
+                                            </th>
+                                            <th>
+                                                {{trans('admin.address')}}
+                                            </th>
+                                            <th style="width: 80px">
+                                                
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recListaa">
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 				
 
@@ -1189,7 +1329,7 @@
 
 @include('dashboard.component.archive_joblic')
 
-@include('dashboard.component.fetch_table')
+{{--@include('dashboard.component.fetch_table')--}}
 
 @include('dashboard.component.license_show')
 
@@ -1198,8 +1338,247 @@
 @can('subscriber_merge')
 @include('dashboard.component.merge')
 @endcan
+<style>
+    .detailsTB th{
+        color:#ffffff;
+    }
+      .detailsTB th,.detailsTB td{
+        text-align:right !important;
+        
+    }
+    .recList>tr>td{
+        font-size:12px;
+    }
+    table.dataTable tbody th, table.dataTable tbody td {
+    padding-bottom: 5px !important;
+}
+.dataTables_filter{
+    margin-top:-15px;
+}
+.even{
+    background-color:#D7EDF9 !important;
+}
+.dt-buttons
+{
+    text-align: left;
+    display: inline;
+    float: left;
+    position: relative;
+    bottom: 10px;
+    margin-right: 10px;
+}
 
+</style>
+<script>
+    window.data_url = "{{ route('subscribe_info_all') }}"
+    window.columns=[
+                { data: 'DT_RowIndex', name: 'DT_RowIndex' , orderable: false, searchable: false},
+                {
+                    data: null, 
+                    render:function(data,row,type){
+                        $actionBtn = data.name;
+                            return $actionBtn;
+                    },
+                    name:'name',
+                
+                },
+                {data:'phone_one'},
+                @if ($type=="employee")
+                {data:'department_name',name:'departments.name'},
+                {data:'job_title_name',name:'a.name'},
+                @elseif ($type=="subscriber")
+                {data:'national_id'},
+                @endif
+                {data:'region_name',name:'regions.name'},
+                @if ($type=="subscriber"||$type=="employee")
+                {
+                data: null, 
+                render:function(data,row,type){
+                    $actionBtn = '<a onclick="update('+(data.id??'')+')" class="btn btn-info" style="margin-left: 5px;"><i style="color:#ffffff" class="fa fa-edit"></i> </a>';
+                    @can('delete_model')
+                        $actionBtn += '<a onclick="delete_user('+(data.id??'')+')" class="btn btn-info"><i style="color:#ffffff" class="fa fa-trash"></i> </a>';
+                    @endcan
+                            return $actionBtn;
+                    },
+                    name:'name',
+                },
+                @endif
+            ];
+    window.buttons=[
+                {
+                    extend: 'excel',
+                    tag: 'img',
+                    title:'',
+                    attr:  {
+                        title: 'excel',
+                        src:'{{asset('assets/images/ico/excel.png')}}',
+                        style: 'cursor:pointer;display:inline;height: 40px; padding-top: 4px;',
+                    },
+
+                },
+                {
+                    extend: 'print',
+                    tag: 'img',
+                    title:'',
+                    attr:  {
+                        title: 'print',
+                        src:'{{asset('assets/images/ico/Printer.png')}} ',
+                        style: 'cursor:pointer;height: 32px;display:inline',
+                        class:"fa fa-print"
+                    },
+                    customize: function ( win ) {
+                  
+ 
+                    $(win.document.body).find( 'table' ).find('tbody')
+                        .css( 'font-size', '20pt' );
+                    }
+                },
+                ];
+</script>
+<script src="{{ asset('assets/js/datatabel.js') }}"></script>
     <script>
+    window.searchResCount=0;
+    window.searchValue='';
+    function smsWarning(){
+        if(window.searchResCount != 0){
+            text='يرجي العلم انه سيتم ارسال رسالة الي '
+            +window.searchResCount
+            +' عضو هل انت من ذلك '
+            Swal.fire({
+                title: 'تحذير',
+                text: text,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ارسال',
+                cancelButtonText: 'الغاء',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    ShowsendForAllModal()
+                    // sendReadSMS();
+                }else{
+                }
+            })
+        }
+    }
+    function ShowsendModal(){
+        $(".mobileNos").removeClass("hide");
+        $("#sendForAll").val(1);
+        $("#memperSMSModal").modal('show')
+    }
+    function ShowsendForAllModal(){
+        $(".mobileNos").addClass("hide");
+        $("#sendForAll").val(2);
+        $("#memperSMSModal").modal('show')
+    }
+    
+    function setSelectedPhone(selected){
+        $("#selectedPhone").val(selected)
+    }
+    
+    function getSelectedPhone(){
+        if($("#selectedPhone").val()==1){
+            return $('#smsNo1').val()
+        }else if ($("#selectedPhone").val()==2) {
+            return $('#smsNo2').val()
+        }else if ($("#selectedPhone").val()==3) {
+            return $('#smsNo3').val()
+        }
+    }
+    function setSMSModelNos(){
+        $('#smsNo1').val($('#formDataMobileNo1').val())
+        $('#smsNo2').val($('#formDataMobileNo2').val())
+        $('#smsNo3').val($('#formDataMobileNo3').val())
+    }
+    smstext='';
+    function sendSMS(){
+        if($('#smsText11').val().length==0){
+            $('#smsText11').addClass('error');
+            return;
+        }
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
+                'ContentType': 'application/json'
+            }
+        });
+        $(".loader").removeClass('hide');
+        $(".form-actions").addClass('hide');
+        var formData={
+                'smsText':$('#smsText11').val(),
+                'smsNo':getSelectedPhone(),
+                'subscriber_name':$('#formDataNameAR').val(),
+                'sendForAll':$("#sendForAll").val(),
+                'member_no':$("#formDataCutomerNo").val(),
+                'search':window.searchValue,
+            }
+        $.ajax({
+            type: "post",
+            url: "{{route('sendSMS')}}",
+            ContentType: 'application/json',
+            data: formData,
+            dataType:'json',
+            success: function (data) {
+                if($("#sendForAll").val()!=2){
+                    if(data=='1001'){
+                        Swal.fire(
+                          'تم ارسال رسالة نصية ',
+                          'success'
+                        )
+                        $("#memperSMSModal").modal('hide')
+                        $('#smsText11').val(' ');
+                        $(".loader").addClass('hide');
+                        $(".form-actions").removeClass('hide');
+                    }else{
+                        Swal.fire({
+            				position: 'top-center',
+            				icon: 'error',
+            				title: 'خطأ',
+            				showConfirmButton: false,
+            				timer: 1500
+            				});
+            				$(".loader").addClass('hide');
+                            $(".form-actions").removeClass('hide');
+            				return false;
+                    } 
+                }else{
+                    txt=' تم ارسال '
+                    +data.successSent
+                    +' رسالة من اصل '
+                    +window.searchResCount
+                    +' فشل '
+                    +data.failedSent
+                     Swal.fire(
+                          txt,
+                          'success'
+                        )
+                        $("#memperSMSModal").modal('hide')
+                        $('#smsText11').val(' ');
+                        $(".loader").addClass('hide');
+                        $(".form-actions").removeClass('hide');
+                }
+                $(".loader").addClass('hide');
+                $(".form-actions").removeClass('hide');
+            },
+            error:function(){
+                Swal.fire({
+    				position: 'top-center',
+    				icon: 'error',
+    				title: 'خطأ',
+    				showConfirmButton: false,
+    				timer: 1500
+				});
+                $(".alert-success").addClass("hide");
+                $(".alert-danger").removeClass('hide');
+                $(".loader").addClass('hide');
+                $(".form-actions").removeClass('hide');
+                $(".loader").addClass('hide');
+                return false;
+            },
+        });
+}
+
         function redirectURL(){
             setTimeout(function(){self.location='{{route("subscribers")}}'},100)
         }
@@ -1779,11 +2158,19 @@
                         $archiveCount+=response.copyToCount;
                         @endcan
                         
+                        @can('subscriberEarh_lic')
+                        getEarh_lic(response.info.id,response.EarchLicCount);
+                        $archiveCount+=response.EarchLicCount;
+                        @endcan
+                        
                         @can('subscriberJalArchive') 
                         getJalArchive(response.info.id,response.linkToCount);
                         $archiveCount+=response.linkToCount;
                         @endcan
-    
+                        @can('subscriberTradeArchive')
+                        getTradeArchive(response.info.id, response.tradeArchiveCount);
+                        $archiveCount += response.tradeArchiveCount;
+                        @endcan
                         $('#subscriber_id').val(response.info.id);
     
                         $('#formDataNameAR').val(response.info.name);
@@ -1799,9 +2186,12 @@
                         $('#formDataEmailAddress').val(response.info.email);
     
                         $('#formDataBussniessName').val(response.info.bussniess_name);
-    
+                        $('#smsNo1').val(response.info.phone_one);
+                        $('#smsNo2').val(response.info.phone_two);
+                        $('#passport_number').val(response.info.passport_number);
+                        
                         $("#certListCnt").html("(" + $archiveCount + ")");
-    
+                        
                         $("#licStatic").html("(" + response.licCount + ")");
                         $("#WaterStatic").html("(" + response.waterCount + ")");
                         $("#ElecStatic").html("(" + response.elecCount + ")");
@@ -2052,6 +2442,7 @@
             var Note = $('#Note').val();
             
             let allowedEmp=$('#allowed_emp').val();
+            let passport_number=$('#passport_number').val();
 
             $.ajax({
 
@@ -2060,45 +2451,26 @@
                 type: "POST",
 
                 data: {
-
                     formDataNameAR: formDataNameAR,
-
                     formDataNationalID: formDataNationalID,
-
                     formDataMobileNo1: formDataMobileNo1,
-
                     formDataMobileNo2: formDataMobileNo2,
-
                     formDataCutomerNo: formDataCutomerNo,
-
                     formDataEmailAddress: formDataEmailAddress,
-
                     formDataBussniessName: formDataBussniessName,
-
                     username: username,
-
                     password: password,
-
                     formDataProfessionID: formDataProfessionID,
-
                     formDataIndustryID: formDataIndustryID,
-
                     _token: _token,
-                    
                     allowedEmp:allowedEmp,
-
                     subscriber_id: subscriber_id,
-
                     city_id: city_id,
-
                     town_id: town_id,
-
                     region_id: region_id,
-
                     AddressDetails: AddressDetails,
-
                     Note: Note,
-
+                    passport_number: passport_number,
                 },
 
                 success: function(response) {
@@ -2159,39 +2531,56 @@
                 },
 
                 error: function(response) {
-
+                    errorMsg='';
+                    if (response.responseJSON.errors.formDataNameAR) {
+                        $("#formDataNameAR").addClass("error");
+                        $( "#formDataNameAR" ).get(0).setCustomValidity(response.responseJSON.errors.formDataNameAR[0]);
+                        $( "#formDataNameAR" ).on('input',function(){
+                            this.setCustomValidity('')
+                        })
+                        errorMsg=response.responseJSON.errors.formDataNameAR[0]+'\n'
+                    }
+                    if(response.responseJSON.errors.formDataNationalID){
+                        $( "#formDataNationalID" ).addClass( "error" );
+                        $( "#formDataNationalID" ).get(0).setCustomValidity(response.responseJSON.errors.formDataNationalID[0]);
+                        $( "#formDataNationalID" ).on('input',function(){
+                            this.setCustomValidity('')
+                        })
+                        errorMsg+=response.responseJSON.errors.formDataNationalID[0]+'\n'
+                    }
+                    if(response.responseJSON.errors.formDataMobileNo1){
+                        $( "#formDataMobileNo1" ).addClass( "error" );
+                        $( "#formDataMobileNo1" ).get(0).setCustomValidity(response.responseJSON.errors.formDataMobileNo1[0]);
+                        $( "#formDataMobileNo1" ).on('input',function(){
+                            this.setCustomValidity('')
+                        })
+                        errorMsg+=response.responseJSON.errors.formDataMobileNo1[0]+'\n'
+                    }
+                    if(response.responseJSON.errors.formDataMobileNo2){
+                        $( "#formDataMobileNo2" ).addClass( "error" );
+                        $( "#formDataMobileNo2" ).get(0).setCustomValidity(response.responseJSON.errors.formDataMobileNo2[0]);
+                        $( "#formDataMobileNo2" ).on('input',function(){
+                            this.setCustomValidity('')
+                        })
+                        errorMsg+=response.responseJSON.errors.formDataMobileNo2[0]+'\n'
+                    }
+                    alert(errorMsg);
                     $(".loader").addClass('hide');
 
                     Swal.fire({
-
                         position: 'top-center',
-
                         icon: 'error',
-
                         title: '{{ trans('admin.error_save') }}',
-
+                        // title: errorMsg,
                         showConfirmButton: false,
-
                         timer: 1500
-
                     }) 
-
                     $("#formDataNameAR").on('keyup', function(e) {
-
                         if ($(this).val().length > 0) {
-
                             $("#formDataNameAR").removeClass("error");
-
                         }
-
                     });
-
-                    if (response.responseJSON.errors.formDataNameAR) {
-
-                        $("#formDataNameAR").addClass("error");
-
-                    }
-
+                    
                 }
 
             });

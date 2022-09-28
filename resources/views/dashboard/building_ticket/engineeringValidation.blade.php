@@ -114,9 +114,7 @@
                                 <div class="form-body">
 
                                     <div class="row">
-                                        <div class="col-lg-7">
-                                            @include('dashboard.includes.wasel')
-                                        </div>
+                                        @include('dashboard.includes.wasel',['isrow'=>true])
                                         
                                         <div class="col-lg-5 col-md-12" style="padding-left:54px">
                                             <div class="form-group">

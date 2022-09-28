@@ -742,6 +742,7 @@ function getFullData(id){
                           }
                         })
                 }
+                
                 if(response.warning.length!=0 && response.errorList.length==0){
                     $(".btnArea").addClass("hide");
                     warningText='  المواطن لديه اخطار';
@@ -754,7 +755,7 @@ function getFullData(id){
                         warningText+=' بسبب ';
                         warningText+=warningOpj.warning_reason;
                         warningText+=' يرجى مراجعة قسم ';
-                        warningText+=warningOpj.dept.name;
+                        warningText+=(warningOpj.dept!=null?warningOpj.dept.name:'');
                     }
                     
                     Swal.fire({

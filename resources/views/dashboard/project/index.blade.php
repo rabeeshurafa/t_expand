@@ -855,6 +855,7 @@ $.ajax({
             $("#ajaxform")[0].reset();
             $("#region_data").val([]);
             $("#area_data").val([]);
+            $("#project_id").val('');
             //////manualy reset table/////
             $('#userList').html('');
             $('#Financier').html('');

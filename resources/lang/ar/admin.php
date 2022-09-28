@@ -101,7 +101,7 @@ return [
     'error_save' => 'خطأ في عملية الحفظ ',
 
     'subscribers' => 'المواطنين',
-    'subscriber_info' => 'معلومات المواطنين',
+    'subscriber_info' => 'معلومات المواطن',
     'subscriber_name' => 'اسم المواطن',
     'subscriber_num'  => 'رقم المواطن.',
     'business_name'   => 'الاسم التجاري',

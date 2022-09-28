@@ -100,6 +100,7 @@ class WaterController extends Controller
             $water->user_id   = $request->customerId;
             
             $water->region   = $request->region;
+            $water->beneficiary   = $request->beneficiary;
 
             $water->save();
 
@@ -138,6 +139,7 @@ class WaterController extends Controller
             $water->user_id   = $request->customerId;
             
             $water->region   = $request->region;
+            $water->beneficiary   = $request->beneficiary;
 
             $water->save();
 

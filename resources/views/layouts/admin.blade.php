@@ -9,6 +9,7 @@
 	
 
 <script src="{{ asset('assets/js/core/libraries/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/js/qrcode.min.js') }}"></script>
 <script type="text/javascript" src="//cdn.asprise.com/scannerjs/scanner.js"></script>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -976,6 +977,8 @@ function noti()
                 let cc="#F2F3F5"
                 for(let i=0;i<response.copyTo.length;i++)
                 {
+                    if(response.copyTo[i].archive.url=='contract_archieve')
+                        response.copyTo[i].archive.url='dep_archieve';
                     if(response.copyTo[i].model_id!=null){
                         var timestamp = response.copyTo[i].archive.created_at;
                         var date = new Date(timestamp);
@@ -1039,6 +1042,9 @@ function noti()
         
                             row += attach;
                             // ${typeArray[response.copyTo[i].archive.type]}
+                        }
+                        if(response.copyTo[i].archive.url=='contract_archieve'){
+                            response.copyTo[i].archive.url='dep_archieve'
                         }
                         var noti_template=`<div class="media" ${(response.copyTo[i].is_seen==0)?`style="background-color:${cc}" `:''}>
                           <div class="media-body">
@@ -1769,11 +1775,14 @@ function doUploadAttach(formDataStr)
 
                         urlfile='{{ asset('') }}';
 
-                        console.log(urlfile);
+                        // console.log(urlfile);
 
-                        urlfile+=data.all_files[j].url;
-
-                        console.log(urlfile);
+                        if(data.all_files[j].type==1){
+                            urlfile+=data.all_files[j].url;
+                        }else{
+                            urlfile=data.all_files[j].url;
+                        }
+                        // console.log(urlfile);
 
                             shortCutName=shortCutName.substring(0, 40)
 
@@ -1799,6 +1808,7 @@ function doUploadAttach(formDataStr)
 
                     }
                     $(".form-control-file").val('');
+                    
                     $(".alert-danger").addClass("hide");
 
                     $(".alert-success").removeClass('hide');
@@ -2211,13 +2221,20 @@ leftSide=$(".leftSide").height()
     }
     
     const firebaseConfig = {
-        apiKey: "AIzaSyAvvlz9UceU_DOIf83MKg7QtgqqiLwiDrI",
-        authDomain: "expand.ps",
-        databaseURL: "https://users.firebaseio.com",
-        projectId: "expand-bcbbc",
-        storageBucket: "expand-bcbbc.appspot.com",
+        // apiKey: "AIzaSyAvvlz9UceU_DOIf83MKg7QtgqqiLwiDrI",
+        // authDomain: "expand.ps",
+        // databaseURL: "https://users.firebaseio.com",
+        // projectId: "expand-bcbbc",
+        // storageBucket: "expand-bcbbc.appspot.com",
         /*messagingSenderId: "",
         appId: ""*/
+          apiKey: "AIzaSyBCoSmxbAHFwzaikWRu98cw8rEr3Tt7lC8",
+          authDomain: "expand-7d71c.firebaseapp.com",
+          projectId: "expand-7d71c",
+          storageBucket: "expand-7d71c.appspot.com",
+          messagingSenderId: "906710062876",
+          appId: "1:906710062876:web:2f4a40467d69b3cfd18cd9",
+          measurementId: "G-9G3JCQ6MPK"
     };
 
 
@@ -2230,9 +2247,9 @@ leftSide=$(".leftSide").height()
                     firebase.firestore().collection("Users").doc(user).collection('notifications').doc(change.doc.id).delete();
                         /*loadNoti();
                         loadOutApp();*/
-                        $('.myTaskTable').DataTable().ajax.reload(); 
+                        $('.myTaskTable101').DataTable().ajax.reload(); 
                         
-                        $('.myTaskTable').DataTable().on('init.dt', function() {
+                        $('.myTaskTable101').DataTable().on('init.dt', function() {
                             $(".odd").each(function(){
                                 $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
                             });
@@ -2240,9 +2257,9 @@ leftSide=$(".leftSide").height()
                                 $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
                             });
                           })
-                        $('.wtbl2').DataTable().ajax.reload();
-                        $('.wtbl4').DataTable().ajax.reload();
-                        $('.wtbl3').DataTable().ajax.reload();
+                        $('.wtbl201').DataTable().ajax.reload();
+                        $('.wtbl401').DataTable().ajax.reload();
+                        $('.wtbl301').DataTable().ajax.reload();
                         // watingTaskTable.DataTable().ajax.reload(); 
                         // watingTaskTable.on('init.dt', function() {
                         //     $(".odd").each(function(){

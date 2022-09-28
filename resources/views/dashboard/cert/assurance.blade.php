@@ -785,6 +785,8 @@ function saveCertD(){
               .map(function(){return $(this).val();}).get();
         var attach_ids = $("input[name='attach_ids[]']")
               .map(function(){return $(this).val();}).get();
+        var notArchived = $("input[name='notArchived[]']")
+            .map(function(){return $(this).val();}).get();
         var attachName = $("input[name='attachName[]']")
               .map(function(){return $(this).val();}).get();
         var formData = {
@@ -812,6 +814,7 @@ function saveCertD(){
             'debtEmp' : debtEmp,
             'cost' : $("#cost").val(),
             'attach_ids' : attach_ids,
+            'notArchived' : notArchived,
             'attachName' : attachName,
             'model': $("#model").val(),
             };
@@ -853,6 +856,7 @@ function saveCertD(){
                 
                 $(".form-actions").removeClass('hide');
                 $("#applicantID").val('');
+                $("#cer_pk_id").val('');
             },
             error: function(response) {
                 $(".form-actions").removeClass('hide');
@@ -1188,19 +1192,25 @@ function update(id){
                                     <div class="col-sm-6">
                                         <input type="text" id="attachName[]" name="attachName[]" class="form-control attachName" placeholder="أدخل اسم المرفق" value="">
                                     </div>
-                                    <div class="col-sm-5 attach_row_${i}">
+                                    <div class="col-sm-5 attach_row_${i+1}">
                                         
                                     </div>
                                     <div class="col-sm-1">
                                         <img src="{{ asset('assets/images/ico/upload.png') }}" width="40"
                                             height="40" style="cursor:pointer"
-                                            onclick="$('#currFile').val(${i});$('#attachfile').trigger('click');">
+                                            onclick="$('#currFile').val(${i+1});$('#attachfile').trigger('click');">
                                     </div>
                                 </div>
                             </li>`
                             attach_index=i+1;
+                            attachCount+=1;
                         }
                         else{
+                            if(data.all_files[i].Files[0].type==2){
+                                url=`${data.all_files[i].Files[0].url}`
+                            }else{
+                                url=`{{asset("")}}${data.all_files[i].Files[0].url}`
+                            }
                         attach_template+=`<li style="font-size: 17px !important;color:#000000">
                             <div class="row">
                                 <div class="col-sm-6">
@@ -1209,7 +1219,7 @@ function update(id){
                                 <div class="col-sm-5 attach_row_${i+1}">
                                     <div id="attach" class=" col-sm-12 ">
                                         <div class="attach"> 
-                                            <a class="attach-close1" href="https://t.expand.ps/expand_repov1/public/${data.all_files[i].Files[0].url}" style="color: #74798D; float:left;" 
+                                            <a class="attach-close1" href="${url}" style="color: #74798D; float:left;" 
                                             target="_blank">  
                                                 <span class="attach-text">${data.all_files[i].Files[0].real_name}</span>    
                                                 <img style="width: 20px;" src="https://t.expand.ps/expand_repov1/public/assets/images/ico/image.png">
@@ -1223,10 +1233,13 @@ function update(id){
                                 </div> 
                             </div> 
                         </li>`
+                        attach_index=i+1;
+                        attachCount+=1;
                         }
                     }
                 }
-                
+                setAttach_index(attach_index+1);
+                $('#currFile').val(attachCount);
                 $('.addAttatch').append(attach_template);
                 window.scrollTo(0, 0);
             },

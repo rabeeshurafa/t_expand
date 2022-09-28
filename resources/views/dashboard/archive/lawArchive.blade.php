@@ -298,16 +298,25 @@
 
                                 <div style="text-align: center;padding-bottom: 20px;">
 
-                                    <button type="submit" class="btn btn-primary" id="saveBtn" style="" >
+                                    <button onclick="save()" type="button" class="btn btn-primary save" id="saveBtn" style="" >
 
                                     {{ trans('admin.save') }}
 
                                     </button>
-                                    <div class="col-md-1 hidedesc-inline"  >
-
-                                        <img style=" float:left;" src="{{asset('assets/images/ico/upload.png')}}" width="40" height="40" style="cursor:pointer" onclick="document.getElementById('formDataaaupload-file[]').click(); return false">
-
-                                    </div>
+                                    <input type="hidden" id="print" class="form-control"
+                                       name="print" value="0">
+                                    <button onclick="save();$('#print').val(1);" type="button" class="btn btn-primary save" id="saveBtn"
+                                            style="">
+    
+                                        حفظ وطباعة
+    
+                                    </button>
+                                    @can('trackingArchive')
+                                        <input type="hidden" id="track" name="track" value="0">
+                                        <button onclick="$('#track').val(1);save();" type="button" class="btn btn-primary save" id="saveBtn" style="" >
+                                            حفظ ومتابعة
+                                        </button>
+                                    @endcan
 
                                 </div>
 
@@ -470,8 +479,11 @@ function scanToJpg() {
                         shortCutID=response.file.id;
 
                         urlfile='{{ asset('') }}';
-
-                        urlfile+=response.file.url;
+                        if(response.file.type==1){
+                            urlfile+=response.file.url;
+                        }else{
+                            urlfile=response.file.url;
+                        }
 
                             shortCutName=shortCutName.substring(0, 40)
 
@@ -515,7 +527,7 @@ function scanToJpg() {
             return true;
     }
 
-    $("#customerName").keyup(function () {
+$("#customerName").keyup(function () {
     if($("#customerName").val()=='')
     {
         // console.log('hiiiiiiiii11');
@@ -532,8 +544,9 @@ $.ajaxSetup({
         }
 
     });
-
-   $('#formDataaa').submit(function(e) {
+    
+        function save(){
+    // $(".loader").removeClass('hide');
     if($('#archive_type').val()==0){
         $( ".archive_type" ).addClass( "error" );
         return false;
@@ -543,13 +556,20 @@ $.ajaxSetup({
         alert('الرجاء اختيار جهة معرفة مسبقاً');
         return false;
     }
-    if(document.getElementById('formDataaaimgUploads[]')==null){
-        if(confirm('لايوجد مرفقات هل تريد الاستمرار؟')){
-            $(".loader").removeClass('hide');
-             $('#saveBtn').css('display','none');
-            e.preventDefault();
 
-            let formData = new FormData(this);
+    if(document.getElementById('formDataaaorgIdList[]')==null && document.getElementById('scannerPdf[]')==null && document.getElementById('scannerfile[]')==null){
+        if(confirm('لايوجد مرفقات هل تريد الاستمرار؟')){
+        }
+        else
+        {
+            return false;
+        }
+    }
+            $(".loader").removeClass('hide');
+            $('#saveBtn').css('display','none');
+            $('#editBtn').css('display','none');
+            form=$('#formDataaa')[0]
+            let formData = new FormData(form);
 
             $( "#customerName" ).removeClass( "error" );
 
@@ -566,9 +586,10 @@ $.ajaxSetup({
                 processData: false,
 
                 success: (response) => {
-                     $('#saveBtn').css('display','inline-block');
-                    $( ".archive_type" ).removeClass( "error" );
+                    $('#saveBtn').css('display','inline-block');
+                    $('#editBtn').css('display','none');
                     $(".loader").addClass('hide');
+                    $( ".archive_type" ).removeClass( "error" );
                     Swal.fire({
 
                         position: 'top-center',
@@ -589,7 +610,17 @@ $.ajaxSetup({
                         $('#pk_i_id').val('');
                         $('#ArchiveID').val('');
                         $('#customerType').val('');
-                    this.reset();
+                    if($('#track').val()==1){
+                        let url=`{{ route('admin.dashboard') }}/trackingArchive/${$('#url').val()}/${response.id}`
+                        window.open(url, '_blank');
+                        $('#track').val(0);
+                    }
+                    if($('#print').val()=='1'){
+                        let url=`{{ route('admin.dashboard') }}/printArchive/archive/${response.id}}`
+                        window.open(url, '_blank');
+                        $('#print').val(0);
+                    }
+                    form.reset();
 
                     $('.wtbl').DataTable().ajax.reload();
 
@@ -598,9 +629,10 @@ $.ajaxSetup({
                 },
 
                 error: function(response){
-                     $('#saveBtn').css('display','inline-block');
-                    $( ".archive_type" ).removeClass( "error" );
+                    $('#saveBtn').css('display','inline-block');
+                    $('#editBtn').css('display','none');
                     $(".loader").addClass('hide');
+                    $( ".archive_type" ).removeClass( "error" );
                     Swal.fire({
 
                         position: 'top-center',
@@ -625,90 +657,196 @@ $.ajaxSetup({
 
             });
             return true;
-        }
-        return false;
-    }else{
-         $('#saveBtn').css('display','none');
-        $(".loader").removeClass('hide');
-        e.preventDefault();
+    
+    
 
-            let formData = new FormData(this);
+  };
+    
 
-            $( "#customerName" ).removeClass( "error" );
+//   $('#formDataaa').submit(function(e) {
+//     if($('#archive_type').val()==0){
+//         $( ".archive_type" ).addClass( "error" );
+//         return false;
+//     }
+//     if((!$('#customerid').val()||$('#customerid').val()==0)&&$("#customerName").val()!='')
+//     {
+//         alert('الرجاء اختيار جهة معرفة مسبقاً');
+//         return false;
+//     }
+//     if(document.getElementById('formDataaaimgUploads[]')==null){
+//         if(confirm('لايوجد مرفقات هل تريد الاستمرار؟')){
+//             $(".loader").removeClass('hide');
+//              $('#saveBtn').css('display','none');
+//             e.preventDefault();
 
-            $.ajax({
+//             let formData = new FormData(this);
 
-                type:'POST',
+//             $( "#customerName" ).removeClass( "error" );
 
-                url: "store_lawArchive",
+//             $.ajax({
 
-                data: formData,
+//                 type:'POST',
 
-                contentType: false,
+//                 url: "store_lawArchive",
 
-                processData: false,
+//                 data: formData,
 
-                success: (response) => {
-                     $('#saveBtn').css('display','inline-block');
-                    $( ".archive_type" ).removeClass( "error" );
-                    $(".loader").addClass('hide');
-                    Swal.fire({
+//                 contentType: false,
 
-                        position: 'top-center',
+//                 processData: false,
 
-                        icon: 'success',
+//                 success: (response) => {
+//                      $('#saveBtn').css('display','inline-block');
+//                     $( ".archive_type" ).removeClass( "error" );
+//                     $(".loader").addClass('hide');
+//                     Swal.fire({
 
-                        title: '{{trans('admin.data_added')}}',
+//                         position: 'top-center',
 
-                        showConfirmButton: false,
+//                         icon: 'success',
 
-                        timer: 1500
+//                         title: '{{trans('admin.data_added')}}',
 
-                        })
-                        $('#customerid').val('');
-                        $('#customerName').val('');
-                        $('#customerType').val('');
-                        $('#pk_i_id').val('');
-                        $('#ArchiveID').val('');
-                    this.reset();
+//                         showConfirmButton: false,
 
-                    $('.wtbl').DataTable().ajax.reload();
+//                         timer: 1500
 
-                    $(".formDataaaFilesArea").html('');
+//                         })
+//                         $('#customerid').val('');
 
-                },
+//                         $('#customerName').val('');
+//                         $('#customername').val('');
+//                         $('#pk_i_id').val('');
+//                         $('#ArchiveID').val('');
+//                         $('#customerType').val('');
+//                     this.reset();
+//                         if($('#print').val()=='1'){
+//                             let url=`{{ route('admin.dashboard') }}/printArchive/archive/${response.id}}`
+//                             window.open(url, '_blank');
+//                             $('#print').val(0);
+//                         }
+//                     $('.wtbl').DataTable().ajax.reload();
 
-                error: function(response){
-                     $('#saveBtn').css('display','inline-block');
-                    $( ".archive_type" ).removeClass( "error" );
-                    $(".loader").addClass('hide');
-                    Swal.fire({
+//                     $(".formDataaaFilesArea").html('');
 
-                        position: 'top-center',
+//                 },
 
-                        icon: 'error',
+//                 error: function(response){
+//                      $('#saveBtn').css('display','inline-block');
+//                     $( ".archive_type" ).removeClass( "error" );
+//                     $(".loader").addClass('hide');
+//                     Swal.fire({
 
-                        title: '{{trans('admin.error_save')}}',
+//                         position: 'top-center',
 
-                        showConfirmButton: false,
+//                         icon: 'error',
 
-                        timer: 1500
+//                         title: '{{trans('admin.error_save')}}',
 
-                        })
+//                         showConfirmButton: false,
 
-                    // if(response.responseJSON.errors.customerName){
+//                         timer: 1500
 
-                    //     $( "#customerName" ).addClass( "error" );
+//                         })
 
-                    // }
+//                     // if(response.responseJSON.errors.customerName){
 
-                }
+//                     //     $( "#customerName" ).addClass( "error" );
 
-            });
-            return true; 
-    }
-    return false;
-  });
+//                     // }
+
+//                 }
+
+//             });
+//             return true;
+//         }
+//         return false;
+//     }else{
+//          $('#saveBtn').css('display','none');
+//         $(".loader").removeClass('hide');
+//         e.preventDefault();
+
+//             let formData = new FormData(this);
+
+//             $( "#customerName" ).removeClass( "error" );
+
+//             $.ajax({
+
+//                 type:'POST',
+
+//                 url: "store_lawArchive",
+
+//                 data: formData,
+
+//                 contentType: false,
+
+//                 processData: false,
+
+//                 success: (response) => {
+//                      $('#saveBtn').css('display','inline-block');
+//                     $( ".archive_type" ).removeClass( "error" );
+//                     $(".loader").addClass('hide');
+//                     Swal.fire({
+
+//                         position: 'top-center',
+
+//                         icon: 'success',
+
+//                         title: '{{trans('admin.data_added')}}',
+
+//                         showConfirmButton: false,
+
+//                         timer: 1500
+
+//                         })
+//                         $('#customerid').val('');
+//                         $('#customerName').val('');
+//                         $('#customerType').val('');
+//                         $('#pk_i_id').val('');
+//                         $('#ArchiveID').val('');
+//                     this.reset();
+//                         if($('#print').val()==1){
+//                             let url=`{{ route('admin.dashboard') }}/printArchive/archive/${response.id}}`
+//                             window.open(url, '_blank');
+//                             $('#print').val(0);
+//                         }
+//                     $('.wtbl').DataTable().ajax.reload();
+
+//                     $(".formDataaaFilesArea").html('');
+
+//                 },
+
+//                 error: function(response){
+//                      $('#saveBtn').css('display','inline-block');
+//                     $( ".archive_type" ).removeClass( "error" );
+//                     $(".loader").addClass('hide');
+//                     Swal.fire({
+
+//                         position: 'top-center',
+
+//                         icon: 'error',
+
+//                         title: '{{trans('admin.error_save')}}',
+
+//                         showConfirmButton: false,
+
+//                         timer: 1500
+
+//                         })
+
+//                     // if(response.responseJSON.errors.customerName){
+
+//                     //     $( "#customerName" ).addClass( "error" );
+
+//                     // }
+
+//                 }
+
+//             });
+//             return true; 
+//     }
+//     return false;
+//   });
 
   $( function() {
 
@@ -829,14 +967,13 @@ $( function() {
                         shortCutName=response.files[j].real_name;
 
                         urlfile='{{ asset('') }}';
-
-                        console.log(urlfile);
-
-                        urlfile+=response.files[j].url;
+                        if(response.files[j].type==1){
+                            urlfile+=response.files[j].url;
+                        }else{
+                            urlfile=response.files[j].url;
+                        }
 
                         formDataStr="formDataaa";
-
-                        console.log(urlfile);
 
                             shortCutName=shortCutName.substring(0, 20)
 

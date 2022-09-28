@@ -107,14 +107,14 @@
                                                 @include('dashboard.includes.wasel')
                                                 
                                                 <div class="row">
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-7">
                                                         <input type="hidden" name="lastRec" id="lastRec" value="4">
                                                         <div class="form-group" style="margin-bottom: 0rem!important;">
                                                             <div class="input-group" style="width:100%!important;">
                                                                 <div class="input-group-prepend">
                                                                     <label class="form-label " style="color: #ff9149; font-weight:bold">القدرة</label>
                                                                 </div>
-                                                                <div class="col-sm-12 col-md-3">
+                                                                <div class="col-sm-12 col-md-6">
                                                                     <input type="radio" name="phase[]" checked="" id="radio-1" class="jui-radio-buttons" value="1"
                                                                         onclick="">
                                                 
@@ -133,6 +133,28 @@
                                                                     <label for="radio-1"> &nbsp; أمبير</label>
                                                                 </div>
                                                                 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <div class="input-group" style="">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text " id="basic-addon1">
+                                                                        {{ 'الغاية' }}
+                                                                    </span>
+                                                                </div>
+                                                                <select id="task_type" name="task_type" type="text"
+                                                                    class="form-control valid task_type" onchange="putDesc();" aria-invalid="false">
+                                                                    @foreach($task_types as $ticketType)
+                                                                    <option value="{{ $ticketType->id }}" @if(isset($ticket)){{ $ticket->task_type==$ticketType->id?'selected':"" }}@endif>{{ $ticketType->name }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                                <div class="input-group-append"onclick="ShowConstantModal(6465,'task_type','الغاية')">
+                                                                    <span class="input-group-text input-group-text2">
+                                                                        <i class="fa fa-external-link"></i>
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>

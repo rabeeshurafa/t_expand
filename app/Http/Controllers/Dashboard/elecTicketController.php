@@ -22,6 +22,7 @@ class elecTicketController extends Controller
     function loadDefaul($type=''){
         $screen=Menu::where('s_function_url','=',$type)->get()->first();
         $ticket=TicketConfig::where('id','=',$screen->pk_i_id)->with('Admin')->get()->first();
+        $ticket->flows=json_decode($ticket->flow);
         $department=Department::where('enabled','=','1')->get();
         if($ticket->ticket_no==1){
             $this->fees=DB::select("select fees_json from app_ticket".$ticket->ticket_no."s where app_type=".$ticket->app_type." and phase=1 order by id desc limit 1");
@@ -113,7 +114,8 @@ class elecTicketController extends Controller
         $fees=$this->fees;
         $app_no=16;
         $archive_config = ArchiveRole::where('empid', Auth()->user()->id)->where('type', $type)->get();
-        return view('dashboard.services.ticket36', compact('type','region','ticketInfo','department','app_type','fees','archive_config','app_no'));
+        $task_types = Constant::where('parent',6465)->where('status',1)->get();
+        return view('dashboard.services.ticket36', compact('type','region','ticketInfo','department','app_type','fees','archive_config','app_no','task_types'));
     }
     public function newTicket39()
     {

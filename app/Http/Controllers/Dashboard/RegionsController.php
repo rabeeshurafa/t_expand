@@ -109,6 +109,10 @@ class RegionsController extends Controller
                 $obj=new City();
                 $obj->status=0;
                 $obj->save();
+            }else{
+                $obj= City::where('id',$request->city_id)->first(); 
+                $obj->status=0;
+                $obj->save();
             }
         }
         elseif($request->table=='region_id')
@@ -117,12 +121,20 @@ class RegionsController extends Controller
                 $obj=new Region();
                 $obj->status=0;
                 $obj->save();
+            }else{
+                $obj= Region::where('id',$request->region_id)->first(); 
+                $obj->status=0;
+                $obj->save();
             }
         }
         elseif($request->table=='town_id')
         {
             if(!$request->town_id){
                 $obj=new Town();
+                $obj->status=0;
+                $obj->save();
+            }else{
+                $obj= Town::where('id',$request->town_id)->first(); 
                 $obj->status=0;
                 $obj->save();
             }

@@ -69,6 +69,19 @@
 									</li>
 									@endcan
 									
+									@can('subscriberEarh_lic')
+									<li class="nav-item">
+
+										<a class="nav-link"  style="color: #0073AA;" id="base-tab15" data-toggle="tab" aria-controls="ctab15" href="#ctab15" aria-expanded="false">
+                                        <b>
+                                            شهادات تسجيل اراضي
+											(<span id="ctabCnt15"></span>) 
+
+										</b></a>
+
+									</li>
+									@endcan
+									
 									@can('subscriberCert4')
 									<li class="nav-item">
 
@@ -146,6 +159,20 @@
 
 									</li>
 									@endcan
+									@can('subscriberTradeArchive')
+                                        <li class="nav-item">
+
+                                            <a class="nav-link" id="base-tab16" style="color: #0073AA;"
+                                               data-toggle="tab" aria-controls="ctab16" href="#ctab16"
+                                               aria-expanded="false">
+                                                <b>
+
+                                                    {{trans('archive.trade_achive')}}
+                                                    (<span id="ctabCnt16"></span>)
+                                                </b></a>
+
+                                        </li>
+                                    @endcan
 								</ul>
 
                                 <div class="tab-content px-1 pt-1" style="margin-top:0px !important ;">
@@ -246,6 +273,71 @@
 
                                     </div>
                                     
+                                    <div class="tab-pane" id="ctab16" aria-labelledby="base-tab16">
+
+                                        <p>
+
+
+                                        <table style="width:100%; margin-top: 10px;direction: rtl;"
+                                               class="detailsTB table hdrTbl1 tradetbl">
+
+                                            <thead>
+
+                                            <tr>
+
+                                                <th scope="col" style="text-align: right;color:#ffffff; width: 10px;">
+                                                    #
+                                                </th>
+
+                                                <th scope="col"
+                                                    style="text-align:  right;font-family: Arial, sans-serif !important;color:#ffffff; width: 150px;">
+
+                                                    رقم المعاملة
+                                                </th>
+
+                                                <th scope="col"
+                                                    style="text-align: right; font-family: Arial, sans-serif !important;color:#ffffff">
+
+                                                    {{trans('archive.date')}}</th>
+
+                                                <th scope="col"
+                                                    style="text-align: right; font-family: Arial, sans-serif !important;color:#ffffff">
+
+                                                    {{trans('archive.deal_type')}}
+                                                </th>
+
+                                                <th scope="col"
+                                                    style="text-align: right; font-family: Arial, sans-serif !important;color:#ffffff">
+
+                                                    رقم الحوض
+                                                </th>
+
+                                                <th scope="col"
+                                                    style="text-align: right; font-family: Arial, sans-serif !important;color:#ffffff">
+
+                                                    رقم القطعة
+                                                </th>
+
+                                                <th scope="col"
+                                                    style="text-align: right; font-family: Arial, sans-serif !important;color:#ffffff">
+
+                                                    {{trans('archive.created_by')}} </th>
+
+                                                <th scope="col"
+                                                    style="text-align: center; font-family: Arial, sans-serif !important;color:#ffffff">
+
+                                                    {{trans('archive.attach')}}</th>
+
+                                            </tr>
+
+                                            </thead>
+
+
+                                        </table>
+
+                                        </p>
+
+                                    </div>
                                     
                                     <div class="tab-pane"  id="ctab12" aria-labelledby="base-tab12">
 
@@ -266,6 +358,71 @@
                                                         <th scope="col" style="text-align: right; font-family: Arial, sans-serif !important;color:#ffffff">
 
                                                         تاريخ الاصدار</th>
+
+                                                        <th scope="col" style="text-align: right; font-family: Arial, sans-serif !important;color:#ffffff">
+                                                        
+                                                        {{trans('archive.created_by')}} </th>
+
+                                                        <th scope="col" style="width:50px;text-align: right; font-family: Arial, sans-serif !important;color:#ffffff">
+                                                        
+                                                        طباعة</th>
+
+                                                    </tr>
+
+                                                </thead>
+
+                                            
+
+                                            </table>
+
+                                        </p>
+
+                                    </div>
+                                    
+                                    <div class="tab-pane"  id="ctab15" aria-labelledby="base-tab15">
+
+                                        <p>
+
+                                            <table style="width:100%; margin-top: 10px;direction: rtl;" class="detailsTB table hdrTbl1 earh_licArchivetbl" >
+
+                                                <thead>
+                                                
+                                                </th>
+                                                    <tr>
+
+                                                        <th scope="col" style="text-align: right;color:#ffffff; width: 10px;">#</th>
+
+                                                        <th scope="col"  style="text-align:  right; direction:rtl; font-family: Arial, sans-serif !important;color:#ffffff; width: 150px;">
+                                                        
+                                                        رقم الشهادة   </th>
+
+                                                        <th scope="col" style="text-align: right; font-family: Arial, sans-serif !important;color:#ffffff">
+
+                                                         تاريخ الشهادة </th>
+                                                         
+                                                        <th scope="col" style="text-align: right; font-family: Arial, sans-serif !important;color:#ffffff">
+
+                                                         اسم المشروع  </th>
+                                                         
+                                                        <th scope="col" style="text-align: right; font-family: Arial, sans-serif !important;color:#ffffff">
+
+                                                               مساحة القطعة م2    </th>
+                                                               
+                                                        <th scope="col" style="text-align: right; font-family: Arial, sans-serif !important;color:#ffffff">
+
+                                                               رسم الشهادة    </th>
+                                                               
+                                                        <th scope="col" style="text-align: right; font-family: Arial, sans-serif !important;color:#ffffff">
+
+                                                               رقم الحوض     </th>
+                                                               
+                                                        <th scope="col" style="text-align: right; font-family: Arial, sans-serif !important;color:#ffffff">
+
+                                                               رقم القطعة       </th>
+                                                               
+                                                        <th scope="col" style="text-align: right; font-family: Arial, sans-serif !important;color:#ffffff">
+
+                                                                اسم المنطقة   </th>
 
                                                         <th scope="col" style="text-align: right; font-family: Arial, sans-serif !important;color:#ffffff">
                                                         
@@ -642,7 +799,11 @@
                                         shortCutName=file.real_name;
                                         shortCutName=shortCutName.substring(0, 20);
                                         urlfile='{{ asset('') }}';
-                                        urlfile+=file.url;
+                                        if(file.type !=2){
+                                            urlfile+=file.url; 
+                                        }else{
+                                            urlfile=file.url; 
+                                        }
                                         if(file.extension=="jpg"||file.extension=="png")
                                         fileimage='{{ asset('assets/images/ico/image.png') }}';
                                         else if(file.extension=="pdf")
@@ -840,7 +1001,11 @@
                                         shortCutName=file.real_name;
                                         shortCutName=shortCutName.substring(0, 20);
                                         urlfile='{{ asset('') }}';
-                                        urlfile+=file.url;
+                                        if(file.type !=2){
+                                            urlfile+=file.url; 
+                                        }else{
+                                            urlfile=file.url; 
+                                        }
                                         if(file.extension=="jpg"||file.extension=="png")
                                         fileimage='{{ asset('assets/images/ico/image.png') }}';
                                         else if(file.extension=="pdf")
@@ -1300,6 +1465,194 @@
         
     }
     
+    function getEarh_lic($id,$certCount){
+
+        var table = $('.earh_licArchivetbl').DataTable({
+            destroy: true,
+            ajax: {
+                url: '{{ route('subscriberEarh_lic') }}',
+                data: function (d) {
+                    d.subscriber_id = $id;
+                }
+            },
+            
+            columns:[
+                        { data: 'DT_RowIndex', name: 'DT_RowIndex' , orderable: false, searchable: false},
+                        {data:'cert_no'},
+                        {data:'date'},
+                        {data:'proj_name'},
+                        {data:'area'},
+                        {data:'cert_cost'},
+                        
+                        {
+                            data: null, 
+                            render:function(data,row,type){
+                                hod_no ='';
+                                if(data.hod_no!=null && data.hod_no.length>0){
+                                    hod_no = data.hod_no['0'];
+                                }
+                                return hod_no;
+                            },
+                            name:'hod_no',
+                        
+                        },
+                        {
+                            data: null, 
+                            render:function(data,row,type){
+                                pice_no ='';
+                                if(data.pice_no!=null && data.pice_no.length>0){
+                                    pice_no = data.pice_no['0'];
+                                }
+                                return pice_no;
+                            },
+                            name:'pice_no',
+                        
+                        },
+                        
+                        {data:'area_name'},
+                        {
+                            data: null, 
+                            render:function(data,row,type){
+                                nick_name ='';
+                                if(data.admin!=null ){
+                                    nick_name = data.admin.nick_name;
+                                }
+                                return nick_name;
+                            },
+                            name:'admin.nick_name',
+                        
+                        },
+                        {
+                            data: null, 
+                            render:function(data,row,type){
+                                
+                                $printBtn = `<a href='{{route('admin.dashboard')}}/printLicEarth/${data.id}' style="margin-right:17px;" target="_blank"> <img title='print'
+                                style='cursor:pointer;height: 32px;'
+                                class:"fa fa-print" src="{{asset('assets/images/ico/Printer.png')}}" /> </a>`;
+                            
+                                return $printBtn;
+
+                            },
+                            name:'cert_no',
+                        
+                        },
+                        
+                    
+                    ],
+
+                    dom: 'Bfltip',
+
+                    buttons: [
+
+                        {
+
+                            extend: 'excel',
+
+                            tag: 'img',
+
+                            title:'',
+
+                            attr:  {
+
+                                title: 'excel',
+
+                                src:'{{asset('assets/images/ico/excel.png')}}',
+
+                                style: 'cursor:pointer; height: 32px;',
+
+                            },
+
+
+
+                        },
+
+                        {
+
+                            extend: 'print',
+
+                            tag: 'img',
+
+                            title:'',
+
+                            attr:  {
+
+                                title: 'print',
+
+                                src:'{{asset('assets/images/ico/Printer.png')}} ',
+
+                                style: 'cursor:pointer;height: 32px;',
+
+                                class:"fa fa-print"
+
+                            },
+
+                            customize: function ( win ) {
+
+                        
+
+
+
+                            $(win.document.body).find( 'table' ).find('tbody')
+
+                                .css( 'font-size', '20pt' );
+
+                            }
+
+                        },
+
+                        ],
+
+                    "language": {
+
+                                "sEmptyTable":     "ليست هناك بيانات متاحة في الجدول",
+
+                                "sLoadingRecords": "جارٍ التحميل...",
+
+                                "sProcessing":   "جارٍ التحميل...",
+
+                                "sLengthMenu":   "أظهر _MENU_ مدخلات",
+
+                                "sZeroRecords":  "لم يعثر على أية سجلات",
+
+                                "sInfo":         "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+
+                                "sInfoEmpty":    "يعرض 0 إلى 0 من أصل 0 سجل",
+
+                                "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+
+                                "sInfoPostFix":  "",
+
+                                "sSearch":       "ابحث:",
+
+                                "sUrl":          "",
+
+                                "oPaginate": {
+
+                                    "sFirst":    "الأول",
+
+                                    "sPrevious": "السابق",
+
+                                    "sNext":     "التالي",
+
+                                    "sLast":     "الأخير"
+
+                                },
+
+                                "oAria": {
+
+                                    "sSortAscending":  ": تفعيل لترتيب العمود تصاعدياً",
+
+                                    "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
+
+                                }
+
+                            }
+
+        });
+        $('#ctabCnt15').html($certCount);
+        
+    }
+    
     function printDivP(m)
     {
         var mywindow = window.open('', 'PRINT', 'height=400,width=600');
@@ -1379,26 +1732,29 @@
                                     data.files.forEach(file => {
                                         shortCutName=file.real_name;
                                         shortCutName=shortCutName.substring(0, 20);
-                                        extension=file.url.split('.');
                                         urlfile='{{ asset('') }}';
-                                        urlfile+=file.url;
-                                        if(extension[1]=="jpg"||extension[1]=="png")
-                                        fileimage='{{ asset('assets/images/ico/image.png') }}';
-                                        else if(extension[1]=="pdf")
-                                        fileimage='{{ asset('assets/images/ico/pdf.png') }}';
-                                        else if(extension[1]=="excel"||extension[1]=="xsc")
-                                        fileimage='{{ asset('assets/images/ico/excellogo.png') }}';
+                                        if(!file.url.includes("http")){
+                                            urlfile+=file.url;
+                                        }else{
+                                            urlfile=file.url;
+                                        }
+                                        if (file.url.includes(".jpg") ||  file.url.includes(".png"))
+                                            fileimage = '{{ asset('assets/images/ico/image.png') }}';
+                                        else if (file.url.includes(".pdf"))
+                                            fileimage = '{{ asset('assets/images/ico/pdf.png') }}';
+                                        else if (file.url.includes(".excel") || file.url.includes(".xsc"))
+                                            fileimage = '{{ asset('assets/images/ico/excellogo.png') }}';
                                         else
-                                        fileimage='{{ asset('assets/images/ico/file.png') }}';
+                                            fileimage = '{{ asset('assets/images/ico/file.png') }}';
                                         $actionBtn += '<div id="attach" class=" col-sm-12 ">'
-                                            +'<div class="attach">'                                        
-                                              +' <a class="attach-close1" href="'+urlfile+'" style="color: #74798D; float:left;" target="_blank">'
-                                                +'  <span class="attach-text">'+shortCutName+'</span>'
-                                                +'    <img style="width: 20px;"src="'+fileimage+'">'     
-                                                +'</a>'
-                                            +'</div>'
-                                            +'</div>'; 
-                                    });
+                                            + '<div class="attach">'
+                                            + ` <a class="attach-close1" href="${urlfile.replace(/&#039;/g, '')}" style="color: #74798D; float:left;" target="_blank">`
+                                            + '  <span class="attach-text">' + shortCutName + '</span>'
+                                            + '    <img style="width: 20px;"src="' + fileimage + '">'
+                                            + '</a>'
+                                            + '</div>'
+                                            + '</div>';
+                                            });
                                     $actionBtn += '</div>';
                                     return $actionBtn;
                                 }
@@ -1599,7 +1955,11 @@
                                         shortCutName=file.real_name;
                                         shortCutName=shortCutName.substring(0, 20);
                                         urlfile='{{ asset('') }}';
-                                        urlfile+=file.url;
+                                        if(file.type !=2){
+                                            urlfile+=file.url; 
+                                        }else{
+                                            urlfile=file.url; 
+                                        }
                                         if(file.extension=="jpg"||file.extension=="png")
                                         fileimage='{{ asset('assets/images/ico/image.png') }}';
                                         else if(file.extension=="pdf")
@@ -1850,7 +2210,11 @@
                                         shortCutName=file.real_name;
                                         shortCutName=shortCutName.substring(0, 20);
                                         urlfile='{{ asset('') }}';
-                                        urlfile+=file.url;
+                                        if(file.type !=2){
+                                            urlfile+=file.url; 
+                                        }else{
+                                            urlfile=file.url; 
+                                        }
                                         if(file.extension=="jpg"||file.extension=="png")
                                         fileimage='{{ asset('assets/images/ico/image.png') }}';
                                         else if(file.extension=="pdf")
@@ -2042,7 +2406,11 @@
                                         shortCutName=file.real_name;
                                         shortCutName=shortCutName.substring(0, 20);
                                         urlfile='{{ asset('') }}';
-                                        urlfile+=file.url;
+                                        if(file.type !=2){
+                                            urlfile+=file.url; 
+                                        }else{
+                                            urlfile=file.url; 
+                                        }
                                         if(file.extension=="jpg"||file.extension=="png")
                                         fileimage='{{ asset('assets/images/ico/image.png') }}';
                                         else if(file.extension=="pdf")
@@ -2241,7 +2609,11 @@
                                         shortCutName=file.real_name;
                                         shortCutName=shortCutName.substring(0, 20);
                                         urlfile='{{ asset('') }}';
-                                        urlfile+=file.url;
+                                        if(file.type !=2){
+                                            urlfile+=file.url; 
+                                        }else{
+                                            urlfile=file.url; 
+                                        }
                                         if(file.extension=="jpg"||file.extension=="png")
                                         fileimage='{{ asset('assets/images/ico/image.png') }}';
                                         else if(file.extension=="pdf")
@@ -2384,5 +2756,201 @@
         $('#ctabCnt9').html($contractArchiveCount);
         
     }
+    
+    function getTradeArchive($id, $tradeArchiveCount) {
+        // let $orgnization_id;
 
+        var table = $('.tradetbl').DataTable({
+            destroy: true,
+            ajax: {
+                url: '{{ route('subscriberTradeArchive') }}',
+                data: function (d) {
+                    d.subscriber_id = $id;
+                }
+            },
+
+            columns: [
+                {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+                {data: 'trade_no'},
+                {data: 'date'},
+                {
+                    data: null,
+                    render: function (data, row, type) {
+                        $type = '';
+                        if (data.type != null) {
+                            $type = data.type.name;
+                        }
+                        return $type;
+                    },
+                    name: 'type.name',
+                },
+                {data: 'plateNo'},
+                {data: 'vehicle_no'},
+                {
+                    data: null,
+                    render: function (data, row, type) {
+                        $admin = '';
+                        if (data.admin != null) {
+                            $admin = data.admin.nick_name;
+                        }
+                        return $admin;
+                    },
+                    name: 'name',
+
+                },
+                {
+                    data: null,
+
+                    render: function (data, row, type) {
+                        if (data.arch_files.length > 0) {
+                            var i = 1;
+                            $actionBtn = "<div class='row' style='margin-left:0px;'>";
+                            data.arch_files.forEach(file => {
+                                shortCutName = file.real_name;
+                                shortCutName = shortCutName.substring(0, 20);
+                                extension = file.url.split('.');
+                                urlfile = '{{ asset('') }}';
+                                if(!file.url.includes("http")){
+                                    urlfile+=file.url;
+                                }else{
+                                    urlfile=file.url;
+                                }
+                                if (file.url.includes(".jpg") ||  file.url.includes(".png"))
+                                    fileimage = '{{ asset('assets/images/ico/image.png') }}';
+                                else if (file.url.includes(".pdf"))
+                                    fileimage = '{{ asset('assets/images/ico/pdf.png') }}';
+                                else if (file.url.includes(".excel") || file.url.includes(".xsc"))
+                                    fileimage = '{{ asset('assets/images/ico/excellogo.png') }}';
+                                else
+                                    fileimage = '{{ asset('assets/images/ico/file.png') }}';
+                                $actionBtn += '<div id="attach" class=" col-sm-12 ">'
+                                    + '<div class="attach">'
+                                    + ` <a class="attach-close1" href="${urlfile.replace(/&#039;/g, '')}" style="color: #74798D; float:left;" target="_blank">`
+                                    + '  <span class="attach-text">' + shortCutName + '</span>'
+                                    + '    <img style="width: 20px;"src="' + fileimage + '">'
+                                    + '</a>'
+                                    + '</div>'
+                                    + '</div>';
+                            });
+                            $actionBtn += '</div>';
+                            return $actionBtn;
+                        } else {
+                            return '';
+                        }
+                    },
+                    name: 'fileIDS',
+                },
+
+            ],
+
+            dom: 'Bfltip',
+
+            buttons: [
+
+                {
+
+                    extend: 'excel',
+
+                    tag: 'img',
+
+                    title: '',
+
+                    attr: {
+
+                        title: 'excel',
+
+                        src: '{{asset('assets/images/ico/excel.png')}}',
+
+                        style: 'cursor:pointer; height: 32px;',
+
+                    },
+
+
+                },
+
+                {
+
+                    extend: 'print',
+
+                    tag: 'img',
+
+                    title: '',
+
+                    attr: {
+
+                        title: 'print',
+
+                        src: '{{asset('assets/images/ico/Printer.png')}} ',
+
+                        style: 'cursor:pointer;height: 32px;',
+
+                        class: "fa fa-print"
+
+                    },
+
+                    customize: function (win) {
+
+
+                        $(win.document.body).find('table').find('tbody')
+
+                            .css('font-size', '20pt');
+
+                    }
+
+                },
+
+            ],
+
+
+            "language": {
+
+                "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
+
+                "sLoadingRecords": "جارٍ التحميل...",
+
+                "sProcessing": "جارٍ التحميل...",
+
+                "sLengthMenu": "أظهر _MENU_ مدخلات",
+
+                "sZeroRecords": "لم يعثر على أية سجلات",
+
+                "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+
+                "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
+
+                "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+
+                "sInfoPostFix": "",
+
+                "sSearch": "ابحث:",
+
+                "sUrl": "",
+
+                "oPaginate": {
+
+                    "sFirst": "الأول",
+
+                    "sPrevious": "السابق",
+
+                    "sNext": "التالي",
+
+                    "sLast": "الأخير"
+
+                },
+
+                "oAria": {
+
+                    "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
+
+                    "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
+
+                }
+
+            }
+
+        });
+
+        $('#ctabCnt16').html($tradeArchiveCount);
+
+    }
 </script>

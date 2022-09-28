@@ -281,7 +281,7 @@ function drawCosts2(){
     $('.vasChange').html('');
     var costrows='';
     <?php $sum=0;
-    if($fees != null){
+    if($fees2 != null){
     ?>
     if('{{$fees2[0]->fees_json}}'!='' &&'{{$fees2[0]->fees_json}}'!=null){
         <?php $arr=json_decode($fees2[0]->fees_json); 

@@ -302,7 +302,7 @@
                             العنوان:   
                             </td>
                             <td>
-                            <input type="text" style="display: inline-block;width:70%;" value="{{$town->name}}" id="address" class="form-control hidePrintB" placeholder=" " name="address">
+                            <input type="text" style="display: inline-block;width:70%;" value="{{($town->name ?? '')}}" id="address" class="form-control hidePrintB" placeholder=" " name="address">
 
                         </td>
                         <td  align="right" width="7%">
@@ -522,7 +522,7 @@ if($(this).attr('name')!='_token'||$(this).attr('type')!='hidden'){
                   mywindow.document.write('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">');
                   mywindow.document.write('<style>'
                   +'td{width:150px !important;height:40px!important;font-size:14pt!important;}'
-                  +'.header{margin-top:50px !important;}'
+                  +'.header{margin-top:20px !important;}'
                   +' input,textarea{'
                     +'     border:0px solid #ffffff !important;'
                    +'  }'
@@ -543,7 +543,7 @@ if($(this).attr('name')!='_token'||$(this).attr('type')!='hidden'){
                  +' input,textarea{'
                     +'     border:0px solid #ffffff !important;font-size:14pt!important;height:40px!important;'
                    +'  }'
-                   +'.header{margin-top:50px !important;}'
+                   +'.header{margin-top:20px !important;}'
                   +'  }'
                   +'</style>');
                   mywindow.document.write('</head><body style=" line-height: 24; font-size: 14px;" ><img src="{{$setting->job_lic_header}}" width="100%" style="max-width:100%">');
@@ -552,15 +552,13 @@ if($(this).attr('name')!='_token'||$(this).attr('type')!='hidden'){
                     mywindow.document.write('<table style="width:100%" dir="rtl" id="for-print">');
     //  console.log($("#for-print").html());
                     var footer='<tr>'
-                                    +'<tr>'
-                                    +'<td></td>'
-                                    +'</tr>'
+                                    
                                     +'<tr>'
                                     +'<td></td>'
                                     +'</tr>'
                                     +'<td colspan="4" align="left">'
                                       +'  توقيع سلطة الترخيص'
-                                      +' <br><br><br>'
+                                      +' <br><br>'
                                     +'</td>'
                                     +'</tr>'
                                     +'<tr>'
@@ -638,8 +636,21 @@ $('#setting_form').submit(function(e) {
 
 $('#formDataaa').submit(function(e) {
     $(".loader").removeClass('hide');
+    
+    if($('#name').val()==null || $('#name').val().length==0){
+        $('#name').addClass('error');
+        $(".loader").addClass('hide');
+        return false;
+    }
+    if($('#customerId').val()==null || $('#customerId').val().length==0){
+        $('#name').addClass('error');
+        $(".loader").addClass('hide');
+        return false;
+    }
+    
     $( "#customerName" ).removeClass( "error" );
     $( "#licNo" ).removeClass( "error" );
+    
        e.preventDefault();
        let formData = new FormData(this);
         /////////////////////////////to not increment currunt LicNo on update////////////////
@@ -681,7 +692,20 @@ $('#formDataaa').submit(function(e) {
            },
            error: function(response){
             $(".loader").addClass('hide');
-
+            if(response.responseJSON.errors.name){
+                $( "#name" ).addClass( "error" );
+                $( "#name" ).get(0).setCustomValidity('يرجى ادخال اسم معرف في النظام  ');
+                $( "#name" ).on('input',function(){
+                    this.setCustomValidity('')
+                })
+            }
+            if(response.responseJSON.errors.customerId){
+                $( "#name" ).addClass( "error" );
+                $( "#name" ).get(0).setCustomValidity('يرجى ادخال اسم معرف في النظام  ');
+                $( "#customerId" ).on('input',function(){
+                    this.setCustomValidity('')
+                })
+            }
             Swal.fire({
 				position: 'top-center',
 				icon: 'error',

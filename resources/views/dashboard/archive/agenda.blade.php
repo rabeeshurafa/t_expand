@@ -16,11 +16,16 @@
     #recList td{
         vertical-align: top !important;;
     }
+    .dropdown-menu.show{
+        transform: translate3d(119px, 30px, 0px) !important;
+    }
 </style>
     <div role="tabpanel" class="tab-pane active show" id="activeIcon1" aria-labelledby="activeIcon1-tab1"
         aria-expanded="true">
         <form action="C_agenda/saveMeeting" id="formData" method="post" novalidate>
+            @csrf
             <!-- horizontal grid start -->
+            <meta name="csrf-token" content="{{ csrf_token() }}" />
             <input type="hidden" name="topicToEdit" id="topicToEdit" value="0">
             <section class="horizontal-grid" id="horizontal-grid">
                 <div class="row white-row">
@@ -44,6 +49,9 @@
                                                         <input type="hidden" id="meetingID" name="meetingID" value="0">
                                                         <input type="hidden" id="meetingIDEnd" name="meetingIDEnd" value="0">
                                                         <input type="hidden" id="lastorder" name="lastorder" value="1">
+                                                        <input type="hidden" id="scannedRow" name="scannedRow" value="0">
+                                                        <input type="hidden" id="mimeType" name="mimeType" value="">
+                                                        <input type="hidden" id="scannedFileSrc" name="scannedFileSrc" value="">
                                                         <select type="text" id="meetingTitleName" name="meetingTitleName"
                                                             class="form-control alphaFeild"
                                                             style="width: 115px;"
@@ -168,7 +176,7 @@
                                             width="450px">
                                             {{trans('archive.decision')}}
                                         </th>
-                                        <th scope="col" class=" th1" width="140"> </th>
+                                        <th scope="col" class=" th1" width="90"> </th>
                                     </tr>
                                 </thead>
                                 <tbody id="recList">
@@ -208,7 +216,7 @@
                                             <input type="file" class="form-control-file" id="subject1UploadFile[]"
                                                 multiple="" name="subject1UploadFile[]" onchange="doUploadAttachNew(1)"
                                                 style="display: none">
-                                                <meta name="csrf-token" content="{{ csrf_token() }}" />
+                                                
                                             <input type="file" class="form-control-file" id="subject1UploadImage[]"
                                                 multiple="" name="subject1UploadImage[]" onchange="doUploadAttachNew(1)"
                                                 accept="image/*" style="display: none">
@@ -222,7 +230,28 @@
                                                         <img src="{{ asset('assets/images/ico/floppy-icon.png') }}"
                                                             style="height: 32px;">
                                                     </button>
-                                                    <a href="#"
+                                                    <span class="dropdown">
+                                                      <button class="btn" style="background-color: transparent !important; border-color: transparent !important;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-v  mr-0" style="color: black;" aria-hidden="true"></i>
+                                                      </button>
+                                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="transform: translate3d(119px, 30px, 0px) !important;">
+                                                        <a class="dropdown-item" onclick="$('#fromname').val('subject1');document.getElementById('subject1UploadFile[]').click(); return false">
+                                                            <img src="{{ asset('assets/images/ico/upload.png') }}" style="height: 32px;">
+                                                            مرفقات
+                                                        </a>
+                                                        <a class="dropdown-item hide" onclick="document.getElementById('subject1UploadImage[]').click(); return false">
+                                                            <img src="{{ asset('assets/images/ico/upload.png') }}" style="height: 32px;">
+                                                        </a>
+                                                        <a class="dropdown-item hide" onclick="scanToJpg();$('#scannedRow').val(1)">
+                                                            <img src="https://t.palexpand.ps/assets/images/ico/scanner.png" class="hide" style="cursor:pointer;" >
+                                                        </a>
+                                                        <a class="dropdown-item" onclick="scanTopdf();$('#scannedRow').val(1)">
+                                                            <img src="https://t.palexpand.ps/assets/images/ico/scannerpdf.png"  style="cursor:pointer;" >
+                                                            سكانر
+                                                        </a>
+                                                      </div>
+                                                    </span>
+                                                    {{--<a href="#"
                                                         onclick="$('#fromname').val('subject1');document.getElementById('subject1UploadFile[]').click(); return false"
                                                         class="attach-icon">
                                                         <img src="{{ asset('assets/images/ico/upload.png') }}"
@@ -234,6 +263,10 @@
                                                         <img src="{{ asset('assets/images/ico/upload.png') }}"
                                                             style="height: 32px;">
                                                     </a>
+                                                    <img src="https://t.palexpand.ps/assets/images/ico/scanner.png" class="hide" style="cursor:pointer;" onclick="scanToJpg();$('#scannedRow').val(1)">
+                                                    
+                                                    <img src="https://t.palexpand.ps/assets/images/ico/scannerpdf.png"  style="cursor:pointer;" onclick="scanTopdf();$('#scannedRow').val(1)">
+                                                    --}}
                                                 </span>
                                             </span>
                                         </td>
@@ -263,6 +296,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-8 mb-2">
+                                        <div style="padding-right: 36px;padding-bottom: 10px;">
+                                            <img src="https://t.palexpand.ps/assets/images/ico/scanner.png"  style="cursor:pointer;" onclick="scanToJpgMeetingFile();">
+                                            <img src="https://t.palexpand.ps/assets/images/ico/scannerpdf.png"  style="cursor:pointer;" onclick="scanTopdfMeetingFile();">
+                                        </div>
                                         <ol class="vasType 1vas addAttatch olmob">
                                             <li style="font-size: 17px !important;color:#000000">
                                                 <div class="row">
@@ -277,6 +314,7 @@
                                                         <img src="{{ asset('assets/images/ico/upload.png') }}" width="40" class="attachs"
                                                             height="40" style="cursor:pointer"
                                                             onclick="$('#currFile').val(1);$('#attachfile').trigger('click');">
+                                                        
                                                     </div>
                                                 </div>
                                             </li>
@@ -382,8 +420,6 @@
                     </div>
                 </div>
             </div>
-
-
         </form>
     </div>
 @include('dashboard.component.fetch_table')
@@ -393,6 +429,184 @@
     @include('dashboard.archive.takeADecision');
     <script>
     attach_index=2;
+    function scanToJpgMeetingFile() {
+        scanner.scan(displayImagesOnPageMeetingFile,
+            {
+                "output_settings" :
+                    [
+                        {
+                            "type" : "return-base64",
+                            "format" : "png"
+                        }
+                    ]
+            }
+        );
+    }
+
+    /** Processes the scan result */
+    function displayImagesOnPageMeetingFile(successful, mesg, response) {
+        if(!successful) { // On error
+            console.error('Failed: ' + mesg);
+            return;
+        }
+
+        if(successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
+            console.info('User canceled');
+            return;
+        }
+        var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
+        for(var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
+            var scannedImage = scannedImages[i];
+            uploadScannedfile(scannedImage);
+            // processScannedImage(scannedImage);
+        }
+    }
+    
+    function scanTopdfMeetingFile() {
+        scanner.scan(displayPdfOnPageMeetingFile,
+            {
+                "output_settings" :
+                    [
+                        {
+                            "type" : "return-base64",
+                            "format" : "pdf",
+                        }
+                    ]
+            }
+        );
+    }
+    
+    function displayPdfOnPageMeetingFile(successful, mesg, response) {
+        
+        if(!successful) { // On error
+            console.error('Failed: ' + mesg);
+            return;
+        }
+
+        if(successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
+            console.info('User canceled');
+            return;
+        }
+        var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
+        for(var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
+            var scannedImage = scannedImages[i];
+            uploadScannedfile(scannedImage);
+        }
+    }
+    
+    function uploadScannedfile(scannedImage){
+        $(".loader").removeClass('hide');
+        $(".form-actions").addClass('hide');
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
+                'ContentType': 'application/json'
+            }
+        });
+        
+        $.ajax({
+                type:'post',
+                url:'{{route('saveScanedFile')}}',
+                data: {
+                    scannedData: scannedImage.src,
+                    type: scannedImage.mimeType,
+                    
+                },
+                dataType:"json",
+                async: true,
+                success: (response) => {
+                    $(".form-actions").removeClass('hide');
+                    $(".loader").addClass('hide');
+                    $( ".archive_type" ).removeClass( "error" );
+                    
+                        shortCutName=response.file.real_name;
+                        
+                        shortCutID=response.file.id;
+                        
+                        urlfile='{{ asset('') }}';
+                        if(response.file.type==1){
+                            urlfile+=response.file.url;
+                        }else{
+                            urlfile=response.file.url;
+                        }
+                        shortCutName=shortCutName.substring(0, 40)
+                        if(response.file.extension=="jpg"||response.file.extension=="png")
+                            fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/image.png';
+                            else if(response.file.extension=="pdf")
+                            fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/pdf.png';
+                            else if(response.file.extension=="doc")
+                            fileimage='https://template.expand.ps/public/assets/images/ico/word.png';
+                            else if(response.file.extension=="excel"||response.file.extension=="xsc")
+                            fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/excellogo.png';
+                            else
+                            fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/file.png';
+                            var row = '<li style="font-size: 17px !important;color:#000000">' +
+                                '<div class="row">' +
+                                '<div class="col-sm-6 attmob">' +
+                                '<input type="text" id="attachName[]" name="attachName[]" class="form-control attachName">' +
+                                '</div>' +
+                                '<div class="attdocmob col-sm-5 attach_row_'+attach_index+'">' +
+                                '<div id="attach" class=" col-sm-12 ">'+
+                                '<div class="attach">' +                                       
+                                '<a class="attach-close1" href="'+urlfile+'" style="color: #74798D; float:left;" target="_blank">'+
+                                '<span class="attach-text hidemob">'+shortCutName+'</span>' +
+                                '<img style="width: 20px;"src="'+fileimage+'">'+
+                                '</a>'+
+                                '<input type="hidden" id="attach_ids[]" name="attach_ids[]" value="'+response.file.id+'">'+
+                                '</div>'+
+                                '</div>'+
+                                '</div>'+
+                                '<div class="attdelmob">' +
+                                '<img src="{{ asset('assets/images/ico/upload.png') }}" width="40" height="40" style="cursor:pointer" onclick="$(\'#currFile\').val('+attach_index+');$(\'#attachfile\').trigger(\'click\'); return false">' +
+                                '</div>' +
+                                '<div class="attdelmob">' +
+                                '<i class="fa fa-trash" id="plusElement1" style="padding-top:10px;position: relative;left: 3%;cursor: pointer;  color:#1E9FF2;font-size: 15pt; " onclick="$(this).parent().parent().parent().remove()"></i>'+
+                                '</div>' +
+                                ' </div>' +
+                               
+                                ' </li>'
+                                attach_index++
+                            $(".addAttatch").append(row)
+                            
+        //                     row='<div id="attach" class=" col-lg-6 ">' +
+        //                         '   <div class="attach" onmouseover="$(this).children().first().next().show()">'
+        //                         +'    <a class="attach-close1" href="'+urlfile+'" style="color: #74798D;" target="_blank">'
+        //                         +'    <span class="attach-text">'+shortCutName+'</span> </a>'
+        //                         +'    <a class="attach-close1" style="color: #74798D; float:left;" onclick="$(this).parent().parent().remove()">×</a>'
+        //                         +'      <input type="hidden" id="formDataaaimgUploads[]" name="formDataaaimgUploads[]" value="'+shortCutName+'">'
+        //                         +'             <input type="hidden" id="formDataaaorgNameList[]" name="formDataaaorgNameList[]" value="'+shortCutName+'">'
+								// +'             <input type="hidden" id="formDataaaorgIdList[]" name="formDataaaorgIdList[]" value="'+shortCutID+'">'
+							 //   +'    </div>'
+        //                         +'  </div>'
+        //                 $(".formDataaaFilesArea").append(row)
+                },
+
+                error: function(response){
+                    $(".form-actions").removeClass('hide');
+                    $(".loader").addClass('hide');
+                    
+                    Swal.fire({
+                        position: 'top-center',
+                        icon: 'error',
+                        title: '{{trans('admin.error_save')}}',
+                        showConfirmButton: false,
+                        timer: 1500
+                        })
+
+                        // $(".formDataaaFilesArea").html('');
+
+                    if(response.responseJSON.errors.customerName){
+
+                        $( "#customerName" ).addClass( "error" );
+
+                    }
+
+                }
+
+            });
+            return true;
+    }
+    
         function addNewAttatch() {
     
             if($(".attachName").last().val().length>0){
@@ -431,7 +645,7 @@
             $(".form-actions").addClass('hide');
             var formData = new FormData($("#"+formDataStr)[0]);
             $.ajax({
-                url: 'uploadTicketAttach',
+                url: '{{route('uploadTicketAttach')}}',
                 type: 'POST',
                 data: formData,
                 dataType:"json",
@@ -448,14 +662,14 @@
                             file=data.all_files[j]
                             shortCutName=data.all_files[j].real_name;
                             shortCutID=data.all_files[j].id;
-                            urlfile='https://t.expand.ps/expand_repov1/public/';
-                            console.log(urlfile);
-                            urlfile+=data.all_files[j].url;
-                            console.log(urlfile);
                              shortCutName=file.real_name;
                                     shortCutName=shortCutName.substring(0, 20);
-                                    urlfile='https://t.expand.ps/expand_repov1/public/';
-                                    urlfile+=file.url;
+                                    urlfile='{{ asset('') }}';
+                                    if(file.type==1){
+                                        urlfile+=file.url;
+                                    }else{
+                                        urlfile=file.url;
+                                    }
                                     if(file.extension=="jpg"||file.extension=="png")
                                     fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/image.png';
                                     else if(file.extension=="pdf")
@@ -482,7 +696,8 @@
                         $(".alert-success").removeClass('hide');
                         $(".attach_row_"+id).append($actionBtn)
                         $(".loader").addClass('hide');
-                        
+                        $("#attachfile").val('');
+                        $(".form-control-file").val('');
                         $(".group1").colorbox({rel:'group1'});
                         setTimeout(function(){
                             $(".alert-danger").addClass("hide");
@@ -509,8 +724,76 @@
         }
     </script>
     <script>
+    function scanToJpg() {
+        scanner.scan(displayImagesOnPage,
+            {
+                "output_settings" :
+                    [
+                        {
+                            "type" : "return-base64",
+                            "format" : "png"
+                        }
+                    ]
+            }
+        );
+    }
+
+    /** Processes the scan result */
+    function displayImagesOnPage(successful, mesg, response) {
+        if(!successful) { // On error
+            console.error('Failed: ' + mesg);
+            return;
+        }
+
+        if(successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
+            console.info('User canceled');
+            return;
+        }
+        var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
+        for(var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
+            var scannedImage = scannedImages[i];
+            rowId=$('#scannedRow').val();
+            $('#scannedFileSrc').val(scannedImage.src);
+            $('#mimeType').val(scannedImage.mimeType);
+            doUploadAttachNew(rowId);
+        }
+    }
+
+    function scanTopdf() {
+        scanner.scan(displayPdfOnPage,
+            {
+                "output_settings" :
+                    [
+                        {
+                            "type" : "return-base64",
+                            "format" : "pdf",
+                        }
+                    ]
+            }
+        );
+    }
     
-    
+    function displayPdfOnPage(successful, mesg, response) {
+        
+        if(!successful) { // On error
+            console.error('Failed: ' + mesg);
+            return;
+        }
+
+        if(successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
+            console.info('User canceled');
+            return;
+        }
+        var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
+        for(var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
+            var scannedImage = scannedImages[i];
+            rowId=$('#scannedRow').val();
+            $('#scannedFileSrc').val(scannedImage.src);
+            $('#mimeType').val(scannedImage.mimeType);
+            doUploadAttachNew(rowId);
+        }
+    }
+
     itopic=1;
     function saveMeeting(){
         //meetingID
@@ -712,6 +995,13 @@
     function saveDesicion(id){
             
             $("#topicToEdit").val(id);
+            console.log(id)
+            console.log('{{ csrf_token() }}')
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
+                }
+            });
         if(confirm('هل تريد حفظ التعديلات')){
             //$("#topicToEdit").val(id);
                 ii=$("#lastorder").val();
@@ -720,7 +1010,7 @@
                 $(".loader").removeClass('hide');
                 $(".attach-icons").addClass('hide');
                 $.ajax({
-                  url: 'ajaxSaveDesicion',
+                  url: '{{route('ajaxSaveDesicion')}}',
                   type: 'POST',
                   data: formData,
                   dataType:"json",
@@ -824,6 +1114,11 @@
                                 fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/file.png';
                                 shortCutName=data[i].Files[0].real_name;
                                 shortCutName=shortCutName.substring(0, 32)
+                                if(data[i].Files[0].type==1){
+                                    url=`{{asset('')}}${data[i].Files[0].url}`
+                                }else{
+                                    url=data[i].Files[0].url
+                                }
                             attach_template+=`<li style="font-size: 17px !important;color:#000000">
                                 <div class="row">
                                     <div class="col-sm-6">
@@ -832,7 +1127,7 @@
                                     <div class="col-sm-5 attach_row_${i+1}">
                                         <div id="attach" class=" col-sm-12 ">
                                             <div class="attach"> 
-                                                <a class="" href="{{asset('')}}${data[i].Files[0].url}" style="color: #74798D; float:left;" 
+                                                <a class="" href="${url}" style="color: #74798D; float:left;" 
                                                 target="_blank">  
                                                     <span class="attach-text">${shortCutName}</span>    
                                                     <img style="width: 20px;" src='${fileimage}'>
@@ -912,8 +1207,14 @@
                     // itopic=$("#lastorder").val()
                     for(i=0;i<data.agenda_topic.length;i++){
                         id=data.agenda_topic[i].id;
+                        agendaIds.push(id);
                         attach='';
                         for(j=0;j<data.agenda_topic[i].files.length;j++){
+                            if(data.agenda_topic[i].files[j].type==1){
+                                url= '{{asset('')}}'+data.agenda_topic[i].files[j].url
+                            }else {
+                                url= data.agenda_topic[i].files[j].url
+                            }
                             shortCutName=data.agenda_topic[i].files[j].real_name;
                             shortCutName=shortCutName.substring(0, 40)
                             if(data.agenda_topic[i].files[j].extension=="jpg"||data.agenda_topic[i].files[j].extension=="png")
@@ -928,12 +1229,12 @@
                                         attach+='       <div id="attach" class=" col-sm-6 ">   ' +
                             '           <div class="attach" onmouseover="$(this).children().first().next().show()">		' +
                             '               <span class="attach-text">'+shortCutName+'</span>		' +
-                            '                   <a class="attach-close1" href="{{asset('')}}'+data.agenda_topic[i].files[j].url+'" style="color: #74798D; float:left;" target="_blank">' +
+                            '                   <a class="attach-close1" href="'+url+'" style="color: #74798D; float:left;" target="_blank">' +
                             '                       <img style="width: 20px;"src="'+fileimage+'"> ' +
                             '                   </a>		' +
                             '                   <a class="attach-close1" style="color: #74798D; float:left;" onclick="$(this).parent().parent().remove()">×</a>' +
                             '                 <input type="hidden" id="subject'+id+'imgUploads[]" name="subject'+id+'imgUploads[]" value="'+data.agenda_topic[i].files[j].real_name+'">      ' +
-                            '                 <input type="hidden" id="subject'+id+'orgNameList[]" name="subject'+id+'orgNameList[]" value="'+data.agenda_topic[i].files[j].url+'">      ' +
+                            // '                 <input type="hidden" id="subject'+id+'orgNameList[]" name="subject'+id+'orgNameList[]" value="'+data.agenda_topic[i].files[j].url+'">      ' +
                             '                 <input type="hidden" id="subject'+id+'id[]" name="subject'+id+'id[]" value="'+data.agenda_topic[i].files[j].id+'">		' +
                             '           </div>	' +
                         '             </div>' ;
@@ -961,7 +1262,6 @@
             +'   </td>'
             +'   <td scope="col">'
             +'       <input type="file" class="form-control-file" id="subject'+id+'UploadFile[]" multiple="" name="subject'+id+'UploadFile[]" onchange="doUploadAttachNew('+id+')" style="display: none">'
-            +'        <meta name="csrf-token" content="V26dNupkYjw1kEd5sjXYftcct1upOdzMLntnhZBM">'
             +'        <input type="file" class="form-control-file" id="subject'+id+'UploadImage[]" multiple="" name="subject'+id+'UploadImage[]" onchange="doUploadAttachNew('+id+')" accept="image/*" style="display: none">'
             +'        <span class="attach-header">'
             +'            <span id="attach-required">*</span>'
@@ -970,15 +1270,42 @@
             +'                   onclick="saveDesicion('+id+')">'
             +'                    <img src="https://t.expand.ps/expand_repov1/public/assets/images/ico/floppy-icon.png" style="height: 32px;">'
             +'               </button>'
-            +'               <a href="#" onclick="$(\'#fromname\').val(\'subject'+id+'\');document.getElementById(\'subject'+id+'UploadFile[]\').click(); return false" class="attach-icon">'
-            +'                    <img src="https://t.expand.ps/expand_repov1/public/assets/images/ico/upload.png" style="height: 32px;">'
-            +'               </a>'
-            +'               <a href="#" onclick="$(\'#fromname\').val(\'subject'+id+'\');document.getElementById(\'subject'+id+'UploadImage[]\').click(); return false" class="attach-icon hide">'
-            +'                   <img src="https://t.expand.ps/expand_repov1/public/assets/images/ico/upload.png" style="height: 32px;">'
-            +'                </a>'
-            +'               <a href="{{ url('') }}/ar/admin/printDes/'+id+'"  class="attach-icon" target="_blank">'
-            +'                   <img src="https://doc.expand.ps/images/printer.jpeg" style="height: 32px;">'
-            +'                </a>'
+            +`               <span class="dropdown">
+                                      <button class="btn" style="background-color: transparent !important; border-color: transparent !important;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-v  mr-0" style="color: black;" aria-hidden="true"></i>
+                                      </button>
+                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="transform: translate3d(119px, 30px, 0px) !important;">
+                                        <a class="dropdown-item" onclick="$('#fromname').val('subject${id}');document.getElementById('subject${id}UploadFile[]').click(); return false">
+                                            <img src="{{ asset('assets/images/ico/upload.png') }}" style="height: 32px;">
+                                            مرفقات
+                                        </a>
+                                        <a class="dropdown-item" href="{{ url('') }}/ar/admin/printDes/${id}" target="_blank">
+                                            <img src="https://doc.expand.ps/images/printer.jpeg" style="height: 32px;">
+                                            طباعة
+                                        </a>
+                                        <a class="dropdown-item hide" onclick="scanToJpg();$('#scannedRow').val(${id})">
+                                            <img src="https://t.palexpand.ps/assets/images/ico/scanner.png" class="hide" style="cursor:pointer;" >
+                                        </a>
+                                        <a class="dropdown-item" onclick="scanTopdf();$('#scannedRow').val(${id})">
+                                            <img src="https://t.palexpand.ps/assets/images/ico/scannerpdf.png"  style="cursor:pointer;" >
+                                            سكانر
+                                        </a>
+                                        <a class="dropdown-item" href="{{ url('') }}/ar/admin/trackingArchive/agenda_archieve/${id}" target="_blank">
+                                            متابعة
+                                        </a>
+                                      </div>
+                                </span>`
+            // +'               <a href="#" onclick="$(\'#fromname\').val(\'subject'+id+'\');document.getElementById(\'subject'+id+'UploadFile[]\').click(); return false" class="attach-icon">'
+            // +'                    <img src="https://t.expand.ps/expand_repov1/public/assets/images/ico/upload.png" style="height: 32px;">'
+            // +'               </a>'
+            // +'               <a href="#" onclick="$(\'#fromname\').val(\'subject'+id+'\');document.getElementById(\'subject'+id+'UploadImage[]\').click(); return false" class="attach-icon hide">'
+            // +'                   <img src="https://t.expand.ps/expand_repov1/public/assets/images/ico/upload.png" style="height: 32px;">'
+            // +'                </a>'
+            // +'               <a href="{{ url('') }}/ar/admin/printDes/'+id+'"  class="attach-icon" target="_blank">'
+            // +'                   <img src="https://doc.expand.ps/images/printer.jpeg" style="height: 32px;">'
+            // +'                </a>'
+            // +                `<div style="padding: 7px;"><img src="https://t.palexpand.ps/assets/images/ico/scanner.png" class="hide"  style="cursor:pointer;" onclick="scanToJpg();$('#scannedRow').val(${id})">`
+            // +                `<img src="https://t.palexpand.ps/assets/images/ico/scannerpdf.png"  style="cursor:pointer;" onclick="scanTopdf();$('#scannedRow').val(${id})"></div>`
             +'            </span>'
             +'        </span>'
             +'    </td>'
@@ -1280,8 +1607,13 @@
                 success: function (data) {
                     row='';
                     row1='';
-                    base_url='{{ asset('') }}';
+                    
                         for(j=0;j<data.all_files.length;j++){
+                            if(data.all_files[j].type==1){
+                                url=`{{ asset('') }}${data.all_files[j].url}`;
+                            }else{
+                                url=data.all_files[j].url
+                            }
                             shortCutName=data.all_files[j].real_name;
                             shortCutName=shortCutName.substring(0, 40)
                             if(data.all_files[j].extension=="jpg"||data.all_files[j].extension=="png")
@@ -1295,10 +1627,10 @@
                             row+='<div id="attach" class=" col-sm-6 ">' +
                                 '   <div class="attach" onmouseover="$(this).children().first().next().show()">'
                                 +'		<span class="attach-text">'+shortCutName+'</span>'
-                                +'		<a class="attach-close1" href="'+base_url+data.all_files[j].url+'" style="color: #74798D; float:left;" target="_blank"><img style="width: 20px;"src="'+fileimage+'"></a>'
+                                +'		<a class="attach-close1" href="'+url+'" style="color: #74798D; float:left;" target="_blank"><img style="width: 20px;"src="'+fileimage+'"></a>'
                                 +'		<a class="attach-close1" style="color: #74798D; float:left;" onclick="$(this).parent().parent().remove()">×</a>'
                                 +'      <input type="hidden" id="subject'+frmid+'imgUploads[]" name="subject'+frmid+'imgUploads[]" value="'+data.all_files[j].real_name+'">'
-                                +'      <input type="hidden" id="subject'+frmid+'orgNameList[]" name="subject'+frmid+'orgNameList[]" value="'+data.all_files[j].url+'">'
+                                // +'      <input type="hidden" id="subject'+frmid+'orgNameList[]" name="subject'+frmid+'orgNameList[]" value="'+data.all_files[j].url+'">'
                                 +'      <input type="hidden" id="subject'+frmid+'id[]" name="subject'+frmid+'id[]" value="'+data.all_files[j].id+'">'
                                 +'		</div>'
                                 +'	</div>' +
@@ -1308,56 +1640,58 @@
                         $(".loader").addClass('hide');
                         $(".attach-icons").removeClass('hide');
                         $(".form-actions").removeClass('hide');
-                        return;
-                        /*
-                    if(data.status.success){
-                        DrawBorder(frmid)
-                        for(j=imgCounter;j<data.all_files.length;j++){
-                            if(data.img[j].type==1 ) {
-                            }
-                            if(data.img[j].type==2 ) {
-                                row1+='<div  class="col-sm-3" id="i'+(j+1)+'">'
-                                    +'	   <div class="row"  onmouseover="$(this).children().first().children().first().next().show()"  onmouseout="$(this).children().first().children().first().next().hide()">'
-                                    +'	       <div class="col-sm-12">'
-                                    +'			   <a class="group" href="'+'uploads/'+data.img[j].name+'" title="'+data.img[j].orgname+'" style="color: #74798D" >' +
-                                    '                <img src="'+'uploads/'+data.img[j].name+'" title="'+data.img[j].orgname+'" id="imgSlider'+(j+1)+'" width="100%"/></a>'
+                        $(".form-actions").removeClass('hide');
+                    // $(".form-control-file").val('')
+                    //     $("#scannedFileSrc").val('');
+                    //     $("#mimeType").val('');
+                    //     $("#scannedRow").val('');
+                    //     /*
+                    // if(data.status.success){
+                    //     DrawBorder(frmid)
+                    //     for(j=imgCounter;j<data.all_files.length;j++){
+                    //         if(data.img[j].type==1 ) {
+                    //         }
+                    //         if(data.img[j].type==2 ) {
+                    //             row1+='<div  class="col-sm-3" id="i'+(j+1)+'">'
+                    //                 +'	   <div class="row"  onmouseover="$(this).children().first().children().first().next().show()"  onmouseout="$(this).children().first().children().first().next().hide()">'
+                    //                 +'	       <div class="col-sm-12">'
+                    //                 +'			   <a class="group" href="'+'uploads/'+data.img[j].name+'" title="'+data.img[j].orgname+'" style="color: #74798D" >' +
+                    //                 '                <img src="'+'uploads/'+data.img[j].name+'" title="'+data.img[j].orgname+'" id="imgSlider'+(j+1)+'" width="100%"/></a>'
     
-                                    +'		       <a class="attach-close" style="color: #74798D" onclick="$(this).parent().parent().parent().remove()" ><i class="fa fa-times"></i></a>'
-                                    +'             <input type="hidden" id="subject'+frmid+'imgUploads[]" name="subject'+frmid+'imgUploads[]" value="'+data.img[j].name+'">'
-                                    +'             <input type="hidden" id="subject'+frmid+'orgNameList[]" name="subject'+frmid+'orgNameList[]" value="'+data.img[j].orgname+'">'
-                                    +'	       </div>'
-                                    +'	   </div>'
-                                    +'</div>'
-                            }
-                        }
-                        //$(".attachs-carousel-container").html(row)
-                        $(".alert-danger").addClass("hide");
-                        $(".alert-success").removeClass('hide');
-                        $("#succMsg").text(data.status.msg)
-                        $(".subject"+frmid+"FilesArea").append(row)
-                        console.log(".subject"+frmid+"FilesArea") 
-                        $(".subject"+frmid+"ImagesArea").append(row1)
-                        $(".loader").addClass('hide');
+                    //                 +'		       <a class="attach-close" style="color: #74798D" onclick="$(this).parent().parent().parent().remove()" ><i class="fa fa-times"></i></a>'
+                    //                 +'             <input type="hidden" id="subject'+frmid+'imgUploads[]" name="subject'+frmid+'imgUploads[]" value="'+data.img[j].name+'">'
+                    //                 +'             <input type="hidden" id="subject'+frmid+'orgNameList[]" name="subject'+frmid+'orgNameList[]" value="'+data.img[j].orgname+'">'
+                    //                 +'	       </div>'
+                    //                 +'	   </div>'
+                    //                 +'</div>'
+                    //         }
+                    //     }
+                    //     //$(".attachs-carousel-container").html(row)
+                    //     $(".alert-danger").addClass("hide");
+                    //     $(".alert-success").removeClass('hide');
+                    //     $("#succMsg").text(data.status.msg)
+                    //     $(".subject"+frmid+"FilesArea").append(row)
+                    //     console.log(".subject"+frmid+"FilesArea") 
+                    //     $(".subject"+frmid+"ImagesArea").append(row1)
+                    //     $(".loader").addClass('hide');
     
-                        $(".group").colorbox({rel:'group'+frmid});
-                        setTimeout(function(){
-                            $(".alert-danger").addClass("hide");
-                            $(".alert-success").addClass("hide");
-                        },2000)
-                    }
-                    else {
-                        $(".alert-success").addClass("hide");
-                        $(".alert-danger").removeClass('hide');
-                        $("#errMsg").text(data.status.msg)
-                    }*/
-                    $(".form-control-file").val('')
-                    $(".loader").addClass('hide');
-                    $(".form-actions").removeClass('hide');
+                    //     $(".group").colorbox({rel:'group'+frmid});
+                    //     setTimeout(function(){
+                    //         $(".alert-danger").addClass("hide");
+                    //         $(".alert-success").addClass("hide");
+                    //     },2000)
+                    // }
+                    // else {
+                    //     $(".alert-success").addClass("hide");
+                    //     $(".alert-danger").removeClass('hide');
+                    //     $("#errMsg").text(data.status.msg)
+                    // }*/
+                    
                 },
                 error:function(){
                     $(".alert-success").addClass("hide");
                     $(".alert-danger").removeClass('hide');
-                    $("#errMsg").text(data.status.msg)
+                    // $("#errMsg").text(data.status.msg)
                     $(".loader").addClass('hide');
                     $(".attach-icons").removeClass('hide');
                     $(".form-actions").removeClass('hide');
@@ -1368,12 +1702,20 @@
             });
         }
         itopic=1;
+        var agendaIds = new Array();
         function addTopicTemplate(){
             // $('.loader').addClass('hide');
             $('.hasLabel').addClass('hide');
             //$("#fromname").remove()
             // console.log($("#lastorder").val())
             itopic=$("#lastorder").val()
+            for(i=0; i<agendaIds.length ; i++){
+                if(itopic==agendaIds[i]){
+                    itopic++;
+                    i=0;
+                }
+            }
+            agendaIds.push(itopic);
             // console.log('New rec: '+itopic)
             $("#lastorder").val(itopic)
             template='<tr class="card123" id="row'+itopic+'">'
@@ -1408,9 +1750,29 @@
             +' <button type="button" class="mainbutton" name="mainbutton" id="mainbutton" style="border:0px; background:#ffffff; " onclick="saveMeeting();">'
             +'                                                     <img src="{{asset('')}}assets/images/floppy-icon.png" style="height: 32px;">'
             +'                                                 </button>'
-            +'                                    <a href="#" onclick="$(\'#fromname\').val(\'subject'+itopic+'\');document.getElementById(\'subject'+itopic+'UploadFile[]\').click(); return false" class="attach-icon">'
-            +'                                        <img src="{{asset('')}}assets/images/upload.png" style="height: 32px;">'
-            +'                                    </a>'
+            +`                                  <span class="dropdown">
+                                                  <button class="btn" style="background-color: transparent !important; border-color: transparent !important;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-ellipsis-v  mr-0" style="color: black;" aria-hidden="true"></i>
+                                                  </button>
+                                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="transform: translate3d(119px, 30px, 0px) !important;">
+                                                    <a class="dropdown-item" onclick="$('#fromname').val('subject${itopic}');document.getElementById('subject${itopic}UploadFile[]').click(); return false">
+                                                        <img src="{{ asset('assets/images/ico/upload.png') }}" style="height: 32px;">
+                                                        مرفقات
+                                                    </a>
+                                                    <a class="dropdown-item hide" onclick="scanToJpg();$('#scannedRow').val(${itopic})">
+                                                        <img src="https://t.palexpand.ps/assets/images/ico/scanner.png" class="hide" style="cursor:pointer;" >
+                                                    </a>
+                                                    <a class="dropdown-item" onclick="scanTopdf();$('#scannedRow').val(${itopic})">
+                                                        <img src="https://t.palexpand.ps/assets/images/ico/scannerpdf.png"  style="cursor:pointer;" >
+                                                        سكانر
+                                                    </a>
+                                                  </div>
+                                                </span>`
+            // +'                                    <a href="#" onclick="$(\'#fromname\').val(\'subject'+itopic+'\');document.getElementById(\'subject'+itopic+'UploadFile[]\').click(); return false" class="attach-icon">'
+            // +'                                        <img src="{{asset('')}}assets/images/upload.png" style="height: 32px;">'
+            // +'                                    </a>'
+            // +                                   `<img src="https://t.palexpand.ps/assets/images/ico/scanner.png" class="hide" style="cursor:pointer;" onclick="scanToJpg();$('#scannedRow').val(${itopic})">`
+            // +                                   `<img src="https://t.palexpand.ps/assets/images/ico/scannerpdf.png"  style="cursor:pointer;" onclick="scanTopdf();$('#scannedRow').val(${itopic})">`
             +'                                </span>'
             +'                            </span>'
             +'                    </td>'

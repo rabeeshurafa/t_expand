@@ -86,16 +86,16 @@
                     <?php echo ($i+1); ?>
                 </td>
                 <td style="border: 1px solid #000000;">
-                    <?php echo $res->user_name[$i] ?>
+                    <?php  echo $res->user_name[$i] ?>
                 </td>
                 <td style="border: 1px solid #000000;">
-                    <?php echo $res->hod_no[$i] ?>
+                    <?php if($i<sizeof($res->hod_no)) echo $res->hod_no[$i] ?>
                 </td>
                 <td style="border: 1px solid #000000;">
-                    <?php echo $res->pice_no[$i] ?>
+                    <?php if($i<sizeof($res->pice_no)) echo $res->pice_no[$i] ?>
                 </td>
                 <td style="border: 1px solid #000000;">
-                    <?php echo $res->notes1[$i] ?>
+                    <?php if($i<sizeof($res->notes1)) echo $res->notes1[$i] ?>
                 </td>
              </tr>
          <?php 
@@ -124,7 +124,7 @@
          </tr>
          
          
-         <?php if(sizeof($res->user_name)==0){
+         <?php if(sizeof($res->name2)==0){
              ?>
          <tr>
             <td colspan="8" style="border: 1px solid #000000;">
@@ -133,33 +133,34 @@
          </tr>
              <?php 
          }else {
-         for($i=0; $i< sizeof($res->user_name) ; $i++ ){
-         if($res->user_name[$i] != null){?>
+         for($i=0; $i< sizeof($res->name2) ; $i++ ){
+         if($res->name2[$i] != null){?>
          <tr>
             <td style="border: 1px solid #000000;">
                 <?php echo ($i+1) ?>
             </td>
             <td style="border: 1px solid #000000;">
-                <?php echo $res->user_name[$i] ?>
+                <?php echo  $res->name2[$i] ?>
             </td>
             <td style="border: 1px solid #000000;">
-                <?php echo $res->user_national[$i] ?>
+                <?php if($i<sizeof($res->user_national)) echo $res->user_national[$i] ?>
             </td>
-            
-            <td style="border: 1px solid #000000;text-align: center;" >
-                <?php echo $res->hod_no[$i] ?>
+            <?php if(($i+2)==2){?>
+            <td style="border: 1px solid #000000;text-align: center;" rowspan="<?php echo sizeof($res->name2) ?>" >
+                <?php  echo $res->sequareNo_2 ?>
             </td>
-            <td style="border: 1px solid #000000;text-align: center;" >
-                <?php echo $res->pice_no[$i] ?>
+            <td style="border: 1px solid #000000;text-align: center;" rowspan="<?php echo sizeof($res->name2) ?>" >
+                <?php  echo $res->peaceNo_2 ?>
             </td>
-            <td style="border: 1px solid #000000;text-align: center;" >
+            <td style="border: 1px solid #000000;text-align: center;" rowspan="<?php echo sizeof($res->name2) ?>" >
                 <?php echo $res->area ?>
             </td>
-            <td style="border: 1px solid #000000;text-align: center;" >
+            <td style="border: 1px solid #000000;text-align: center;" rowspan="<?php echo sizeof($res->name2) ?>">
                 <?php echo $res->area_name ?>
             </td>
+            <?php }?>
             <td style="border: 1px solid #000000;">
-                <?php echo $res->notes2[$i] ?>
+                <?php if($i<sizeof($res->notes2))  echo  $res->notes2[$i] ?>
             </td>
          </tr>
          <?php 

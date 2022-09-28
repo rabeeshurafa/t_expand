@@ -67,7 +67,7 @@
                                                     <select type="text" id="app_status" name="app_status" class="app_status form-control">
                                                         <option value="5001"> الكل </option>
                                                         <option value="5002">  الطلب المفتوح  </option>
-                                                        <option value="5003">  الطلب المغلق  </option>
+                                                        <option value="5003">  الطلب المنتهي  </option>
                                                         @foreach ($appStatus as $row)
                                                         <option value="{{$row->id}}"> {{$row->name}} </option>
                                                         @endforeach
@@ -155,17 +155,17 @@
                                                 قسم الكهرباء
                                             </span>
 
-                                            <li>
+                                            <li class="hide">
                                                 <input type="checkbox"  class="ticketType" name="ticketType[]" value="1_1">
  
                                                 طلب اشتراك كهرباء
                                             </li>
-                                            <li>
+                                            <li class="hide">
                                                 <input type="checkbox" class="ticketType" name="ticketType[]" value="1_2">
  
                                                   عطل كهرباء لمشترك
                                             </li>
-                                            <li class="hide">
+                                            <li>
                                                 <input type="checkbox" class="ticketType" name="ticketType[]" value="1_3">
  
                                                    اذن اشغال عقار كهرباء
@@ -176,7 +176,7 @@
  
                                                   عطل كهرباء عام
                                             </li>
-                                            <li>
+                                            <li class="hide">
                                                 <input type="checkbox" class="ticketType" name="ticketType[]" value="1_5">
  
                                                   فحص عداد كهرباء
@@ -196,7 +196,7 @@
  
                                                   تنازل عن اشتراك كهرباء
                                             </li>
-                                            <li>
+                                            <li class="hide">
                                                 <input type="checkbox" class="ticketType" name="ticketType[]" value="1_9">
  
                                                 قراءة عداد كهرباء
@@ -216,7 +216,7 @@
  
                                                 نقل عامود كهرباء / كابل
                                             </li>
-                                            <li>
+                                            <li class="hide">
                                                 <input type="checkbox" class="ticketType" name="ticketType[]" value="1_13">
  
                                                   رفع قدرة العداد (زيادة أمبيرات)
@@ -234,7 +234,7 @@
                                             <li>
                                                 <input type="checkbox" class="ticketType" name="ticketType[]" value="1_16">
  
-                                                   لوحة عرس (اشتراك مؤقت)
+                                                    اشتراك مؤقت
                                             </li>
                                             <li>
                                                 <input type="checkbox" class="ticketType" name="ticketType[]" value="1_17">
@@ -251,17 +251,17 @@
 
                                                 قسم المياه 
                                             </span>
-                                            <li>
+                                            <li class="hide">
                                                 <input type="checkbox" class="ticketType" name="ticketType[]" value="2_1">
  
                                                 طلب اشتراك مياه
                                             </li>
-                                            <li>
+                                            <li class="hide">
                                                 <input type="checkbox" class="ticketType" name="ticketType[]" value="2_2">
  
                                                   عطل مياه لمشترك
                                             </li>
-                                            <li class="hide">
+                                            <li>
                                                 <input type="checkbox" class="ticketType" name="ticketType[]" value="2_3">
  
                                                    اذن اشغال عقار كهرباء
@@ -272,37 +272,37 @@
  
                                                   عطل مياه عام
                                             </li>
-                                            <li>
+                                            <li class="hide">
                                                 <input type="checkbox" class="ticketType" name="ticketType[]" value="2_5">
  
                                                   فحص عداد مياه
                                             </li>
-                                            <li>
+                                            <li class="hide">
                                                 <input type="checkbox" class="ticketType" name="ticketType[]" value="2_6">
  
                                                   فصل خط مياه
                                             </li>
-                                            <li>
+                                            <li class="hide">
                                                 <input type="checkbox" class="ticketType" name="ticketType[]" value="2_7">
  
                                                   إعادة وصل خط مياه
                                             </li>
-                                            <li>
+                                            <li class="hide">
                                                 <input type="checkbox" class="ticketType" name="ticketType[]" value="2_8">
  
                                                   تنازل عن اشتراك مياه
                                             </li>
-                                            <li>
+                                            <li class="hide">
                                                 <input type="checkbox" class="ticketType" name="ticketType[]" value="2_9">
  
                                                 تغيير عداد مياه
                                             </li>
-                                            <li>
+                                            <li class="hide">
                                                 <input type="checkbox" class="ticketType" name="ticketType[]" value="2_10">
  
                                                    نقل عداد مياه
                                             </li>
-                                            <li>
+                                            <li class="hide">
                                                 <input type="checkbox" class="ticketType" name="ticketType[]" value="2_11">
  
                                                   نقل ذمة مالية مياه 
@@ -311,7 +311,7 @@
                                         <div class="col-lg-2 col-md-12 pr-0 pr-s-12">
                                             <span class="input-group-text" id="basic-addon1" style="height: 35px">
                                             <span class="mx-1">
-                                                <input type="checkbox"  class="elecTicket" name="elecTicket" onchange="selectAll('ticketType','3','18','26')">
+                                                <input type="checkbox"  class="elecTicket" name="elecTicket" onchange="selectAll('ticketType','3','18','40')">
                                             </span>
                                                 الدائرة الهندسية
                                             </span>
@@ -346,6 +346,21 @@
                                                 <input type="checkbox" class="ticketType" name="ticketType[]" value="3_26">
  
                                                    طلب استرداد تأمين رخصة بناء
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" class="ticketType" name="ticketType[]" value="3_35">
+ 
+                                                   نقل ملكية رخصة بناء
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" class="ticketType" name="ticketType[]" value="3_39">
+ 
+                                                   طلب اذن صب خرسانة
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" class="ticketType" name="ticketType[]" value="3_40">
+ 
+                                                    طلب افراز / توحيد
                                             </li>
                                         </div>
                                         <div class="col-lg-2 col-md-12 pr-0 pr-s-12">
@@ -411,6 +426,14 @@
  
                                                     اذن اخراج مواد
                                             </li>
+                                            <li>
+                                                <input type="checkbox" class="ticketType" name="ticketType[]" value="5_44">
+                                                مذكرة داخلية
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" class="ticketType" name="ticketType[]" value="5_46">
+                                                متابعة ارشيف  
+                                            </li>
                                         </div>
                                         <div class="col-lg-2 col-md-12 pr-0 pr-s-12">
                                             <span class="input-group-text" id="basic-addon1" style="height: 35px">
@@ -427,6 +450,14 @@
                                             <li>
                                                 <input type="checkbox" class="ticketType" name="cirtType2" value="farfromcenter2">
                                                 مراسلات خارجية 
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" class="ticketType" name="cirtType3" value="farfromcenter3">
+                                                 تعهد والتزام 
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" class="ticketType" name="cirtType4" value="farfromcenter4">
+                                                 اخطار  
                                             </li>
                                         </div>
 
@@ -751,7 +782,7 @@
                                 status=response[$i]['response'][last]['name'];
                                 if(response[$i]['0']['ticket_status']==5003){
                                     color='red';
-                                    status='مغلق';
+                                    status='منتهي';
                                 }
                             }
                             $name = response[$i]['0']['customer_name']?response[$i]['0']['customer_name']: '';
@@ -798,10 +829,16 @@
                             $time=$rowDateTime[1].substring(0, 5);
                             certname='إصدار شهادة';
                             if(response[$i]['e_type']==1){
-                                link= '/admin/cert?id='+response[$i]['pk_i_id'];  
+                                link= '/admin/cert?id='+response[$i]['pk_i_id']; 
                             }else if(response[$i]['e_type']==2){
                                 link= '/admin/sendOut?id='+response[$i]['pk_i_id'];  
                                  certname='مراسلات خارجية';
+                            }else if(response[$i]['e_type']==3){
+                                link= '/admin/assurance?id='+response[$i]['pk_i_id'];  
+                                 certname='تعهد والتزام';
+                            }else if(response[$i]['e_type']==4){
+                                link= '/admin/warningCert?id='+response[$i]['pk_i_id'];  
+                                 certname='اخطار';
                             }
                             
                             
@@ -811,7 +848,7 @@
                                     +($i+1)
                                 +'</td>'
                                 +'<td >'
-                                    +((response[$i]['e_type']==1)?response[$i]['citizen_name']?response[$i]['citizen_name']:'':response[$i]['benefitS']?response[$i]['benefitS']:'')
+                                    +((response[$i]['e_type']!=2 )?response[$i]['citizen_name']?response[$i]['citizen_name']:'':response[$i]['benefitS']?response[$i]['benefitS']:'')
                                 +'</td>'
                                 +'<td >'
                                     +'<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
@@ -822,6 +859,9 @@
                                     
                                 +'</td>'
                                 +'<td >'
+                                    +certname
+                                +'</td>'
+                                +'<td >'
                                     +response[$i]['admin']['nick_name'] 
                                 +'</td>'
                                 +'<td >'
@@ -830,9 +870,9 @@
                                 +'<td >'
                                     
                                 +'</td>'
-                                // +'<td >'
+                                +'<td >'
                                     
-                                // +'</td>'
+                                +'</td>'
                             +'</tr>'
                             // counter++;
                         }

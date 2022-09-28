@@ -151,7 +151,7 @@
                                                     </div>
                                                     <input type="text" id="national_id" 
                                                         class="form-control numFeild" placeholder="{{ 'رقم الهوية' }}"
-                                                        @if(isset($ticket))
+                                                        @if(isset($ticket)) maxlength="9"
                                                         value="{{ $ticket->national_id }}"
                                                         readonly
                                                         @endif

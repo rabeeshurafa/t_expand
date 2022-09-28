@@ -87,6 +87,9 @@ use App\Models\AppTicket33;
 use App\Models\AppTicket34;
 use App\Models\AppTicket35;
 use App\Models\AppTicket36;
+use App\Models\AppTicket39;
+use App\Models\AppTicket40;
+use App\Models\TradeArchive;
 use Yajra\DataTables\Services\DataTable;
 use App\Models\water;
 use App\Models\Constant;
@@ -96,8 +99,10 @@ use App\Models\jobLic;
 use App\Models\CertExtention;
 use App\Models\Warning;
 use App\Models\Merge;
+use App\Models\Smslog;
 use Illuminate\Support\Carbon;
 use DB;
+use App\Models\Earh_lic;
 
 class SubscriberController extends Controller
 
@@ -129,6 +134,19 @@ class SubscriberController extends Controller
 
         'jobTitle','type','setting','address','orgInfo','admins'));    
 
+    }
+    
+    public function printElec(Request $request){
+        $elecController = new ElecController();
+        $elecs= $elecController->elec_info_byUser($request)->original['info'];
+        // dd($elecs);
+        return view('dashboard.subscriber.printElecSubscription',compact('elecs'));    
+    }
+    public function printWater(Request $request){
+        $waterController = new WaterController();
+        $waters= $waterController->water_info_byUser($request)->original['info'];
+        // dd($elecs);
+        return view('dashboard.subscriber.printWaterSubscription',compact('waters'));    
     }
 
     public function store_subscriber (SubscribertRequest $request){
@@ -177,6 +195,7 @@ class SubscriberController extends Controller
             $user->phone_two = $request->formDataMobileNo2;
 
             $user->national_id = $request->formDataNationalID;
+            $user->passport_number = $request->passport_number;
 
             $user->cutomer_num = $request->formDataCutomerNo;
 
@@ -242,6 +261,7 @@ class SubscriberController extends Controller
             $user->phone_two = $request->formDataMobileNo2;
 
             $user->national_id = $request->formDataNationalID;
+            $user->passport_number = $request->passport_number;
 
             $user->cutomer_num = $request->formDataCutomerNo;
 
@@ -375,13 +395,15 @@ class SubscriberController extends Controller
        
     }
     
-    function masterQuery($where='',$ticketFiltter=''){
+    function masterQuery($where='',$ticketFiltter='',$json_ticketFiltter=''){
         $sql="";
         // $lastTicket= LastTicket::find(1);
         for($i=1;$i<=27;$i++){
             // if($i==3||$i==23) continue;
             if($i==1)
                 $sql.=" SELECT `id`, 1 related, `active_trans`, `ticket_status` FROM `app_ticket".$i."s` $ticketFiltter";
+            else if($i==19)
+                $sql.=" UNION SELECT `id`, 2 related, `active_trans`, `ticket_status` FROM `app_ticket".$i."s` $ticketFiltter".$json_ticketFiltter;
             else
                 $sql.=" UNION SELECT `id`, 2 related, `active_trans`, `ticket_status` FROM `app_ticket".$i."s` $ticketFiltter";
         }
@@ -392,7 +414,8 @@ class SubscriberController extends Controller
     public function getUserTicket(Request $request){
         $ticketFiltter='where 1 ';
         $ticketFiltter.=' and customer_id='.$request['subscribe_id'];
-        $activeRec= $this->masterQuery(" where app_trans.id = a.active_trans ",$ticketFiltter);
+        $json_ticketFiltter=' or json_contains(`beneficiaries_id`,"\"'.$request['subscribe_id'].'\"","$")=1 ';
+        $activeRec= $this->masterQuery(" where app_trans.id = a.active_trans ",$ticketFiltter,$json_ticketFiltter);
         $res=DB::select("SELECT app_trans.*,admins.nick_name,admins.image FROM `app_trans` join admins on app_trans.sender_id=admins.id WHERE  EXISTS ($activeRec) order by id desc");
         $arr=array();
         for($i=0;$i<count($res);$i++){
@@ -467,6 +490,9 @@ class SubscriberController extends Controller
         $user['linkToCount']  = count(AgendaTopic::where('connected_to',$request['subscribe_id'])
 
         ->where('model',$model)->get());
+        
+        $user['tradeArchiveCount'] = TradeArchive::where('model_id', $request['subscribe_id'])->where('enabled', 1)
+            ->where('model_name', $model)->count();
 
         $user['licCount'] = count(license::where('user_id','=',$request['subscribe_id'])->where('enabled',1)->get());
 
@@ -618,8 +644,8 @@ class SubscriberController extends Controller
         //     $user['address'] = Address::where('id', $user['info']['addresse_id'])->first();
 
         // }
-
-        $user['ArchiveCount'] = $ArchiveCount + $CopyToCount +$ArchiveLicCount+$jalArchiveCount+$user['certCount']+$user['warningCount'];
+        $user['EarchLicCount'] = Earh_lic::whereJsonContains('id2',strval($request['subscribe_id']))->where('enabled',1)->count();
+        $user['ArchiveCount'] = $ArchiveCount + $CopyToCount +$ArchiveLicCount+$jalArchiveCount+$user['certCount']+$user['warningCount']+$user['EarchLicCount']+ $user['tradeArchiveCount'];
 
         // $user['job_title'] = JobTitle::where('id',$user['info']->job_title_id)->first()->name;
 
@@ -806,6 +832,37 @@ class SubscriberController extends Controller
         ->make(true);
 
     }
+    
+    public function subscriberTradeArchive(Request $request)
+    {
+
+        $Archive = TradeArchive::where('model_id', $request['subscriber_id'])->where('enabled', 1)
+            ->where('model_name', 'App\\Models\\User')->with('Admin')->with('Type')->get();
+
+        foreach ($Archive as $row) {
+
+            $attach = json_decode($row->json_feild);
+            $files = array();
+            foreach ($attach as $key => $value) {
+
+                foreach ((array)$value as $key => $val) {
+                    $temp = array();
+                    $temp['real_name'] = $key;
+                    $temp['url'] = $val;
+
+                }
+                //dd($temp);
+                array_push($files, $temp);
+
+            }
+            $row['arch_files'] = $files;
+        }
+
+        return DataTables::of($Archive)
+            ->addIndexColumn()
+            ->make(true);
+
+    }
 
     public function subscriberCopyArchive(Request $request){
 
@@ -878,8 +935,37 @@ class SubscriberController extends Controller
         ->make(true);
 
     }
+    
+    public function subscriberEarh_lic(Request $request){
+        
+        $res= Earh_lic::whereJsonContains('id2',strval($request['subscriber_id']))->where('enabled',1)->with('Admin')->orderBy('date', 'ASC')->get();
+        // dd($res);
+        foreach($res as $row){
+    	    $row['user_name']=json_decode($row->user_name);
+    	    $row['hod_no']=json_decode($row->hod_no);
+    	    $row['pice_no']=json_decode($row->pice_no);
+    	    $row['user_national']=json_decode($row->user_national);
+    	    $row['notes1']=json_decode($row->notes1);
+    	    $row['notes2']=json_decode($row->notes2);
+            
+        }
+        // $Archive =Archive::select('archives.*', 't_constant.name as type_id_name')
+        // ->where('enabled',1)
+        // ->where('model_id',$request['subscriber_id'])
+        // ->where('model_name','App\\Models\\User')
+        // ->where('type','outArchive')
+        // ->leftJoin('t_constant', 't_constant.id', 'archives.type_id')
+        // ->with('archiveType')->with('files')->with('copyTo')->with('Admin')->orderBy('archives.date', 'ASC')->get();
 
-    public function subscribe_info_all() {
+        return DataTables::of($res)
+
+        ->addIndexColumn()
+
+        ->make(true);
+
+    }
+    
+    public function subscribe_info_all(Request $request) {
 
         $users= User::select('users.*','regions.name as region_name','cities.name as city_name',
 
@@ -893,10 +979,79 @@ class SubscriberController extends Controller
 
         ->leftJoin('cities','users.city_id','cities.id')
 
-        ->leftJoin('towns','users.town_id','towns.id')->where('users.enabled','1')->orderBy('users.id', 'DESC');
+        ->leftJoin('towns','users.town_id','towns.id')->where('users.enabled','1')->search($request)->orderBy('users.id', 'DESC');
 
         return DataTables::of($users)->addIndexColumn() ->make(true);
 
+    }
+    
+    function sendForOne($request){
+       $setting=Setting::find(13);
+        $str1 = $request->smsNo;
+        $pattern = "/\d{10}/";
+        $mob='';
+        $error=false;
+        if( preg_match($pattern,$str1, $match) ){
+            if(strlen($match[0])==10)
+              $mob= substr ( $match[0] , 1,9);
+            else
+                $error= true;
+        }
+        else $error= true;
+        
+        $username=urlencode('Expand.ps');
+        $password=urlencode('9836960');
+        $sender  =urlencode('Expand.ps');
+        $match=array();
+        $message1=urlencode($request->smsText."-".$setting->name_ar);
+        if(/*Auth()->user()->id == 74 ||*/ $error){
+            $result=4004;
+        }else{
+            $result= file_get_contents("http://hotsms.ps/sendbulksms.php?user_name=".$username."&user_pass=".$password."&sender=".$sender."&mobile=$mob&type=2&text=".$message1);
+        }
+        $smslog= new Smslog();
+        $smslog->sender=Auth()->user()->id;
+        $smslog->txt=$request->smsText."-".$setting->name_ar;
+        $smslog->s_mobile=$mob;
+        $smslog->reciver_name=$request->subscriber_name;
+        // $smslog->member_no=$request->member_no;
+        $smslog->status=$result;
+        $smslog->type=2;
+        $smslog->save();
+        if($result){
+            return $result;  
+        }else{
+            return 4004;
+        } 
+    }
+    
+    function sendSMS(Request $request){
+        
+        if($request->sendForAll==1){
+            return $this->sendForOne($request);
+        }else if($request->sendForAll==2){
+            $successSent=0;
+            $failedSent=0;
+            if($request->search!=null){
+                $regions = Region::where('status',1)->where('name', 'like', '%' . trim($request->search) . '%')->get("id");
+                $subscribers = User::where('enabled',1)->whereIn('region_id',$regions)->get();
+            }else{
+                $subscribers = User::where('enabled',1)->get();
+            }
+            foreach($subscribers as $subscriber){
+                $request->smsNo=$subscriber->phone_one;
+                $request->subscriber_name=$subscriber->name;
+                $request->member_no=$subscriber->cutomer_num;
+                $res=$this->sendForOne($request);
+                if($res!=1001){
+                    $request->smsNo=$subscriber->phone_two;
+                    $res=$this->sendForOne($request);
+                }
+                ($res==1001)?$successSent++:$failedSent++;
+            }
+            return response()->json(['successSent'=>$successSent,'failedSent'=>$failedSent]);
+        }
+        return 4004;
     }
 
     public function subscriber($id){
@@ -926,6 +1081,7 @@ class SubscriberController extends Controller
         }
         
         $super = User::find($request->superMergerID);
+        $mergeNote="تم دمج المواطنين ( ";
         if($super != null){
             $usersToMerge=User::whereIn('id',$request->mergerID)->get();
             
@@ -947,10 +1103,16 @@ class SubscriberController extends Controller
                     $super->group_id        = ($super->group_id       ?? $user->group_id);
                     $super->job_title_id    = ($super->job_title_id   ?? $user->job_title_id);
                     $super->save();
+                    $mergeNote.=$user->name." - ";
                 }
+                $super->notes.=$mergeNote." ) "
+                ."مع هذا المواطن من قبل "
+                .Auth()->user()->nick_name;
+                $super->save();
                 ////////////////////////////////////////////////////////////////////////////////////
                 $this->mergeArchive($super,$usersToMerge,$request);
                 $this->mergeTickets($super,$usersToMerge,$request);
+                $this->mergeEarh_lic($super,$usersToMerge,$request);
                 
                 $waters     =Water::whereIn('user_id',$request->mergerID)->get();
                 $elecs      =elec::whereIn('user_id',$request->mergerID)->get();
@@ -992,17 +1154,36 @@ class SubscriberController extends Controller
             return response()->json(['error'=>'No Super']);
         }
         foreach($usersToMerge as $user){
-            $merge= new Merge();
-            $merge->super_id    = $super->id;
-            $merge->merged_id   = $user->id;
-            $merge->name        = $user->name;
-            $merge->phone       = $user->phone_one;
-            $merge->national    = $user->national_id;
-            $merge->merged_by   = Auth()->user()->id;
-            $merge->save();
-            $user->delete();
+            if($user->id != $super->id){
+                $merge= new Merge();
+                $merge->super_id    = $super->id;
+                $merge->merged_id   = $user->id;
+                $merge->name        = $user->name;
+                $merge->phone       = $user->phone_one;
+                $merge->national    = $user->national_id;
+                $merge->merged_by   = Auth()->user()->id;
+                $merge->save();
+                $user->delete();
+            }
         }
         return response()->json(['success'=>'done','super'=>$super->id]);
+    }
+    
+    function mergeEarh_lic($super , $usersToMerge ,Request $request){
+        foreach($usersToMerge as $user){
+            $earh_lics  = Earh_lic::whereJsonContains('id2',strval($user->id))->get();
+            
+            foreach($earh_lics as $earh_lic){
+                $id2s=json_decode($earh_lic->id2);
+                for($i=0; $i<sizeof($id2s) ; $i++){
+                    if(intval($id2s[$i]) == $user->id ){
+                        $id2s[$i]=strval($super->id);
+                    }
+                }
+                $earh_lic->id2   = json_encode($id2s);
+                $earh_lic->save();
+            }
+        }
     }
     
     function mergeArchive($super , $usersToMerge ,Request $request){
@@ -1071,6 +1252,8 @@ class SubscriberController extends Controller
         $AppTicket35s       =AppTicket35::whereIn('customer_id',$request->mergerID)->get();
         $AppTicket35_1s     =AppTicket35::whereIn('customer_id1',$request->mergerID)->get();
         $AppTicket36s       =AppTicket36::whereIn('customer_id',$request->mergerID)->get();
+        $AppTicket39s       =AppTicket39::whereIn('customer_id',$request->mergerID)->get();
+        $AppTicket40s       =AppTicket40::whereIn('customer_id',$request->mergerID)->get();
         
         foreach($AppTicket1s    as $AppTicket1){
             $AppTicket1->customer_id    =$super->id;
@@ -1266,6 +1449,16 @@ class SubscriberController extends Controller
             $AppTicket36->customer_id    =$super->id;
             $AppTicket36->customer_name  =$super->name;
             $AppTicket36->save();
+        }
+        foreach($AppTicket39s   as $AppTicket39){
+            $AppTicket39->customer_id    =$super->id;
+            $AppTicket39->customer_name  =$super->name;
+            $AppTicket39->save();
+        }
+        foreach($AppTicket40s   as $AppTicket40){
+            $AppTicket40->customer_id    =$super->id;
+            $AppTicket40->customer_name  =$super->name;
+            $AppTicket40->save();
         }
         
     }

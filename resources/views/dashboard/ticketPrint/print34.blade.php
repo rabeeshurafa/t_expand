@@ -306,7 +306,7 @@
                         <div class="col-sm-4 attach_row11_{{$i}}">
                             <div id="attach" class=" col-sm-12 ">
                                 <div class="attach"> 
-                                    <a class="attach-close1" href="https://t.expand.ps/expand_repov1/public/{{$file->Files[0]->url}}" style="color: #74798D; float:left;" 
+                                    <a class="attach-close1" href="https://t.palexpand.ps/expand_repov1/public/{{$file->Files[0]->url}}" style="color: #74798D; float:left;" 
                                     target="_blank">  
                                         <span class="attach-text">{{ substr($file->attachName,0,40)}}</span>    
                                         <img style="width: 20px;" src="https://t.expand.ps/expand_repov1/public/assets/images/ico/image.png">

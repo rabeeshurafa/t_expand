@@ -298,7 +298,7 @@ class LicenseController extends Controller
 
     {
         // dd($request->all);
-        $license['info'] = license::where('fileNo',$request['license_id'])->first();
+        $license['info'] = license::where('fileNo',$request['license_id'])->with('use_desc')->first();
         // dd($license['info']);
         $license['user']=User::find($license['info']->user_id);
 

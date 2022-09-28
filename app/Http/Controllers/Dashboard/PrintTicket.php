@@ -48,7 +48,8 @@ use App\Models\AppTicket37;
 use App\Models\AppTicket38;
 use App\Models\AppTicket39;
 use App\Models\AppTicket40;
-
+use App\Models\AppTicket42;
+use App\Models\AppTicket44;
 use App\Models\AppTrans;
 use App\Models\water;
 use App\Models\elec;
@@ -118,7 +119,7 @@ class PrintTicket extends Controller
     
     function getAttach( $file_ids=array()){
         $attachArr=array();
-        foreach($file_ids as $row){
+        foreach(($file_ids??array()) as $row){
             $row->Files=File::where('id',$row->attach_ids)->get();
         }
         return $file_ids;
@@ -182,7 +183,13 @@ class PrintTicket extends Controller
         $related=intval($request->related_ticket);
                     // dd($request->all());
 
-        if($related==3){
+        if($related==3 && $request->printType==2){
+            $ticket=AppTicket3::find($ticket_id);
+            $ticket->printNo	=$request->printNo;	
+            $ticket->printDate	=$request->printDate;
+            $ticket->printText	=$request->printText;
+            $ticket->save();
+        }else if($related==3){
             $ticket=AppTicket3::find($ticket_id);
             $ticket->owner_name	=$request->owner_name;	
             $ticket->customer_owner_state	=$request->customer_owner_state;
@@ -220,6 +227,12 @@ class PrintTicket extends Controller
             
             $ticket->save();
             
+        }else if($related==31){
+            $ticket=AppTicket31::find($ticket_id);
+            $ticket->notes		=$request->notes;
+            $ticket->reciptDate		=$request->reciptDate;
+            $ticket->receipt_no		=$request->reciptNo;
+            $ticket->save();
         }
 	    if($ticket){
 	        return $ticket->id;
@@ -338,10 +351,42 @@ order by created_at asc");
 		if($related==1){
 		    $ticket=AppTicket1::find($ticket_id);
             $helpers['subsList']=Constant::where('parent',39)->get();
+            $ticket->subscription_type_name=Constant::where('id',$ticket->subscription_type)->first();
             
 		}
 		if($related==2){
 		    $ticket=AppTicket2::find($ticket_id);
+		    if($ticket->subs)
+		    $subsId=json_decode($ticket->subs);
+		    else
+		    $subsId=["0"];
+		    if($ticket->app_type==2)
+            {
+                // $subs=water::whereIn('id',$subsId)->get();
+                $subs = water::where('waters.enabled',1)->whereIn('waters.id',$subsId)->select('waters.*', 'users.name as user_name','a.name as subscription_Type_name','b.name as counter_Type_name','d.name as payType_name')
+                ->leftJoin('t_constant as a', 'a.id', 'waters.subscription_Type')
+        
+                ->leftJoin('t_constant as b', 'b.id', 'waters.counter_Type')
+        
+                ->leftJoin('t_constant as d', 'd.id', 'waters.payType')
+        
+                ->leftJoin('users','users.id','waters.user_id')
+                ->get();
+            }
+            else
+            $subs=elec::where('elecs.enabled',1)->whereIn('elecs.id',$subsId)->select('elecs.*', 'users.name as user_name','a.name as subscription_Type_name','b.name as counter_Type_name','d.name as payType_name')
+                ->leftJoin('t_constant as a', 'a.id', 'elecs.subscription_Type')
+        
+                ->leftJoin('t_constant as b', 'b.id', 'elecs.counter_Type')
+        
+                ->leftJoin('t_constant as d', 'd.id', 'elecs.payType')
+        
+                ->leftJoin('users','users.id','elecs.user_id')
+                ->get();
+            $ticket->setAttribute('subscription',$subs);
+		}
+		if($related==3){
+		    $ticket=AppTicket3::find($ticket_id);
 		}
 		if($related==4){
 		    $ticket=AppTicket4::find($ticket_id);
@@ -349,7 +394,34 @@ order by created_at asc");
 		}
 		if($related==5){
 		    $ticket=AppTicket5::find($ticket_id);
-		    
+		    if($ticket->subs)
+		    $subsId=json_decode($ticket->subs);
+		    else
+		    $subsId=["0"];
+		    if($ticket->app_type==2)
+            {
+                // $subs=water::whereIn('id',$subsId)->get();
+                $subs = water::where('waters.enabled',1)->whereIn('waters.id',$subsId)->select('waters.*', 'users.name as user_name','a.name as subscription_Type_name','b.name as counter_Type_name','d.name as payType_name')
+                ->leftJoin('t_constant as a', 'a.id', 'waters.subscription_Type')
+        
+                ->leftJoin('t_constant as b', 'b.id', 'waters.counter_Type')
+        
+                ->leftJoin('t_constant as d', 'd.id', 'waters.payType')
+        
+                ->leftJoin('users','users.id','waters.user_id')
+                ->get();
+            }
+            else
+            $subs=elec::where('elecs.enabled',1)->whereIn('elecs.id',$subsId)->select('elecs.*', 'users.name as user_name','a.name as subscription_Type_name','b.name as counter_Type_name','d.name as payType_name')
+                ->leftJoin('t_constant as a', 'a.id', 'elecs.subscription_Type')
+        
+                ->leftJoin('t_constant as b', 'b.id', 'elecs.counter_Type')
+        
+                ->leftJoin('t_constant as d', 'd.id', 'elecs.payType')
+        
+                ->leftJoin('users','users.id','elecs.user_id')
+                ->get();
+            $ticket->setAttribute('subscription',$subs);
             
 		}
 		if($related==6){
@@ -567,7 +639,9 @@ order by created_at asc");
         
                 ->leftJoin('users','users.id','elecs.user_id')
                 ->get();
-            
+            // if(Auth()->user()->id==74){
+            //     dd($subs);
+            // }
             $ticket->setAttribute('subscription',$subs);
             $ticket->setAttribute('subscription1',$subs1);
             $lic = License::where('id','=',$ticket->licNo)->first();
@@ -733,7 +807,7 @@ order by created_at asc");
 	    }
 	    if($related==31){
 		    $ticket=AppTicket31::find($ticket_id);
-    	    $helpers['orders']=Order::where('ticket_id',$ticket_id)->where('related_ticket',$related)->get();
+    	    $helpers['orders']=Order::where('ticket_id',$ticket_id)->where('related_ticket',$related)->orderBy('id','ASC')->get();
     	    $CurrencyList=array();
             $CurrencyList[1]="شيكل";
             $CurrencyList[2]="دولار";
@@ -789,6 +863,35 @@ order by created_at asc");
                 $ticket->setAttribute('license',$lic);
             }
 	    }
+	    if($related==44){
+		    $ticket=AppTicket44::find($ticket_id);
+		    if($ticket != null){
+		        $admin=Admin::where('id',$ticket->customer_id)->with('jobTitle')->first();
+		        $admin2=Admin::where('id',$ticket->customer_id1)->with('jobTitle')->first();
+		        $ticket->jobTitle=$admin->jobTitle->name;
+		        $ticket->jobTitle2=$admin2->jobTitle->name;
+		    }
+	    }
+	    if($related==42){
+	    $ticket=AppTicket42::find($ticket_id);
+	    $temp=Constant::where('id',$ticket->fin_desc)->first();
+	    $apptype='';
+	    if($temp != null){
+	        $apptype=$temp->name;
+	    }
+	    $helpers['orders']=Order::where('ticket_id',$ticket_id)->where('related_ticket',$related)->get();
+	    $totalamount=0;
+	    foreach(($helpers['orders']??[]) as $order){
+	        $totalamount+=(($order->total??0)*1);
+	    }
+	    $ticket->totalamount=$totalamount;
+	    $CurrencyList=array();
+        $CurrencyList[1]="شيكل";
+        $CurrencyList[2]="دولار";
+        $CurrencyList[3]="دينار";
+        $CurrencyList[4]="يورو";
+        $helpers['CurrencyList']=$CurrencyList;
+	    }
 	    //dd($ticket);
         $config=TicketConfig::where('ticket_no',$related)->where('app_type',$ticket->app_type)->get();
         $res=$this->getTicketHistory($ticket_id,$related);
@@ -839,7 +942,7 @@ order by created_at asc");
         $setting = Setting::first();
         if($related==34||$related==31||$related==33){
         return view('dashboard.ticketPrint.print34', compact('type','app_type','setting','ticket','related','config','helpers'));
-        }if($related==32){
+        }else if($related==32){
             $deptname='';
             $emp=Admin::where('id',$ticket->customer_id)->first();
             
@@ -847,12 +950,32 @@ order by created_at asc");
                 $deptname=Department::where('id',$emp->department_id)->first('name');
                 
             return view('dashboard.ticketPrint.printVac', compact('type','app_type','setting','ticket','related','config','helpers','deptname','vac'));
+        }else if($related==44){
+            return view('dashboard.ticketPrint.print44', compact('type','app_type','setting','ticket','related','config','helpers'));
+        }else if($related==42){
+            return view('dashboard.ticketPrint.print42', compact('apptype','type','app_type','setting','ticket','related','config','helpers'));
         }else if($related==38){
             return view('dashboard.ticketPrint.print38', compact('type','app_type','setting','ticket','related','config','helpers','oilTypes','oilmetrecies'));
         }else{
         return view('dashboard.ticketPrint.index', compact('type','app_type','setting','ticket','related','config','helpers'));
 	
         }       
+    }
+    
+    public function printTicket31($ticket_id,$related){
+        $ticket=AppTicket31::with('Admin')->find($ticket_id);
+        $deptname=Department::where('id',$ticket->admin->department_id)->first();
+        $orders=Order::where('ticket_id',$ticket_id)->where('related_ticket',$related)->orderBy('id','ASC')->get();
+        $ticket->deptName='';
+        if($deptname!=null){
+            $ticket->deptName=$deptname->name;
+        }
+        $total=0;
+        foreach($orders as $order){
+            $total+=$order->total;
+        }
+        $ticket->total=$total;
+        return view('dashboard.ticketPrint.print31', compact('ticket'));
     }
     
     public function printTicket39($ticket_id=0,$related=0){
@@ -1078,6 +1201,33 @@ order by created_at asc");
             return view('dashboard.ticketPrint.print3_1', compact('type','app_type','setting','ticket','related','config','helpers','customer_ticket_no'));
         else
             return view('dashboard.ticketPrint.print3_2', compact('type','app_type','setting','ticket','related','config','helpers','customer_ticket_no'));
+	}
+	
+	public function objectionPrint ($ticket_id=0,$related){
+	    $year=(date('Y')+1)."-01-01 00:00:00";
+	    $count1=AppTicket3::where('printNo','!=',null)->where('updated_at','<',$year)->count();
+	   // $count2=AppTicket15::where('printNo','!=',null)->where('updated_at','<',$year)->count();
+	    $count=$count1/*+$count2*/;
+	    
+	    $currentyear=date('Y');
+	    if($currentyear == 2022){
+            $count+=799;
+        }
+	    
+	    if($related == 3){
+	        $ticket=AppTicket3::find($ticket_id); 
+	        $ticket->related=3;
+	        if($ticket->printNo==null){
+	            $ticket->printNo=$count;
+	        }
+	    } else if($related == 15){
+	        $ticket=AppTicket15::find($ticket_id); 
+	        $ticket->related=15;
+	        if($ticket->printNo==null){
+	            $ticket->printNo=$count;
+	        }
+	    }
+	    return view('dashboard.ticketPrint.objectionPrint', compact('ticket'));
 	}
 	
 	public function printWasl($ticket_id=0,$related=0){

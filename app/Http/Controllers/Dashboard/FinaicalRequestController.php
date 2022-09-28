@@ -8,6 +8,7 @@ use App\Models\TicketConfig;
 use App\Models\Department;
 use App\Models\Constant;
 use App\Models\AppTicket34;
+use App\Models\AppTicket42;
 use Yajra\DataTables\DataTables;
 
 class FinaicalRequestController extends Controller
@@ -16,8 +17,9 @@ class FinaicalRequestController extends Controller
         $screen=Menu::where('s_function_url','=',$type)->get()->first();
         // dd($screen);
         $department=Department::where('enabled',1)->get();
-        
-        return TicketConfig::where('id','=',$screen->pk_i_id)->with('Admin')->get()->first();
+        $ticket=TicketConfig::where('id','=',$screen->pk_i_id)->with('Admin')->get()->first();
+        $ticket->flows=json_decode($ticket->flow);
+        return $ticket;
         
     }
 
@@ -36,6 +38,25 @@ class FinaicalRequestController extends Controller
         return view('dashboard.finaicalRequest.index', compact('type','fin_desc_list','ticketInfo','department'));
     }
     
+    public function innerFinaicalRequest()
+    {
+        $type = 'innerFinaicalRequest';
+        $ticketInfo=$this->loadDefaul($type);
+        // dd($ticketInfo);
+        $fin_desc_list = Constant::where('parent',6326)->where('status',1)->get();
+        $department=Department::where('enabled',1)->get();
+        return view('dashboard.finaicalRequest.innerFinancial', compact('type','fin_desc_list','ticketInfo','department'));
+    }
+    public function innerFinancial_info_all()
+    {
+        $financial = AppTicket42::select('app_ticket42s.*', 't_constant.name as fin_desc_name','admins.nick_name as created_by_name')
+        ->leftJoin('t_constant', 't_constant.id', 'app_ticket42s.fin_desc')
+        ->leftJoin('admins', 'admins.id', 'app_ticket42s.created_by')
+        ->orderBy('id', 'DESC')->get();
+
+        return DataTables::of($financial)->addIndexColumn()->make(true);
+
+    }
     public function financial_info_all()
     {
         $financial = AppTicket34::select('app_ticket34s.*', 't_constant.name as fin_desc_name','admins.nick_name as created_by_name')

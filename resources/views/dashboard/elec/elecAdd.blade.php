@@ -608,8 +608,35 @@
 
                                                             </tr>
                                                             <tr >
-                                                                <td colspan="10" style="border:none">
+                                                                <td colspan="3" style="border:none">
+                                                                    
+                                                                    <div class="col-lg-12 col-md-12 pr-0 pr-s-12" style="padding-right: 0px" >
 
+                                                                        <div class="form-group">
+
+                                                                            <div class="input-group w-s-87" style="width: 99.5% !important;">
+
+                                                                                <div class="input-group-prepend">
+
+                                                                                    <span class="input-group-text" id="basic-addon1">
+
+                                                                                         اسم المستفيد
+                    
+                                                                                    </span>
+                    
+                                                                                </div>
+                    
+                                                                                <input type="text" id="beneficiary" class="form-control alphaFeild cust" placeholder="اسم المستفيد" name="beneficiary">
+
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </td>
+                                                                <td colspan="7" style="border:none">
+                                                                    
                                                                     <div class="col-lg-12 col-md-12 pr-0 pr-s-12" style="padding-right: 0px" >
 
                                                                         <div class="form-group">
@@ -860,7 +887,8 @@ $('#formDataaa').submit(function(e) {
                 $('#editBtn').addClass('hide');
                 $('#licNo').empty();
                 $('.wtbl').DataTable().ajax.reload();
-    
+                $('#customerId').val('');
+                $('#elecId').val('');
                  console.log(response);
     
                  if (response) {
@@ -1267,7 +1295,8 @@ $( function() {
         $("#notes").val(response.info.notes);
 
         $("#region").val(response.info.region);
-
+        $("#beneficiary").val(response.info.beneficiary);
+        
         let date=(response.info.subscription_date)
 
         dates=""

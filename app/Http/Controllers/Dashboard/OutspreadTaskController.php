@@ -21,6 +21,7 @@ class OutspreadTaskController extends Controller{
     function loadDefaul($type=''){
         $screen=Menu::where('s_function_url','=',$type)->get()->first();
         $ticket=TicketConfig::where('id','=',$screen->pk_i_id)->with('Admin')->get()->first();
+        $ticket->flows=json_decode($ticket->flow);
         $department=Department::where('enabled',1)->get();
         $this->fees=DB::select("select fees_json from app_ticket".$ticket->ticket_no."s where app_type=".$ticket->app_type." order by id desc limit 1");
         return $ticket;
@@ -36,8 +37,9 @@ class OutspreadTaskController extends Controller{
         $department=Department::where('enabled',1)->get();
         $fees=$this->fees;
         $archive_config = ArchiveRole::where('empid', Auth()->user()->id)->where('type', $type)->get();
+        $ticket_status=Constant::where('parent',5001)->where('status',1)->get();
         $app_no=23;
-        return view('dashboard.outspreadTasks.outspreadTask',  compact('type','ticketTypeList','region','ticketInfo','department','fees','archive_config','app_no'));
+        return view('dashboard.outspreadTasks.outspreadTask',  compact('ticket_status','type','ticketTypeList','region','ticketInfo','department','fees','archive_config','app_no'));
     }
     public function quittance()
     {

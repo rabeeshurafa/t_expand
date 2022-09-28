@@ -846,7 +846,9 @@ $(document).ready(function () {
                                             +'    <img style="width: 20px;"src="'+fileimage+'">'
                                             +'</a>'
                                         +'</div>'
-                                        +'</div>'; 
+                                        +'</div>'
+                                    +'<div></div>'
+                                        ; 
                                 });
                                 $actionBtn += '</div>';
                                 return $actionBtn;
@@ -1026,7 +1028,10 @@ $(document).ready(function () {
                                                 +'    <img style="width: 20px;"src="'+fileimage+'">'
                                                 +'</a>'
                                             +'</div>'
-                                            +'</div>'; 
+                                            +'</div>'
+                                            
+                                    +'<div></div>'
+                                            ; 
                                     });
                                     $actionBtn += '</div>';
                                     return $actionBtn;

@@ -136,7 +136,9 @@
                             @elseif($type=="concrete")
                             ارشيف اذن صب خرسانة      
                             @elseif($type=="tichet40")
-                            ارشيف طلب توحيد / افراز        
+                            ارشيف طلب توحيد / افراز    
+                            @elseif($type=="internalMemo")
+                            ارشيف المذكرات الداخلية
                             @endif
                             
                             <div class="dt-buttons" style="height: 20px;padding-top: 10px;" title="الاعدادات">
@@ -149,9 +151,83 @@
                                 </div>
                             </div>
                             </h4>
+                            
                     </div>
+                    
                     <div class="card-body">
                         <div class="form-body">
+                            @if($type=="outspreadTasks")
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="input-group" style="">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text " id="basic-addon1">
+                                                    {{ 'نوع الطلب' }}
+                                                </span>
+                                            </div>
+                                            <select id="search_task_type" name="search_task_type" type="text"
+                                                class="form-control valid" aria-invalid="false" onchange="reload();">
+                                                <option value="0" selected=""> {{ 'نوع الطلب' }} </option>
+                                                @foreach($ticketTypeList as $ticketType)
+                                                <option value="{{ $ticketType->id }}">{{ $ticketType->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <div class="input-group" style="">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text " id="basic-addon1">
+                                                    {{ 'حالة الطلب' }}
+                                                </span>
+                                            </div>
+                                            <select id="search_status" name="search_status" type="text"
+                                                class="form-control valid"  aria-invalid="false"  onchange="reload();">
+                                                <option value="0" selected=""> {{ 'حالة الطلب' }} </option>
+                                                @foreach($ticket_status as $ticket_state)
+                                                <option value="{{ $ticket_state->id }}" >{{ $ticket_state->name }}</option>
+                                                @endforeach
+                                                <option value="6283"> {{ 'مؤجلة' }} </option>
+                                                <option value="5003"> {{ 'مغلق' }} </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group paddmob">
+                                        <div class="input-group subscribermob">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    {{ 'من تاريخ' }}
+                                                </span>
+                                            </div>
+                                            <input type="text" id="search_from" 
+                                                class="form-control singledate" maxlength="10" data-mask="00/00/0000" placeholder="{{date('d/m/Y')}}"
+                                                name="search_from">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group paddmob">
+                                        <div class="input-group subscribermob">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    {{ 'الي تاريخ' }}
+                                                </span>
+                                            </div>
+                                            <input type="search_to" id="search_to" 
+                                                class="form-control singledate" maxlength="10" data-mask="00/00/0000" placeholder="{{date('d/m/Y')}}"
+                                                name="search_from">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
                             <div class="row" id="resultTblaa">
                                 <div class="col-xl-12 col-lg-12">
                                     <table style="width:100%; margin-top: -10px;direction: rtl;text-align: right" class="detailsTB table wtbl">
@@ -212,6 +288,33 @@
                                                 </th>
                                                 <th width="150px;">
                                                      انشئ بواسطة
+                                                </th>
+                                                <th style="width:79px!important;" >
+                                                    طباعة الطلب
+                                                </th>
+                                            </tr>
+                                            @elseif($type=="internalMemo")
+                                            <tr style="text-align:center !important;background: #00A3E8;">
+                                                <th width="10px;">
+                                                    #
+                                                </th>
+                                                <th  width="150px;">
+                                                    من 
+                                                </th>
+                                                <th  width="150px;">
+                                                    الي 
+                                                </th>
+                                                <th  width="150px;">
+                                                    الموضوع 
+                                                </th>
+                                                <th width="80px;">
+                                                    العام 
+                                                </th>
+                                                <th width="50px;">
+                                                    رقم المذكرة
+                                                </th>
+                                                <th width="80px;">
+                                                      الحالة
                                                 </th>
                                                 <th style="width:79px!important;" >
                                                     طباعة الطلب
@@ -495,7 +598,36 @@
 </div>
 @include('dashboard.component.task_archive_config')
 <script>
+
+    var typingTimer;                //timer identifier
+    var doneTypingInterval = 300;  //time in ms
+    var $search_from = $('#search_from');
+    var $search_to = $('#search_to');
     
+    //on keyup, start the countdown
+    $search_from.on('keyup', function () {
+      clearTimeout(typingTimer);
+      typingTimer = setTimeout(reload, doneTypingInterval);
+    });
+    
+    //on keydown, clear the countdown 
+    $search_from.on('keydown', function () {
+      clearTimeout(typingTimer);
+    });
+    
+    $search_to.on('keyup', function () {
+      clearTimeout(typingTimer);
+      typingTimer = setTimeout(reload, doneTypingInterval);
+    });
+    
+    //on keydown, clear the countdown 
+    $search_to.on('keydown', function () {
+      clearTimeout(typingTimer);
+    });
+
+    function reload(){
+        $('.wtbl').DataTable().ajax.reload();  
+    }
         var buildArray = { "2079": '{{trans('archive.build_type1')}}', "2080": '{{trans('archive.build_type2')}}',"2081": '{{trans('archive.build_type3')}}'}; 
 
         $appStatusList=[];
@@ -532,6 +664,13 @@
             @elseif ($type=="waterMalfunction")
             ajax: {
                 url: '{{ route('getWaterMalfuncTickets') }}',
+                data: function (d) {
+                    d.type = $('#type').val();
+                }
+            },
+            @elseif ($type=="internalMemo")
+            ajax: {
+                url: '{{ route('getInternalMemoTickets') }}',
                 data: function (d) {
                     d.type = $('#type').val();
                 }
@@ -793,6 +932,10 @@
                 url: '{{ route('getOutspreadTickets') }}',
                 data: function (d) {
                     d.type = $('#type').val();
+                    d.search_task_type = $('#search_task_type').val();
+                    d.search_status = $('#search_status').val();
+                    d.search_from = $('#search_from').val();
+                    d.search_to = $('#search_to').val();
                 }
             },
             @elseif ($type=="publicComplaint")
@@ -873,8 +1016,6 @@
                     {
                         data:null, 
                         render:function(data,row,type){
-                            link= '/admin/viewTicket/'+data.id+'/'+{{$app_no}};
-                            
                             // $rowDateTime=data.created_at.split('T');
                             // $rowDate=$rowDateTime[0].split('-');
                             // $date=$rowDate[2]+'/'+$rowDate[1]+'/'+$rowDate[0];
@@ -883,17 +1024,27 @@
                             $date=`${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
                             $time=`${date.getHours()}:${date.getMinutes()}`;
                             
-                            $actionbtn='<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
-                                            +'<span class="hideMob" >'+ $date
-                                            +'<img src="{{ asset('assets/images/ico/clock.png') }}" style="margin-right: 29px;margin-left: 8px;" width="32" height="32">'
-                                            +$time +'</span>'
-                                        +'</a>';
+                            $actionbtn='<span class="hideMob" >'+ $date
+                                        +'<img src="{{ asset('assets/images/ico/clock.png') }}" style="margin-right: 29px;margin-left: 8px;" width="32" height="32">'
+                                        +$time +'</span>';
                             return $actionbtn;
                         },
                         name:'created_at',
                         
                     },
-                    {data:'customer_name',name:'customer_name'},
+                    {
+                        data:null, 
+                        render:function(data,row,type){
+                            link= '/admin/viewTicket/'+data.id+'/'+{{$app_no}};
+                            $actionbtn='<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
+                                            +'<span class="hideMob" >'+data.customer_name+'</span>'
+                                        +'</a>';
+                            return $actionbtn;
+                        },
+                        name:'customer_name',
+                        
+                    },
+                    // {data:'customer_name',name:'customer_name'},
                     {data:'customer_mobile',name:'customer_mobile'},
                     {data:'app_no',name:'app_no'},
                     { 
@@ -929,6 +1080,61 @@
                     },
                    
                 ],
+            
+            @elseif ($type=="internalMemo")   
+            columns:[
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex' , orderable: false, searchable: false},
+                    {data:'customer_name',name:'customer_name'},
+                    {data:'customer_name1',name:'customer_name1'},
+                    {
+                        data:null,
+                        render:function(data,row,type){
+                            link= '/admin/viewTicket/'+data.id+'/'+{{$app_no}};
+                            
+                            $actionbtn='<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
+                                            +'<span >'+ data.topic
+                                            +'</span>'
+                                        +'</a>';
+                            return $actionbtn;
+                        },
+                        name:'topic',
+                        
+                    },
+                    // {data:'topic',name:'topic'},
+                    {data:'year',name:'year'},
+                    {data:'app_no',name:'app_no'},
+                    { 
+                        data:null, 
+                        render:function(data,row,type){
+                            color='green';
+                           
+                            if(data.ticket_status==5003){
+                                color='red';
+                            }
+                            // link= '/admin/viewTicket/'+data.id+'/'+11;
+                            
+                                $actionbtn='<div class="row">';
+                                $actionbtn+=(data.ticket_status==5003?'<img src="{{asset('assets/images/ico/lock.png')}}" style="height: 18px"> &nbsp; &nbsp;'
+                                            :'<img src="{{asset('assets/images/ico/greenlook.png')}}" style="height: 18px">  &nbsp; &nbsp;')
+                                $actionbtn+= `<div style="color:${color};">${$appStatusList[data.ticket_status]}</div>`;
+                                $actionbtn+='</div>';
+                                
+                                    return $actionbtn;
+                        },
+                        name:'ticket_status'
+                    },
+                    {
+                        data: null,
+                        render:function(data,row,type){
+                                $actionBtn = `<a href='{{route('admin.dashboard')}}/printTicket/${data.id}/{{$app_no}}' style="margin-right:17px;" target="_blank"> <img title='print'
+                                    style='cursor:pointer;height: 32px;'
+                                    class:"fa fa-print" src="{{asset('assets/images/ico/Printer.png')}}" /> </a>`;
+                                    return $actionBtn;
+                        },
+                        name:'admins.name',
+                    },
+                   
+                ],
                 
             @elseif($type=="quittance")
             columns:[
@@ -936,7 +1142,7 @@
                     {
                         data:null, 
                         render:function(data,row,type){
-                            link= '/admin/viewTicket/'+data.id+'/'+{{$app_no}};
+                            // link= '/admin/viewTicket/'+data.id+'/'+{{$app_no}};
                             
                             // $rowDateTime=data.created_at.split('T');
                             // $rowDate=$rowDateTime[0].split('-');
@@ -945,17 +1151,27 @@
                             date=new Date(data.created_at);
                             $date=`${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
                             $time=`${date.getHours()}:${date.getMinutes()}`;
-                            $actionbtn='<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
-                                            +'<span class="hideMob" >'+ $date
+                            $actionbtn='<span class="hideMob" >'+ $date
                                             +'<img src="{{ asset('assets/images/ico/clock.png') }}" style="margin-right: 29px;margin-left: 8px;" width="32" height="32">'
-                                            +$time +'</span>'
-                                        +'</a>';
+                                            +$time +'</span>';
                             return $actionbtn;
                         },
                         name:'created_at',
                         
                     },
-                    {data:'customer_name',name:'customer_name'},
+                    {
+                        data:null, 
+                        render:function(data,row,type){
+                            link= '/admin/viewTicket/'+data.id+'/'+{{$app_no}};
+                            $actionbtn='<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
+                                            +'<span class="hideMob" >'+data.customer_name+'</span>'
+                                        +'</a>';
+                            return $actionbtn;
+                        },
+                        name:'customer_name',
+                        
+                    },
+                    // {data:'customer_name',name:'customer_name'},
                     {data:'customer_mobile',name:'customer_mobile'},
                     {data:'app_no',name:'app_no'},
                     {data:'reason_name',name:'t_constant.name'},
@@ -1184,7 +1400,7 @@
                     {
                         data:null, 
                         render:function(data,row,type){
-                            link= '/admin/viewTicket/'+data.id+'/'+{{$app_no}};
+                            // link= '/admin/viewTicket/'+data.id+'/'+{{$app_no}};
                             
                             // $rowDateTime=data.created_at.split('T');
                             // $rowDate=$rowDateTime[0].split('-');
@@ -1193,17 +1409,27 @@
                             date=new Date(data.created_at);
                             $date=`${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
                             $time=`${date.getHours()}:${date.getMinutes()}`;
-                            $actionbtn='<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
-                                            +'<span class="hideMob" >'+ $date
+                            $actionbtn='<span class="hideMob" >'+ $date
                                             +'<img src="{{ asset('assets/images/ico/clock.png') }}" style="margin-right: 29px;margin-left: 8px;" width="32" height="32">'
-                                            +$time +'</span>'
-                                        +'</a>';
+                                            +$time +'</span>';
                             return $actionbtn;
                         },
                         name:'created_at',
                         
                     },
-                    {data:'customer_name',name:'customer_name'},
+                    {
+                        data:null, 
+                        render:function(data,row,type){
+                            link= '/admin/viewTicket/'+data.id+'/'+{{$app_no}};
+                            $actionbtn='<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
+                                            +'<span class="hideMob" >'+(data.customer_name??"____")+'</span>'
+                                        +'</a>';
+                            return $actionbtn;
+                        },
+                        name:'customer_name',
+                        
+                    },
+                    // {data:'customer_name',name:'customer_name'},
                     {data:'task_name',name:'t_constant.name'},
                     {data:'app_no',name:'app_no'},
                     {data:'regionName',name:'regions.name'},
@@ -1307,7 +1533,7 @@
                     {
                         data:null, 
                         render:function(data,row,type){
-                            link= '/admin/viewTicket/'+data.id+'/'+{{$app_no}};
+                            // link= '/admin/viewTicket/'+data.id+'/'+{{$app_no}};
                             
                             // $rowDateTime=data.created_at.split('T');
                             // $rowDate=$rowDateTime[0].split('-');
@@ -1316,17 +1542,27 @@
                             date=new Date(data.created_at);
                             $date=`${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
                             $time=`${date.getHours()}:${date.getMinutes()}`;
-                            $actionbtn='<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
-                                            +'<span class="hideMob" >'+ $date
+                            $actionbtn='<span class="hideMob" >'+ $date
                                             +'<img src="{{ asset('assets/images/ico/clock.png') }}" style="margin-right: 29px;margin-left: 8px;" width="32" height="32">'
-                                            +$time +'</span>'
-                                        +'</a>';
+                                            +$time +'</span>';
                             return $actionbtn;
                         },
                         name:'created_at',
                         
                     },
                     {data:'app_no',name:'app_no'},
+                    {
+                        data:null, 
+                        render:function(data,row,type){
+                            link= '/admin/viewTicket/'+data.id+'/'+{{$app_no}};
+                            $actionbtn='<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
+                                            +'<span class="hideMob" >'+data.customer_name+'</span>'
+                                        +'</a>';
+                            return $actionbtn;
+                        },
+                        name:'customer_name',
+                        
+                    },
                     {data:'customer_name',name:'customer_name'},
                     {data:'national_id',name:'national_id'},
                     { 
@@ -1372,8 +1608,7 @@
                     {
                         data:null, 
                         render:function(data,row,type){
-                            link= '/admin/viewTicket/'+data.id+'/'+{{$app_no}};
-                            console.log(link)
+                            // link= '/admin/viewTicket/'+data.id+'/'+{{$app_no}};
                             // $rowDateTime=data.created_at.split('T');
                             // $rowDate=$rowDateTime[0].split('-');
                             // $date=$rowDate[2]+'/'+$rowDate[1]+'/'+$rowDate[0];
@@ -1381,18 +1616,27 @@
                             date=new Date(data.created_at);
                             $date=`${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
                             $time=`${date.getHours()}:${date.getMinutes()}`;
-                            $actionbtn='<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
-                                            +'<span class="hideMob" >'+ $date
+                            $actionbtn='<span class="hideMob" >'+ $date
                                             +'<img src="{{ asset('assets/images/ico/clock.png') }}" style="margin-right: 29px;margin-left: 8px;" width="32" height="32">'
-                                            +$time +'</span>'
-                                        +'</a>';
+                                            +$time +'</span>';
                             return $actionbtn;
                         },
                         name:'created_at',
                         
                     },
-                    
-                    {data:'customer_name',name:'customer_name'},
+                    {
+                        data:null, 
+                        render:function(data,row,type){
+                            link= '/admin/viewTicket/'+data.id+'/'+{{$app_no}};
+                            $actionbtn='<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
+                                            +'<span class="hideMob" >'+data.customer_name+'</span>'
+                                        +'</a>';
+                            return $actionbtn;
+                        },
+                        name:'customer_name',
+                        
+                    },
+                    // {data:'customer_name',name:'customer_name'},
                     {data:'vehicle_no',name:'vehicle_no'},
                     {data:'app_no',name:'app_no'},
                     { 
@@ -1435,7 +1679,7 @@
                 {
                     data:null, 
                     render:function(data,row,type){
-                        link= '/admin/viewTicket/'+data.id+'/'+{{$app_no}};
+                        // link= '/admin/viewTicket/'+data.id+'/'+{{$app_no}};
                         
                         // $rowDateTime=data.created_at.split('T');
                         // $rowDate=$rowDateTime[0].split('-');
@@ -1444,17 +1688,27 @@
                         date=new Date(data.created_at);
                         $date=`${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
                         $time=`${date.getHours()}:${date.getMinutes()}`;
-                        $actionbtn='<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
-                                        +'<span class="hideMob" >'+ $date
+                        $actionbtn='<span class="hideMob" >'+ $date
                                         +'<img src="{{ asset('assets/images/ico/clock.png') }}" style="margin-right: 29px;margin-left: 8px;" width="32" height="32">'
-                                        +$time +'</span>'
-                                    +'</a>';
+                                        +$time +'</span>';
                         return $actionbtn;
                     },
                     name:'created_at',
                     
                 },
-                {data:'customer_name',name:'customer_name'},
+                {
+                    data:null, 
+                    render:function(data,row,type){
+                        link= '/admin/viewTicket/'+data.id+'/'+{{$app_no}};
+                        $actionbtn='<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
+                                        +'<span class="hideMob" >'+data.customer_name+'</span>'
+                                    +'</a>';
+                        return $actionbtn;
+                    },
+                    name:'customer_name',
+                    
+                },
+                // {data:'customer_name',name:'customer_name'},
                 {data:'customer_mobile',name:'customer_mobile'},
                 {data:'app_no',name:'app_no'},
                 { 
@@ -1496,7 +1750,7 @@
                     {
                         data:null, 
                         render:function(data,row,type){
-                            link= '/admin/viewTicket/'+data.id+'/'+{{$app_no}};
+                            // link= '/admin/viewTicket/'+data.id+'/'+{{$app_no}};
                             
                             // $rowDateTime=data.created_at.split('T');
                             // $rowDate=$rowDateTime[0].split('-');
@@ -1505,17 +1759,27 @@
                             date=new Date(data.created_at);
                             $date=`${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
                             $time=`${date.getHours()}:${date.getMinutes()}`;
-                            $actionbtn='<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
-                                            +'<span class="hideMob" >'+ $date
+                            $actionbtn='<span class="hideMob" >'+ $date
                                             +'<img src="{{ asset('assets/images/ico/clock.png') }}" style="margin-right: 29px;margin-left: 8px;" width="32" height="32">'
-                                            +$time +'</span>'
-                                        +'</a>';
+                                            +$time +'</span>';
                             return $actionbtn;
                         },
                         name:'created_at',
                         
                     },
-                    {data:'customer_name',name:'customer_name'},
+                    {
+                        data:null, 
+                        render:function(data,row,type){
+                            link= '/admin/viewTicket/'+data.id+'/'+{{$app_no}};
+                            $actionbtn='<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
+                                            +'<span class="hideMob" >'+data.customer_name+'</span>'
+                                        +'</a>';
+                            return $actionbtn;
+                        },
+                        name:'customer_name',
+                        
+                    },
+                    // {data:'customer_name',name:'customer_name'},
                     {data:'customer_mobile',name:'customer_mobile'},
                     {data:'app_no',name:'app_no'},
                     {data:'regionName',name:'regions.name'},

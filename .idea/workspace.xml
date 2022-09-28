@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a16e4324-61f7-4759-b5ed-4280ce8af87e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.user.ini" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Middleware/HttpsProtocol.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Middleware/TrustIPAddress.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Requests/Ticket15Request.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Requests/Ticket44Request.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/AppTicket42.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/AppTicket44.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/AppTicket46.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/TradeArchive.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Models/Trade_Archive.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/php.ini" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/ico/scan.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/ico/scanner.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/ico/scannerpdf.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/ico/smartphone.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/printArchive.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/tradeArchive.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/generalCert.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/modelCert.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/finaicalRequest/innerFinancial.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/generalRequest_Tickts/internalMemo.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/beneficiaries.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/innerFinancialOrder.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/subscriber/printElecSubscription.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/subscriber/printWaterSubscription.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketPrint/objectionPrint.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketPrint/print31.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketPrint/print42.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketPrint/print44.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/innerOrders_rec.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket42.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket44.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket46.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/trackingArchive/component/agendaArchive.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/trackingArchive/component/financeArchive.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/trackingArchive/component/munArchive.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/trackingArchive/component/outArchive.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/trackingArchive/component/tradeArchive.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/trackingArchive/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/.htaccess" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/asira.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/phpunit.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/AgendaArchieveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/AgendaArchieveController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/AppOp.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/AppOp.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ArchieveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ArchieveController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/BuildingTicketController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/BuildingTicketController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/DashboardController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/EarchLicController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/EarchLicController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ElecController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ElecController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/FinaicalRequestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/FinaicalRequestController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/GeneralRequescontroller.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/GeneralRequescontroller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/LicenseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/LicenseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/OutspreadTaskController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/OutspreadTaskController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/PrintTicket.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/PrintTicket.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/RegionsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/RegionsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ReportController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/SearchController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/SubscriberController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/SubscriberController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/SubscriberWarning.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/SubscriberWarning.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/TasksTableController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/TasksTableController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/WaterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/WaterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/WaterTicketController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/WaterTicketController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/certController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/certController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/elecTicketController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/elecTicketController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/jobLicController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/jobLicController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/TrustProxies.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/TrustProxies.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/SubscribertRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/SubscribertRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/TicketRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/TicketRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/jobLicRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/jobLicRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Jobs/Ticket10TableJob.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Jobs/Ticket10TableJob.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Admin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Earh_lic.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Earh_lic.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/filesystems.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/global.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/global.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/employees_vw.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/t_attach.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/t_company_arch.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/t_elec_ticket1.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/t_elec_ticket10.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/t_elec_ticket14.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/t_elec_ticket17.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/t_elec_ticket2.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/t_elec_ticket28.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/t_elec_ticket3.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/t_elec_ticket33.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/t_elec_ticket38.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/t_elec_ticket_respponse.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/t_elec_ticket_summary.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/t_obj_arch.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/v_elec_ticket_trans.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/v_electricity_subscription.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/v_individual_customer.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/v_sponsor.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/v_water_subscription.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/ar/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ar/admin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/ar/archive.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ar/archive.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/EarchLic/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/EarchLic/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/EarchLic/printLicEarth.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/EarchLic/printLicEarth.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/agenda.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/agenda.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/agendaReport.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/agendaReport.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/assetsArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/assetsArchive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/lawArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/lawArchive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/licArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/licArchive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/licFileArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/licFileArchive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/outArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/outArchive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/printDes.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/printDes.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/rptArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/rptArchive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/building_ticket/engineeringValidation.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/building_ticket/engineeringValidation.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/building_ticket/licenseFile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/building_ticket/licenseFile.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/cert/assurance.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/assurance.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/cert/cert.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/cert.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/cert/sendOut.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/sendOut.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/cert/warningCert.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/warningCert.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/assets_archive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/assets_archive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/dept_archive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/dept_archive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/elec_show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/elec_show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/employee_archive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/employee_archive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/fetch_Task_table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/fetch_Task_table.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/fetch_table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/fetch_table.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/inner_employee_archive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/inner_employee_archive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/myTasksModel.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/myTasksModel.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/orgnization_archive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/orgnization_archive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/project_archive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/project_archive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/specialAssets_archive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/specialAssets_archive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/subscribe_archive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/subscribe_archive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/ticket_config.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/ticket_config.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/vehicle_archive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/vehicle_archive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/water_show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/water_show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/elec/elecAdd.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/elec/elecAdd.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/empArchive/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/empArchive/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/employee/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/employee/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/generalRequest_Tickts/collecting.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/generalRequest_Tickts/collecting.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/includes/attach_ticket.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/attach_ticket.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/includes/attachment.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/attachment.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/includes/attachment1.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/attachment1.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/includes/attachmentCert.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/attachmentCert.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/includes/buildType.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/buildType.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/includes/costs.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/costs.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/includes/dept.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/dept.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/includes/mailPage.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/mailPage.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/includes/navbar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/navbar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/includes/subscriber.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/subscriber.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/includes/subscriber_rec.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/subscriber_rec.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/jobLic/jobLic.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/jobLic/jobLic.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/outspreadTasks/citizenComplaint.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/outspreadTasks/citizenComplaint.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/outspreadTasks/publicComplaint.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/outspreadTasks/publicComplaint.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/outspreadTasks/quittance.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/outspreadTasks/quittance.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/project/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/project/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/reports/dailyReport.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/reports/dailyReport.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/reports/tasksArchiveReport.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/reports/tasksArchiveReport.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/reports/tasksReport.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/reports/tasksReport.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/reports/totalReport.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/reports/totalReport.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/services/FinancialTransfer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/services/FinancialTransfer.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/services/appTicket3.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/services/appTicket3.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/services/disconnect.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/services/disconnect.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/services/malfunction.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/services/malfunction.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/services/meterCheck.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/services/meterCheck.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/services/meterRead.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/services/meterRead.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/services/meterTransfer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/services/meterTransfer.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/services/reconnect.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/services/reconnect.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/services/subscription.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/services/subscription.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/services/ticket29.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/services/ticket29.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/services/ticket36.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/services/ticket36.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/services/waiveSubscription.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/services/waiveSubscription.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/setting/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/setting/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/subscribeWarning/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/subscribeWarning/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/subscriber/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/subscriber/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/tabo/tabo1.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/tabo/tabo1.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/tabo/tabo2.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/tabo/tabo2.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/tabo/tabo3.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/tabo/tabo3.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/tabo/tabo4.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/tabo/tabo4.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/ticketPrint/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketPrint/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/ticketPrint/print34.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketPrint/print34.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket16.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket16.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket19.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket19.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket27.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket27.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/water/waterAdd.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/water/waterAdd.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/water_ticket/FinancialTransfer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/water_ticket/FinancialTransfer.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/water_ticket/disconnect.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/water_ticket/disconnect.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/water_ticket/globalMalfunction.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/water_ticket/globalMalfunction.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/water_ticket/malfunction.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/water_ticket/malfunction.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/water_ticket/meterCheck.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/water_ticket/meterCheck.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/water_ticket/meterRead.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/water_ticket/meterRead.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/water_ticket/meterTransfer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/water_ticket/meterTransfer.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/water_ticket/reconnect.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/water_ticket/reconnect.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/water_ticket/waiveSubscription.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/water_ticket/waiveSubscription.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/front/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front/home.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/addresspopup.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/addresspopup.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/portal/includes/attach_ticket.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/portal/includes/attach_ticket.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/portal/includes/attachment.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/portal/includes/attachment.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/portal/includes/attachment1.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/portal/includes/attachment1.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/portal/includes/attachmentCert.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/portal/includes/attachmentCert.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.php" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/vendor/psy/psysh" />
+      <path value="$PROJECT_DIR$/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/vendor/psr/event-dispatcher" />
+      <path value="$PROJECT_DIR$/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/vendor/brick/math" />
+      <path value="$PROJECT_DIR$/vendor/ezyang/htmlpurifier" />
+      <path value="$PROJECT_DIR$/vendor/yajra/laravel-datatables-oracle" />
+      <path value="$PROJECT_DIR$/vendor/opis/closure" />
+      <path value="$PROJECT_DIR$/vendor/filp/whoops" />
+      <path value="$PROJECT_DIR$/vendor/asm89/stack-cors" />
+      <path value="$PROJECT_DIR$/vendor/voku/portable-ascii" />
+      <path value="$PROJECT_DIR$/vendor/league/mime-type-detection" />
+      <path value="$PROJECT_DIR$/vendor/league/flysystem" />
+      <path value="$PROJECT_DIR$/vendor/pusher/pusher-php-server" />
+      <path value="$PROJECT_DIR$/vendor/nesbot/carbon" />
+      <path value="$PROJECT_DIR$/vendor/facade/ignition" />
+      <path value="$PROJECT_DIR$/vendor/facade/flare-client-php" />
+      <path value="$PROJECT_DIR$/vendor/league/commonmark" />
+      <path value="$PROJECT_DIR$/vendor/facade/ignition-contracts" />
+      <path value="$PROJECT_DIR$/vendor/egulias/email-validator" />
+      <path value="$PROJECT_DIR$/vendor/vlucas/phpdotenv" />
+      <path value="$PROJECT_DIR$/vendor/laravel/tinker" />
+      <path value="$PROJECT_DIR$/vendor/laravel/framework" />
+      <path value="$PROJECT_DIR$/vendor/ramsey/uuid" />
+      <path value="$PROJECT_DIR$/vendor/ramsey/collection" />
+      <path value="$PROJECT_DIR$/vendor/spatie/laravel-enum" />
+      <path value="$PROJECT_DIR$/vendor/spatie/enum" />
+      <path value="$PROJECT_DIR$/vendor/myclabs/php-enum" />
+      <path value="$PROJECT_DIR$/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/vendor/mcamara/laravel-localization" />
+      <path value="$PROJECT_DIR$/vendor/laravel/ui" />
+      <path value="$PROJECT_DIR$/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/vendor/mockery/mockery" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-token-stream" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-foundation" />
+      <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/css-selector" />
+      <path value="$PROJECT_DIR$/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/vendor/symfony/error-handler" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/mime" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-kernel" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-iconv" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/vendor/symfony/routing" />
+      <path value="$PROJECT_DIR$/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php73" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php72" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php81" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/vendor/symfony/translation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/translation" />
+      <path value="$PROJECT_DIR$/vendor/theseer/tokenizer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/var-dumper" />
+      <path value="$PROJECT_DIR$/vendor/maennchen/zipstream-php" />
+      <path value="$PROJECT_DIR$/vendor/fruitcake/laravel-cors" />
+      <path value="$PROJECT_DIR$/vendor/markbaker/matrix" />
+      <path value="$PROJECT_DIR$/vendor/markbaker/complex" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/vendor/fideloper/proxy" />
+      <path value="$PROJECT_DIR$/vendor/hamcrest/hamcrest-php" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/sodium_compat" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/vendor/phpoption/phpoption" />
+      <path value="$PROJECT_DIR$/vendor/phpoffice/phpspreadsheet" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/object-reflector" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/vendor/nunomaduro/collision" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/vendor/fzaninotto/faker" />
+      <path value="$PROJECT_DIR$/vendor/astrotomic/laravel-translatable" />
+      <path value="$PROJECT_DIR$/vendor/dragonmantank/cron-expression" />
+      <path value="$PROJECT_DIR$/vendor/swiftmailer/swiftmailer" />
+      <path value="$PROJECT_DIR$/vendor/maatwebsite/excel" />
+      <path value="$PROJECT_DIR$/vendor/tijsverkoyen/css-to-inline-styles" />
+      <path value="$PROJECT_DIR$/vendor/darryldecode/cart" />
+    </include_path>
+  </component>
+  <component name="ProjectId" id="2FLB89Ic1jmI0bipW54CmnR29gl" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/laragon/www/t_expand&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\laragon\www\t_expand" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner scope="XML" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a16e4324-61f7-4759-b5ed-4280ce8af87e" name="Changes" comment="" />
+      <created>1664261327002</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1664261327002</updated>
+      <workItem from="1664261330377" duration="2480000" />
+      <workItem from="1664355137208" duration="7169000" />
+      <workItem from="1664363985581" duration="3908000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+</project>

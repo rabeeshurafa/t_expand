@@ -17,6 +17,7 @@ use App\Models\AppTicket5;
 use App\Models\AppTicket6;
 use App\Models\AppTicket7;
 use App\Models\AppTicket8;
+use App\Models\AppTicket9;
 use App\Models\AppTicket10;
 use App\Models\AppTicket11;
 use App\Models\AppTicket12;
@@ -48,6 +49,9 @@ use App\Models\AppTicket37;
 use App\Models\AppTicket38;
 use App\Models\AppTicket39;
 use App\Models\AppTicket40;
+use App\Models\AppTicket42;
+use App\Models\AppTicket44;
+use App\Models\AppTicket46;
 use App\Http\Requests\TicketRequest;
 use App\Http\Requests\TicketRequest2;
 use App\Http\Requests\TicketRequest3;
@@ -73,6 +77,8 @@ use App\Http\Requests\TicketRequest22;
 use App\Http\Requests\Ticket23Request;
 use App\Http\Requests\Ticket39Request;
 use App\Http\Requests\Ticket40Request;
+use App\Http\Requests\Ticket15Request;
+use App\Http\Requests\Ticket44Request;
 use App\Models\Setting;
 use App\Models\AppTrans;
 use App\Models\water;
@@ -86,6 +92,8 @@ use App\Models\PortalTicket;
 use DB;
 use App\Models\Orgnization;
 use App\Models\Archive;
+use App\Models\CopyTo;
+use App\Models\AgendaTopic;
 use stdClass;
 class AppOp extends Controller
 {
@@ -248,9 +256,11 @@ class AppOp extends Controller
 
     function sendSMS($mobile,$msg){
         //{"url":"http:\/\/hotsms.ps\/","sendSMS":1,"page":"sendbulksms.php","username":"Zababdeh M","password":"5873071","sender":"Zababdeh M"}
-         $username=urlencode('Asira Vc');
-         $password=urlencode('837524');
-         $sender  =urlencode('Asira Vc');
+        //  $username=urlencode('Expand.psss');
+        //  $password=urlencode('7688278777');
+         $username=urlencode('Expand.ps');
+         $password=urlencode('9836960');
+         $sender  =urlencode('Expand.ps');
          $match=array();
         $message1=urlencode($msg);
         $result= file_get_contents("http://hotsms.ps/sendbulksms.php?user_name=".$username."&user_pass=".$password."&sender=".$sender."&mobile=$mobile&type=2&text=".$message1);
@@ -302,7 +312,7 @@ class AppOp extends Controller
                 $appResponse=new AppResponse();
                 $appResponse->trans_id	=$ticket->active_trans;
                 $appResponse->ticket_id=$ticket->id;
-                $appResponse->app_type=$ticket->app_type;
+                $appResponse->app_type=$request->ticketNo;
                 $txt1='تم ارسال رسالة نصية إلى الرقم : ';
                 $txt1.=$s_mobile.' <br> '.$txt;
                 $appResponse->s_text=$txt1;
@@ -355,7 +365,16 @@ class AppOp extends Controller
     // }
     
     public function addReplay(Request $request){
-        
+        if($request->removeTag==true){
+            $appTranses=AppTrans::where('ticket_id',$request->ticket_id)->where('related',$request->app_type)->get();
+            $finished_tag=array();
+            foreach($appTranses as $trans){
+                $finished_tag=json_decode($trans->finished_tag);
+                array_push($finished_tag,strval(Auth()->user()->id));
+                $trans->finished_tag=$finished_tag;
+                $trans->save();
+            }
+        }
         $appTrans=AppTrans::find($request->trans_id);
         if($appTrans){
             
@@ -413,13 +432,22 @@ class AppOp extends Controller
             }
             return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
     }
-    
+        
     public function addTrans(Request $request){
         
         $ticket=DB::select("select * from app_ticket".$request->related."s where id=".$request->ticket_id);
-        // if($ticket[0]->ticket_status==5003){
-        DB::update("update app_ticket".$request->related."s set ticket_status= 1"." where id=".$request->ticket_id );
-        // }
+        $config=TicketConfig::where('ticket_no',$request->related)->where('app_type',$request->app_type)->first();
+        if($ticket[0]->ticket_status==5003 || $ticket[0]->ticket_status==6283){
+            DB::update("update app_ticket".$request->related."s set ticket_status= 1"." where id=".$request->ticket_id );
+        }
+        
+        $flows=json_decode($config->flow);
+        if(sizeof($flows)>($ticket[0]->flow_index)) {
+            $nextFlow = $flows[($ticket[0]->flow_index)];
+        }
+        if(isset($nextFlow)&& $request->AssDeptID == $nextFlow->nextDeptId) {
+            DB::update("update app_ticket".$request->related."s set flow_index= ".($ticket[0]->flow_index + 1)." where id=".$request->ticket_id );
+        }
         
         $res_id=intval($request->AssignedToID);
         $user_name=Admin::select('nick_name')->where('id','=',$res_id)->first();
@@ -430,7 +458,6 @@ class AppOp extends Controller
             $str='تم تحويل الطلب الى  ';
             $str.=$user_name['nick_name'];
         }
-        // dd($str);
         if($request->note!=null)
             $str.='<br/><b style="color:#5599FE">ملاحظات: </b>'.trim($request->note);
         
@@ -582,6 +609,81 @@ order by created_at asc");
             // $buildingTypes = Constant::where('parent',6016)->where('status',1)->get();
             return view('dashboard.license.licenseAdd',compact('type','regions','use_desc','ticket'/*,'useList','officeList','buildingTypes'*/));
         }
+    }
+    
+    public function getArchive($Id,$type){
+        if($type== 'trade_archive'){
+            $archive['info'] = TradeArchive::where('id', $Id)->first();
+            $attach = json_decode($archive['info']->json_feild);
+            $attachIds = json_decode($archive['info']->attach_ids) ?? array();
+            $count = sizeof($attachIds);
+            $i = 0;
+            foreach ($attach as $key => $value) {
+                foreach ((array)$value as $key => $val) {
+                    $temp = array();
+                    if ($i < $count) {
+                        $temp['id'] = $attachIds[$i];
+                        $i++;
+                    } else {
+                        $temp['id'] = 0;
+                    }
+                    $temp['real_name'] = $key;
+                    $temp['url'] = $val;
+                }
+                //dd($temp);
+                $archive['files'][] = $temp;
+            }
+        }else if($type== 'finance_archive'){
+            $archive['info'] = Archive::find($Id);
+            $attach=json_decode($archive['info']->json_feild);
+            foreach($attach as $key=>$value){
+                foreach((array) $value as $key=>$val){
+                    $temp=array();
+                    $temp['id']=0;
+                    $temp['real_name']=$key;
+                    $temp['url']=$val;
+                }
+                //dd($temp);
+                $archive['files'][]=$temp;
+            }
+        }else if($type== 'agenda_archieve'){
+            $archive['info'] = AgendaTopic::find($Id);
+            $archive['info']->url="agenda_archieve";
+            $archive['files']=[];
+            if(is_array(json_decode($archive['info']->file_ids)))
+              $files= File::whereIn('id',json_decode($archive['info']->file_ids))->get(['id','real_name','url']);
+            if(isset($files) && $files!=null){
+                foreach($files as $file){
+                    $temp=array();
+                    $temp['id']=$file->id;
+                    $temp['real_name']=$file->real_name;
+                    $temp['url']=$file->url;
+                }
+                $archive['files'][]=$temp;
+            }
+        }else{
+            $archive['info'] = Archive::find($Id);
+            $archive['files'] = File::where('archive_id', '=', $Id)->where('model_name', 'App\Models\Archive')->get();
+            $archive['CopyTo'] = CopyTo::where('archive_id', '=', $Id)->where('enabled',1)->get();
+        }
+        if($type=='mun_archieve'){
+            $archive['docTypes']=Constant::where('parent',49)->where('status',1)->get();
+        }else if($type=='proj_archieve'){
+           $archive['docTypes']=Constant::where('parent',53)->where('status',1)->get(); 
+        }else if($type=='assets_archieve'){
+           $archive['docTypes']=Constant::where('parent',9)->where('status',1)->get(); 
+        }else if($type=='emp_archieve'){
+           $archive['docTypes']=Constant::where('parent',50)->where('status',1)->get(); 
+        }else if($type=='dep_archieve' || $type=='contract_archieve'){
+           $archive['docTypes']=Constant::where('parent',51)->where('status',1)->get(); 
+        }else if($type=='cit_archieve'){
+           $archive['docTypes']=Constant::where('parent',52)->where('status',1)->get(); 
+        }else if($type=='law_archieve'){
+           $archive['docTypes']=Constant::where('parent',101)->where('status',1)->get(); 
+        }else if($type=='trade_archive' || $type=='finance_archive'){
+           $archive['docTypes']=Constant::where('parent',105)->where('status',1)->get(); 
+        }
+        return $archive;
     }
     
     public function viewTicket($ticket_id=0,$related=0)
@@ -1010,7 +1112,9 @@ order by created_at asc");
 		if($related==16){
 		    $ticket=AppTicket16::find($ticket_id);
 		    $helpers['sparePartes']=Order::where('ticket_id',$ticket->id)->where('related_ticket',$related)->get();
-            $setting = Setting::first();             $helpers['region']=Region::where('town_id',$setting->town_id)->get();
+		    $helpers['task_types'] = Constant::where('parent',6465)->where('status',1)->get();
+            $setting = Setting::first();             
+            $helpers['region']=Region::where('town_id',$setting->town_id)->get();
 		}
 		if($related==17){
 		    $ticket=AppTicket17::find($ticket_id);
@@ -1044,6 +1148,12 @@ order by created_at asc");
 	    }
 	    if($related==19){
 		    $ticket=AppTicket19::find($ticket_id);
+		    $ticket->NameARList=(json_decode($ticket->NameARList))??array();
+		    $ticket->NationalIDList=(json_decode($ticket->NationalIDList))??array();
+            $ticket->MobileNo1List=(json_decode($ticket->MobileNo1List))??array();
+            $ticket->s_sideList=(json_decode($ticket->s_sideList))??array();
+            $ticket->beneficiaries	=json_decode($ticket->beneficiaries);
+            $ticket->beneficiaries_id	=json_decode($ticket->beneficiaries_id);
             $helpers['buildingTypeList'] = Constant::where('parent',6016)->where('status',1)->get();
             $helpers['officeAreaList'] = Constant::where('parent',6084)->where('status',1)->get();
             
@@ -1084,6 +1194,8 @@ order by created_at asc");
 		if($related==27){
 		    $ticket=AppTicket27::find($ticket_id);
 		    $helpers['resonTypeList']=Constant::where('parent',6033)->get();
+		    $ticket->piece_no_array		=json_decode($ticket->piece_no);
+            $ticket->hod_no_array		=json_decode($ticket->hod_no);
             // $setting = Setting::first();             $helpers['region']=Region::where('town_id',$setting->town_id)->get();
 	    }
 		if($related==28){
@@ -1179,11 +1291,49 @@ order by created_at asc");
             $setting = Setting::first();             
             $helpers['region']=Region::where('town_id',$setting->town_id)->get();
 	    }
+	    if($related==42){
+		    $ticket=AppTicket42::find($ticket_id);
+		    $helpers['orders']=Order::where('ticket_id',$ticket_id)->where('related_ticket',$related)->get();
+		    
+		    $helpers['fin_desc_list']=Constant::where('parent',6326)->where('status',1)->get();
+	    }
+	    if($related==44){
+		    $ticket=AppTicket44::find($ticket_id);
+		    $admin=Admin::where('id',$ticket->customer_id)->first();
+		    $admin1=Admin::where('id',$ticket->customer_id1)->first();
+		    $ticket->position=$admin->job_title_id;
+		    $ticket->position1=$admin1->job_title_id;
+		    $helpers['positions'] = Constant::where('parent',65)->where('status',1)->get();
+	    }
+	    if($related==46){
+		    $ticket=AppTicket46::find($ticket_id);
+		    $helpers['archive']=$this->getArchive($ticket->archive_id,$ticket->archive_type);
+	    }
 	    //dd($ticket);
 	    if($ticket==null)
 	        return redirect()->route('admin.dashboard');
 	    //dd($ticket);
         $config=TicketConfig::where('ticket_no',$related)->where('app_type',$ticket->app_type)->get();
+        
+        $allFlows=json_decode($config[0]->flow);
+        if(sizeof($allFlows)>1){
+            $flows[] = $allFlows[$ticket->flow_index];
+            $flowsDept[]=$allFlows[$ticket->flow_index]->nextDeptId;
+            $flowsEmp[]=$allFlows[$ticket->flow_index]->nextDeptId;
+            $flowsIsMandatory[]=$allFlows[$ticket->flow_index]->nextIsMandatory;
+            if(($ticket->flow_index-1) >= 0 && ($ticket->flow_index-1) < sizeof($allFlows) && $allFlows[$ticket->flow_index]->nextIsMandatory!=1) {
+                $flows[] = $allFlows[$ticket->flow_index - 1];
+                $flowsDept[] = $allFlows[$ticket->flow_index - 1]->nextDeptId;
+                $flowsEmp[] = $allFlows[$ticket->flow_index - 1]->nextEmpId;
+                $flowsIsMandatory[] = $allFlows[$ticket->flow_index - 1]->nextIsMandatory;
+            }
+        }else{
+            $flows=null;
+            $flowsDept=null;
+            $flowsEmp=null;
+            $flowsIsMandatory=null;
+        }
+        
         // dd($ticket->app_type);
         $res=$this->getTicketHistory($ticket_id,$related);
         foreach($res as $row){
@@ -1206,7 +1356,7 @@ order by created_at asc");
         $app_type=$ticket->app_type;
         $ticket->setAttribute('AppTrans',AppTrans::where('ticket_type',$related)->where('ticket_id',$ticket_id)->get());
         $type = 'receive';
-        return view('dashboard.ticketRecive.index', compact('type','app_type','ticket','related','config','helpers'));
+        return view('dashboard.ticketRecive.index', compact('type','app_type','ticket','related','config','helpers','flows','flowsDept','flowsEmp'));
 	}
 	
     public function editTicket($ticket_id=0,$related=0)
@@ -1339,7 +1489,7 @@ order by created_at asc");
             $i=0;
             $c=0;
             foreach ($files_ids as $id) {
-                if($request->notArchived[$c] == $id){
+                if($c<sizeof($request->notArchived) && $request->notArchived[$c] == $id){
                     $archive = new Archive();
             
                     $archive->model_id = $request->subscriber_id;
@@ -1405,7 +1555,7 @@ order by created_at asc");
             $i=0;
             $c=0;
             foreach ($files_ids as $id) {
-                if($request->notArchived1[$c] == $id && $request->notArchived1[$c] !="undefined"){
+                if($c<sizeof($request->notArchived1) && $request->notArchived1[$c] == $id && $request->notArchived1[$c] !="undefined"){
                     $archive = new Archive();
             
                     $archive->model_id = $request->subscriberId1;
@@ -1538,7 +1688,7 @@ order by created_at asc");
                 
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(1,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1665,7 +1815,7 @@ order by created_at asc");
                 
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(2,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1701,6 +1851,7 @@ order by created_at asc");
             $app->file_ids	=json_encode($this->prepearAttach($request));
             $app->save();
             if ($app) {
+                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
@@ -1812,7 +1963,7 @@ order by created_at asc");
                 
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(3,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1879,7 +2030,6 @@ order by created_at asc");
             $app->file_ids	=json_encode($this->prepearAttach($request));
             $app->save();
             if ($app) {
-                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
@@ -1958,7 +2108,7 @@ order by created_at asc");
                 }
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(4,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1991,7 +2141,6 @@ order by created_at asc");
             $app->dept_id		=$request->dept_id;
             $app->save();
             if ($app) {
-                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
@@ -2075,7 +2224,7 @@ order by created_at asc");
                 
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(5,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2194,7 +2343,7 @@ order by created_at asc");
                 
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(6,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2312,7 +2461,7 @@ order by created_at asc");
                 }
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(7,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2446,7 +2595,7 @@ order by created_at asc");
                 }
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(8,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2571,7 +2720,7 @@ order by created_at asc");
                 }
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(9,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2606,7 +2755,6 @@ order by created_at asc");
             $app->file_ids	=json_encode($this->prepearAttach($request));
             $app->save();
             if ($app) {
-                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
@@ -2687,7 +2835,7 @@ order by created_at asc");
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(10,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2736,12 +2884,12 @@ order by created_at asc");
             $app->file_ids	=json_encode($this->prepearAttach($request));
             $app->save();
             if ($app) {
-                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
                     $this->saveScannedFilesArchieve($request,$name,$link);
                 }
+                
                 
                 return response()->json(['app_id'=>$app->id,'app_type'=>$ticket_type,'success'=>trans('تم الحفظ')]);
             }
@@ -2814,7 +2962,7 @@ order by created_at asc");
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(11,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2927,7 +3075,7 @@ order by created_at asc");
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(12,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3041,7 +3189,7 @@ order by created_at asc");
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(13,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3153,7 +3301,7 @@ order by created_at asc");
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(14,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3201,7 +3349,7 @@ order by created_at asc");
         }
     }
     
-    public function saveTicket15(TicketRequest5 $request){
+    public function saveTicket15(Ticket15Request $request){
         if(($request->AssignedToID == null || $request->AssDeptID == null)&& $request->app_id==null){
 	        return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
 	    }
@@ -3267,7 +3415,7 @@ order by created_at asc");
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(15,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3307,7 +3455,6 @@ order by created_at asc");
             $app->file_ids	=json_encode($this->prepearAttach($request));
             $app->save();
             if ($app) {
-                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
@@ -3350,6 +3497,7 @@ order by created_at asc");
             $app->receipt_no	=$request->ReciptNo;	
             $app->amount		=$request->AmountInNIS;
             $app->currency		=$request->CurrencyID;
+            $app->task_type		=$request->task_type;
             $app->customer_id	=$request->subscriber_id;	
             $app->customer_name	=$request->subscriber_name;
             $app->customer_mobile=$request->MobileNo;		             
@@ -3383,7 +3531,7 @@ order by created_at asc");
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(16,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3399,6 +3547,7 @@ order by created_at asc");
             $app->receipt_no	=$request->ReciptNo;	
             $app->amount		=$request->AmountInNIS;
             $app->currency		=$request->CurrencyID;
+            $app->task_type		=$request->task_type;
             $app->customer_id	=$request->subscriber_id;	
             $app->customer_name	=$request->subscriber_name;
             $app->customer_mobile=$request->MobileNo;		             $app->national_id=$request->national_id;		
@@ -3419,7 +3568,6 @@ order by created_at asc");
             $app->file_ids	=json_encode($this->prepearAttach($request));
             $app->save();
             if ($app) {
-                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
@@ -3495,7 +3643,7 @@ order by created_at asc");
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(17,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3531,7 +3679,6 @@ order by created_at asc");
             $app->file_ids	=json_encode($this->prepearAttach($request));
             $app->save();
             if ($app) {
-                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
@@ -3619,7 +3766,7 @@ order by created_at asc");
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(18,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3667,7 +3814,6 @@ order by created_at asc");
             $app->file_ids	=json_encode($this->prepearAttach($request));
             $app->save();
             if ($app) {
-                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
@@ -3678,6 +3824,26 @@ order by created_at asc");
             }
             return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
         }
+    }
+    
+    function prepearBeneficiaries(Request $request){
+        $beneficiaryName=$request->beneficiaryName;
+        $beneficiaryID=$request->beneficiaryID;
+        $beneficiaryNationalId=$request->beneficiaryNationalId;
+        $beneficiaryPhone=$request->beneficiaryPhone;
+        $beneficiaryArr=array();
+        if($beneficiaryName)
+        for($i=0;$i<sizeof($beneficiaryName);$i++){
+            if(trim($beneficiaryName[$i])!=''&& $beneficiaryID[$i] != null){
+            $temp=array();
+            $temp['beneficiaryName']=$beneficiaryName[$i];
+            $temp['beneficiaryID']=$beneficiaryID[$i];
+            $temp['beneficiaryNationalId']=$beneficiaryNationalId[$i];
+            $temp['beneficiaryPhone']=$beneficiaryPhone[$i];
+            $beneficiaryArr[]=$temp;
+            }
+        }
+        return $beneficiaryArr;
     }
     
     public function saveTicket19(TicketRequest9 $request){
@@ -3720,7 +3886,12 @@ order by created_at asc");
             $app->fileNo		=$request->fileNo;
             $app->hodNo		=$request->hodNo;
             $app->pieceNo		=$request->pieceNo;
+            $app->quarterNo		=$request->quarterNo;
+            $app->square		=$request->square;
+            $app->hodName		=$request->hodName;
             $app->engOffice		=$request->engOffice;
+            $app->beneficiaries	=json_encode($this->prepearBeneficiaries($request));
+            $app->beneficiaries_id	=json_encode($request->beneficiaryID);
             $app->buildingType	=$request->buildingType;
             $app->debt_total		=$request->debtTotal;
             $app->payment		=$request->payment;
@@ -3753,7 +3924,7 @@ order by created_at asc");
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(19,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3771,7 +3942,8 @@ order by created_at asc");
             $app->currency		=$request->CurrencyID;
             $app->customer_id	=$request->subscriber_id;	
             $app->customer_name	=$request->subscriber_name;
-            $app->customer_mobile=$request->MobileNo;		             $app->national_id=$request->national_id;		
+            $app->customer_mobile=$request->MobileNo;		             
+            $app->national_id=$request->national_id;		
             $app->region		=$request->AreaID;
             $app->address		=isset($request->Address)?$request->Address:'';
             $app->app_type		=$request->app_type;
@@ -3780,7 +3952,8 @@ order by created_at asc");
             $app->pieceNo		=$request->pieceNo;
             $app->engOffice		=$request->engOffice;
             $app->buildingType	=$request->buildingType;
-
+            $app->beneficiaries	=json_encode($this->prepearBeneficiaries($request));
+            $app->beneficiaries_id	=json_encode(($request->beneficiaryID??[]));
             $app->debt_total		=$request->debtTotal;
             $app->payment		=$request->payment;
             $app->rest		=$request->rest;
@@ -3800,7 +3973,6 @@ order by created_at asc");
             $app->file_ids	=json_encode($this->prepearAttach($request));
             $app->save();
             if ($app) {
-                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
@@ -3875,7 +4047,7 @@ order by created_at asc");
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(20,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -3995,7 +4167,7 @@ order by created_at asc");
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(21,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4040,13 +4212,11 @@ order by created_at asc");
             $app->file_ids	=json_encode($this->prepearAttach($request));
             $app->save();
             if ($app) {
-                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
                     $this->saveScannedFilesArchieve($request,$name,$link);
                 }
-                
                 return response()->json(['app_id'=>$app->id,'app_type'=>$ticket_type,'success'=>trans('تم الحفظ')]);
             }
             return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
@@ -4119,7 +4289,7 @@ order by created_at asc");
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(22,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4159,7 +4329,6 @@ order by created_at asc");
             $app->file_ids	=json_encode($this->prepearAttach($request));
             $app->save();
             if ($app) {
-                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
@@ -4234,7 +4403,7 @@ order by created_at asc");
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(23,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4279,7 +4448,6 @@ order by created_at asc");
             $app->file_ids	=json_encode($this->prepearAttach($request));
             $app->save();
             if ($app) {
-                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
@@ -4354,7 +4522,7 @@ order by created_at asc");
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(24,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4399,7 +4567,6 @@ order by created_at asc");
             $app->file_ids	=json_encode($this->prepearAttach($request));
             $app->save();
             if ($app) {
-                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
@@ -4476,7 +4643,7 @@ order by created_at asc");
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(25,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4514,7 +4681,6 @@ order by created_at asc");
             $app->file_ids	=json_encode($this->prepearAttach($request));
             $app->save();
             if ($app) {
-                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
@@ -4589,7 +4755,7 @@ order by created_at asc");
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(26,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4625,7 +4791,6 @@ order by created_at asc");
             $app->file_ids	=json_encode($this->prepearAttach($request));
             $app->save();
             if ($app) {
-                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
@@ -4673,6 +4838,8 @@ order by created_at asc");
             $app->national_id=$request->national_id;
             $app->app_type		=$request->app_type;
             $app->reason		=$request->reason;
+            $app->piece_no		=json_encode($request->piece_no);
+            $app->hod_no		=json_encode($request->hod_no);
             $app->b_enabled		=1;
             $app->created_by	=Auth()->user()->id;
             $app->dept_id		=$request->dept_id;
@@ -4696,7 +4863,7 @@ order by created_at asc");
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(27,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4715,9 +4882,12 @@ order by created_at asc");
             $app->currency		=$request->CurrencyID;
             $app->customer_id	=$request->subscriber_id;
             $app->customer_name	=$request->subscriber_name;
-            $app->customer_mobile=$request->MobileNo;		             $app->national_id=$request->national_id;
+            $app->customer_mobile=$request->MobileNo;		             
+            $app->national_id=$request->national_id;
             $app->app_type		=$request->app_type;
             $app->reason		=$request->reason;
+            $app->piece_no		=json_encode($request->piece_no);
+            $app->hod_no		=json_encode($request->hod_no);
             $app->updated_at	=date('Y-m-d H:i:s');
             $app->dept_id		=$request->dept_id;
             $app->debt_total		=$request->debtTotal;
@@ -4729,7 +4899,6 @@ order by created_at asc");
             $app->file_ids	=json_encode($this->prepearAttach($request));
             $app->save();
             if ($app) {
-                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
@@ -4791,15 +4960,15 @@ order by created_at asc");
     			$this->saveTrans($app->id,$ticket_type,$row,$request->note,$request->AssDeptID,2);*/
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
-                $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
-                ." بإسم ".$request->subscriber_name;
-                $this->addSmsLog(28,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
-                //////////////////////////////////////////////////////////////////////////////////////////////////////////
-                $model='App\\Models\\Admin';
-                $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
-                $name=$config->ticket_name.'  ('.$app->app_no.')';
-                $this->saveCustomerFilesArchieve($request,$name,$link,$model);
+                // $txt="تم استلام "
+                // .$config->ticket_name." ".$app->app_no
+                // ." بإسم ".$request->subscriber_name;
+                // $this->addSmsLog(28,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
+                // //////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // $model='App\\Models\\Admin';
+                // $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
+                // $name=$config->ticket_name.'  ('.$app->app_no.')';
+                // $this->saveCustomerFilesArchieve($request,$name,$link,$model);
                 
                 return response()->json(['app_id'=>$app->id,'app_type'=>$ticket_type,'success'=>trans('تم الحفظ')]);
             }
@@ -4824,12 +4993,11 @@ order by created_at asc");
             $app->dept_id		=$request->dept_id;
             $app->save();
             if ($app) {
-                
-                if(($request->notArchived != null)){
-                    $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
-                    $name=$config->ticket_name.'  ('.$app->app_no.')';
-                    $this->saveScannedFilesArchieve($request,$name,$link);
-                }
+                // if(($request->notArchived != null)){
+                //     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
+                //     $name=$config->ticket_name.'  ('.$app->app_no.')';
+                //     $this->saveScannedFilesArchieve($request,$name,$link);
+                // }
                 
                 return response()->json(['app_id'=>$app->id,'app_type'=>$ticket_type,'success'=>trans('تم الحفظ')]);
             }
@@ -4903,7 +5071,7 @@ order by created_at asc");
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(29,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4941,7 +5109,6 @@ order by created_at asc");
             $app->file_ids	=json_encode($this->prepearAttach($request));
             $app->save();
             if ($app) {
-                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
@@ -5041,8 +5208,15 @@ order by created_at asc");
                 $order=new Order();
                 $order->ticket_id=$id;
                 $order->itemname	=$ItemNameList[$i];
-                $order->quantity		=$QuantityList[$i];
-                $order->types		=$TypesList[$i];
+                if($related != 42){
+                    $order->quantity		=$QuantityList[$i];
+                    if($related != 34){
+                        $order->types		=$TypesList[$i];
+                    }
+                }else{
+                    $order->quantity		=1;
+                    $order->types		=1;
+                }
                 if(sizeof($PriceList)>$i)
                         $order->price	=$PriceList[$i];
                 if(sizeof($TotalList)>$i)
@@ -5135,7 +5309,7 @@ order by created_at asc");
                 $this->savePurchase($request,$app->id,31);
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(31,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5166,12 +5340,12 @@ order by created_at asc");
             $app->save();
             if ($app) {
                 $this->savePurchase($request,$app->id,31);
-                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
                     $this->saveScannedFilesArchieve($request,$name,$link);
                 }
+                
                 
                 return response()->json(['app_id'=>$app->id,'app_type'=>$ticket_type,'success'=>trans('تم الحفظ')]);
             }
@@ -5224,7 +5398,7 @@ order by created_at asc");
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(32,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5256,8 +5430,8 @@ order by created_at asc");
             $app->dept_id		=$request->dept_id;
             $app->save();
             if ($app) {
-                
                 if(($request->notArchived != null)){
+                    $model='App\\Models\\Admin';
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
                     $this->saveScannedFilesArchieve($request,$name,$link);
@@ -5382,7 +5556,7 @@ order by created_at asc");
                 $this->savePurchase($request,$app->id,34);
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(34,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5415,7 +5589,6 @@ order by created_at asc");
             $app->save();
             if ($app) {
                 $this->savePurchase($request,$app->id,34);
-                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
@@ -5505,7 +5678,7 @@ order by created_at asc");
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(35,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5546,7 +5719,6 @@ order by created_at asc");
             $app->file_ids	=json_encode($this->prepearAttach($request));
             $app->save();
             if ($app) {
-                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
@@ -5672,7 +5844,6 @@ order by created_at asc");
             $app->file_ids	=json_encode($this->prepearAttach($request));
             $app->save();
             if ($app) {
-                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
@@ -5761,7 +5932,6 @@ order by created_at asc");
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
                     $this->saveScannedFilesArchieve($request,$name,$link);
                 }
-                
                 return response()->json(['app_id'=>$app->id,'app_type'=>$ticket_type,'success'=>trans('تم الحفظ')]);
             }
             return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
@@ -5850,7 +6020,6 @@ order by created_at asc");
             $app->file_ids	        =json_encode($this->prepearAttach($request));
             $app->save();
             if ($app) {
-                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
@@ -5946,7 +6115,7 @@ order by created_at asc");
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(39,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -5994,7 +6163,6 @@ order by created_at asc");
             $app->file_ids	=json_encode($this->prepearAttach($request));
             $app->save();
             if ($app) {
-                
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
@@ -6083,7 +6251,7 @@ order by created_at asc");
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 $txt="تم استلام "
-                .$config->ticket_name." ".$app->id
+                .$config->ticket_name." ".$app->app_no
                 ." بإسم ".$request->subscriber_name;
                 $this->addSmsLog(40,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -6128,13 +6296,279 @@ order by created_at asc");
             $app->file_ids	=json_encode($this->prepearAttach($request));
             $app->save();
             if ($app) {
+                if(($request->notArchived != null)){
+                    $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
+                    $name=$config->ticket_name.'  ('.$app->app_no.')';
+                    $this->saveScannedFilesArchieve($request,$name,$link);
+                }
+                return response()->json(['app_id'=>$app->id,'app_type'=>$ticket_type,'success'=>trans('تم الحفظ')]);
+            }
+            return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
+        }
+    }
+    
+    public function saveTicket42(Request $request){
+        if(($request->AssignedToID == null || $request->AssDeptID == null)&& $request->app_id==null){
+	        return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
+	    }
+        $app_id=$request->app_id;
+        $ticket_type=42;
+        $this->updateCMobile($request->subscriber_id,$request->MobileNo)  ;
+
+        $config=TicketConfig::where('ticket_no',42)->where('app_type',$request->app_type)->first();
+        /////////////////////////////////////////////////////////////////////sms///////////////////////
+        if(!$app_id){
+            $Currency='';
+            $fin_descName='';
+            if($request->CurrencyID1=="1"){
+                $Currency='شيكل';
+            }else if($request->CurrencyID1=="2"){
+                $Currency='دولار';
+            }else if($request->CurrencyID1=="3"){
+                $Currency='دينار';
+            }else{
+                $Currency='يورو';
+            }
+            if($request->fin_desc!= null){
+                $fin_descName=Constant::where('id',$request->fin_desc)->first();
+            }
+            $subscriber_name=str_replace("(مواطن)", "",$request->subscriber_name);
+            $txt="حضرة السادة : "
+            .$subscriber_name
+            ." يرجي من حضرتكم تسديد مبلغ "
+            .$request->AmountInNIS1
+            ." ".$Currency
+            ." وذلك عن "
+            .$fin_descName->name
+            ." خلال فترة اقصاها 3 ايام وفي حال عدم الالتزام سيتم فصل الخدمة عنكم";
+            
+        }
+        /////////////////////////////////////////////////////////////////////sms///////////////////////
+        if(!$app_id){
+            $maxRec=AppTicket42::select('app_no')->where('app_type',$request->app_type)->orderBy('id','desc')->limit(1)->get();
+            $max=1;
+
+            if(sizeof($maxRec)>0)
+                $max=$maxRec[0]->app_no+1;
+            $app=new AppTicket42();
+            $app->app_no=$max;
+            $app->receipt_no	=$request->ReciptNo;
+            $app->amount		=$request->AmountInNIS;
+            $app->currency		=$request->CurrencyID;
+            $app->customer_id	=$request->subscriber_id;
+            $app->customer_name	=$request->subscriber_name;
+            $app->customer_model	=$request->subscriber_model;
+            $app->customer_mobile=$request->MobileNo;
+            $app->app_type		=$request->app_type;
+            $app->b_enabled		=1;
+            $app->created_by	=Auth()->user()->id;
+            $app->dept_id		=$request->dept_id;
+            $app->fees_json		=json_encode($this->prepearFees($request));
+            $app->file_ids	=json_encode($this->prepearAttach($request));
+            $app->AmountInNIS1	=$request->AmountInNIS1;
+            $app->CurrencyID1	=$request->CurrencyID1;
+            $app->fin_desc	=$request->fin_desc;
+            $app->hrs		=$request->restHrs;
+            $app->priority		=0;//$request->;
+            $app->ticket_status =1;
+            $app->active_trans	=1;
+            $app->save();
+            $request->note.=" الرسالة النصية: ".$txt;
+            $app->active_trans=$this->saveTrans($app->id,$request->app_type,$request->AssignedToID,$request->note,$request->AssDeptID,1,$ticket_type,$request);
+            $app->save();
+    		/*$tag=$request->tags?$request->tags:array();
+    		foreach($tag as $row)
+    			$this->saveTrans($app->id,$ticket_type,$row,$request->note,$request->AssDeptID,2);*/
+            if ($app) {
+                $this->savePurchase($request,$app->id,42);
+                ///////////////////////////////////////////////////////for Production///////////////////////////////////////
                 
+                $this->addSmsLog(42,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////
+                $model= $app->customer_model;
+                $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
+                $name=$config->ticket_name.'  ('.$app->app_no.')';
+                $this->saveCustomerFilesArchieve($request,$name,$link,$model);
+                
+                return response()->json(['app_id'=>$app->id,'app_type'=>$ticket_type,'success'=>trans('تم الحفظ')]);
+            }
+            return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
+        }
+        else{
+            $app=AppTicket42::find($app_id);
+            $app->receipt_no	=$request->ReciptNo;
+            $app->amount		=$request->AmountInNIS;
+            $app->currency		=$request->CurrencyID;
+            $app->customer_id	=$request->subscriber_id;
+            $app->customer_name	=$request->subscriber_name;
+            $app->customer_model	=$request->subscriber_model;
+            $app->customer_mobile=$request->MobileNo;
+            $app->app_type		=$request->app_type;
+            $app->fees_json		=json_encode($this->prepearFees($request));
+            $app->file_ids	=json_encode($this->prepearAttach($request));
+            $app->AmountInNIS1	=$request->AmountInNIS1;
+            $app->CurrencyID1	=$request->CurrencyID1;
+            $app->fin_desc	=$request->fin_desc;
+            $app->updated_at	=date('Y-m-d H:i:s');
+            $app->dept_id		=$request->dept_id;
+            $app->save();
+            if ($app) {
+                $this->savePurchase($request,$app->id,42);
                 if(($request->notArchived != null)){
                     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
                     $name=$config->ticket_name.'  ('.$app->app_no.')';
                     $this->saveScannedFilesArchieve($request,$name,$link);
                 }
                 
+                return response()->json(['app_id'=>$app->id,'app_type'=>$ticket_type,'success'=>trans('تم الحفظ')]);
+            }
+            return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
+        }
+    }
+    
+    public function saveTicket44(Ticket44Request $request){
+        if(($request->AssignedToID == null || $request->AssDeptID == null)&& $request->app_id==null){
+	        return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
+	    }
+        $app_id=$request->app_id;
+        $ticket_type=44;      
+
+        $config=TicketConfig::where('ticket_no',44)->where('app_type',$request->app_type)->first();
+        if(!$app_id){
+            // $maxRec=AppTicket44::select('app_no')->where('app_type',$request->app_type)->orderBy('id','desc')->limit(1)->get();
+            // $max=1;
+
+            // if(sizeof($maxRec)>0)
+            //     $max=$maxRec[0]->app_no+1;
+            $app=new AppTicket44();
+            $app->app_no        =$request->app_no;
+            $app->year          =$request->year;
+            $app->topic         =$request->topic;
+            $app->receipt_no	=$request->ReciptNo;
+            $app->amount		=$request->AmountInNIS;
+            $app->currency		=$request->CurrencyID;
+            $app->customer_id	=$request->subscriber_id;
+            $app->customer_name	=$request->subscriber_name;
+            $app->customer_id1	=$request->subscriber_id1;
+            $app->customer_name1=$request->subscriber_name1;
+            $app->app_type		=$request->app_type;
+            $app->b_enabled		=1;
+            $app->created_by	=Auth()->user()->id;
+            $app->dept_id		=$request->dept_id;
+            $app->malDesc		=$request->malDesc;
+            $app->hrs		=$request->restHrs;
+            $app->file_ids	=json_encode($this->prepearAttach($request));
+            $app->priority		=0;//$request->;
+            $app->ticket_status =1;
+            $app->active_trans	=1;
+            $app->save();      
+            $app->active_trans=$this->saveTrans($app->id,$request->app_type,$request->AssignedToID,$request->note,$request->AssDeptID,1,$ticket_type,$request);
+            $app->save();
+    		/*$tag=$request->tags?$request->tags:array();
+    		foreach($tag as $row)
+    			$this->saveTrans($request,$app->id,$ticket_type,$row,$request->note,$request->AssDeptID,2);*/
+            if ($app) {
+                ///////////////////////////////////////////////////////for Production///////////////////////////////////////
+                // $txt="تم استلام "
+                // .$config->ticket_name." ".$app->id
+                // ." بإسم ".$request->subscriber_name;
+                // $this->addSmsLog(44,Auth()->user()->id,$txt,$request->MobileNo,$request->subscriber_name,$app->id,$request->app_type);
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // $model='App\\Models\\Admin';
+                // $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
+                // $name=$config->ticket_name.'  ('.$app->app_no.')';
+                // $this->saveCustomerFilesArchieve($request,$name,$link,$model);
+                
+                return response()->json(['app_id'=>$app->id,'app_type'=>$ticket_type,'success'=>trans('تم الحفظ')]);
+            }
+            return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
+        }
+        else{
+            $app=AppTicket44::find($app_id);
+            $app->app_no        =$request->app_no;
+            $app->year          =$request->year;
+            $app->topic         =$request->topic;
+            $app->receipt_no	=$request->ReciptNo;
+            $app->amount		=$request->AmountInNIS;
+            $app->currency		=$request->CurrencyID;
+            $app->customer_id	=$request->subscriber_id;
+            $app->customer_name	=$request->subscriber_name;
+            $app->customer_id1	=$request->subscriber_id1;
+            $app->customer_name1=$request->subscriber_name1;
+            $app->app_type		=$request->app_type;
+            $app->malDesc		=$request->malDesc;
+            $app->file_ids	=json_encode($this->prepearAttach($request));
+            $app->updated_at	=date('Y-m-d H:i:s');
+            $app->dept_id		=$request->dept_id;
+            $app->save();
+            if ($app) {
+                
+                // if(($request->notArchived != null)){
+                //     $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
+                //     $name=$config->ticket_name.'  ('.$app->app_no.')';
+                //     $this->saveScannedFilesArchieve($request,$name,$link);
+                // }
+                
+                return response()->json(['app_id'=>$app->id,'app_type'=>$ticket_type,'success'=>trans('تم الحفظ')]);
+            }
+            return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
+        }
+    }
+    
+    public function saveTicket46(Request $request){
+        if(($request->AssignedToID == null || $request->AssDeptID == null)&& $request->app_id==null){
+	        return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
+	    }
+        $app_id=$request->app_id;
+        $ticket_type=46;
+        $config=TicketConfig::where('ticket_no',46)->where('app_type',$request->app_type)->first();
+        if(!$app_id){
+            $maxRec=AppTicket46::select('app_no')->where('app_type',$request->app_type)->orderBy('id','desc')->limit(1)->get();
+            $max=1;
+
+            if(sizeof($maxRec)>0)
+                $max=$maxRec[0]->app_no+1;
+            $app=new AppTicket46();
+            $app->app_no=$max;
+            $app->archive_id	=$request->ArchiveID;
+            $app->archive_type	=$request->archive_type;
+            $app->archive_title	=$request->msgTitle;
+            $app->customer_id	=$request->customer_id;
+            $app->customer_model	=$request->customer_model;
+            $app->customer_name	=$request->customerName;
+            $app->app_type		=$request->app_type;
+            $app->b_enabled		=1;
+            $app->created_by	=Auth()->user()->id;
+            $app->dept_id		=$request->dept_id;
+            $app->fees_json		=json_encode($this->prepearFees($request));
+            $app->file_ids	=json_encode($this->prepearAttach($request));
+            $app->hrs		=$request->restHrs;
+            $app->priority		=0;//$request->;
+            $app->ticket_status =1;
+            $app->active_trans	=1;
+            $app->save();
+            $app->active_trans=$this->saveTrans($app->id,$request->app_type,$request->AssignedToID,$request->note,$request->AssDeptID,1,$ticket_type,$request);
+            $app->save();
+            if ($app) {
+                return response()->json(['app_id'=>$app->id,'app_type'=>$ticket_type,'success'=>trans('تم الحفظ')]);
+            }
+            return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
+        }
+        else{
+            $app=AppTicket46::find($app_id);
+            $app->archive_id	=$request->ArchiveID;
+            $app->archive_type	=$request->archive_type;
+            $app->archive_title	=$request->msgTitle;
+            $app->customer_id	=$request->customer_id;
+            $app->customer_model	=$request->customer_model;
+            $app->customer_name	=$request->customerName;
+            $app->app_type		=$request->app_type;
+            $app->fees_json		=json_encode($this->prepearFees($request));
+            $app->file_ids	=json_encode($this->prepearAttach($request));
+            $app->updated_at	=date('Y-m-d H:i:s');
+            $app->dept_id		=$request->dept_id;
+            $app->save();
+            if ($app) {
                 return response()->json(['app_id'=>$app->id,'app_type'=>$ticket_type,'success'=>trans('تم الحفظ')]);
             }
             return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);

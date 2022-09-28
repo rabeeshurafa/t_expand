@@ -45,6 +45,8 @@
                             {{ trans('archive.emp_archive_lst') }}
                             @elseif ($type=="contractArchive")
                             {{ trans('archive.dep_archive_lst') }}
+                            @elseif ($type=="tradeArchive")
+                            {{ trans('archive.trade_achive') }}
                             @elseif ($type=="citArchive")
                             {{ trans('archive.cit_archive') }}
                             @elseif ($type=="licArchive")
@@ -159,6 +161,38 @@
                                                 <th style="width:79px!important;" class="hidemob">
                                                 </th>
                                             </tr>
+                                        </thead>
+                                        @elseif($type == 'tradeArchive')
+                                        <thead>
+                                        <tr style="text-align:center !important;background: #00A3E8;">
+                                            <th>
+                                                #
+                                            </th>
+                                            <th>
+                                                رقم المعاملة
+                                            </th>
+                                            <th>
+                                                {{trans('archive.deal_type')}}
+                                            </th>
+                                            <th style="width:200px">
+
+                                                مقدم الطلب
+                                            </th>
+                                            <th>
+                                                رقم الهوية
+                                            </th>
+                                            <th>
+                                                رقم الحوض
+                                            </th>
+                                            <th>
+                                                رقم القطعة
+                                            </th>
+                                            <th style="width:320px">
+                                                {{trans('archive.attach')}}
+                                            </th>
+                                            <th style="width:160px!important;">
+                                            </th>
+                                        </tr>
                                         </thead>
                                         @elseif($type == 'spareParts') <thead>
                                             <tr style="text-align:center !important;background: #00A3E8;">
@@ -729,7 +763,7 @@
                                                 <th width="230px">
                                                     {{trans('archive.attach')}}
                                                 </th>
-                                                <th style="width:90px;" class="hidemob">
+                                                <th style="width:140px;" class="hidemob">
                                                 </th>
                                                 <!--<th>-->
                                                 <!--</th>-->
@@ -889,6 +923,13 @@
             @elseif($type=="outArchive"||$type=="inArchive"||$type=='projArchive'||$type=='munArchive'||$type=='empArchive'||$type=='assetsArchive'||$type=='citArchive'||$type=='contractArchive' || $type=='lawArchieve' || $type == 'specialEmpArchive')
             ajax: {
                 url: '{{ route('archieve_info_all') }}',
+                data: function (d) {
+                    d.type = $('#type').val();
+                }
+            },
+            @elseif($type=='tradeArchive')
+            ajax: {
+                url: '{{ route('archieveTrade_info_all') }}',
                 data: function (d) {
                     d.type = $('#type').val();
                 }
@@ -1072,6 +1113,101 @@
                     name:'name',
                 },
             ],
+            @elseif($type=="tradeArchive")
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+                    {
+                        data: null,
+                        render: function (data, row, type) {
+                            // $time=data.created_at.substring(11,19);
+                            $date = data.created_at.substring(8, 10) + '/' + data.created_at.substring(7, 5) + '/' + data.created_at.substring(4, 0);
+                            $actionBtn = '<a data-toggle="tooltip" data-placement="top" data-original-title="'
+                                + ' تمت الإضافة بواسطة '
+                                + data.admin.nick_name
+                                + ' بتاريخ '
+                                + $date
+                                + '">' + data.trade_no + '</a>';
+        
+                            return $actionBtn;
+                        },
+                        name: 'name',
+        
+                    },
+                    // {data: 'trade_no'},
+                    {data: 'trade_type_name', name: 't_constant.name'},
+                    {
+                        data: null,
+                        render: function (data, row, type) {
+                            //$actionBtn = '<a ondblclick="update('+data.id+')">'+data.name+'</a>';
+                            if (data.url.url) {
+                                $actionBtn = '<a target="_blank" href="{{ route('admin.dashboard') }}/' + data.url.url + '?id=' + data.model_id + '">' + (data.name ?? '') + '</a>';
+                            } else {
+                                $actionBtn = '<a target="_blank" href="{{ route('admin.dashboard') }}">' + (data.name ?? '') + '</a>';
+                            }
+                            return $actionBtn;
+                        },
+                        name: 'name',
+        
+                    },
+                    {data: 'vehicle_name'},
+                    {data: 'plateNo'},
+                    {data: 'vehicle_no'},
+                    {
+                        data: null,
+        
+                        render: function (data, row, type) {
+                            if (data.arch_files.length > 0) {
+                                var i = 1;
+                                $actionBtn = "<div class='row' style='margin-left:0px;'>";
+                                data.arch_files.forEach(file => {
+                                    shortCutName = file.real_name;
+                                    shortCutName = shortCutName.substring(0, 20);
+                                    urlfile='{{ asset('') }}';
+                                    if(!file.url.includes("http")){
+                                        urlfile+=file.url;
+                                    }else{
+                                        urlfile=file.url;
+                                    }
+                                    if (file.url.includes(".jpg") ||  file.url.includes(".png"))
+                                        fileimage = '{{ asset('assets/images/ico/image.png') }}';
+                                    else if (file.url.includes(".pdf"))
+                                        fileimage = '{{ asset('assets/images/ico/pdf.png') }}';
+                                    else if (file.url.includes(".excel") || file.url.includes(".xsc"))
+                                        fileimage = '{{ asset('assets/images/ico/excellogo.png') }}';
+                                    else
+                                        fileimage = '{{ asset('assets/images/ico/file.png') }}';
+                                    $actionBtn += '<div id="attach" class=" col-sm-6 ">'
+                                        + '<div class="attach">'
+                                        + ` <a class="attach-close1" href="${urlfile.replace(/&#039;/g, '')}" style="color: #74798D; float:left;" target="_blank">`
+                                        + '  <span class="attach-text">' + shortCutName + '</span>'
+                                        + '    <img style="width: 20px;"src="' + fileimage + '">'
+                                        + '</a>'
+                                        + '</div>'
+                                        + '</div>';
+                                });
+                                $actionBtn += '</div>';
+                                return $actionBtn;
+                            } else {
+                                return '';
+                            }
+                        },
+                        name: 'fileIDS',
+                    },
+                    {
+                        data: null,
+                        render: function (data, row, type) {
+                            $actionBtn = '';
+                            @can('store_archive')
+                                $actionBtn = '<a onclick="update(' + (data.id ?? '') + ')" class="btn btn-info"><i style="color:#ffffff" class="fa fa-edit"></i> </a>';
+                            @endcan
+                                @can('archive_delete')
+                                $actionBtn += '<a onclick="delete_archive(' + (data.id ?? '') + ')" style="margin-right:17px;" onclick="" class="btn btn-info"><i style="color:#ffffff;" class="fa fa-trash"></i> </a>';
+                            @endcan
+                            return $actionBtn;
+                        },
+                        name: 'name',
+                    },
+                ],
             @elseif($type == 'medicines')
             columns:[
 
@@ -1258,7 +1394,7 @@
                 data: null, 
                 render:function(data,row,type){
                         $actionBtn = '';
-                        @can('store_archive')
+                        @can('edit_model')
                         $actionBtn = '<a onclick="update('+(data.id??'')+')" class="btn btn-info"><i style="color:#ffffff" class="fa fa-edit"></i> </a>';
                         @endcan
                         return $actionBtn;
@@ -1413,7 +1549,12 @@
                             data.files.forEach(file => {
                                 shortCutName=data.file_ids[c].attachName;
                                 urlfile='{{ asset('') }}';
-                                urlfile+=file.url;
+                                if(file.type==1){
+                                    urlfile+=file.url;
+                                }else{
+                                    urlfile=file.url;
+                                }
+
                                 if(file.extension=="jpg"||file.extension=="png"||file.extension=="jfif")
                                 fileimage='{{ asset('assets/images/ico/image.png') }}';
                                 else if(file.extension=="pdf")
@@ -1515,7 +1656,11 @@
                                 shortCutName=file.real_name;
                                 shortCutName=shortCutName.substring(0, 20);
                                 urlfile='{{ asset('') }}';
-                                urlfile+=file.url;
+                                if(file.type==1){
+                                    urlfile+=file.url;
+                                }else{
+                                    urlfile=file.url;
+                                }
                                 if(file.extension=="jpg"||file.extension=="png"||file.extension=="jfif")
                                 fileimage='{{ asset('assets/images/ico/image.png') }}';
                                 else if(file.extension=="pdf")
@@ -1553,6 +1698,10 @@
                     @can('archive_delete')
                         $actionBtn += '<a onclick="delete_archive('+(data.id??'')+')" style="margin-right:17px;" onclick="" class="btn btn-info"><i style="color:#ffffff;" class="fa fa-trash"></i> </a>';
                     @endcan
+                    $actionBtn +=`
+                    <a target="_blank" href="{{asset(app()->getLocale())}}/admin/printArchive/archive/${data.id}"  style="margin-right:17px;" >
+                    <img class="fa fa-print" tabindex="0" title="print" src="https://c.palexpand.ps/assets/images/ico/Printer.png " style="cursor:pointer;height: 32px;display:inline">
+                    </a>` ;
                             return $actionBtn;
                     },
                     name:'name',
@@ -1629,7 +1778,11 @@
                                 shortCutName=file.real_name;
                                 shortCutName=shortCutName.substring(0, 20);
                                 urlfile='{{ asset('') }}';
-                                urlfile+=file.url;
+                                if(file.type==1){
+                                    urlfile+=file.url;
+                                }else{
+                                    urlfile=file.url;
+                                }
                                 if(file.extension=="jpg"||file.extension=="png"||file.extension=="jfif")
                                 fileimage='{{ asset('assets/images/ico/image.png') }}';
                                 else if(file.extension=="pdf")
@@ -1667,6 +1820,11 @@
                     @can('archive_delete')
                         $actionBtn += '<a onclick="delete_archive('+data.id+')" style="margin-right:17px;" onclick="" class="btn btn-info"><i style="color:#ffffff;" class="fa fa-trash"></i> </a>';
                     @endcan
+                    
+                     $actionBtn +=`
+                    <a target="_blank" href="{{asset(app()->getLocale())}}/admin/printArchive/archive/${data.id}"  style="margin-right:17px;" >
+                    <img class="fa fa-print" tabindex="0" title="print" src="https://c.palexpand.ps/assets/images/ico/Printer.png " style="cursor:pointer;height: 32px;display:inline">
+                    </a>` ;
                             return $actionBtn;
                     },
                     name:'name',
@@ -1751,7 +1909,11 @@
                                 shortCutName=file.real_name;
                                 shortCutName=shortCutName.substring(0, 20);
                                 urlfile='{{ asset('') }}';
-                                urlfile+=file.url;
+                                if(file.type==1){
+                                    urlfile+=file.url;
+                                }else{
+                                    urlfile=file.url;
+                                }
                                 if(file.extension=="jpg"||file.extension=="png"||file.extension=="jfif")
                                 fileimage='{{ asset('assets/images/ico/image.png') }}';
                                 else if(file.extension=="pdf")
@@ -1784,6 +1946,10 @@
                 render:function(data,row,type){
                         $actionBtn = '<a onclick="update('+data.id+')" class="btn btn-info"><i style="color:#ffffff" class="fa fa-edit"></i> </a>';
                         $actionBtn += '<a style="margin-right:17px;" onclick="delete_archive('+data.id+')" class="btn btn-info"><i style="color:#ffffff;" class="fa fa-trash"></i> </a>';
+                        $actionBtn +=`
+                        <a target="_blank" href="{{asset(app()->getLocale())}}/admin/printArchive/archive/${data.id}"  style="margin-right:17px;" >
+                        <img class="fa fa-print" tabindex="0" title="print" src="https://c.palexpand.ps/assets/images/ico/Printer.png " style="cursor:pointer;height: 32px;display:inline">
+                        </a>`     
                             return $actionBtn;
                     },
                     name:'name',
@@ -1819,28 +1985,9 @@
                 },
                 {data:'area',name:'area'},
                 {data:'cert_cost',name:'cert_cost'},
-                {
-                    data: null, 
-                    render:function(data,row,type){
-                        $hod_no ='';
-                        if(data.hod_no!=null)
-                        $hod_no = data.hod_no[(data.hod_no.length-1)];
-                            return $hod_no;
-                    },
-                    name:'hod_no',
+                {data:'sequareNo_2',name:'sequareNo_2'},
+                {data:'peaceNo_2',name:'peaceNo_2'},
                 
-                },
-                {
-                    data: null, 
-                    render:function(data,row,type){
-                        $pice_no ='';
-                        if(data.pice_no!=null)
-                        $pice_no = data.pice_no[(data.pice_no.length-1)];
-                            return $pice_no;
-                    },
-                    name:'pice_no',
-                
-                },
                 {data:'area_name',name:'area_name'},
                 {
                 data: null, 
@@ -1897,7 +2044,11 @@
                                 shortCutName=file.real_name;
                                 shortCutName=shortCutName.substring(0, 20);
                                 urlfile='{{ asset('') }}';
-                                urlfile+=file.url;
+                                if(file.type==1){
+                                    urlfile+=file.url;
+                                }else{
+                                    urlfile=file.url;
+                                }
                                 if(file.extension=="jpg"||file.extension=="png"||file.extension=="jfif")
                                 fileimage='{{ asset('assets/images/ico/image.png') }}';
                                 else if(file.extension=="pdf")
@@ -2028,18 +2179,22 @@
                                 shortCutName=shortCutName.substring(0, 20);
                                 extension=file.url.split('.');
                                 urlfile='{{ asset('') }}';
-                                urlfile+=file.url;
-                                if(extension[1]=="jpg"||extension[1]=="png")
-                                fileimage='{{ asset('assets/images/ico/image.png') }}';
-                                else if(extension[1]=="pdf")
-                                fileimage='{{ asset('assets/images/ico/pdf.png') }}';
-                                else if(extension[1]=="excel"||extension[1]=="xsc")
-                                fileimage='{{ asset('assets/images/ico/excellogo.png') }}';
+                                if(!file.url.includes("http")){
+                                    urlfile+=file.url;
+                                }else{
+                                    urlfile=file.url;
+                                }
+                                if (file.url.includes(".jpg") ||  file.url.includes(".png"))
+                                    fileimage = '{{ asset('assets/images/ico/image.png') }}';
+                                else if (file.url.includes(".pdf"))
+                                    fileimage = '{{ asset('assets/images/ico/pdf.png') }}';
+                                else if (file.url.includes(".excel") || file.url.includes(".xsc"))
+                                    fileimage = '{{ asset('assets/images/ico/excellogo.png') }}';
                                 else
                                 fileimage='{{ asset('assets/images/ico/file.png') }}';
                                 $actionBtn += '<div id="attach" class=" col-sm-6 ">'
                                     +'<div class="attach">'                                        
-                                      +' <a class="attach-close1" href="'+urlfile+'" style="color: #74798D; float:left;" target="_blank">'
+                                      + ` <a class="attach-close1" href="${urlfile.replace(/&#039;/g, '')}" style="color: #74798D; float:left;" target="_blank">`
                                         +'  <span class="attach-text">'+shortCutName+'</span>'
                                         +'    <img style="width: 20px;"src="'+fileimage+'">'     
                                         +'</a>'
@@ -2114,7 +2269,11 @@
                                 shortCutName=shortCutName.substring(0, 20);
                                 extension=file.url.split('.');
                                 urlfile='{{ asset('') }}';
-                                urlfile+=file.url;
+                                if(file.type==1){
+                                    urlfile+=file.url;
+                                }else{
+                                    urlfile=file.url;
+                                }
                                 if(extension[1]=="jpg"||extension[1]=="png")
                                 fileimage='{{ asset('assets/images/ico/image.png') }}';
                                 else if(extension[1]=="pdf")
@@ -2130,7 +2289,12 @@
                                         +'    <img style="width: 20px;"src="'+fileimage+'">'     
                                         +'</a>'
                                     +'</div>'
-                                    +'</div>'; 
+                                    +'</div>'
+                                    +'<div></div>'
+                                    
+                                    ; 
+                                    
+                                    
                             });
                             $actionBtn += '</div>';
                             return $actionBtn;
@@ -2208,7 +2372,11 @@
                                 shortCutName=file.real_name;
                                 shortCutName=shortCutName.substring(0, 20);
                                 urlfile='{{ asset('') }}';
-                                urlfile+=file.url;
+                                if(file.type==1){
+                                    urlfile+=file.url;
+                                }else{
+                                    urlfile=file.url;
+                                }
                                 if(file.extension=="jpg"||file.extension=="png"||file.extension=="jfif")
                                 fileimage='{{ asset('assets/images/ico/image.png') }}';
                                 else if(file.extension=="pdf")

@@ -47,14 +47,14 @@
                 <?php echo $res->title?><br />
             </td>
         </tr>
-        <?php if($res->connected_to_txt!=null){?>
+        {{--<?php if($res->connected_to_txt!=null){?>
         <tr>
             <td colspan="2" style="text-align:right;direction: rtl;padding-top:0px;padding-right:40px;font-size: 16pt;">
                 مقدم الطلب:
                 <?php echo $res->connected_to_txt==null?'':$res->connected_to_txt?><br />
             </td>
         </tr>
-        <?php }?>
+        <?php }?>--}}
         <tr>
             <td colspan="2" style="text-align:right;direction: rtl;padding-top:0px;padding-right:40px;font-size: 16pt;">
                 قرر 

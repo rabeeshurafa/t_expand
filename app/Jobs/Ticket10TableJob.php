@@ -85,7 +85,7 @@ class Ticket10TableJob implements ShouldQueue
         $client['address']              = @$obj['AddressDetailsAR'];
         $client['address1']             = @$obj['AddressDetailsAR1'];
         $client['created_at']           = @$obj['dt_created_at'];
-        $client['licNo']                = (@$obj['licno']??0);
+        $client['licNo']                = @$obj['licno'];
         $client['pos']                  = @$pos_op;
         $client['phase']                = @$obj['vas_op'];
         $client['created_by']           = @intval($obj['ticket_created_by']);

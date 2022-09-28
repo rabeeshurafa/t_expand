@@ -20,16 +20,9 @@ class certController extends Controller
 
     {
         $CertExtention = CertExtention::where('b_enabled','=','1')->where('e_type','=','1')->get();
-        $count=Cert::where('e_type','=','1')->count();
-        if($count==0){
-            $CertCount=81;
-        }else{
-            $lastSerial=Cert::where('e_type','=','1')->latest('pk_i_id')->first();
-            // if(Auth()->user()->id==74){
-            // dd(intval(explode('/', ($lastSerial->serial_per_year))[0]),$lastSerial);
-            // }
-            $CertCount=(intval(explode('/', ($lastSerial->serial_per_year))[0])+1);
-        }
+        $currentyear=date('Y');
+        $CertCount = (Cert::where('e_type','=','1')->where('cert_year',$currentyear)->count())+1;
+        // $CertCount = Cert::where('e_type','=','1')->count()+1;
         
         $type = 'cert';
         $e_type = 1;
@@ -58,6 +51,36 @@ class certController extends Controller
 
     }
     
+    public function modelCert()
+    {
+        $CertExtention = CertExtention::where('b_enabled','=','1')->where('e_type','=','5')->get();
+        
+        $CertCount = count(Cert::where('e_type','=','5')->get())+1;
+        
+        $type = 'cert';
+        $e_type = 5;
+        $url = "modelCert";
+        
+        $setting = Setting::first();
+
+        return view('dashboard.cert.modelCert', compact('type', 'url','CertExtention','e_type','setting','CertCount'));
+
+    }
+    public function generalCert()
+    {
+        $CertExtention = CertExtention::where('b_enabled','=','1')->where('e_type','=','6')->get();
+        
+        $CertCount = count(Cert::where('e_type','=','6')->get())+1;
+        
+        $type = 'cert';
+        $e_type = 6;
+        $url = "generalCert";
+        
+        $setting = Setting::first();
+
+        return view('dashboard.cert.generalCert', compact('type', 'url','CertExtention','e_type','setting','CertCount'));
+
+    }
     public function assurance()
 
     {
@@ -117,7 +140,13 @@ class certController extends Controller
     
     function prepearAttach(Request $request){
         $attach_ids=$request->attach_ids;
-        $attachName=$request->attachName;
+        $attachNameTemp=$request->attachName;
+        $attachName=array();
+        foreach($attachNameTemp as $attach){
+            if($attach != null || $attach != ''){
+                array_push($attachName,$attach);
+            }
+        }
         $attachArr=array();
         if($attach_ids)
         for($i=0;$i<sizeof($attach_ids);$i++){
@@ -212,6 +241,67 @@ class certController extends Controller
 
         }
     }
+    function saveScannedFilesArchieve(Request $request,$taskname='',$tasklink='',$model='App\\Models\\User'){
+        $files_ids = $request->attach_ids;
+
+        if ($files_ids) {
+            $i=0;
+            $c=0;
+            foreach ($files_ids as $id) {
+                if($request->notArchived[$c] == $id){
+                    $archive = new Archive();
+                    
+                    $archive->model_id = $request->citizen_id;
+                    
+                    $archive->type_id = '6046';
+                    
+                    $archive->name = $request->citizen_name;
+                    
+                    $archive->model_name = $model;
+                    
+                    $date=date("Y/m/d");
+                    
+                    $from = explode('/', ($date));
+                    
+                    $from = $from[2] . '-' . $from[1] . '-' . $from[0];
+                    
+                    $archive->date = $from;
+                    
+                    $archive->task_name = $taskname;
+                    
+                    $archive->task_link = $tasklink;
+                    
+                    $archive->title = $request->attachName[$i];
+            
+                    $archive->type = 'certArchive';
+            
+                    $archive->serisal = '';
+            
+                    if($request->model=='App\\Models\\User')
+                    
+                        $archive->url =  'cit_archieve';
+                    else
+                        $archive->url =  'org_archieve';
+            
+                    $archive->add_by = Auth()->user()->id;
+            
+                    //dd( $request->customername=='0',$request->customername,$archive);
+                    $archive->save();
+            
+                    $file = File::find($id);
+    
+                    $file->archive_id = $archive->id;
+    
+                    $file->model_name = "App\Models\Archive";
+    
+                    $file->save();
+                    $c++;
+                }
+                $i++;
+            }
+
+        }
+    }
     
     function updateCNationalID($customer,$nationalID){
         $mystring = $nationalID;
@@ -226,7 +316,7 @@ class certController extends Controller
     }
     
     public function saveCertDetails(Request $request){
-      
+        // dd($request->all(),($request->notArchived != null));
         if($request->cer_pk_id&&$request->cer_pk_id!=0)
             {
                 $Cert=Cert::where('pk_i_id','=',$request->cer_pk_id)->first();
@@ -245,6 +335,7 @@ class certController extends Controller
           $Cert->msgTitle = $request->msgTitle;
           $Cert->recept_no = $request->recept_no;
           $Cert->cost = $request->cost;
+          $Cert->cert_year = ($request->certYear??'');
           $Cert->serial_per_year = $request->serial_per_year;
           $Cert->NationalID = $request->NationalID;
           $Cert->cer_date = $request->cer_date;
@@ -267,10 +358,22 @@ class certController extends Controller
                 $link='';
                 $name='شهادات / مراسات خارجية';
                 $this->saveCertFilesArchieve($request,$name,$link,$request->model);
+            }else if(($request->cer_pk_id!=null&&$request->cer_pk_id!=0) && ($request->notArchived != null)){
+                $link='';
+                $name='شهادات / مراسات خارجية';
+                $attachNameTemp=$request->attachName;
+                $attachName=array();
+                foreach($attachNameTemp as $attach){
+                    if($attach != null || $attach != ''){
+                        array_push($attachName,$attach);
+                    }
+                }
+                $request->attachName=$attachName;
+                $this->saveScannedFilesArchieve($request,$name,$link,$request->model);
             }
-            $lastSerial=Cert::where('e_type','=','1')->latest('pk_i_id')->first();
-            $CertCount=(intval(explode('/', ($lastSerial->serial_per_year))[0])+1);
-            return response()->json(['status'=>trans('admin.extention_added'),'CertCount'=>$CertCount]);
+            $currentyear=date('Y');
+            $certCount = (Cert::where('e_type','=','1')->where('cert_year',$currentyear)->count())+1;
+            return response()->json(['status'=>trans('admin.extention_added'),'CertCount'=>$certCount]);
         }else{
             return response()->json(['status'=>$validator->errors()->all()]);
         }
@@ -345,6 +448,7 @@ class certController extends Controller
                             ->make(true);
 
     }
+    
     function getAttach( $file_ids=array()){
         $attachArr=array();
         foreach($file_ids as $row){

@@ -23,7 +23,9 @@ use App\Models\ArchiveRole;
 use App\Models\Cert;
 use App\Models\Setting;
 use App\Models\Warning;
+use App\Models\Admin;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class WaterTicketController extends Controller
 {
@@ -33,6 +35,7 @@ class WaterTicketController extends Controller
     function loadDefaul($type=''){
         $screen=Menu::where('s_function_url','=',$type)->get()->first();
         $ticket=TicketConfig::where('id','=',$screen->pk_i_id)->with('Admin')->get()->first();
+        $ticket->flows=json_decode($ticket->flow);
         $department=Department::where('enabled',1)->get();
         $this->fees=DB::select("select fees_json from app_ticket".$ticket->ticket_no."s where app_type=".$ticket->app_type." order by id desc limit 1");
         return $ticket;
@@ -166,21 +169,30 @@ class WaterTicketController extends Controller
 
     {
 
-        if ($file) {
+        // if ($file) {
 
-            $files = $file;
+        //     $files = $file;
 
-            $imageName = $prefix . rand(3, 999) . '-' . time() . '.' . $files->extension();
+        //     $imageName = $prefix . rand(3, 999) . '-' . time() . '.' . $files->extension();
 
-            $image = "storage/" . $imageName;
+        //     $image = "storage/" . $imageName;
 
-            $files->move(public_path('storage'), $imageName);
+        //     $files->move(public_path('storage'), $imageName);
 
-            $getValue = $image;
+        //     $getValue = $image;
 
-            return $getValue;
+        //     return $getValue;
 
-        }
+        // }
+        $filePath = $file->hashName();
+        // Storage::disk('s3')->put($filePath, file_get_contents($file));
+        Storage::disk('s3')->put($filePath, fopen($file, 'r+'));
+    
+        return [
+            'name' => $file->getClientOriginalName(),
+            'extension'=>$file->getClientOriginalExtension(),
+            'path' => Storage::cloud()->url($filePath)
+        ];
 
     }
     
@@ -384,11 +396,7 @@ class WaterTicketController extends Controller
             $file = $request->file($name);
             $url = $this->upload_image($file, 'quipent_');
             if ($url) {
-                $uploaded_files['files'] = File::create(
-                                                        [
-                                                            'url' => $url,                        
-                                                            'real_name' => $file->getClientOriginalName(),                        
-                                                            'extension' => $file->getClientOriginalExtension(),]);
+                $uploaded_files['files'] = File::create(['url' => $url['path'],'real_name' => $url['name'],'extension' => $url['extension'],'type'=>'2',]);
             }
             $data[] = $uploaded_files;
             
@@ -431,7 +439,36 @@ class WaterTicketController extends Controller
         }
 
     }
-
+    
+    public function prepareFlow($nextDeptIds, $nextEmpIds,$nextIsMandatorys, $defaultEmpToReceive){
+        $flow=array();
+        $count=0;
+        $firstEmp=Admin::where('id',$defaultEmpToReceive)->first();
+        $temp=array();
+        if($firstEmp != null) {
+            $temp['nextDeptId'] = $firstEmp->department_id;
+            $temp['nextEmpId'] = $firstEmp->id;
+            $temp['nextIsMandatory'] = 2;
+        }else{
+            $temp['nextDeptId'] = 0;
+            $temp['nextEmpId'] = 0;
+        }
+        $flow[] = $temp;
+        if(is_array($nextDeptIds)){
+            foreach ($nextDeptIds as $nextDeptId){
+                if($nextDeptId != null){
+                    $temp=array();
+                    $temp['nextDeptId']=$nextDeptId;
+                    $temp['nextEmpId']=$nextEmpIds[$count];
+                    $temp['nextIsMandatory']=$nextIsMandatorys[$count];
+                    $flow[] = $temp;
+                }
+                $count++;
+            } 
+        }
+        return $flow;
+    }
+    
     public function store_config(Request $request){
         $ticketConfig = TicketConfig::find($request->id);
         $ticketConfig->single_receive = $request->single_receive;
@@ -450,6 +487,7 @@ class WaterTicketController extends Controller
         $ticketConfig->apply_with_finished_license = $request->apply_with_finished_license;
         $ticketConfig->apply_for_band_customer = $request->apply_for_band_customer;
         $ticketConfig->public_app = $request->public_app;
+        $ticketConfig->can_reply = $request->can_reply;
         $ticketConfig->emp_to_close_json = json_encode(is_array($request->emp_to_close_json)?$request->emp_to_close_json:array());
         $ticketConfig->emp_to_revoke_json = json_encode(is_array($request->emp_to_revoke_json)?$request->emp_to_revoke_json:array());
         $ticketConfig->emp_to_update_json = json_encode(is_array($request->emp_to_update_json)?$request->emp_to_update_json:array());
@@ -466,6 +504,7 @@ class WaterTicketController extends Controller
         $ticketConfig->apps_btn = $request->apps_btn;
         $ticketConfig->id = $request->id;
         $ticketConfig->fk_i_updated_by = Auth()->user()->id;
+        $ticketConfig->flow = json_encode($this->prepareFlow($request->nextDeptId,$request->nextEmpId,$request->nextIsMandatory,$request->reciver));
         $res=$ticketConfig->save();
         if ($res) {
 

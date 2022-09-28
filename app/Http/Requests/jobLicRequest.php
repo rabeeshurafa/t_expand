@@ -25,7 +25,7 @@ class jobLicRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            // 'customerId' => 'require',
+            'customerId' => 'required|numeric|exists:users,id',
         ];
     }
 }

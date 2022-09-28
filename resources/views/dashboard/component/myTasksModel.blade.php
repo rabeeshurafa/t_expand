@@ -65,13 +65,17 @@
 
 								 {{"المرسل"}}  </th>
 
-							<th class="col-md-2" scope="col" style="text-align: right; color:#ffffff">
+							<th class="" scope="col" style="text-align: right; color:#ffffff">
 
 								 {{"اسم المستفيد"}}</th>
 
-							<th class="col-md-2" scope="col" style="text-align: right; color:#ffffff">
+							<th class="" scope="col" style="text-align: right; color:#ffffff">
 
 								{{trans('admin.task_title')}}</th>
+								
+							<th class="col-md-1" scope="col" style="text-align: right; color:#ffffff">
+
+								الحالة</th>
 
 							<th class="col-md-3 hideMob" scope="col" style="text-align: center; color:#ffffff" >
 
@@ -179,6 +183,9 @@
 							<th class="col-md-2" style="text-align: right;   color:#ffffff">
 
 									{{trans('admin.task_title')}}</th>
+							<th class="col-md-2" style="text-align: right;   color:#ffffff">
+								الحالة
+							</th>
 
 							<th class="col-md-3 hideMob" style="text-align: center;   color:#ffffff" >
 
@@ -275,7 +282,7 @@ var count=0;
         }
         
          
-    $(function() {
+    $( document ).ready(function() {
              myTaskTable1 = $('.myTaskTable101').DataTable({
                 processing:true,
                 serverSide:true,
@@ -345,6 +352,15 @@ var count=0;
                         },
                     name:'config.ticket_name'
                     },
+                    {data:'.0',
+                        className:"hideMob",
+                        render:function(data,row,type){
+                            $actionBtn = `<a href="javascript:void(0)" style="text-align: right;; color: #000000; font-weight:bold;font-size: 14px !important;"> 
+                                            ${data.tname }`
+                                return $actionBtn;
+                        },
+                        name:'0.tname'
+                    },
                     {data:null ,
                      
                         render:function(data,row,type){
@@ -371,7 +387,12 @@ var count=0;
                     {data:null,
                         render:function(data,row,type){
                             if(data.response.length>0){
-                                var txt=decodeURI(data['response'][0].s_text);
+                                try {
+                                    var txt=decodeURI(data['response'][0].s_text);
+                                }
+                                catch(err) {
+                                    var txt=data['response'][0].s_text;
+                                }
                                 var temp= txt.split('&lt;\\br&gt;');
                                 txt='';
                                 for(i=0;i<temp.length;i++)
@@ -387,7 +408,12 @@ var count=0;
                                                 </div>
                                             </div>`
                             }else{
-                                var txt=decodeURI(data['trans'].s_note);
+                                try {
+                                  var txt=decodeURI(data['trans'].s_note);
+                                }
+                                catch(err) {
+                                  var txt=data['trans'].s_note;
+                                }
                                 var temp= txt.split('&lt;\\br&gt;');
                                 txt='';
                                 for(i=0;i<temp.length;i++)
@@ -444,7 +470,7 @@ var count=0;
               })
         });
    
-    $(function() {
+    $( document ).ready(function() {
          watingTaskTable1 = $('.wtbl201').DataTable({
             processing:true,
             responsive: true,
@@ -548,7 +574,12 @@ var count=0;
                 {data:null,className:"hideMob",
                     render:function(data,row,type){
                         if(data.response.length>0){
-                            var txt=decodeURI(data['response'][0].s_text);
+                            try {
+                                    var txt=decodeURI(data['response'][0].s_text);
+                                }
+                                catch(err) {
+                                    var txt=data['response'][0].s_text;
+                                }
                             var temp= txt.split('&lt;\\br&gt;');
                                 txt='';
                                 for(i=0;i<temp.length;i++)
@@ -564,7 +595,12 @@ var count=0;
                                             </div>
                                         </div>`
                         }else{
-                            var txt=decodeURI(data['trans'].s_note);
+                            try {
+                                  var txt=decodeURI(data['trans'].s_note);
+                                }
+                                catch(err) {
+                                  var txt=data['trans'].s_note;
+                                }
                             var temp= txt.split('&lt;\\br&gt;');
                                 txt='';
                                 for(i=0;i<temp.length;i++)
@@ -615,7 +651,7 @@ var count=0;
     });
     
      
-    $(function() {
+    $( document ).ready(function() {
          tagedTaskTable1 = $('.wtbl301').DataTable({
             processing:true,
             serverSide:true,
@@ -682,7 +718,15 @@ var count=0;
                     },
                 name:'config.ticket_name'
                 },
-                
+                {data:'.0',
+                        className:"hideMob",
+                        render:function(data,row,type){
+                            $actionBtn = `<a href="javascript:void(0)" style="text-align: right;; color: #000000; font-weight:bold;font-size: 14px !important;"> 
+                                            ${data.tname }`
+                                return $actionBtn;
+                        },
+                        name:'0.tname'
+                },
                 {data:null ,
                     className:"hideMob",
                     render:function(data,row,type){
@@ -709,38 +753,50 @@ var count=0;
                 {data:null,className:"hideMob",
                     render:function(data,row,type){
                         if(data.response.length>0){
-                            var txt=decodeURI(data['response'][0].s_text);
+                            try {
+                                    var txt=decodeURI(data['response'][0].s_text);
+                                }
+                                catch(err) {
+                                    var txt=data['response'][0].s_text;
+                                }
                             var temp= txt.split('&lt;\\br&gt;');
                                 txt='';
                                 for(i=0;i<temp.length;i++)
                                 txt+=temp[i];
                             $actionBtn = `<div class="row">
-                                            <div class="col-sm-2">
+                                            <div class="col-sm-4">
                                                 <img src="${data['response'][0].image }" class="avatar avatar-online" style="height:30px;margin-left: 15px;">
+                                                ${data['response'][0].nick_name }
                                             </div>
-                                            <div class="col-sm-10">
+                                            <div class="col-sm-8">
                                                 <a class="nottes">
                                                 ${ txt!="null"? decodeHtml(txt):'' }
                                                 </a>
                                             </div>
                                         </div>`
                         }else{
-                            var txt=decodeURI(data['trans'].s_note);
+                            try {
+                                  var txt=decodeURI(data['trans'].s_note);
+                                }
+                                catch(err) {
+                                  var txt=data['trans'].s_note;
+                                }
                             var temp= txt.split('&lt;\\br&gt;');
                                 txt='';
                                 for(i=0;i<temp.length;i++)
                                 txt+=temp[i];
                             $actionBtn = `<div class="row">
-                                            <div class="col-sm-2">
+                                            <div class="col-sm-4">
                                                 <img src="${data['trans'].image }" class="avatar avatar-online" style="height:30px;margin-left: 15px;">
+                                                ${data['trans'].nick_name }
                                             </div>
-                                            <div class="col-sm-10">
+                                            {{--<div class="col-sm-8">
                                                 <a class="nottes">
                                                 ${ txt!="null"? txt.replace(/(<([^>]+)>)/gi, " "):'' }
                                                 </a>
-                                            </div>
+                                            </div>--}}
                                         </div>`
-                                        }
+                        }
                             return $actionBtn;
                     },
                 
@@ -774,7 +830,7 @@ var count=0;
           })
     });
     
-    $(function() {
+    $( document ).ready(function() {
          sentTaskTable1 = $('.wtbl401').DataTable({
             processing:true,
             serverSide:true,
@@ -927,6 +983,7 @@ var count=0;
             
           })
     });
+    
     $(".list101").on("click", function() {
             if (window.matchMedia('(max-width: 767px)').matches) {
                 $(".setWidth").each(function(){

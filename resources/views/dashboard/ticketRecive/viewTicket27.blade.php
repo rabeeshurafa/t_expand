@@ -133,11 +133,128 @@
 </div>
 @endif
 
-
+<div class="row" id="hodAndPieces">
+    @for($i=0 ; $i <sizeof($ticket->piece_no_array); $i++)
+        @if($ticket->piece_no_array[$i] !=null || $ticket->hod_no_array[$i]!=null)
+            <div class="row col-md-6">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="input-group" style="width: 100% !important;">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text " id="basic-addon1">
+                                    {{ 'رقم القطعة' }}
+                                </span>
+                            </div>
+                            <input type="text" id="piece_no[]"
+                               class="form-control alphaFeild ui-autocomplete-input piece_no"
+                               placeholder="رقم القطعة"
+                               name="piece_no[]" autocomplete="off" value="{{$ticket->piece_no_array[$i]}}" onclick="addNewhodAndPieces();" onblur="addNewhodAndPieces();">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="input-group" style="width: 95% !important;">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text " id="basic-addon1">
+                                    {{ 'رقم الحوض' }}
+                                </span>
+                            </div>
+                            <input type="text" id="hod_no[]"
+                               class="form-control alphaFeild ui-autocomplete-input hod_no"
+                               placeholder="رقم الحوض"
+                               name="hod_no[]" autocomplete="off" value="{{$ticket->hod_no_array[$i]}}">
+                            <div class="input-group-append" onclick="$(this).parent().parent().parent().parent().remove()" style="cursor:pointer;">
+                                <span class="input-group-text input-group-text2">
+                                    <i class="fa fa-trash"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+    @endfor
+    <div class="row col-md-6">
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="input-group" style="width: 100% !important;">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text " id="basic-addon1">
+                            {{ 'رقم القطعة' }}
+                        </span>
+                    </div>
+                    <input type="text" id="piece_no[]"
+                       class="form-control alphaFeild ui-autocomplete-input piece_no"
+                       placeholder="رقم القطعة"
+                       name="piece_no[]" autocomplete="off" onclick="addNewhodAndPieces();" onblur="addNewhodAndPieces();">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="input-group" style="width: 100% !important;">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text " id="basic-addon1">
+                            {{ 'رقم الحوض' }}
+                        </span>
+                    </div>
+                    <input type="text" id="hod_no[]"
+                       class="form-control alphaFeild ui-autocomplete-input hod_no"
+                       placeholder="رقم الحوض"
+                       name="hod_no[]" autocomplete="off">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script>
-
+function addNewhodAndPieces(){
+    if($(".piece_no").last().val().length > 0){
+        row=`
+        <div class="row col-md-6">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group" style="width: 100% !important;">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text " id="basic-addon1">
+                                {{ 'رقم القطعة' }}
+                            </span>
+                        </div>
+                        <input type="text" id="piece_no[]"
+                           class="form-control alphaFeild ui-autocomplete-input piece_no"
+                           placeholder="رقم القطعة"
+                           name="piece_no[]" autocomplete="off" onclick="addNewhodAndPieces();" onblur="addNewhodAndPieces();">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group" style="width: 95% !important;">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text " id="basic-addon1">
+                                {{ 'رقم الحوض' }}
+                            </span>
+                        </div>
+                        <input type="text" id="hod_no[]"
+                           class="form-control alphaFeild ui-autocomplete-input hod_no"
+                           placeholder="رقم الحوض"
+                           name="hod_no[]" autocomplete="off">
+                        <div class="input-group-append" onclick="$(this).parent().parent().parent().parent().remove()" style="cursor:pointer;">
+                            <span class="input-group-text input-group-text2">
+                                <i class="fa fa-trash"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `
+        $("#hodAndPieces").append(row);
+    }
+}
     
 </script>
 

@@ -15,6 +15,7 @@ use App\Models\Setting;
 use App\Models\AppTicket19;
 use App\Models\AppTicket18;
 use App\Models\AppTicket21;
+use App\Models\AppTicket40;
 use DB;
 
 class BuildingTicketController extends Controller{
@@ -25,6 +26,7 @@ class BuildingTicketController extends Controller{
     function loadDefaul($type=''){
         $screen=Menu::where('s_function_url','=',$type)->get()->first();
         $ticket=TicketConfig::where('id','=',$screen->pk_i_id)->with('Admin')->get()->first();
+        $ticket->flows=json_decode($ticket->flow);
         $department=Department::where('enabled',1)->get();
         $this->fees=DB::select("select fees_json from app_ticket".$ticket->ticket_no."s where app_type=".$ticket->app_type." order by id desc limit 1");
         return $ticket;

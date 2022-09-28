@@ -83,6 +83,13 @@ $('#store-Address').submit(function(e) {
 				$(".loader").addClass('hide');
 						//$(".form-actions").removeClass('hide');
 						$("#AConstantName").val('')
+						if(fillIn=="city_id")
+						    $("#city_id_p").val('')
+                        if(fillIn=="town_id")
+                            $("#town_id_p").val('')
+                        if(fillIn=="region_id")
+						    $("#region_id_p").val('')
+						
 						$("#AddressModal").modal('hide');
            },
            error: function(response){
@@ -194,7 +201,7 @@ function deleteConstantObj1(id,ctrl){
 	    city_id:$("#city_id_p").val(),
 	    town_id:$("#town_id_p").val(),
 	    region_id:$("#region_id_p").val(),
-	    tabel:ctrl,
+	    table:ctrl,
 		_token: '{{csrf_token()}}',
 	};
    $.ajax({

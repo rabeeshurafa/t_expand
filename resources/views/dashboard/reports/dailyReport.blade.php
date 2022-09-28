@@ -342,6 +342,7 @@
         }
 
         function search() {
+            $('.loader').removeClass('hide');
             if ($.fn.DataTable.isDataTable('.wtbl')) {
                 $(".wtbl").dataTable().fnDestroy();
                 $('#recListaa').empty();
@@ -408,7 +409,7 @@
                                 $row+= "<td>" + 'أرشيف الأقسام' + "</td>" ;
                             
                             }else{
-                                $row+= "<td>" + 'بدون تصنيف' + "</td>" ;
+                                $row+= "<td>" + 'ارشيف معاملات' + "</td>" ;
                             }
                             $row+= "<td>" + (elem.name??'') + "</td>";
                             if(elem.type!='licArchive'){
@@ -451,8 +452,8 @@
                                     elem.files.forEach(file => {
                                         shortCutName=file.real_name;
                                         shortCutName=shortCutName.substring(0, 20);
-                                        urlfile='{{ asset('') }}';
-                                        urlfile+=file.url;
+                                        // urlfile='{{ asset('') }}';
+                                        urlfile=file.url;
                                         if(file.extension=="jpg"||file.extension=="png")
                                         fileimage='{{ asset('assets/images/ico/image.png') }}';
                                         else if(file.extension=="pdf")
@@ -683,6 +684,7 @@
                         });
                         
                     }
+                    $('.loader').addClass('hide');
                 },
             });
 

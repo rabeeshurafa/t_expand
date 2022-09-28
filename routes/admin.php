@@ -127,6 +127,9 @@ Route::group([
         Route::post('saveTicket38', 'AppOp@saveTicket38')->name('saveTicket38');
         Route::post('saveTicket39', 'AppOp@saveTicket39')->name('saveTicket39');
         Route::post('saveTicket40', 'AppOp@saveTicket40')->name('saveTicket40');
+        Route::post('saveTicket42', 'AppOp@saveTicket42')->name('saveTicket42');
+        Route::post('saveTicket44', 'AppOp@saveTicket44')->name('saveTicket44');
+        Route::post('saveTicket46', 'AppOp@saveTicket46')->name('saveTicket46');
         Route::post('saveSparPart', 'AppOp@saveSparPart')->name('saveSparPart');
         Route::post('dowaivesubscription', 'AppOp@dowaivesubscription')->name('dowaivesubscription');
         Route::post('addReplay', 'AppOp@addReplay')->name('addReplay');
@@ -137,10 +140,12 @@ Route::group([
         Route::get('addSubscription/{id}/{type}', 'AppOp@addSubscription')->name('addSubscription');
         Route::get('editTicket/{id}/{type}', 'AppOp@editTicket')->name('editTicket');
         Route::get('printTicket/{id}/{type}', 'PrintTicket@printTicket')->name('printTicket');
+        Route::get('printTicket31/{id}/{type}', 'PrintTicket@printTicket31')->name('printTicket31');
         Route::post('saveWasl', 'PrintTicket@saveWasl')->name('saveWasl');
         Route::get('printBar2aa/{id}/{type}', 'PrintTicket@printBar2aa')->name('printBar2aa');
         Route::get('printWasl/{id}/{type}', 'PrintTicket@printWasl')->name('printWasl');
         Route::get('printTicket3/{id}', 'PrintTicket@printTicket3')->name('printTicket3');
+        Route::get('objectionPrint/{id}/{related}', 'PrintTicket@objectionPrint')->name('objectionPrint');
         Route::post('saveEditTicket', 'PrintTicket@saveEditTicket')->name('saveEditTicket');
         Route::post('savePrintTicket39No', 'PrintTicket@savePrintTicket39No')->name('savePrintTicket39No');
         Route::get('printTicket39/{id}/{type}', 'PrintTicket@printTicket39')->name('printTicket39');
@@ -202,7 +207,8 @@ Route::group([
         Route::get('getTicket40s', 'TasksTableController@getTicket40s')->name('getTicket40s'); 
         Route::get('getWaterPermissionTickets', 'TasksTableController@getWaterPermissionTickets')->name('getWaterPermissionTickets'); 
         Route::get('getElecPermissionTickets', 'TasksTableController@getElecPermissionTickets')->name('getElecPermissionTickets'); 
-
+        Route::get('getInternalMemoTickets', 'TasksTableController@getInternalMemoTickets')->name('getInternalMemoTickets'); 
+        
         Route::get('/', 'DashboardController@index')->name('admin.dashboard');  // the first page admin visits if authenticated
         Route::get('getMyTaskAjax', 'DashboardController@getMyTaskAjax')->name('getMyTaskAjax');
         Route::get('getWatingTaskAjax', 'DashboardController@getWatingTaskAjax')->name('getWatingTaskAjax');
@@ -230,7 +236,7 @@ Route::group([
         Route::get('Organization_info', 'SettingsController@Organization_info')->name('Organization_info');
         Route::get('Organization_law', 'SettingsController@Organization_law')->name('Organization_law');
         Route::get('Organization_archive_count', 'SettingsController@Organization_archive_count')->name('Organization_archive_count');
-        Route::get('userper', 'SettingsController@userper')->name('userper');
+        Route::get('userper', 'SettingsController@userper')->name('userper')->middleware('can:userper');
         Route::post('store_usrpermission', 'SettingsController@store_usrpermission')->name('store_usrpermission');
         Route::post('getEmpPer', 'EmployeeController@getEmpPer')->name('getEmpPer');
 
@@ -267,12 +273,19 @@ Route::group([
         Route::post('store_license', 'LicenseController@store_license')->name('store_license');
         Route::get('license_info_byUser', 'LicenseController@license_info_byUser')->name('license_info_byUser');
         
-        Route::get('warning', 'SubscriberWarning@index')->name('warning');
+        Route::get('warning', 'SubscriberWarning@index')->name('warning')->middleware('can:warning');
         Route::post('store_warning', 'SubscriberWarning@store_warning')->name('store_warning');
         Route::get('warning_info_all', 'SubscriberWarning@warning_info_all')->name('warning_info_all');
         Route::get('warning_info', 'SubscriberWarning@warning_info')->name('warning_info');
         Route::post('warning_delete', 'SubscriberWarning@warning_delete')->name('warning_delete');
         
+        Route::get('trade_archive','ArchieveController@tradeArchive')->name('trade_archive');
+        Route::post('store_trade_archive','ArchieveController@store_trade_archive')->name('store_trade_archive');
+        Route::get('archieveTrade_info_all','ArchieveController@archieveTrade_info_all')->name('archieveTrade_info_all');
+        Route::get('tradeArchive_info','ArchieveController@tradeArchive_info')->name('tradeArchive_info');
+        Route::post('tradeArchive_delete','ArchieveController@tradeArchive_delete')->name('tradeArchive_delete');
+        
+        Route::get('phpinfo', 'ArchieveController@phpinfo')->name('phpinfo');
         Route::post('store_archive_config', 'ArchieveController@store_archive_config')->name('store_archive_config');
         Route::post ('saveScanedFile', 'ArchieveController@saveScanedFile')->name('saveScanedFile');
         Route::post('store_config', 'WaterTicketController@store_config')->name('store_config');
@@ -298,6 +311,8 @@ Route::group([
 
         Route::get('counterReadReport', 'CounterReadReport@index')->name('counterReadReport');
         Route::get('finaicalRequest', 'FinaicalRequestController@index')->name('finaicalRequest');
+        Route::get('innerFinaicalRequest', 'FinaicalRequestController@innerFinaicalRequest')->name('innerFinaicalRequest');
+        Route::get('innerFinancial_info_all', 'FinaicalRequestController@innerFinancial_info_all')->name('innerFinancial_info_all');
         Route::get('financialReport', 'FinaicalRequestController@financialReport')->name('financialReport');
         Route::get('financial_info_all', 'FinaicalRequestController@financial_info_all')->name('financial_info_all');
         Route::get('reporth','Reporth@index')->name('reporth');
@@ -363,11 +378,13 @@ Route::group([
         Route::get('subscriberOutArchive', 'SubscriberController@subscriberOutArchive')->name('subscriberOutArchive');
         Route::get('subscriberInArchive', 'SubscriberController@subscriberInArchive')->name('subscriberInArchive');
         Route::get('subscriberLicArchive', 'SubscriberController@subscriberLicArchive')->name('subscriberLicArchive');
+        Route::get('subscriberTradeArchive', 'SubscriberController@subscriberTradeArchive')->name('subscriberTradeArchive');
         Route::get('subscriberCopyArchive', 'SubscriberController@subscriberCopyArchive')->name('subscriberCopyArchive');
         Route::get('subscriberJalArchive', 'SubscriberController@subscriberJalArchive')->name('subscriberJalArchive');
         Route::get('subscriberOtherArchive', 'SubscriberController@subscriberOtherArchive')->name('subscriberOtherArchive');
         Route::get('subscribercontractArchive', 'SubscriberController@subscribercontractArchive')->name('subscribercontractArchive');
         Route::get('subscriberCert', 'SubscriberController@subscriberCert')->name('subscriberCert');
+        Route::get('subscriberEarh_lic', 'SubscriberController@subscriberEarh_lic')->name('subscriberEarh_lic');
         Route::get('subscriberWarning', 'SubscriberController@subscriberWarning')->name('subscriberWarning');
         Route::post('mergeSubscribers', 'SubscriberController@mergeSubscribers')->name('mergeSubscribers');
         
@@ -447,6 +464,7 @@ Route::group([
         Route::get('innerQuittance', 'OutspreadTaskController@innerQuittance')->name('innerQuittance');
 
         Route::get('vacationRequest', 'GeneralRequescontroller@vacationRequest')->name('vacationRequest');
+        Route::get('internalMemo', 'GeneralRequescontroller@internalMemo')->name('internalMemo');
         Route::get('leavePermission', 'GeneralRequescontroller@leavePermission')->name('leavePermission');
         Route::get('collecting', 'GeneralRequescontroller@collecting')->name('collecting');
         Route::get('requestSpareParts', 'GeneralRequescontroller@requestSpareParts')->name('requestSpareParts');
@@ -454,6 +472,7 @@ Route::group([
         Route::get('networkDevelopment', 'GeneralRequescontroller@networkDevelopment')->name('networkDevelopment');
         Route::get('vehicleMaintenance', 'GeneralRequescontroller@vehicleMaintenance')->name('vehicleMaintenance');
         Route::get('refueling', 'GeneralRequescontroller@refueling')->name('refueling');
+        Route::get('trackingArchive/{type}/{id}', 'GeneralRequescontroller@trackingArchive')->name('trackingArchive');
 
         Route::get('elecSubscription', 'elecTicketController@elecSubscription')->name('elecSubscription');
         Route::get('elecMalfunction', 'elecTicketController@elecMalfunction')->name('elecMalfunction');
@@ -524,8 +543,11 @@ Route::group([
         Route::get('citizen_info','Civil@citizen_info')->name('citizen_info');
         Route::post('citizen_delete', 'Civil@citizen_delete')->name('citizen_delete');
         Route::get('citizen_auto_complete','Civil@citizen_auto_complete')->name('citizen_auto_complete');
-
+        
+        Route::post('sendSMS', 'SubscriberController@sendSMS')->name('sendSMS');
         Route::get('subscribers', 'SubscriberController@index')->name('subscribers')->middleware('can:subscribers');
+        Route::get('printElec/{subscriber_id}', 'SubscriberController@printElec')->name('printElec');
+        Route::get('printWater/{subscriber_id}', 'SubscriberController@printWater')->name('printWater');
         Route::get('subscribers/id/{id}', 'SubscriberController@index')->name('subscriber');
         Route::post('store_subscriber', 'SubscriberController@store_subscriber')->name('store_subscriber');
         Route::get('subscribe_auto_complete', 'SubscriberController@subscribe_auto_complete')->name('subscribe_auto_complete');
@@ -637,6 +659,7 @@ Route::group([
         Route::get('archieve_jal_info', 'JalArchieveController@archieve_info')->name('archieve_jal_info');
         Route::get('archieve_info_all','ArchieveController@archieve_info_all')
         ->name('archieve_info_all');
+        Route::get('printArchive/{type}/{id}', 'ArchieveController@printArchive')->name('printArchive');
         Route::get('archievelic_info_all','ArchieveController@archievelic_info_all')
         ->name('archievelic_info_all');
         Route::get('archieve_report','ArchieveController@archieve_report')
@@ -717,6 +740,8 @@ Route::group([
 
         Route::post('saveCert','certController@saveCert')->name('saveCert');
         Route::post('getUserCertification','certController@getUserCertification')->name('getUserCertification');
+        Route::get('modelCert', 'certController@modelCert')->name('modelCert');
+        Route::get('generalCert', 'certController@generalCert')->name('generalCert');
         Route::post('getCertification','certController@getCertification')->name('getCertification');
         Route::get('getCertifications','certController@getCertifications')->name('getCertifications');
         Route::get('getCertificationsUser','certController@getCertificationsUser')->name('getCertificationsUser');

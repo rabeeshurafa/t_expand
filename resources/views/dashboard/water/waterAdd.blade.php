@@ -128,7 +128,7 @@
 
                                             <div class="row">
 
-                                                <div class="col-lg-6 col-md-12 pr-0 pr-s-12"  >
+                                                <div class="col-lg-5 col-md-12 pr-0 pr-s-12"  >
 
                                                     <div class="form-group">
 
@@ -218,6 +218,30 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-12 pr-0 pr-s-12"  >
+
+                                                    <div class="form-group">
+
+                                                        <div class="input-group w-s-87">
+
+                                                            <div class="input-group-prepend">
+
+                                                                <span class="input-group-text" id="basic-addon1">
+
+                                                                     اسم المستفيد
+
+                                                                </span>
+
+                                                            </div>
+
+                                                            <input type="text" id="beneficiary" class="form-control alphaFeild cust" placeholder="اسم المستفيد" name="beneficiary">
+
+
+                                                        </div>
+
+                                                    </div>
+
                                                 </div>
 
                                             </div>
@@ -1085,6 +1109,7 @@ $( function() {
         $("#notes").val(response.info.notes);
         
         $("#region").val(response.info.region);
+        $("#beneficiary").val(response.info.beneficiary);
 
         let date=(response.info.subscription_date)
 

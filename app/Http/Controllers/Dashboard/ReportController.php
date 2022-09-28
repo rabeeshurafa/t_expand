@@ -59,6 +59,11 @@ use App\Models\AppTicket35;
 use App\Models\AppTicket36;
 use App\Models\AppTicket37;
 use App\Models\AppTicket38;
+use App\Models\AppTicket39;
+use App\Models\AppTicket40;
+use App\Models\AppTicket42;
+use App\Models\AppTicket44;
+use App\Models\AppTicket46;
 use App\Models\AppTrans;
 use App\Models\AppResponse;
 use App\Models\Cert;
@@ -70,7 +75,21 @@ use App\Models\Setting;
 
 
 class ReportController extends Controller{
-
+var $archiveNames=array(
+    'out_archieve'=>'صادر',
+    'in_archieve'=>'وارد',
+    'mun_archieve'=>'المؤسسة',
+    'proj_archieve'=>'المشاريع',
+    'assets_archieve'=>'الاصول',
+    'emp_archieve'=>'الموظفين',
+    'cit_archieve'=>'المواطنين',
+    'law_archieve'=>'قوانين واجراءات',
+    'dep_archieve'=>'اتفاقيات وعقود',
+    'contract_archieve'=>'اتفاقيات وعقود',
+    'finance_archive'=>'قسم المالية',
+    'trade_archive'=>'المعاملات',
+    'agenda_archieve'=>'الجلسات',
+);
     public function DailyReport()
     {
         // $city = City::get();
@@ -104,7 +123,8 @@ class ReportController extends Controller{
     public function customerReport()
     {
         $type = 'customerReport';
-        $regions= Region::where('status',1)->get();
+        $setting = Setting::first();
+        $regions= Region::where('town_id',$setting->town_id)->where('status',1)->get();
         $job = Constant::where('parent',74)->where('status',1)->get();
         $dept = Region::where('status',1)->get();
         $use_elec =Constant::where('parent',6032)->where('status',1)->get();
@@ -511,79 +531,89 @@ class ReportController extends Controller{
     function newSearchTasks(Request $request){
         // dd($request->all());
         
-        $ticket1=AppTicket1::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket1=AppTicket1::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket2=AppTicket2::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket2=AppTicket2::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket4=AppTicket4::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket4=AppTicket4::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket5=AppTicket5::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket5=AppTicket5::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket6=AppTicket6::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket6=AppTicket6::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket7=AppTicket7::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket7=AppTicket7::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket8=AppTicket8::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket8=AppTicket8::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket9=AppTicket9::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket9=AppTicket9::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket10=AppTicket10::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket10=AppTicket10::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket11=AppTicket11::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket11=AppTicket11::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket12=AppTicket12::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket12=AppTicket12::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket13=AppTicket13::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket13=AppTicket13::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket14=AppTicket14::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket14=AppTicket14::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket15=AppTicket15::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket15=AppTicket15::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket16=AppTicket16::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket16=AppTicket16::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket17=AppTicket17::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket17=AppTicket17::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket18=AppTicket18::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket18=AppTicket18::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket19=AppTicket19::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket19=AppTicket19::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket20=AppTicket20::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket20=AppTicket20::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket21=AppTicket21::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket21=AppTicket21::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket22=AppTicket22::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket22=AppTicket22::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket23=AppTicket23::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket23=AppTicket23::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','task_type')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket24=AppTicket24::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket24=AppTicket24::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket25=AppTicket25::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket25=AppTicket25::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket26=AppTicket26::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket26=AppTicket26::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket27=AppTicket27::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket27=AppTicket27::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket28=AppTicket28::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket28=AppTicket28::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket29=AppTicket29::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket29=AppTicket29::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket30=AppTicket30::select('id','dept_id','app_no','network_type','malDesc','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket30=AppTicket30::select('id','dept_id','app_no','network_type','malDesc','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket31=AppTicket31::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket31=AppTicket31::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket32=AppTicket32::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket32=AppTicket32::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket33=AppTicket33::select('id','dept_id','app_no','amount','receipt_no','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket33=AppTicket33::select('id','dept_id','app_no','amount','receipt_no','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket34=AppTicket34::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket34=AppTicket34::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket35=AppTicket35::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket35=AppTicket35::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket36=AppTicket36::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket36=AppTicket36::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket37=AppTicket37::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket37=AppTicket37::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
-        $ticket38=AppTicket38::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at')
+        $ticket38=AppTicket38::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
+        ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
+        $ticket39=AppTicket39::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
+        ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
+        $ticket40=AppTicket40::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
+        ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
+        $ticket42=AppTicket42::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','ticket_status as temp')
+        ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
+        $ticket44=AppTicket44::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','topic as temp')
+        ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
+        $ticket46=AppTicket46::select('id','dept_id','app_no','customer_name','customer_id','created_by','active_trans','ticket_status','created_at','updated_at','archive_type as temp')
         ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans','!=',null);
         
         if($request->taskState!=1){
@@ -624,6 +654,11 @@ class ReportController extends Controller{
             $ticket36=  $ticket36->where('ticket_status',$request->taskState);
             $ticket37=  $ticket37->where('ticket_status',$request->taskState);
             $ticket38=  $ticket38->where('ticket_status',$request->taskState);
+            $ticket39=  $ticket39->where('ticket_status',$request->taskState);
+            $ticket40=  $ticket40->where('ticket_status',$request->taskState);
+            $ticket42=  $ticket42->where('ticket_status',$request->taskState);
+            $ticket44=  $ticket44->where('ticket_status',$request->taskState);
+            $ticket46=  $ticket46->where('ticket_status',$request->taskState);
         }
         if($request->Deptid!=0){
             $ticket1 =  $ticket1->where('dept_id',$request->Deptid);
@@ -663,6 +698,11 @@ class ReportController extends Controller{
             $ticket36=  $ticket36->where('dept_id',$request->Deptid);
             $ticket37=  $ticket37->where('dept_id',$request->Deptid);
             $ticket38=  $ticket38->where('dept_id',$request->Deptid);
+            $ticket39=  $ticket39->where('dept_id',$request->Deptid);
+            $ticket40=  $ticket40->where('dept_id',$request->Deptid);
+            $ticket42=  $ticket42->where('dept_id',$request->Deptid);
+            $ticket44=  $ticket44->where('dept_id',$request->Deptid);
+            $ticket46=  $ticket46->where('dept_id',$request->Deptid);
         }
         if($request->customerid!=0){
             $ticket1 =  $ticket1->where('customer_id',$request->customerid);
@@ -702,6 +742,10 @@ class ReportController extends Controller{
             $ticket36=  $ticket36->where('customer_id',$request->customerid);
             $ticket37=  $ticket37->where('customer_id',$request->customerid);
             $ticket38=  $ticket38->where('customer_id',$request->customerid);
+            $ticket39=  $ticket39->where('customer_id',$request->customerid);
+            $ticket40=  $ticket40->where('customer_id',$request->customerid);
+            $ticket42=  $ticket42->where('customer_id',$request->customerid);
+            // $ticket44=  $ticket44->where('customer_id',$request->customerid);
         }
         if($request->from!='' && $request->from!=null  && $request->to!='' && $request->to!=null){
             
@@ -756,13 +800,18 @@ class ReportController extends Controller{
             $ticket36=  $ticket36->whereBetween('created_at', [$from, $to]);
             $ticket37=  $ticket37->whereBetween('created_at', [$from, $to]);
             $ticket38=  $ticket38->whereBetween('created_at', [$from, $to]);
+            $ticket39=  $ticket39->whereBetween('created_at', [$from, $to]);
+            $ticket40=  $ticket40->whereBetween('created_at', [$from, $to]);
+            $ticket42=  $ticket42->whereBetween('created_at', [$from, $to]);
+            $ticket44=  $ticket44->whereBetween('created_at', [$from, $to]);
+            $ticket46=  $ticket46->whereBetween('created_at', [$from, $to]);
             
         }
         $tickets=$ticket1->unionAll($ticket2)->unionAll($ticket4)->unionAll($ticket5)->unionAll($ticket6)->unionAll($ticket7)->unionAll($ticket8)->unionAll($ticket9)->unionAll($ticket10)
         ->unionAll($ticket11)->unionAll($ticket12)->unionAll($ticket13)->unionAll($ticket14)->unionAll($ticket15)->unionAll($ticket16)->unionAll($ticket17)->unionAll($ticket18)->unionAll($ticket19)
         ->unionAll($ticket20)->unionAll($ticket21)->unionAll($ticket22)->unionAll($ticket23)->unionAll($ticket24)->unionAll($ticket25)->unionAll($ticket26)->unionAll($ticket27)->unionAll($ticket28)
         ->unionAll($ticket29)->unionAll($ticket30)->unionAll($ticket31)->unionAll($ticket32)->unionAll($ticket33)->unionAll($ticket34)->unionAll($ticket35)->unionAll($ticket36)->unionAll($ticket37)
-        ->unionAll($ticket38);
+        ->unionAll($ticket38)->unionAll($ticket39)->unionAll($ticket40)->unionAll($ticket42)->unionAll($ticket44)->unionAll($ticket46);
         // dd($ticket);
         $tickets=$tickets->get();
         $res=array();
@@ -770,6 +819,17 @@ class ReportController extends Controller{
             if($ticket->activeTrans!=null){
                 // dd($ticket);
                 $config=TicketConfig::where('app_type',$ticket->activeTrans->ticket_type)->where('ticket_no',$ticket->activeTrans->related)->first();
+                if($ticket->activeTrans->related == 23){
+                    
+                    $task_type=Constant::where('id',$ticket->temp)->first();
+                    if($task_type != null){
+                        $config->ticket_name=$task_type->name;
+                    }
+                }elseif($ticket->activeTrans->related == 44){
+                     $config->ticket_name=$ticket->temp;   
+                }else if($ticket->activeTrans->related == 46){
+                     $config->ticket_name.=' '.$this->archiveNames[$ticket->temp];   
+                }
                 $admin=Admin::where('id',$ticket->activeTrans->reciver_id)->first();
                 $ticket['TicketConfig']=$config;
                 $ticket->admin2=$admin;
@@ -914,6 +974,12 @@ class ReportController extends Controller{
                 
                 if($res[$i]->related==23 && $res[$i]->ticket_type==4){
                     $ticket['tiketName']=Constant::where('id',$ticket['0']->task_type)->first();
+                }elseif($res[$i]->related==44){
+                    $ticket['config']->ticket_name=$ticket[0]->topic;
+                }elseif($res[$i]->related==16){
+                    $ticket['tiketName']=Constant::where('id',$ticket['0']->task_type)->first();
+                }else if($res[$i]->related == 46){
+                    $ticket['config']->ticket_name.=' '.$this->archiveNames[$ticket[0]->archive_type];   
                 }
                 $arr[]=$ticket;
             }
@@ -1127,6 +1193,12 @@ class ReportController extends Controller{
                     
                     if($res[$i]->related==23 && $res[$i]->ticket_type==4){
                         $ticket['tiketName']=Constant::where('id',$ticket['0']->task_type)->first();
+                    }elseif($res[$i]->related==16){
+                        $ticket['tiketName']=Constant::where('id',$ticket['0']->task_type)->first();
+                    }else if($res[$i]->related==44){
+                        $ticket['config']->ticket_name=$ticket[0]->topic;
+                    }else if($res[$i]->related == 46){
+                        $ticket['config']->ticket_name.=' '.$this->archiveNames[$ticket[0]->archive_type];   
                     }
                     $arr[]=$ticket;
                 }
@@ -1152,6 +1224,23 @@ class ReportController extends Controller{
             $temp=  $result;  
             $result = array_merge($temp, $Cert2->toArray());
         }
+        if($request->cirtType3!=null){
+                $Cert3=Cert::whereRaw('CAST(t_farfromcenter.created_at AS DATE) between ? and ?', [$from, $to])->where('t_farfromcenter.e_type','=',3)->select('t_farfromcenter.*','t_certification.s_name_ar as cer_name')
+                ->leftJoin('t_certification','t_certification.pk_i_id','t_farfromcenter.msgTitle')
+                ->with('Admin')
+                ->get();
+            $temp=  $result;  
+            $result = array_merge($temp, $Cert3->toArray());
+        }
+        if($request->cirtType4!=null){
+                $Cert4=Cert::whereRaw('CAST(t_farfromcenter.created_at AS DATE) between ? and ?', [$from, $to])->where('t_farfromcenter.e_type','=',4)->select('t_farfromcenter.*','t_certification.s_name_ar as cer_name')
+                ->leftJoin('t_certification','t_certification.pk_i_id','t_farfromcenter.msgTitle')
+                ->with('Admin')
+                ->get();
+            $temp=  $result;  
+            $result = array_merge($temp, $Cert4->toArray());
+        }
+        
         
         usort($result, function($a, $b) {
             if(count($a)<=8 && count($a)>1){

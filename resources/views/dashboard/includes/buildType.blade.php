@@ -8,7 +8,7 @@
                     </span>
                 </div>
                 <select id="buildingType" name="buildingType" type="text"
-                    class="form-control valid" aria-invalid="false">
+                    class="form-control valid buildingType" aria-invalid="false">
                     <option > {{ '-- نوع البناء --' }} </option>
                     @foreach($buildingTypeList as $buildingType)
                     <option value="{{ $buildingType->id }}">{{ $buildingType->name }}</option>

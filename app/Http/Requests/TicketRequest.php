@@ -30,7 +30,7 @@ class TicketRequest extends FormRequest
             'AreaID' => 'required|numeric',
             // 'Address' => 'required|string',
             'subscriptionType' => 'required|numeric',
-            'AssignedToID' => 'required|numeric',
+            // 'AssignedToID' => 'required|numeric',
             // 'Position' => 'required|numeric|exists:t_constant,id',
             // 'JobType' => 'required|numeric|exists:t_constant,id',
             //'DirectManager' => 'required|numeric',

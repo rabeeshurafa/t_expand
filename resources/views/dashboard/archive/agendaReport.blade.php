@@ -601,6 +601,11 @@ function search(){
                                 id=elem.agenda_topic[i].id;
                                 attach='';
                                 for(j=0;j<elem.agenda_topic[i].files.length;j++){
+                                    if(elem.agenda_topic[i].files[j].type==1){
+                                        url= '{{asset('')}}'+elem.agenda_topic[i].files[j].url
+                                    }else {
+                                        url= elem.agenda_topic[i].files[j].url
+                                    }
                                     shortCutName=elem.agenda_topic[i].files[j].real_name;
                                     shortCutName=shortCutName.substring(0, 20)
                                     if(elem.agenda_topic[i].files[j].extension=="jpg"||elem.agenda_topic[i].files[j].extension=="png")
@@ -614,7 +619,7 @@ function search(){
                                         attach+='       <div id="attach" class=" col-sm-6 ">   ' +
                                     '           <div class="attach" onmouseover="$(this).children().first().next().show()">		' +
                                     '               <span class="attach-text">'+shortCutName+'</span>		' +
-                                    '                   <a class="attach-close1" href="{{asset('')}}'+elem.agenda_topic[i].files[j].url+'" style="color: #74798D; float:left;" target="_blank">' +
+                                    '                   <a class="attach-close1" href="'+url+'" style="color: #74798D; float:left;" target="_blank">' +
                                     '                       <img style="width: 20px;"src="'+fileimage+'">' +
                                     '                   </a>		' +
                                     '                 <input type="hidden" id="subject'+id+'imgUploads[]" name="subject'+id+'imgUploads[]" value="'+elem.agenda_topic[i].files[j].real_name+'">      ' +

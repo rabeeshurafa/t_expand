@@ -489,6 +489,7 @@ function calcDuration(str){
         let BuildingType = $("#BuildingType").val();
         let BuildingTypeData = $("#BuildingTypeData").val();
         let LicType = $("#LicType").val();
+        $('.loader').removeClass('hide');
         $.ajax({
             type: 'get', // the method (could be GET btw)
             url: "archieve_report",
@@ -534,10 +535,13 @@ function calcDuration(str){
 
                         shortCutName=elem.files[j].real_name;
 
-                        urlfile='{{ asset('') }}';
+                        // urlfile='{{ asset('') }}';
 
-                        urlfile+=elem.files[j].url;
-
+                        // if(elem.files[j].type==1){
+                        //     urlfile+=elem.files[j].url;
+                        // }else{
+                            urlfile=elem.files[j].url;
+                        // }
                         if(elem.files[j].extension=="jpg"||elem.files[j].extension=="png")
 
                         fileimage='{{ asset('assets/images/ico/image.png') }}';
@@ -628,7 +632,11 @@ function calcDuration(str){
 
                         urlfile='{{ asset('') }}';
 
-                        urlfile+=elem.files[j].url;
+                        if(elem.files[j].type==1){
+                            urlfile+=elem.files[j].url;
+                        }else{
+                            urlfile=elem.files[j].url;
+                        }
 
                         if(elem.files[j].extension=="jpg"||elem.files[j].extension=="png")
 
@@ -737,6 +745,7 @@ function calcDuration(str){
                                     }
                                 }
                     });
+                    $('.loader').addClass('hide');
                 },
             });
 

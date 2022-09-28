@@ -328,7 +328,7 @@ function getFullData(id){
     formData={'id':id}
        $.ajax({
           type:'POST',
-          url: "appCustomer",
+          url: "{{route('appCustomer')}}",
            data: formData,
            /*contentType: false,
            processData: false,*/
@@ -397,7 +397,7 @@ function getSubscriberTasks(id){
 
                 type: 'get',
 
-                url: "subscriber_tasks",
+                url: "{{route('subscriber_tasks')}}",
 
                 data: {
 

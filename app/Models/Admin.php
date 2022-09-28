@@ -19,6 +19,10 @@ class Admin  extends  Authenticatable
     {
         return $this->belongsTo(Department::class, 'admin_id');
     }
+    public function jobTitle()
+    {
+        return $this->belongsTo(Constant::class, 'job_title_id');
+    }
     public function hasAbility($permissions)   
     {
         $role = $this->role;

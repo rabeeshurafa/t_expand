@@ -36,6 +36,7 @@ return [
         "reports" => 'reports',
         'report_archieve' => 'report_archieve',
         "permissions" => 'permissions',
+        "userper" => 'userper',
         "account" => 'account',
         "my_account" => 'my_account',
         

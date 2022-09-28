@@ -305,7 +305,20 @@
                                         
 
                                 </div>
-
+                                <div class="row">
+                                    <div class="col-lg-10 col-md-12 "  >
+                                        <div class="form-group paddmob">
+                                            <div class="input-group" style="width: 93% !important;">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        ملاحظات
+                                                    </span>
+                                                </div>
+                                                <input type="text" id="notes" class="form-control" name="notes" style="width: 30%;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                         <div class="row">
 
                                         <div class="col-lg-10 col-md-12 pr-0 pr-s-12"  >
@@ -453,6 +466,7 @@
 
 
 <script>
+
 function scanToJpg() {
         scanner.scan(displayImagesOnPage,
             {
@@ -593,7 +607,11 @@ function scanToJpg() {
 
                         urlfile='{{ asset('') }}';
 
-                        urlfile+=response.file.url;
+                        if(response.file.type==1){
+                            urlfile+=response.file.url;
+                        }else{
+                            urlfile=response.file.url;
+                        }
 
                             shortCutName=shortCutName.substring(0, 40)
                             
@@ -613,7 +631,7 @@ function scanToJpg() {
 
                                 +'      <input type="text" id="attachName[]" class="form-control" name="attachName[]" value="'+$("#AttahType option:selected").text()+'">     ' 
 
-                                +'      <input type="hidden" id="attachFile[]" name="attachFile[]" value="'+response.file.url+'">        '    
+                                +'      <input type="hidden" id="attachFile[]" name="attachFile[]" value="'+response.file.id+'">        '    
 
                                 +'      <a href="'+urlfile+'" target="_blank">     '           
 
@@ -678,7 +696,6 @@ function scanToJpg() {
             });
             return true;
     }
-
 
 
 
@@ -928,7 +945,7 @@ $( function() {
             $('#pk_i_id').val(response.info.license_id);
 
             $('#customerType').val(response.info.model_name);
-
+            $('#notes').val(response.info.notes);
             $('#licNo').val(response.info.licNo);
             $('#fileNo').val(response.info.fileNo);
             $('#use_desc').val(response.info.use_desc);
@@ -954,9 +971,11 @@ $( function() {
 
                         urlfile='{{ asset('') }}';
 
-                        urlfile+=response.files[j].url;
-
-                        console.log(response.files[j].url)
+                        if(response.files[j].type==1){
+                            urlfile+=response.files[j].url;
+                        }else{
+                            urlfile=response.files[j].url;
+                        }
 
                         formDataStr="formDataaa";
 
@@ -978,7 +997,7 @@ $( function() {
 
                                 +'      <input type="text" id="attachName[]" class="form-control" name="attachName[]" value="'+response.files[j].real_name+'">     ' 
 
-                                +'      <input type="hidden" id="attachFile[]" name="attachFile[]" value="'+response.files[j].url+'">        '    
+                                +'      <input type="hidden" id="attachFile[]" name="attachFile[]" value="'+response.files[j].id+'">        '    
 
                                 +'      <a href="'+urlfile+'" target="_blank">     '           
 
@@ -1080,7 +1099,7 @@ $( function() {
 
         $("#license_date").val(dates);
         $("#licNo").val((response.info.licNo??''));
-        $("#use_desc").val((response.info.use_desc??''));
+        $("#use_desc").val((response.info.use_desc!=null?response.info.use_desc.name:''));
 
         },
 
@@ -1164,7 +1183,7 @@ function doUploadAttach1(formDataStr)
 
                                 +'      <input type="text" id="attachName[]" class="form-control" name="attachName[]" value="'+$("#AttahType option:selected").text()+'">     ' 
 
-                                +'      <input type="hidden" id="attachFile[]" name="attachFile[]" value="'+data.all_files[j].url+'">        '    
+                                +'      <input type="hidden" id="attachFile[]" name="attachFile[]" value="'+data.all_files[j].id+'">        '    
 
                                 +'      <a href="'+urlfile+'" target="_blank">     '           
 
@@ -1200,6 +1219,7 @@ function doUploadAttach1(formDataStr)
 
                     $(".loader").addClass('hide');
                     $(".form-control-file").val('');
+
                     //document.getElementById(""+formDataStr+"upload-file[]").value="";
 
                     $(".group1").colorbox({rel:'group1'});

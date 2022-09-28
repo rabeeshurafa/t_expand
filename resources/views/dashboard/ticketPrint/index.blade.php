@@ -138,6 +138,32 @@
                <span>{{ $ticket->customer_mobile }}</span>
             </div>
         </div>
+        @if( $config[0]->ticket_no==1)
+        <div class="row" style="margin-bottom:10px;">
+            <div class="col-6" style="text-align:right">
+                <span> نوع الاشتراك : </span>
+                <span>{{$ticket->subscription_type_name->name}}</span>
+            </div>
+            @if( $ticket->app_type==1)
+            <div class="col-6" style="text-align:right">
+                <span> القدرة : </span>
+                @if($ticket->phase==1)
+               <span>1 فاز</span>
+               @else
+               <span>3 فاز</span>
+               @endif
+            </div>
+            @endif  
+        </div>
+        @endif  
+        @if( isset($ticket->subscription))
+        <div class="row" style="margin-bottom:10px;">
+            <div class="col-12" style="text-align:right">
+                <span> رقم الاشتراك : </span>
+                <span>{{$ticket->subscription[0]->subscription_no}}</span>
+            </div>
+        </div>
+        @endif  
         @if($ticket->malDesc != null)
         <div class="row" style="margin-bottom:10px;">
             <div class="col-12" style="text-align:right">
@@ -218,12 +244,13 @@
                 </div>
             </div>  
         @endif  
-        @if($config[0]->has_debt_list==1)
+        
         <div class="row"style="margin-bottom:10px;" >
             <div class="col-md-12 attachs-section"  style="margin-left: 25px; margin-right: 25px;text-align: right;margin-bottom: 0;">
             </div>
         </div>
         <div class="row">
+        @if($config[0]->has_debt_list==1)
             <div class="row" style="width:50%">
                     <div class="card-body" style="padding:0;">
                        <div class="form-group col-md-12">
@@ -358,11 +385,12 @@
                     </div>
                     
                 </div>
-                
+        @endif       
+        @if($config[0]->has_price_list==1)
             <div class="row attachs-body" style="width:50%">
                 
                 <div class="form-group col-12 mb-2" style="padding-top: 20px;">
-                    <div class="col-12" style="text-align: center;font-size:20pt;">
+                    <div class="col-12 hide" style="text-align: center;font-size:20pt;">
                          <span style="text-align: center;font-size:20pt;">
                              التكاليف
                          </span> 
@@ -370,7 +398,7 @@
                         <?php $total=0; 
                         $arr=json_decode($ticket->fees_json);
                         $arr=is_array($arr)?$arr:array();?>
-                    <ol class="vasType 1vas addRec">
+                    <ol class="vasType 1vas addRec hide">
                          <?php 
                         if(sizeof($arr)>0){?>
                             @foreach($arr as $fee)
@@ -393,7 +421,7 @@
                         <li style="font-size: 17px !important;color:#000000">
                             <div class="row">
                                 <div class="col-sm-8">
-                                    الإجمالي
+                                    اجمالي التكاليف
                                 </div>
                                 <div class="col-sm-3">
                                     <input type="number" style="font-weight:bold;text-align:center;" id="total" disabled="" name="total" class="form-control" value="{{$total}}">
@@ -403,8 +431,9 @@
                     </ol>
                 </div>
             </div>
+        @endif  
         </div>
-    @endif
+    
     <div class="row" >
         <div class="col-md-12 attachs-section"  style="margin-left: 25px; margin-right: 25px;text-align: right;margin-bottom: 0;right;margin-top: 25px;">
 
@@ -481,7 +510,14 @@
     </div>
     @endforeach
     </div>
-
+    <div class="row" style="padding-top: 50px;">
+        <div class="col-12" style="text-align:left">
+            <span> 
+            توقيع مقدم الطلب  
+            </span>
+            
+        </div>
+    </div>
 </form>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

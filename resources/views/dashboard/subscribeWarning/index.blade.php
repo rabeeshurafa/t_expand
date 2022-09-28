@@ -128,7 +128,7 @@
                                             
                                                             <div class="input-group-append hidden-xs hidden-sm">
                                             
-                                                                <div class="input-group-append" onclick="ShowConstantModal(6283,'warningType','نوع الاخطار')">
+                                                                <div class="input-group-append" onclick="ShowConstantModal(6228,'warningType','نوع الاخطار')">
                                             
                                                                     <span class="input-group-text input-group-text2">
                                             
@@ -271,6 +271,9 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6" style="padding-right: 0px;">
+                                                <img src="https://t.palexpand.ps/assets/images/ico/scanner.png"  style="cursor:pointer;    float: left;" onclick="scanToJpg();">
+
+                                                <img src="https://t.palexpand.ps/assets/images/ico/scannerpdf.png"  style="cursor:pointer;    float: left;" onclick="scanTopdf();">
                                                  <div class="row attachs-body repAttach" style="margin-left: 25px;">
                                                     <div class="form-group col-12 mb-2" style="padding-right: 0px;">
                                                 
@@ -337,6 +340,72 @@
                     </div>
                     <div class="card-body">
                         <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="input-group" style="">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text " id="basic-addon1">
+                                                    {{ 'نوع الاخطار' }}
+                                                </span>
+                                            </div>
+                                            <select id="search_warningType" name="search_warningType" type="text"
+                                                class="form-control valid warningType" aria-invalid="false" onchange="reload();">
+                                                <option value="0" selected=""> {{ 'نوع الاخطار' }} </option>
+                                                @foreach($warningTypes as $worningType1)
+                                                <option value="{{$worningType1->id}}"> {{$worningType1->name}} </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <div class="input-group" style="">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text " id="basic-addon1">
+                                                    {{ 'حالة الاخطار' }}
+                                                </span>
+                                            </div>
+                                            <select id="search_warningStatuse" name="search_warningStatuse" class="form-control" onchange="reload();">
+                                                <option value="0">اختر</option>
+                                                <option value="6240">قائم</option>
+                                                <option value="6242">ملغي</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group paddmob">
+                                        <div class="input-group subscribermob">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    {{ 'من تاريخ' }}
+                                                </span>
+                                            </div>
+                                            <input type="text" id="search_from" 
+                                                class="form-control singledate" maxlength="10" data-mask="00/00/0000" placeholder="{{date('d/m/Y')}}"
+                                                name="search_from">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group paddmob">
+                                        <div class="input-group subscribermob">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    {{ 'الي تاريخ' }}
+                                                </span>
+                                            </div>
+                                            <input type="search_to" id="search_to" 
+                                                class="form-control singledate" maxlength="10" data-mask="00/00/0000" placeholder="{{date('d/m/Y')}}"
+                                                name="search_from">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row" id="resultTblaa">
                                 <div class="col-xl-12 col-lg-12">
                                     <table style="width:100%; margin-top: -10px;direction: rtl;text-align: right" class="detailsTB table wtbl">
@@ -390,6 +459,189 @@
 @section('script')
 <script>
 
+    var typingTimer;                //timer identifier
+    var doneTypingInterval = 300;  //time in ms
+    var $search_from = $('#search_from');
+    var $search_to = $('#search_to');
+    
+    //on keyup, start the countdown
+    $search_from.on('keyup', function () {
+      clearTimeout(typingTimer);
+      typingTimer = setTimeout(reload, doneTypingInterval);
+    });
+    
+    //on keydown, clear the countdown 
+    $search_from.on('keydown', function () {
+      clearTimeout(typingTimer);
+    });
+    
+    $search_to.on('keyup', function () {
+      clearTimeout(typingTimer);
+      typingTimer = setTimeout(reload, doneTypingInterval);
+    });
+    
+    //on keydown, clear the countdown 
+    $search_to.on('keydown', function () {
+      clearTimeout(typingTimer);
+    });
+
+    function reload(){
+        $('.wtbl').DataTable().ajax.reload();  
+    }
+
+    function scanToJpg() {
+        scanner.scan(displayImagesOnPage,
+            {
+                "output_settings" :
+                    [
+                        {
+                            "type" : "return-base64",
+                            "format" : "png"
+                        }
+                    ]
+            }
+        );
+    }
+
+    /** Processes the scan result */
+    function displayImagesOnPage(successful, mesg, response) {
+        if(!successful) { // On error
+            console.error('Failed: ' + mesg);
+            return;
+        }
+
+        if(successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
+            console.info('User canceled');
+            return;
+        }
+        var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
+        for(var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
+            var scannedImage = scannedImages[i];
+            uploadScannedfile(scannedImage);
+            // processScannedImage(scannedImage);
+        }
+    }
+    
+    function scanTopdf() {
+        scanner.scan(displayPdfOnPage,
+            {
+                "output_settings" :
+                    [
+                        {
+                            "type" : "return-base64",
+                            "format" : "pdf",
+                        }
+                    ]
+            }
+        );
+    }
+    
+    function displayPdfOnPage(successful, mesg, response) {
+        
+        if(!successful) { // On error
+            console.error('Failed: ' + mesg);
+            return;
+        }
+
+        if(successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
+            console.info('User canceled');
+            return;
+        }
+        var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
+        for(var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
+            var scannedImage = scannedImages[i];
+            uploadScannedfile(scannedImage);
+        }
+    }
+    
+    function uploadScannedfile(scannedImage){
+        $(".loader").removeClass('hide');
+        $(".form-actions").addClass('hide');
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
+                'ContentType': 'application/json'
+            }
+        });
+        
+        $.ajax({
+                type:'post',
+                url:'{{route('saveScanedFile')}}',
+                data: {
+                    scannedData: scannedImage.src,
+                    type: scannedImage.mimeType,
+                    
+                },
+                dataType:"json",
+                async: true,
+                success: (response) => {
+                    $(".form-actions").removeClass('hide');
+                    $(".loader").addClass('hide');
+                        shortCutName=response.file.real_name;
+                        
+                        shortCutID=response.file.id;
+                        
+                        urlfile='{{ asset('') }}';
+                        
+                        urlfile+=response.file.url;
+                        
+                        shortCutName=shortCutName.substring(0, 40)
+                        if(response.file.extension=="jpg"||response.file.extension=="png")
+                            fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/image.png';
+                            else if(response.file.extension=="pdf")
+                            fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/pdf.png';
+                            else if(response.file.extension=="doc")
+                            fileimage='https://template.expand.ps/public/assets/images/ico/word.png';
+                            else if(response.file.extension=="excel"||response.file.extension=="xsc")
+                            fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/excellogo.png';
+                            else
+                            fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/file.png';
+                            var row = '<li style="font-size: 17px !important;color:#000000">' +
+                                '<div class="row">' +
+                                '<div class="col-sm-6 attmob">' +
+                                '<input type="text" id="attachName1[]" name="attachName1[]" class="form-control attachName1">' +
+                                '</div>' +
+                                '<div class="attdocmob col-sm-5 attach_row_'+attach_index1+'">' +
+                                '<div id="attach" class=" col-sm-12 ">'+
+                                '<div class="attach">' +                                       
+                                '<a class="attach-close1" href="'+urlfile+'" style="color: #74798D; float:left;" target="_blank">'+
+                                '<span class="attach-text hidemob">'+shortCutName+'</span>' +
+                                '<img style="width: 20px;"src="'+fileimage+'">'+
+                                '</a>'+
+                                '<input type="hidden" id="attach_ids[]" name="attach_ids[]" value="'+response.file.id+'">'+
+                                '<input type="hidden" id="notArchived[]" name="notArchived[]" value="'+response.file.id+'">'+
+                                '</div>'+
+                                '</div>'+
+                                '</div>'+
+                                '<div class="attdelmob">' +
+                                '<img src="{{ asset('assets/images/ico/upload.png') }}" width="40" height="40" style="cursor:pointer" onclick="$(\'#currFile\').val('+attach_index1+');$(\'#attachfile\').trigger(\'click\'); return false">' +
+                                '</div>' +
+                                '<div class="attdelmob">' +
+                                '<i class="fa fa-trash" id="plusElement1" style="padding-top:10px;position: relative;left: 3%;cursor: pointer;  color:#1E9FF2;font-size: 15pt; " onclick="$(this).parent().parent().parent().remove()"></i>'+
+                                '</div>' +
+                                ' </div>' +
+                               
+                                ' </li>'
+                                attach_index1++
+                            $(".addAttatch1").append(row)
+                },
+
+                error: function(response){
+                    $(".form-actions").removeClass('hide');
+                    $(".loader").addClass('hide');
+                    
+                    Swal.fire({
+                        position: 'top-center',
+                        icon: 'error',
+                        title: '{{trans('admin.error_save')}}',
+                        showConfirmButton: false,
+                        timer: 1500
+                        })
+                }
+
+            });
+            return true;
+    }
 
 function resetFunction(){
 
@@ -553,13 +805,13 @@ function startUpload1(formDataStr)
                                         +'<input type="hidden" id="attach_ids[]" name="attach_ids[]" value="'+file.id+'">'
                                     +'</div>'
                                     +'</div>'; 
-                            $actionBtn += '</div>';
                             shortCutName=shortCutName.substring(0, 40)
                     }
                     $(".alert-danger").addClass("hide");
                     $(".alert-success").removeClass('hide');
                     $(".attach_row1_"+id).append($actionBtn)
                     $(".loader").addClass('hide');
+                    $("#attachfile1").val('');
                     
                     $(".group1").colorbox({rel:'group1'});
                     setTimeout(function(){
@@ -798,8 +1050,16 @@ function startUpload1(formDataStr)
 
         var table = $('.wtbl').DataTable({
 
-            ajax:"{{ route('warning_info_all') }}",
-
+            ajax:{
+                url: "{{ route('warning_info_all') }}",
+                data: function (d) {
+                    d.type = $('#type').val();
+                    d.search_warningType = $('#search_warningType').val();
+                    d.search_warningStatuse = $('#search_warningStatuse').val();
+                    d.search_from = $('#search_from').val();
+                    d.search_to = $('#search_to').val();
+                }
+            },
             columns:[
 
                     { data: 'DT_RowIndex', name: 'DT_RowIndex' , orderable: false, searchable: false},

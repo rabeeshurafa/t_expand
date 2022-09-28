@@ -25,7 +25,7 @@
                     <div>
                         <img src="{{ asset('assets/images/ico/upload.png') }}" width="40"
                             height="40" style="cursor:pointer"
-                            onclick="$('#currFile').val(1);$('#attachfile').trigger('click');">
+                            onclick="$('#currFile').val(($('#currFile').val()==null || $('#currFile').val()=='' ? 1 : $('#currFile').val()));$('#attachfile').trigger('click');">
                     </div>
                 </div>
             </li>
@@ -37,8 +37,11 @@
 
 
 <script>
-
-
+attach_index=2;
+function setAttach_index(newvalue){
+    console.log(newvalue);
+    attach_index=newvalue;
+}
     function scanToJpg() {
         scanner.scan(displayImagesOnPage,
             {
@@ -133,8 +136,12 @@
                         
                         urlfile='{{ asset('') }}';
                         
-                        urlfile+=response.file.url;
-                        
+                        if(response.file.type==2){
+                            urlfile=response.file.url;
+                        }else{
+                            urlfile+=response.file.url;
+                        }
+                        console.log(attach_index);
                         shortCutName=shortCutName.substring(0, 40)
                         if(response.file.extension=="jpg"||response.file.extension=="png")
                             fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/image.png';
@@ -209,7 +216,8 @@ function trigerAttach(){
             $( ".attachs-body" ).toggleClass( "hide" );
             resize();
         }
-attach_index=2;
+
+
     function addNewAttatch() {
 
         if($(".attachName").last().val().length>0){
@@ -267,13 +275,15 @@ function startUpload(formDataStr)
                         shortCutName=data.all_files[j].real_name;
                         shortCutID=data.all_files[j].id;
                         urlfile='{{asset("")}}/';
-                        console.log(urlfile);
                         urlfile+=data.all_files[j].url;
-                        console.log(urlfile);
                          shortCutName=file.real_name;
                                 shortCutName=shortCutName.substring(0, 20);
                                 urlfile='{{asset("")}}/';
-                                urlfile+=file.url;
+                                if(file.type==2){
+                                    urlfile=file.url; 
+                                }else{
+                                    urlfile+=file.url; 
+                                }
                                 if(file.extension=="jpg"||file.extension=="png")
                                 fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/image.png';
                                 else if(file.extension=="pdf")

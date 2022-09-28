@@ -221,8 +221,8 @@
                                                             {{trans('admin.depat')}}                                                             </span>
                                                     </div>
                                                     <select type="text" id="DepartmentID" name="DepartmentID" class="form-control" onchange="getDeptInfo($(this).val(),DirectManager)">
-                                                        <option> {{trans('admin.select')}} </option>
-                                                        <option value="">  {{trans('admin.without')}} </option>
+                                                        <optionvalue="0"> {{trans('admin.select')}} </option>
+                                                        <option value="0">  {{trans('admin.without')}} </option>
 
                                                         @foreach($departments as $department)
                                                         <option value="{{$department->id}}">  {{$department->name}} </option>
@@ -248,7 +248,7 @@
                                                             {{trans('admin.job_title')}}                                                              </span>
                                                     </div>
                                                     <select type="text" id="Position" name="Position" class="form-control Position" placeholder="internal phone">
-                                                        <option> {{trans('admin.select')}} </option>
+                                                        <option value="0"> {{trans('admin.select')}} </option>
                                                         @foreach($jobTitle as $title)
                                                         <option value="{{$title->id}}">  {{$title->name}}  </option>
                                                         @endforeach
@@ -303,7 +303,7 @@
                                                     </div>
                                                   <?php  $types=$type;  ?>
                                                     <select id="JobType" name="JobType" type="text" class="form-control JobType">
-                                                        <option> {{trans('admin.select')}} </option>
+                                                        <option value="0"> {{trans('admin.select')}} </option>
                                                         @foreach($jobType as $type)
                                                         <option value="{{$type->id}}"> {{$type->name}} </option>
                                                         @endforeach

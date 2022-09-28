@@ -47,7 +47,7 @@
                                                     <select id="TaskState" class="form-control" name="TaskState">
                                                         <option value="1">{{ 'الكل' }}</option>
                                                         @foreach ($ticketStatuses as $ticketStatuse)
-                                                            <option value="{{$ticketStatuse->id}}">{{ $ticketStatuse->name }}</option>
+                                                            <option value="{{$ticketStatuse->id}}">{{ $ticketStatuse->id == 5003 ?'منتهي':$ticketStatuse->name }}</option>
                                                         @endforeach
                                                     </select>
 
@@ -546,7 +546,7 @@
                             if(response[i].ticket_status != null){
                                 if(response[i].ticket_status.id==5003){
                                     color='red';
-                                    status='مغلق';
+                                    status='منتهي';
                                     statusID=5003;
                                 }
                                 else {

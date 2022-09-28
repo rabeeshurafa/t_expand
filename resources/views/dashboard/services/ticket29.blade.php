@@ -385,6 +385,27 @@ $(document).ready(function () {
                     this.setCustomValidity('')
                 })
             }
+            if(response.responseJSON.errors.kwatt){
+                $( "#kwatt" ).addClass( "error" );
+                $( "#kwatt" ).get(0).setCustomValidity('ادخل قدرة المشروع');
+                $( "#kwatt" ).on('input',function(){
+                    this.setCustomValidity('')
+                })
+            }
+            if(response.responseJSON.errors.licNo){
+                $( "#licNo" ).addClass( "error" );
+                $( "#licNo" ).get(0).setCustomValidity('ادخل رقم الرخصة');
+                $( "#licNo" ).on('input',function(){
+                    this.setCustomValidity('')
+                })
+            }
+            if(response.responseJSON.errors.placement){
+                $( "#placement" ).addClass( "error" );
+                $( "#placement" ).get(0).setCustomValidity('ادخل مكان التركيب');
+                $( "#placement" ).on('input',function(){
+                    this.setCustomValidity('')
+                })
+            }
 			Swal.fire({
 				position: 'top-center',
 				icon: 'error',

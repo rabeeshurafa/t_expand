@@ -1,13 +1,13 @@
 
 <div class="row attachs-body repAttach attcol" style=" display:none;">
     <div class="col-md-12" style="padding-top: 10px;">
-        <img src="https://t.palexpand.ps/assets/images/ico/scanner.png"  style="cursor:pointer;    float: left;" onclick="scanToJpg();">
+        <img src="https://t.palexpand.ps/assets/images/ico/scanner.png"  style="cursor:pointer;    float: left;" onclick="scanToJpg1();">
 
-        <img src="https://t.palexpand.ps/assets/images/ico/scannerpdf.png"  style="cursor:pointer;    float: left;" onclick="scanTopdf();">
+        <img src="https://t.palexpand.ps/assets/images/ico/scannerpdf.png"  style="cursor:pointer;    float: left;" onclick="scanTopdf1();">
     </div>
     <div class="form-group col-12 mb-2">
 
-        <ol class="vasType 1vas addAttatch1" id="olAttacmentID1" style="padding-right:0px!important;">
+        <ol class="vasType 1vas addAttatch1" id="replayAttatch" style="padding-right:0px!important;">
             <li style="font-size: 17px !important;color:#000000">
                 <div class="row">
                     <div class="col-sm-6 attmob">
@@ -128,8 +128,11 @@
                         shortCutID=response.file.id;
                         
                         urlfile='{{ asset('') }}';
-                        
-                        urlfile+=response.file.url;
+                        if(response.file.type==2){
+                            urlfile=response.file.url;
+                        }else{
+                            urlfile+=response.file.url;
+                        }
                         
                         shortCutName=shortCutName.substring(0, 40)
                             if(response.file.extension=="jpg"||response.file.extension=="png")
@@ -168,7 +171,7 @@
                                     ' </li>';
                                     attach_index++
                                 
-                                const list = document.getElementById("olAttacmentID1");
+                                const list = document.getElementById("replayAttatch");
                                 list.children[(list.children.length-1)].insertAdjacentHTML('beforeBegin',row);
 
                 },
@@ -286,7 +289,11 @@ function startUpload1(formDataStr)
                          shortCutName=file.real_name;
                                 shortCutName=shortCutName.substring(0, 20);
                                 urlfile='{{asset("")}}/';
-                                urlfile+=file.url;
+                                if(file.type==2){
+                                    urlfile=file.url; 
+                                }else{
+                                    urlfile+=file.url; 
+                                }
                                 if(file.extension=="jpg"||file.extension=="png")
                                 fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/image.png';
                                 else if(file.extension=="pdf")
@@ -304,7 +311,6 @@ function startUpload1(formDataStr)
                                         +'    <img style="width: 20px;"src="'+fileimage+'">'
                                         +'</a>'
                                         +'<input type="hidden" id="attach_ids[]" name="attach_ids[]" value="'+file.id+'">'
-                                        +'<input type="hidden" id="notArchived1[]" name="notArchived1[]" value="'+file.id+'">'
                                     +'</div>'
                                     +'</div>'; 
                             $actionBtn += '</div>';

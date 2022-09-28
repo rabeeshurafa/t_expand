@@ -11,6 +11,7 @@ use App\Models\Warning;
 use App\Models\File;
 use App\Models\Archive;
 use App\Managers\AttatchmentManager;
+use DateTime;
 use DB;
 
 
@@ -26,7 +27,13 @@ class SubscriberWarning extends Controller
     
     function prepearAttach(Request $request){
         $attach_ids=$request->attach_ids;
-        $attachName=$request->attachName1;
+        $attachNameTemp=$request->attachName1;
+        $attachName=array();
+        foreach($attachNameTemp as $attach){
+            if($attach != null || $attach != ''){
+                array_push($attachName,$attach);
+            }
+        }
         $attachArr=array();
         if($attach_ids)
         for($i=0;$i<sizeof($attach_ids);$i++){
@@ -84,6 +91,19 @@ class SubscriberWarning extends Controller
             $link='';
             $name='اخطارات';
             $this->saveWarningArchieve($request,$name,$link);
+        }
+        if(($request->warningId!=0 || $request->warningId!=null) && ($request->notArchived != null)){
+            $link='';
+            $name='اخطارات';
+            $attachNameTemp=$request->attachName1;
+            $attachName=array();
+            foreach($attachNameTemp as $attach){
+                if($attach != null || $attach != ''){
+                    array_push($attachName,$attach);
+                }
+            }
+            $request->attachName1=$attachName;
+            $this->saveScannedArchieve($request,$name,$link);
         }
         
         DB::commit();
@@ -149,6 +169,63 @@ class SubscriberWarning extends Controller
 
         }
     }
+    function saveScannedArchieve(Request $request,$taskname='',$tasklink='',$model='App\\Models\\User'){
+        $files_ids = $request->attach_ids;
+
+        if ($files_ids) {
+            $i=0;
+            $c=0;
+            foreach ($files_ids as $id) {
+                if($request->notArchived[$c] == $id){
+                    $archive = new Archive();
+            
+                    $archive->model_id = $request->subscriberID;
+            
+                    $archive->type_id = '6046';
+            
+                    $archive->name = $request->subscriberName;
+            
+                    $archive->model_name = $model;
+            
+                    $date=date("Y/m/d");
+                    
+                    $from = explode('/', ($date));
+        
+                    $from = $from[0] . '-' . $from[1] . '-' . $from[2];
+                    
+                    $archive->date = $from;
+                    
+                    $archive->task_name = $taskname;
+                    
+                    $archive->task_link = $tasklink;
+                    
+                    $archive->title = $request->attachName1[$i];
+            
+                    $archive->type = 'WarningArchive';
+            
+                    $archive->serisal = '';
+            
+                    $archive->url =  'Warning_archieve';
+            
+                    $archive->add_by = Auth()->user()->id;
+            
+                    //dd( $request->customername=='0',$request->customername,$archive);
+                    $archive->save();
+            
+                    $file = File::find($id);
+    
+                    $file->archive_id = $archive->id;
+    
+                    $file->model_name = "App\Models\Archive";
+    
+                    $file->save();
+                    $c++;
+                }
+                $i++;
+            }
+
+        }
+    }
     
     
     public function warning_info(Request $request)
@@ -188,14 +265,50 @@ class SubscriberWarning extends Controller
         return $file_ids;
     }
 
-    public function warning_info_all()
+    public function warning_info_all(Request $request)
 
     {
         $warnings= Warning::select('warnings.*', 't.name as warningType','s.name as warningStatus')
         ->leftJoin('t_constant as t', 't.id', 'warnings.warning_type')
         ->leftJoin('t_constant as s', 's.id', 'warnings.warning_status')
-        ->orderBy('warnings.id', 'DESC')->where('warnings.enabled',1)->get();
+        ->orderBy('warnings.id', 'DESC')->where('warnings.enabled',1);
+        
+        if($request->search_warningType != null && $request->search_warningType != 0){
+            $warnings=$warnings->where('warnings.warning_type',$request->search_warningType);
+        }
+        if($request->search_warningStatuse != null && $request->search_warningStatuse != 0){
+            $warnings=$warnings->where('warnings.warning_status',$request->search_warningStatuse);
+        }
+        $from=null;
+        $to=null;
+        if ($request->search_from && $request->search_to) {
+            try{
+                $from = date_create(($request->get('search_from')));
+    
+                $from = explode('/', ($request->get('search_from')));
+    
+                $from = $from[2] . '-' . $from[1] . '-' . $from[0];
+    
+                $to = date_create(($request->get('search_to')));
+    
+                $to = explode('/', ($request->get('search_to')));
+                if($to[0]==31)
+                    $to = $to[2] . '-' . $to[1] . '-' . ($to[0]);
+                else
+                    $to = $to[2] . '-' . $to[1] . '-' . ($to[0]+1);
+            }catch (\Exception $e){
+                $from=null;
+                $to=null;
+            }
 
+        }
+        
+        if($to !=null && $from != null){
+            if (DateTime::createFromFormat('Y-m-d', $to) !== false && DateTime::createFromFormat('Y-m-d', $to) !== $from) {
+              $warnings=$warnings->whereBetween('warnings.warning_date',[$from,$to]);
+            }
+        }
+        $warnings=$warnings->get();
         foreach($warnings as $warning){
             if($warning->file_ids!=null){
                 $warning->setAttribute('Files',$this->getAttach(json_decode($warning->file_ids)));

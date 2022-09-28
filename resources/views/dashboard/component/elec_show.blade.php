@@ -4,20 +4,57 @@
             <div class="modal-header">
               <h4 class="modal-title" id="myModalLabel1"> 
               {{trans('admin.elec_subscription')}}  (<span id="elecCustomerName"></span>)</h4>
+              
+              
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
               </button>
+              
             </div>
-            <div class="modal-body_elec">
+            <div id="printElec">
+                
+            </div>
+            <div class="modal-body_elec" id="forPrint">
                      
             </div>
         </div>
     </div>
 </div>
 <script>
+    // function printDiv()
+    // {
+    //     var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+    //       mywindow.document.write('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">');
+    //       mywindow.document.write('</head><body style=" line-height: 24; font-size: 14px;" >');
+    //       mywindow.document.write('<style>'
+    //       +'@media print {'
+    //       +'      .footerLine{'
+    //     +'            display:block;'
+    //      +'           bottom:0;'
+    //       +'          width: 100%;'
+    //     +'            position:fixed; '   
+    //      +'           text-align: center;'
+    //       +'          font-weight: bold;'
+    //     +'            font-size: 16px;'
+    //      +'       }'
+    //       +'  }'
+    //       +'</style>');
+    
+    //       mywindow.document.write($("#forPrint").html());
+    //       mywindow.document.write('</body></html>');
+    
+    //       mywindow.document.close(); // necessary for IE >= 10
+    //       mywindow.focus(); // necessary for IE >= 10*/
+
+    // }
 function getelec($id)
 {
     
+    $("#printElec").html(`
+        <a class="pt-1 pr-1" style="float: left;" target="_blank" href="{{asset(app()->getLocale()).'/admin/printElec/'}}${$id}">
+            <img class="fa fa-print" tabindex="0" title="print" src="https://tf.palexpand.ps/assets/images/ico/Printer.png " style="cursor:pointer;height: 32px;display:inline">
+        </a>
+    `)
     let subscriber_id = $id;
     $.ajax({
     type: 'get', // the method (could be GET btw)

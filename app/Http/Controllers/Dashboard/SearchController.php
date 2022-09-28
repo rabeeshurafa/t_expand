@@ -48,7 +48,8 @@ class SearchController extends Controller
         $user = User::where('name', 'like', '%' . $emp_data . '%')->where('enabled',1)
         //->select('*',DB::raw("CONCAT(name  ),' 'AS label"))->get();
         ->select('*',DB::raw("name AS label"))->get();
-        $archive =  Archive::where('title', 'like', '%' . $emp_data . '%')->where('enabled',1)
+        $archive =  Archive::where('title', 'like', '%' . $emp_data . '%')->orWhere('serisal', 'like', '%' . $emp_data . '%')
+        ->where('enabled',1)->where('type','!=','taskArchive')->where('type','!=','WarningArchive')->where('type','!=','certArchive')
         //->select('*',DB::raw("CONCAT(title , ' ','(الارشيف)' )AS label"))->get();
         ->select('*',DB::raw("title AS label"))->get();
         $archiveLicense =  ArchiveLicense::where('name', 'like', '%' . $emp_data . '%')->where('enabled',1)

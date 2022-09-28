@@ -83,6 +83,22 @@ return [
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
+            'visibility' => 'public',
+        ],
+
+        'ftp' => [
+            'driver' => 'ftp',
+            'host' => env('FTP_HOST', 'u319352.your-storagebox.de'),
+            'username' => env('FTP_USERNAME', 'u319352'),
+            'password' => env('FTP_PASSWORD', 'QiuJ591eBDbFE5hR'),
+            'url' => env('FTP_URl'),
+            'visibility' => 'public',
+            // Optional FTP Settings...
+            // 'port' => env('FTP_PORT', 21),
+            // 'root' => env('FTP_ROOT'),
+            // 'passive' => true,
+            // 'ssl' => true,
+            // 'timeout' => 30,
         ],
 
     ],

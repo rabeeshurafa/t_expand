@@ -304,7 +304,7 @@
 
                                             </div>
 
-                                            <div class="col-lg-3 col-md-12 "  >
+                                            <div class="col-lg-4 col-md-12 "  >
 
                                                 <div class="form-group paddmob">
 
@@ -414,7 +414,7 @@
 
                                             </div>
 
-                                            <div class="col-lg-3 col-md-12 "  >
+                                            <div class="col-lg-4 col-md-12 "  >
 
                                                 <div class="form-group paddmob">
 
@@ -449,7 +449,22 @@
                                             </div>
 
                                         </div>
-
+                                        
+                                        <div class="row">
+                                            <div class="col-lg-8 col-md-12 "  >
+                                                <div class="form-group paddmob">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1">
+                                                                ملاحظات
+                                                            </span>
+                                                        </div>
+                                                        <input type="text" id="notes" class="form-control" name="notes" style="width: 30%;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
                                         <div class="row cop">
 
                                             <div class="col-md-12 checkCop">
@@ -574,7 +589,20 @@
                                     {{ trans('admin.save') }}    
 
                                     </button>                                    
+                                    <input type="hidden" id="print" class="form-control"
+                                               name="print" value="0">
+                                    <button onclick="save();$('#print').val(1);" type="button" class="btn btn-primary save" id="saveBtn"
+                                            style="">
 
+                                       حفظ وطباعة
+
+                                    </button>
+                                    @can('trackingArchive')
+                                        <input type="hidden" id="track" name="track" value="0">
+                                        <button onclick="$('#track').val(1);save();" type="button" class="btn btn-primary save" id="saveBtn" style="" >
+                                            حفظ ومتابعة
+                                        </button>
+                                    @endcan
                                 </div>
                     </div>
 
@@ -596,6 +624,12 @@
 
 
 <script>
+    // $( document ).ready(function() {
+    //     if($('#url').val()=="out_archieve"){
+    //         $('#msgid').val("م م ع /")
+    //     }
+    // });
+
     function scanToJpg() {
         scanner.scan(displayImagesOnPage,
             {
@@ -735,9 +769,11 @@
                         shortCutID=response.file.id;
 
                         urlfile='{{ asset('') }}';
-
-                        urlfile+=response.file.url;
-
+                        if(response.file.type==1){
+                            urlfile+=response.file.url;
+                        }else{
+                            urlfile=response.file.url;
+                        }
                             shortCutName=shortCutName.substring(0, 40)
 
                             row='<div id="attach" class=" col-lg-6 ">' +
@@ -779,7 +815,6 @@
             });
             return true;
     }
-
 
 function ShowConfigModal(bindTo) {
 
@@ -876,7 +911,7 @@ $.ajaxSetup({
             return false;
         }
 
-    if(document.getElementById('formDataaaorgIdList[]')==null){
+    if(document.getElementById('formDataaaorgIdList[]')==null && document.getElementById('scannerPdf[]')==null && document.getElementById('scannerfile[]')==null){
         if(confirm('لايوجد مرفقات هل تريد الاستمرار؟')){
         }
         else
@@ -931,7 +966,16 @@ $.ajaxSetup({
                         $('#ArchiveID').val('');
                         $('#customerType').val('');
                     form.reset();
-
+                    if($('#print').val()==1){
+                        let url=`{{ route('admin.dashboard') }}/printArchive/archive/${response.id}}`
+                        window.open(url, '_blank');
+                        $('#print').val(0);
+                    }
+                    if($('#track').val()==1){
+                        let url=`{{ route('admin.dashboard') }}/trackingArchive/${$('#url').val()}/${response.id}`
+                        window.open(url, '_blank');
+                        $('#track').val(0);
+                    }
                     $('.wtbl').DataTable().ajax.reload();
 
                     $(".formDataaaFilesArea").html('');
@@ -955,19 +999,19 @@ $.ajaxSetup({
 
 
 
-                    if(response.responseJSON.errors.archive_type){
+                    // if(response.responseJSON.errors.archive_type){
 
-                        $( "#archive_type" ).addClass( "error" );
+                    //     $( "#archive_type" ).addClass( "error" );
 
-                    }
+                    // }
 
 
 
-                    if(response.responseJSON.errors.customerid){
+                    // if(response.responseJSON.errors.customerid){
 
-                        $( ".cust" ).addClass( "error" );
+                    //     $( ".archive_type" ).addClass( "error" );
 
-                    }
+                    // }
 
                     Swal.fire({
 
@@ -983,7 +1027,7 @@ $.ajaxSetup({
 
                         })
 
-                        $(".formDataaaFilesArea").html('');
+                        // $(".formDataaaFilesArea").html('');
 
                     if(response.responseJSON.errors.customerName){
 
@@ -1046,11 +1090,15 @@ $( function() {
     $( ".cust" ).autocomplete({
 
         @if($type=='projArchive')
-
 		source: 'project_auto_complete',
 
+        @elseif($type=='empArchive')
+		source: 'emp_auto_complete',
+		
+        @elseif($type=='citArchive')
+		source: 'subscribe_auto_complete',
+		
         @else
-
 		source: 'archive_auto_complete',
 
 		@endif
@@ -1114,6 +1162,7 @@ $( function() {
             $('#msgTitle').val(response.info.title);
 
             $('#archive_type').val(response.info.type_id);
+            $('#notes').val(response.info.notes);
 
             let date=(response.info.date)
 
@@ -1143,7 +1192,11 @@ $( function() {
 
                         urlfile='{{ asset('') }}';
 
-                        urlfile+=response.files[j].url;
+                        if(response.files[j].type==1){
+                            urlfile+=response.files[j].url;
+                        }else{
+                            urlfile=response.files[j].url;
+                        }
 
                         formDataStr="formDataaa";
 

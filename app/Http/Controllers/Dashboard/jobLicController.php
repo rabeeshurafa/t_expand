@@ -17,11 +17,11 @@ class jobLicController extends Controller
     public function index()
     {
         $type='jobLic';
-        $MaxlicNo=jobLic::max('licNo');
+        $MaxlicNo=jobLic::orderBy('id', 'desc')->first();
         if($MaxlicNo==null){
             $licNo=1;
         }else{
-           $licNo=($MaxlicNo+1); 
+           $licNo=($MaxlicNo->licNo+1); 
         }
         $setting = Setting::first();
         $town=Town::where('id',$setting->town_id)->first();

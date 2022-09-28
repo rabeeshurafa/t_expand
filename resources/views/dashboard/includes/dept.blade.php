@@ -173,6 +173,28 @@
                     <td>
                     </td>
                 </tr>
+                <tr>
+                    <td style="color:#1E9FF2">7</td> 
+                    <td>
+                        {{'طابو'}}
+                        <input type="hidden" class="debtname" name="debtname[]" value="{{'طابو'}}">
+                    </td>
+                    <td class="hideMob" style="text-align: -webkit-center;">
+                        <input type="text" class="form-control alphaFeild debtValue" onblur="calcDebtTotal();" name="debtValue[]" value="">
+                    </td>
+                    <td class="hideMob" style="text-align: -webkit-center;">
+                        <input type="number" class="form-control alphaFeild debtPayed" onblur="calcDebtPayed();" name="debtPayed[]" value="">
+                    </td>
+                    <td class="hideMob" style="text-align: -webkit-center;">
+                        <input type="text" class="form-control alphaFeild   debtVoucher"  name="debtVoucher[]" value="">
+                    </td>
+                    <td style="text-align: -webkit-center;">
+                        <input type="text" class="form-control debtEmp" onclick="addDebt();" name="debtEmp[]">
+                        <input type="hidden" class="form-control"  name="debtEmpID[]" value="">
+                    </td>
+                    <td>
+                    </td>
+                </tr>
             </tbody>
             <tbody id="debtTotalList">
                 <tr>
@@ -258,7 +280,7 @@ function trigerDept(){
     		}
     	});
     });
-    var lastCntr = 7;
+    var lastCntr = 8;
     function calcDebtTotal() {
         
         total = 0;

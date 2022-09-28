@@ -13,36 +13,111 @@ use App\Models\AgendaExtention;
 use Session;
 use DB;
 use App\Http\Requests\MeetingTitleRequest;
+use Illuminate\Support\Facades\Storage;
 
 class AgendaArchieveController extends Controller
 {
-    public function agendaAttach(Request $request){
-        $frm=isset($request->fromname)?$request->fromname:'subject1';
-        if ($request->hasFile($frm.'UploadFile')) {
-            $files=$request->file($frm.'UploadFile');
-            foreach ($files as $file)
-            {
-                $url = $this->upload_image($file
-                    , 'quipent_');
-                if ($url) 
-                {
-                    $uploaded_files['files'] = File::create([
-                        'url' => $url,
-                        'real_name' => $file->getClientOriginalName(),
-                        'extension' => $file->getClientOriginalExtension(),
-                    ]);
-                }
-                $data[] = $uploaded_files;
-            }
-            foreach($data as $row){
-                $files_ids[] = $row['files']->id;
-            }
-            Session::put('files_ids', $files_ids);
+    public function creatImages($images){
+        $data=$images;
 
-            $all_files['all_files'] = File::whereIn('id',$files_ids)->get();
-            return response()->json($all_files);
+        if (preg_match('/^data:image\/(\w+);base64,/', $data, $type)) {
+            $data = substr($data, strpos($data, ',') + 1);
+
+            $type = strtolower($type[1]); // jpg, png, gif
+
+            if (!in_array($type, [ 'jpg', 'jpeg', 'gif', 'png' ])) {
+                return 0;
+                // throw new \Exception('invalid image type');
+            }
+            $data = str_replace( ' ', '+', $data );
+            $data = base64_decode($data);
+
+            if ($data === false) {
+                return 0;
+                // throw new \Exception('base64_decode failed');
+            }
+        } else {
+            return 0;
+            // throw new \Exception('did not match data URI with image data');
         }
+        $name='scanner'. rand(3, 999) . '-' . time();
+        // file_put_contents(public_path('storage').'/'.$name. '.'.$type, $data);
+        Storage::disk('s3')->put(($name.'.'.$type), $data);
+        $file=new File();
+        $file->real_name=$name.'.'.$type;
+        $file->extension=$type;
+        $file->url=Storage::cloud()->url(($name.'.'.$type));
+        $file->type='2';
+        $file->save();
+        return $file;
+    }
+    public function creatPdf($images){
+        $pdf_base64 = $images;
+        $pdf_base64 = substr($pdf_base64, strpos($pdf_base64, ',') + 1);
+        $pdf_decoded = base64_decode ($pdf_base64,true);
+        if (strpos($pdf_decoded, '%PDF') !== 0) {
+            return 0;
+            // throw new Exception('Missing the PDF file signature');
+        }
+
+        $name='scanner'. rand(3, 999) . '-' . time();
+        Storage::disk('s3')->put(($name.'.pdf'), $pdf_decoded);
+        $file=new File();
+        $file->real_name=$name.'.pdf';
+        $file->extension='pdf';
+        $file->url=Storage::cloud()->url(($name.'.pdf'));
+        $file->type='2';
+        $file->save();
+        return $file;
+    }
     
+    public function saveScanedFile($type,$data){
+        if($type == 'application/pdf'){
+            $file=$this->creatPdf($data);
+        }else{
+            $file=$this->creatImages($data);
+        }
+        if($file){
+            return $file;
+        }else{
+            return false;
+        }
+    }
+    
+    public function agendaAttach(Request $request){
+        if($request->scannedRow > 0 && $request->mimeType != null && $request->scannedFileSrc != null){
+            $file=$this->saveScanedFile($request->mimeType,$request->scannedFileSrc);
+            $all_files['all_files'] =[$file];
+            return response()->json($all_files); 
+        }else {
+            $frm=isset($request->fromname)?$request->fromname:'subject1';
+            
+            if ($request->hasFile($frm.'UploadFile')) {
+                $files=$request->file($frm.'UploadFile');
+                foreach ($files as $file)
+                {
+                    $url = $this->upload_image($file
+                        , 'quipent_');
+                    if ($url) 
+                    {
+                        // $uploaded_files['files'] = File::create([
+                        //     'url' => $url,
+                        //     'real_name' => $file->getClientOriginalName(),
+                        //     'extension' => $file->getClientOriginalExtension(),
+                        // ]);
+                        $uploaded_files['files'] = File::create(['url' => $url['path'],'real_name' => $url['name'],'extension' => $url['extension'],'type'=>'2']);
+                    }
+                    $data[] = $uploaded_files;
+                }
+                foreach($data as $row){
+                    $files_ids[] = $row['files']->id;
+                }
+                Session::put('files_ids', $files_ids);
+    
+                $all_files['all_files'] = File::whereIn('id',$files_ids)->get();
+                return response()->json($all_files);
+            }
+        }
     }
     public function searchEmpByName(Request $request)
     {
@@ -168,7 +243,19 @@ class AgendaArchieveController extends Controller
     }
     function prepearAttach(Request $request){
         $attach_ids=$request->attach_ids;
-        $attachName=$request->attachName;
+        $attachNameTemp=$request->attachName??[];
+        $attachName=array();
+        foreach($attachNameTemp as $name){
+            if(!empty($name)){
+                array_push($attachName,$name);
+            }
+        }
+        if(sizeof($attachName) < sizeof($attach_ids)){
+            $deff=sizeof($attach_ids)-sizeof($attachName);
+            for($i=0 ; $i<$deff ; $i++){
+                array_push($attachName,'');
+            }
+        }
         $attachArr=array();
         if($attach_ids)
         for($i=0;$i<sizeof($attach_ids);$i++){
@@ -304,14 +391,23 @@ class AgendaArchieveController extends Controller
  }
     
     function upload_image($file, $prefix){
-        if($file){
-            $files = $file;
-            $imageName = $prefix.rand(3,999).'-'.time().'.'.$files->extension();
-            $image = "storage/".$imageName;
-            $files->move(public_path('storage'), $imageName);
-            $getValue = $image;
-            return $getValue;
-        }
+        // if($file){
+        //     $files = $file;
+        //     $imageName = $prefix.rand(3,999).'-'.time().'.'.$files->extension();
+        //     $image = "storage/".$imageName;
+        //     $files->move(public_path('storage'), $imageName);
+        //     $getValue = $image;
+        //     return $getValue;
+        // }
+        $filePath = $file->hashName();
+        // Storage::disk('s3')->put($filePath, file_get_contents($file));
+        Storage::disk('s3')->put($filePath, fopen($file, 'r+'));
+    
+        return [
+            'name' => $file->getClientOriginalName(),
+            'extension'=>$file->getClientOriginalExtension(),
+            'path' => Storage::cloud()->url($filePath)
+        ];
     }
     public function ajaxSaveMeeting(Request $request){
         ///dd($request);

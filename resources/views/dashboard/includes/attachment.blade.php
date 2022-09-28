@@ -141,8 +141,12 @@
                         
                         urlfile='{{ asset('') }}';
                         
-                        urlfile+=response.file.url;
                         
+                        if(response.file.type==2){
+                            urlfile=response.file.url;
+                        }else{
+                            urlfile+=response.file.url;
+                        }
                         shortCutName=shortCutName.substring(0, 40)
                         if(response.file.extension=="jpg"||response.file.extension=="png")
                             fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/image.png';
@@ -287,7 +291,11 @@ function startUpload(formDataStr)
                          shortCutName=file.real_name;
                                 shortCutName=shortCutName.substring(0, 20);
                                 urlfile='{{asset("")}}/';
-                                urlfile+=file.url;
+                                if(file.type==2){
+                                    urlfile=file.url; 
+                                }else{
+                                    urlfile+=file.url; 
+                                }
                                 if(file.extension=="jpg"||file.extension=="png")
                                 fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/image.png';
                                 else if(file.extension=="pdf")

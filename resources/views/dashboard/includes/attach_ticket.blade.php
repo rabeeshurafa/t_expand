@@ -125,6 +125,7 @@ function startUpload(formDataStr)
                             shortCutName=shortCutName.substring(0, 40)
                     }
                     $(".alert-danger").addClass("hide");
+                    $("#attachfile").val('');
                     $(".alert-success").removeClass('hide');
                     $(".attach_row_"+id).append($actionBtn)
                     $(".loader").addClass('hide');

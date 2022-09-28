@@ -281,7 +281,12 @@
 
                                     </button>
 
-                                        
+                                    @can('trackingArchive')
+                                        <input type="hidden" id="track" name="track" value="0">
+                                        <button onclick="$('#track').val(1);save();" type="button" class="btn btn-primary save" id="saveBtn" style="" >
+                                            حفظ ومتابعة
+                                        </button>
+                                    @endcan
 
                                         
 
@@ -333,6 +338,9 @@
 
 
 <script>
+
+
+
 function scanToJpg() {
         scanner.scan(displayImagesOnPage,
             {
@@ -472,9 +480,11 @@ function scanToJpg() {
                         shortCutID=response.file.id;
 
                         urlfile='{{ asset('') }}';
-
-                        urlfile+=response.file.url;
-
+                        if(response.file.type==1){
+                            urlfile+=response.file.url;
+                        }else{
+                            urlfile=response.file.url;
+                        }
                             shortCutName=shortCutName.substring(0, 40)
                             
                             row='<div class="col-sm-12"><div class="form-group">'
@@ -493,7 +503,7 @@ function scanToJpg() {
 
                                 +'      <input type="text" id="attachName[]" class="form-control" name="attachName[]" value="'+$("#AttahType option:selected").text()+'">     ' 
 
-                                +'      <input type="hidden" id="attachFile[]" name="attachFile[]" value="'+response.file.url+'">        '    
+                                +'      <input type="hidden" id="attachFile[]" name="attachFile[]" value="'+response.file.id+'">        '    
 
                                 +'      <a href="'+urlfile+'" target="_blank">     '           
 
@@ -561,9 +571,6 @@ function scanToJpg() {
 
 
 
-
-
-
 $.ajaxSetup({
 
         headers: {
@@ -574,6 +581,99 @@ $.ajaxSetup({
 
     });
 
+function save(){
+       if(parseInt($("#customerid").val())<= 0)
+
+       {
+
+           alert("الرجاء اختيار مورد");
+
+       }
+
+       else{
+
+       $(".loader").removeClass('hide');
+
+       form=$('#formDataaa')[0]
+        let formData = new FormData(form);
+
+       $.ajax({
+
+          type:'POST',
+
+          url: "store_finance_archive",
+
+           data: formData,
+
+           contentType: false,
+
+           processData: false,
+
+           success: (response) => {
+
+            $(".loader").addClass('hide');
+            
+            $('#supplierid').val('');
+
+            $('#ArchiveID').val('');
+
+            $('#supplierName').val('');
+
+            $('#suppliername').val('');
+
+            $('#supplierType').val('');
+
+            Swal.fire({
+
+				position: 'top-center',
+
+				icon: 'success',
+
+				title: '{{trans('admin.data_added')}}',
+
+				showConfirmButton: false,
+
+				timer: 1500
+
+				})
+
+                $(".formDataaaFilesArea").html('');
+                if($('#track').val()==1){
+                    let url=`{{ route('admin.dashboard') }}/trackingArchive/${$('#url').val()}/${response.id}`
+                    window.open(url, '_blank');
+                    $('#track').val(0);
+                }
+                this.reset();
+
+               $('.wtbl').DataTable().ajax.reload();  
+
+           },
+
+           error: function(response){
+
+            $(".loader").addClass('hide');
+
+            Swal.fire({
+
+				position: 'top-center',
+
+				icon: 'error',
+
+				title: '{{trans('admin.error_save')}}',
+
+				showConfirmButton: false,
+
+				timer: 1500
+
+				})
+
+           }
+
+       });
+
+       }
+
+}
 
 
    $('#formDataaa').submit(function(e) {
@@ -769,10 +869,12 @@ $( function() {
                         shortCutID=response.files[j].id;
 
                         urlfile='{{ asset('') }}';
+                        if(response.files[j].type==1){
+                            urlfile+=response.files[j].url;
+                        }else{
+                            urlfile=response.files[j].url;
+                        }
 
-                        urlfile+=response.files[j].url;
-
-                        console.log(response.files[j].url)
 
                         formDataStr="formDataaa";
 
@@ -794,7 +896,7 @@ $( function() {
 
                                 +'      <input type="text" id="attachName[]" class="form-control" name="attachName[]" value="'+response.files[j].real_name+'">     ' 
 
-                                +'      <input type="hidden" id="attachFile[]" name="attachFile[]" value="'+response.files[j].url+'">        '    
+                                +'      <input type="hidden" id="attachFile[]" name="attachFile[]" value="'+response.files[j].id+'">        '    
 
                                 +'      <a href="'+urlfile+'" target="_blank">     '           
 
@@ -948,7 +1050,7 @@ $( function() {
 
                                 +'      <input type="text" id="attachName[]" class="form-control" name="attachName[]" value="'+$("#AttahType option:selected").text()+'">     ' 
 
-                                +'      <input type="hidden" id="attachFile[]" name="attachFile[]" value="'+data.all_files[j].url+'">        '    
+                                +'      <input type="hidden" id="attachFile[]" name="attachFile[]" value="'+data.all_files[j].id+'">        '    
 
                                 +'      <a href="'+urlfile+'" target="_blank">     '           
 

@@ -30,10 +30,10 @@
 </div>
 {{-- ticket 39 & 40 has its owne national id --}}
 @if($ticketInfo->show_nationalID == 1 && $ticketInfo->ticket_no != 39 && $ticketInfo->ticket_no != 40)
-<div calss="row" style="position: relative; ">
-    <div class="col-md-7" style="padding-right: 0px;">
+<div class="row" style="position: relative; ">
+    <div class="col-md-7" >
         <div class="form-group paddmob">
-            <div class="input-group subscribermob">
+            <div class="input-group" style="width: 93% !important;">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">
                         {{ 'رقم الهوية' }}
@@ -46,7 +46,13 @@
                     {{ $readonly?"readonly":"" }}
                     
                     name="national_id">
-                
+                @if($ticketInfo->ticket_no == 19)   
+                <div class="input-group-append" onclick="addNewBeneficiary()" style="cursor:pointer">
+                    <span class="input-group-text input-group-text2">
+                        <i class="fa fa-plus"></i>
+                    </span>
+                </div>
+                @endif
             </div>
         </div>
     </div>

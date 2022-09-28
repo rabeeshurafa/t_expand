@@ -19,7 +19,25 @@
     'Thursday'=>'الخميس',
     'Friday'=>'الجمعة',
 );?>
-
+<?php
+    $archiveNames=array(
+        'out_archieve'=>'صادر',
+        'in_archieve'=>'وارد',
+        'mun_archieve'=>'المؤسسة',
+        'proj_archieve'=>'المشاريع',
+        'assets_archieve'=>'الاصول',
+        'emp_archieve'=>'الموظفين',
+        'cit_archieve'=>'المواطنين',
+        'law_archieve'=>'قوانين واجراءات',
+        'dep_archieve'=>'انفاقيات وعقود',
+        'contract_archieve'=>'انفاقيات وعقود',
+        'finance_archive'=>'قسم المالية',
+        'trade_archive'=>'المعاملات',
+        'agenda_archieve'=>'الجلسات',
+        );
+    if($config[0]->ticket_no==46)
+    $config[0]->ticket_name.=' '.$archiveNames[$ticket->archive_type];
+?>
     <style>
         /* The Modal (background) */
         .modal1 {
@@ -165,7 +183,7 @@
                             <input type="hidden" name="tiketrelated" id="tiketrelated" value="{{ $config[0]->ticket_no }}">
                             <div class="card-content">
                                 <div class="card-body">
-                                
+                                        
                                      @php
                                      $path='dashboard.ticketRecive.viewTicket'.$config[0]->ticket_no
                                      @endphp
@@ -221,24 +239,24 @@
                                                                 <input {{ $readonly?"readonly":"" }} type="text" class="w-100 form-control debtname" name="debtname[]" value="{{$debt->debtName}}">
                                                             </td>
                                                             <td class="" style="text-align: -webkit-center;">
-                                                                <input {{ $readonly?"readonly":"" }} type="number" class=" form-control alphaFeild debtValue" onblur="calcDebtTotal();" name="debtValue[]" value="{{$debt->debtValue}}">
+                                                                <input {{ $readonly?"readonly":"" }} type="number" class=" form-control alphaFeild debtValue{{$i>=8?'2':''}}" onblur="calcDebtTotal();" name="debtValue[]" value="{{$debt->debtValue}}">
                                                             </td>
                                                             <td class="" style="text-align: -webkit-center;">
                                                                 <?php if(isset($debt->debtPayed)){ ?>
-                                                                <input type="number" {{ $readonly?"readonly":"" }} class="form-control alphaFeild debtPayed" onblur="calcDebtPayed();" name="debtPayed[]" value="{{$debt->debtPayed}}">
+                                                                <input type="number" {{ $readonly?"readonly":"" }} class="form-control alphaFeild debtPayed{{$i>=8?'2':''}} payedDebt{{$i}}" onblur="calcDebtPayed();defineEmp({{$i}});" name="debtPayed[]" value="{{$debt->debtPayed}}">
                                                                 <?php } else{?>
-                                                                <input type="number" {{ $readonly?"readonly":"" }} class="form-control alphaFeild debtPayed" onblur="calcDebtPayed();" name="debtPayed[]" value="">
+                                                                <input type="number" {{ $readonly?"readonly":"" }} class="form-control alphaFeild debtPayed{{$i>=8?'2':''}} payedDebt{{$i}}" onblur="calcDebtPayed();defineEmp({{$i}});" name="debtPayed[]" value="">
                                                                 <?php } ?>
                                                             </td>
                                                             <td class="hidemob" style="text-align: -webkit-center;">
                                                                 <?php if(isset($debt->debtVoucher)) {?>
-                                                                <input type="text" {{ $readonly?"readonly":"" }} class=" form-control alphaFeild"  name="debtVoucher[]" value="{{$debt->debtVoucher}}">
+                                                                <input type="text" {{ $readonly?"readonly":"" }} class=" form-control alphaFeild debtVoucher{{$i}}" onchange="setRequired({{$i}});"  name="debtVoucher[]" value="{{$debt->debtVoucher}}">
                                                                 <?php } else{?>
-                                                                <input type="text" {{ $readonly?"readonly":"" }} class=" form-control alphaFeild"  name="debtVoucher[]" value="">
+                                                                <input type="text" {{ $readonly?"readonly":"" }} class=" form-control alphaFeild debtVoucher{{$i}}" onchange="setRequired({{$i}});"  name="debtVoucher[]" value="">
                                                                 <?php } ?>
                                                             </td>
                                                             <td style="text-align: -webkit-center;">
-                                                                <input type="text" {{ $readonly?"readonly":"" }} class="w-100 form-control debtEmp" onclick="addDebt();" name="debtEmp[]" value="{{$debt->debtEmp}}">
+                                                                <input type="text" {{ $readonly?"readonly":"" }} class="w-100 form-control debtEmp debtEmp{{$i}}" onclick="/*addDebt();*/" name="debtEmp[]" value="{{$debt->debtEmp}}">
                                                                 <input type="hidden" class="form-control"  name="debtEmpID[]" value="">
                                                             </td>
                                                             <td>
@@ -266,7 +284,7 @@
                                                                 <input type="text" {{ $readonly?"readonly":"" }} class="form-control alphaFeild"  name="debtVoucher[]" value="">
                                                             </td>
                                                             <td style="text-align: -webkit-center;">
-                                                                <input type="text" {{ $readonly?"readonly":"" }} class="w-100 form-control debtEmp" onclick="addDebt();" name="debtEmp[]" value="">
+                                                                <input type="text" {{ $readonly?"readonly":"" }} class="w-100 form-control debtEmp" onclick="/*addDebt();*/" name="debtEmp[]" value="">
                                                                 <input type="hidden" class="form-control"  name="debtEmpID[]" value="">
                                                             </td>
                                                             <td>
@@ -279,15 +297,16 @@
                                                         <tr>
                                                             <td style="color:#1E9FF2"></td> 
                                                             <td style="text-align: left;">
-                                                                {{'المجموع الكلى'}}
+                                                                {{'المجموع الكلى شيقل'}}
                                                             </td>
                                                             <td class="" style="text-align: -webkit-center;">
                                                                 <input type="number"{{ $readonly?"readonly":"" }} class="form-control alphaFeild" id="debtTotal"  onblur="calcDebtrest();" name="debtTotal" value="{{$ticket->debt_total}}">
                                                             </td>
-                                                            <td style="text-align: -webkit-center;">
+                                                            <td style="text-align: left !important;">
+                                                                {{'المجموع الكلى دينار'}}
                                                             </td>
-                                                            <td>
-                                                                
+                                                            <td class="" style="text-align: -webkit-center;">
+                                                                <input type="number"{{ $readonly?"readonly":"" }} class="form-control alphaFeild" id="debtTotal2"  onblur="calcDebtrest();" name="debtTotal2" value="">
                                                             </td>
                                                             <td>
                                                                 
@@ -299,15 +318,16 @@
                                                         <tr>
                                                             <td style="color:#1E9FF2"></td> 
                                                             <td style="text-align: left;">
-                                                                {{'المبلغ المدفوع'}}
+                                                                {{'المبلغ المدفوع شيقل'}}
                                                             </td>
                                                             <td class="" style="text-align: -webkit-center;">
                                                                 <input type="number"{{ $readonly?"readonly":"" }} class="form-control alphaFeild"  onblur="calcDebtrest();" id="payment" name="payment" value="{{$ticket->payment}}">
                                                             </td>
-                                                            <td style="text-align: -webkit-center;">
+                                                            <td style="text-align: left !important;">
+                                                                {{'المبلغ المدفوع دينار'}}
                                                             </td>
-                                                            <td>
-                                                                
+                                                            <td class="" style="text-align: -webkit-center;">
+                                                                <input type="number"{{ $readonly?"readonly":"" }} class="form-control alphaFeild"  onblur="calcDebtrest();" id="payment2" name="payment2" value="">
                                                             </td>
                                                             <td>
                                                                 
@@ -319,17 +339,17 @@
                                                         <tr>
                                                             <td style="color:#1E9FF2"></td> 
                                                             <td style="text-align: left;">
-                                                                {{'الباقى'}}
+                                                                {{'الباقى شيقل'}}
                                                             </td>
                                                             <td class="" style="text-align: -webkit-center;">
                                                                 <input type="number"{{ $readonly?"readonly":"" }} class="form-control alphaFeild rest" id="rest" name="rest" value="{{$ticket->rest}}">
                                                             </td>
                                                             
-                                                            <td>
-                                                                
+                                                            <td style="text-align: left;">
+                                                                {{'الباقى دينار'}}
                                                             </td>
-                                                            <td>
-                                                                
+                                                            <td class="" style="text-align: -webkit-center;">
+                                                                <input type="number"{{ $readonly?"readonly":"" }} class="form-control alphaFeild rest2" id="rest2" name="rest2" value="">
                                                             </td>
                                                             <td>
                                                                 
@@ -355,13 +375,24 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="row attachs-body">
+                                    <div class="row attachs-body" style="margin-left: 25px; margin-right: 25px;">
                                         <div class="form-group col-12 mb-2">
-    
-                                                <?php $total=0; 
+                                            <div class="row hidemob">
+                                                <div class="col-sm-8">
+                                                </div>
+                                                <div class="col-sm-2" style="text-align: center;font-size: 16pt !important;">
+                                                    دينار
+                                                </div>
+                                                <div class="col-sm-2" style="text-align: center;font-size: 16pt !important;">
+                                                    شيقل
+                                                </div>
+                                            </div>
+                                                <?php 
+                                                $total=0; 
+                                                $total2=0; 
                                                 $arr=json_decode($ticket->fees_json);
                                                 $arr=is_array($arr)?$arr:array();?>
-                                            <ol class="vasType 1vas addRec olmob">
+                                            <ol class="vasType 1vas addRec ">
                                                 @if($config[0]->ticket_no==13)
                                                 <li style="font-size: 17px !important;color:#000000">
                                                     <div class="row">
@@ -406,29 +437,40 @@
                                                         
                                                         if($fee->feesValue==''||$fee->feesValue==null)
                                                             $fee->feesValue=0; 
+                                                        if($fee->feesValue2==''||$fee->feesValue2==null)
+                                                            $fee->feesValue2=0; 
                                                         ?>
                                                     <li style="font-size: 17px !important;color:#000000">
                                                         <div class="row">
-                                                            <div class="col-sm-8 feestextmob">
+                                                            <div class="col-sm-8">
                                                                 <input type="text" {{ $readonly?"readonly":"" }} name="feesText[]" class="form-control feesText" value="{{ $fee->feesText}}">
                                                             </div>
-                                                            <div class="col-sm-3 feesnummob">
+                                                            <div class="col-sm-2">
                                                                 <input type="number"{{ $readonly?"readonly":"" }} name="feesValue[]" class="form-control FessVals" value="{{ $fee->feesValue*1}}" onblur="calcTotal();addExtraRow();" onchange="calcTotal()">
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <input type="number"{{ $readonly?"readonly":"" }} name="feesValue2[]" class="form-control FessVals2" value="{{ ($fee->feesValue2)*1}}" onblur="calcTotal();addExtraRow();" onchange="calcTotal()">
                                                             </div>
                                                         </div>
                                                     </li>
-                                                    <?php $total+=$fee->feesValue; ?>
+                                                    <?php 
+                                                    $total+=$fee->feesValue; 
+                                                    $total2+=$fee->feesValue2; 
+                                                    ?>
                                                     @endforeach
                                                 <?php } ?>
                                                 @if(!$readonly)
                                                 <li style="font-size: 17px !important;color:#000000">
                                                     <div class="row">
-                                                        <div class="col-sm-8 feestextmob">
+                                                        <div class="col-sm-8">
                                                             <input type="text" name="feesText[]" class="form-control feesText"
                                                                 value="">
                                                         </div>
-                                                        <div class="col-sm-3 feesnummob">
+                                                        <div class="col-sm-2">
                                                             <input type="number" name="feesValue[]" class="form-control FessVals" value="0" onblur="calcTotal();addExtraRow();" onchange="calcTotal()">
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <input type="number" name="feesValue2[]" class="form-control FessVals2" value="0" onblur="calcTotal();addExtraRow();" onchange="calcTotal()">
                                                         </div>
                                                     </div>
                                                 </li>
@@ -438,11 +480,14 @@
                                             <ol class="vasType 1vas olmob" style="list-style-type: none;">
                                                 <li style="font-size: 17px !important;color:#000000">
                                                     <div class="row">
-                                                        <div class="col-sm-8 feestextmob">
+                                                        <div class="col-sm-8">
                                                             الإجمالي
                                                         </div>
-                                                        <div class="col-sm-3 feesnummob">
+                                                        <div class="col-sm-2">
                                                             <input type="number" id="total" disabled="" name="total" class="form-control" value="{{$total}}">
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <input type="number" id="total2" disabled="" name="total2" class="form-control" value="{{$total2}}">
                                                         </div>
                                                     </div>
                                                 </li>
@@ -484,7 +529,7 @@
                                                         <div class="attdocmob col-sm-5 attach_row_{{$i}}" >
                                                             <div id="attach" class=" col-sm-12 ">
                                                                 <div class="attach"> 
-                                                                    <a class="attach-close1" href="{{asset($file->Files[0]->url)}}" style="color: #74798D; float:left;" 
+                                                                    <a class="attach-close1" href="{{($file->Files[0]->type!=2?asset($file->Files[0]->url):$file->Files[0]->url)}}" style="color: #74798D; float:left;" 
                                                                     target="_blank">  
                                                                         <span class="attach-text hidemob">{{ substr($file->Files[0]->real_name,0,15)}}</span>    
                                                                         @if($file->Files[0]->extension=="jpg"||$file->Files[0]->extension=="png")
@@ -578,6 +623,11 @@
                                             <!--<a class="btn btn-info" style="padding: .5rem 1rem;" href="{{url('ar/admin/printBar2aa/'.$ticket->id.'/'.$ticket->history[0]->related)}}" target="_blank">-->
                                             <!--    تحرير و طباعة براءة  الذمة-->
                                             <!--</a>-->
+                                            @if($config[0]->ticket_no == 31)
+                                            <a style="padding: .5rem 1rem;" href="{{url('ar/admin/printTicket31/'.$ticket->id.'/'.$ticket->history[0]->related)}}" class="btn btn-info" target="_blank">
+                                             طباعة اذن صرف
+                                            </a>
+                                            @endif
                                             @if($config[0]->ticket_no == 39)
                                             <a style="padding: .5rem 1rem;" href="{{url('ar/admin/printTicket39/'.$ticket->id.'/'.$ticket->history[0]->related)}}" class="btn btn-info" target="_blank">
                                                 تحرير وطباعة الطلب
@@ -586,6 +636,9 @@
                                             @if($config[0]->ticket_no==3)
                                             <a style="padding: .5rem 1rem;" href="{{url('ar/admin/printTicket3/'.$ticket->id)}}" class="btn btn-info" target="_blank">
                                                 تحرير وطباعة الطلب
+                                            </a>
+                                            <a style="padding: .5rem 1rem;" href="{{url('ar/admin/objectionPrint/'.$ticket->id.'/'.$ticket->history[0]->related)}}" class="btn btn-info" target="_blank">
+                                                طباعة عدم ممانعة  
                                             </a>
                                             @endif
                                             @if($config[0]->ticket_no == 18)
@@ -624,7 +677,6 @@
                            
                             @foreach($ticket->history as $rowTicket)
                            <?php
-                           
                            if($rowTicket->recive_type==1) 
                                     $lastReciver=$rowTicket->reciver_id;
                                 if(in_array($rowTicket->recive_type,array(1,2))) 
@@ -690,7 +742,17 @@
                                                     <a class="attach-close1" href="{{asset($file->Files[0]->url)}}" style="color: #74798D; float:left;" 
                                                     target="_blank">  
                                                         <span class="attach-text">{{ substr($file->attachName,0,40)}}</span>    
-                                                        <img style="width: 20px;" src="https://t.expand.ps/expand_repov1/public/assets/images/ico/image.png">
+                                                        @if($file->Files[0]->extension=="jpg"||$file->Files[0]->extension=="png")
+                                                        <img style="width: 20px;" src="https://t.palexpand.ps/public/assets/images/ico/image.png">
+                                                        @elseif($file->Files[0]->extension=="pdf")
+                                                        <img style="width: 20px;" src="https://t.palexpand.ps/public/assets/images/ico/pdf.png">
+                                                        @elseif($file->Files[0]->extension=="xsc" || $file->Files[0]->extension=="excel")
+                                                        <img style="width: 20px;" src="https://t.palexpand.ps/public/assets/images/ico/excellogo.png">
+                                                        @elseif($file->Files[0]->extension=="doc")
+                                                        <img style="width: 20px;" src="https://template.expand.ps/public/assets/images/ico/word.png">
+                                                        @else
+                                                        <img style="width: 20px;" src="https://t.palexpand.ps/public/assets/images/ico/file.png">
+                                                        @endif
                                                     </a>
                                                 </div>
                                             </div>
@@ -773,7 +835,7 @@
                             ?>
                             <!-- Not closed -->
                             @if($ticket->ticket_status<>5003) 
-                                @if($lastReciver==Auth()->user()->id || in_array(Auth()->user()->id,$tagArr) || in_array(Auth()->user()->id,$emp_to_revoke_json))
+                                @if($lastReciver==Auth()->user()->id || (in_array(Auth()->user()->id,$tagArr) && $config[0]->can_reply==1) || in_array(Auth()->user()->id,$emp_to_revoke_json))
                                 <form onsubmit="return false" id="formData" class="frm1" method="post" style=" margin-left: 15px; margin-right: 15px;">
                                     <div class="form-control" style="background-color: #ffffff; margin-bottom:20px; border:0px solid #000000 !important">
                                         <div class="row">
@@ -808,10 +870,11 @@
                                                                         </span>
                                                                 </div>
                                                                 <select type="text" id="app_status" name="app_status" class="app_status form-control" onchange="$('#app_status1').val($(this).val())">
-                                                                    <option value="5002">  تغيير حالة الطلب  </option>
+                                                                    <option value="5002" {{ $ticket->ticket_status == 5002 ? 'selected':'' }}>  تغيير حالة الطلب  </option>
                                                                     @foreach ($helpers['appStatus'] as $row)
-                                                                    <option value="{{$row->id}}"> {{$row->name}} </option>
+                                                                    <option value="{{$row->id}}" {{ $ticket->ticket_status == $row->id ? 'selected':'' }}> {{$row->name}} </option>
                                                                     @endforeach
+                                                                    <option value="6283" {{ $ticket->ticket_status == 6283 ? 'selected':'' }}> مؤجلة </option>
                             									</select>
                                                                 <div class="input-group-append ">
                                                                     <span class="input-group-text input-group-text2 hidemob" onclick="ShowConstantModal(5001,'app_status','حالة الطلب')">
@@ -823,14 +886,16 @@
                                                                 @else
                                                                     <img src="https://db.expand.ps/images/upload.png" style="margin-right: auto;" height="35" onclick="$('.repAttach').toggle();$('.repAttach1').toggle()">
                                                                 @endif
-                                                                <input type="hidden" id="app_status1" name="app_status1" value="5002">
+                                                                {{--<input type="hidden" id="app_status1" name="app_status1" value="5002">--}}
+                                                                <input type="hidden" id="app_status1" name="app_status1" value="{{ $ticket->ticket_status }}">
+                                                                
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <textarea type="text" id="details" name="details" class="form-control" placeholder="أدخل ما تم عمله هنا" rows="3" aria-invalid="false" style="border: none!important;box-shadow: none; text-align: right;"></textarea>
-                                                
+                                                    <input type="hidden" id="removeTag" name="removeTag" value="0">
                                                     <input type="hidden" id="details1" name="details1">
                                                 </div>
                                             </div>
@@ -840,18 +905,19 @@
                                                     <div class="form-group col-md-12 mb-2">
                                                         <div class="form-group ">
                                                             <div class="row">
-                                                                <div class="col-md-1">
-                                                                    
-                                                                </div>
                                                                 <div class="col-md-3" style="color:#000000; width:33%;">
                                                                     <img src="https://doc.expand.ps/uploads/s1.jpg?>" id="makeResponse" height="32px" style="cursor: pointer" onclick="CloseApp(this);">
                                                                         <br>
                                                                     <spna class="saveRmob">حفظ ما تم عملة</spna>
-
-
-
                                                                 </div>
-                                                                
+                                                                @if(in_array(Auth()->user()->id,$tagArr))
+                                                                <div class="col-md-3 hide" style="color:#000000; width:33%;">
+                                                                    <img src="https://doc.expand.ps/uploads/s3.jpg?>" id="removeTagBtn" height="32px" style="cursor: pointer" onclick="$('#removeTag').val(true);addAction(this);">
+                                                                        <br>
+                                                                    انهاء من طرفي
+                                                                    
+                                                                </div>
+                                                                @endif
                                                                 @if($lastReciver==Auth()->user()->id|| in_array(Auth()->user()->id,$emp_to_revoke_json))
                                                                 <div class="col-md-3" style="color:#000000; width:33%;">
                                                                     <img src="https://doc.expand.ps/uploads/s4.jpg" height="32px" onclick="$('#forwordTo').toggle();$('html, body').animate({scrollTop:$(document).height()}, 'slow');">
@@ -860,7 +926,7 @@
                                                                 </div>
                                                                 @if(in_array(Auth()->user()->id,$emp_to_close_json))
                                                                     @if($lastTicket->related!=32)
-                                                                    <div class="col-md-4" style="color:#000000; width:33%;">
+                                                                    <div class="col-md-3" style="color:#000000; width:33%;">
                                                                         <input type="hidden" name="dept" value="8">
                                                                         <img src="https://doc.expand.ps/uploads/s3.jpg" height="32px" onclick="$('#app_status1').val(5003);CloseApp(this)">
                                                                         <br>
@@ -881,9 +947,6 @@
                                                                     </div>
                                                                     @endif
                                                                 @endif
-                                                                <div class="col-md-1">
-                                                                    
-                                                                </div>
                                                                 @endif
                                                             </div>
                                             
@@ -901,7 +964,14 @@
                                         <input name="related" type="hidden" value="{{$ticket->history[0]->related  }}">
                                         <div class="attachCopy" style="display:none"></div>
                                         <textarea style="display:none" name="s_response" id="frm2details"></textarea>
-    
+                                        <?php
+                                            if(is_array($flows)){
+                                                $nextFlow = $flows[0];
+                                            }else{
+                                                $nextFlow = null;
+                                                $flows = null;
+                                            }
+                                        ?>
                                         <div class="row mobRow">
                                                 <div class="col-lg-6 col-md-5 pr-s-12">
                                                     <div class="form-group">
@@ -915,7 +985,8 @@
                                                                 onchange="ShowDeptEmp()">
                                                                 <option disabled="" selected=""> -- اختيار القسم -- </option>
                                                                 @foreach ($helpers['department'] as $dept)
-                                                                <option value="{{$dept->id}}">{{$dept->name}}</option>
+                                                                <option value="{{$dept->id}}" {{($flows!=null && $nextFlow->nextDeptId==$dept->id)?"selected":''}}
+                                                                    class="{{($flows!=null && !in_array($dept->id,$flowsDept))?"hide":''}}" >{{$dept->name}}</option>
                                                                 @endforeach
                                                             </select>
                                                             <script>
@@ -939,10 +1010,17 @@
                                                             </div>
                                                             
                                                             <select type="text" id="Assigned2ID"  name="AssignedToID"
-                                                                class="form-control myselect2" aria-invalid="false">
+                                                                class="form-control myselect2" aria-invalid="false" >
                                                                 <option disabled="" selected=""> -- اختيار الموظف -- </option>
                                                                 @foreach ($employees as $emp)
-                                                                <option class="allDept hide dept{{$emp->department_id}}"  value="{{$emp->id}}" dept="{{$emp->department_id}}" >{{$emp->nick_name}}</option>
+                                                                <option class="allDept  dept{{$emp->department_id}}
+                                                                @if($nextFlow==null || $nextFlow->nextIsMandatory!=1)
+                                                                    {{($nextFlow!=null && $nextFlow->nextDeptId==$emp->department_id && $nextFlow->nextDeptId!=0)?"":'hide'}}
+                                                                @else
+                                                                    {{($nextFlow!=null && $nextFlow->nextEmpId==$emp->id && $nextFlow->nextDeptId!=0)?"":'hide'}}
+                                                                @endif"
+                                                                    {{($nextFlow!=null && $nextFlow->nextEmpId==$emp->id)?"selected":''}}
+                                                                    value="{{$emp->id}}" dept="{{$emp->department_id}}" >{{$emp->nick_name}}</option>
                                                                 @endforeach
                                                             </select>
                                                             <!--<input type="text" id="SubscriberName" class="form-control  alphaFeild" placeholder="Subscriber Name " name="SubscriberName">-->
@@ -1186,7 +1264,7 @@
                                             <div class="col-sm-12 col-md-7 marginrightminus30">
                                                 <h5>
                                                     @if($numberOf_ticket<=1)
-                                                    <a class="btn btn-primary" onclick="deleteTicket(<?php echo $lastTicket->ticket_id?>,<?php echo $lastTicket->related ?>);">حذف الطلب </a>
+                                                    <a class="btn btn-primary hide" onclick="deleteTicket(<?php echo $lastTicket->ticket_id?>,<?php echo $lastTicket->related ?>);">حذف الطلب </a>
                                                     @endif
                                                     
                                                     <time style="font-family:Arial!important; color:#000000; font-size: 17px !important;font-weight: 500;">
@@ -1235,10 +1313,11 @@
                                                                         </span>
                                                                 </div>
                                                                 <select type="text" id="app_status" name="app_status" class="app_status form-control" onchange="$('#app_status1').val($(this).val())">
-                                                                    <option value="5002"> تغيير حالة الطلب  </option>
+                                                                    <option value="5002" {{ $ticket->ticket_status == 5002 ? 'selected':'' }}> تغيير حالة الطلب  </option>
                                                                     @foreach ($helpers['appStatus'] as $row)
-                                                                    <option value="{{$row->id}}"> {{$row->name}} </option>
+                                                                    <option value="{{$row->id}}" {{ $ticket->ticket_status == $row->id ? 'selected':'' }}> {{$row->name}} </option>
                                                                     @endforeach
+                                                                    <option value="6283" {{ $ticket->ticket_status == 6283 ? 'selected':'' }}> مؤجلة </option>
                             									</select>
                                                                 <div class="input-group-append">
                                                                     <span class="input-group-text input-group-text2 hidemob" onclick="ShowConstantModal(5001,'app_status','حالة الطلب')">
@@ -1247,7 +1326,8 @@
                                                                     
                                                                     <img src="https://db.expand.ps/images/upload.png"  height="35" onclick="$('.repAttach').toggle();$('.repAttach1').toggle()">
                                                                 </div>
-                                                                <input type="hidden" id="app_status1" name="app_status1" value="5002">
+                                                                {{--<input type="hidden" id="app_status1" name="app_status1" value="5002">--}}
+                                                                <input type="hidden" id="app_status1" name="app_status1" value="{{ $ticket->ticket_status }}">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1311,7 +1391,14 @@
                                         <input name="related" type="hidden" value="{{$ticket->history[0]->related  }}">
                                         <div class="attachCopy" style="display:none"></div>
                                         <textarea style="display:none" name="s_response" id="frm2details"></textarea>
-    
+                                        <?php
+                                            if(is_array($flows)){
+                                                $nextFlow = $flows[0];
+                                            }else{
+                                                $nextFlow = null;
+                                                $flows = null;
+                                            }
+                                        ?>
                                         <div class="row mobRow">
                                                 <div class="col-lg-6 col-md-5 pr-s-12">
                                                     <div class="form-group">
@@ -1325,7 +1412,8 @@
                                                                 onchange="ShowDeptEmp()">
                                                                 <option disabled="" selected=""> -- اختيار القسم -- </option>
                                                                 @foreach ($helpers['department'] as $dept)
-                                                                <option value="{{$dept->id}}">{{$dept->name}}</option>
+                                                                <option value="{{$dept->id}}" {{($flows!=null && $nextFlow->nextDeptId==$dept->id)?"selected":''}}
+                                                                    class="{{($flows!=null && !in_array($dept->id,$flowsDept))?"hide":''}}" >{{$dept->name}}</option>
                                                                 @endforeach
                                                             </select>
                                                             <script>
@@ -1352,7 +1440,14 @@
                                                                 class="form-control myselect2" aria-invalid="false">
                                                                 <option disabled="" selected=""> -- اختيار الموظف -- </option>
                                                                 @foreach ($employees as $emp)
-                                                                <option class="allDept hide dept{{$emp->department_id}}"  value="{{$emp->id}}" dept="{{$emp->department_id}}" >{{$emp->nick_name}}</option>
+                                                                <option class="allDept  dept{{$emp->department_id}}
+                                                                    @if($nextFlow==null || $nextFlow->nextIsMandatory!=1)
+                                                                        {{($nextFlow!=null && $nextFlow->nextDeptId==$emp->department_id && $nextFlow->nextDeptId!=0)?"":'hide'}}
+                                                                    @else
+                                                                        {{($nextFlow!=null && $nextFlow->nextEmpId==$emp->id && $nextFlow->nextDeptId!=0)?"":'hide'}}
+                                                                    @endif"
+                                                                    {{($nextFlow!=null && $nextFlow->nextEmpId==$emp->id)?"selected":''}}
+                                                                    value="{{$emp->id}}" dept="{{$emp->department_id}}" >{{$emp->nick_name}}</option>
                                                                 @endforeach
                                                             </select>
                                                             <!--<input type="text" id="SubscriberName" class="form-control  alphaFeild" placeholder="Subscriber Name " name="SubscriberName">-->
@@ -1678,6 +1773,7 @@ function calcAmpereCost(){
    calcTotal();
 }
 
+$(document).ready(function () {
         @if($config[0]->ticket_no==8)
         Applicanttype=1;
         Applicanttype=('{{ $ticket->Applicanttype}}');
@@ -1691,7 +1787,7 @@ function calcAmpereCost(){
         getempArchive($('#subscriber_id').val());
     else
         getsubscriperArchive($('#subscriber_id').val());
-
+})
 	function getsubscriperArchive($id) {
 
             let subscribe_id = $id;
@@ -1815,9 +1911,11 @@ function calcAmpereCost(){
 }
 
 
+$( document ).ready(function() {
 if( {{$config[0]->apps_btn}}==1)
     getSubscriberTasks($('#subscriber_id').val());
-    
+});   
+
 function getSubscriberTasks(id){
     
         let subscribe_id = id;
@@ -2390,7 +2488,7 @@ function sendSMS(){
                     let no= $('#smsNo').val();
                     
                     
-                    $("#details").val(`تم ارسال رسالة نصية الى الرقم : ${no} <br>  ${text} `)
+                    // $("#details").val(`تم ارسال رسالة نصية الى الرقم : ${no} <br>  ${text} `)
                     smstext=`تم ارسال رسالة نصية الى الرقم : ${no} <br>  ${text} `;
                     
                     var d=new Date();
@@ -2502,7 +2600,7 @@ function addAction(ctrl ='',accepted=0){
     if(ctrl!='')
         $(ctrl).hide()
         
-            if($(".frm1 #app_status1").val()!=5002){
+            if($(".frm1 #app_status1").val()!=5002 && ($(".frm1 #app_status1").val() != "{{ $ticket->ticket_status }}")){
                 if(accepted==0 && $('#tiketrelated').val()!=32)
                     $("#details1").val('<br /> تم تغيير حالة الطلب إلى: '+
                         ($(".frm1 #app_status1").val()==5003?'إغلاق نهائي':$(".frm1 #app_status option:selected").text() ) );
@@ -2641,9 +2739,20 @@ function addAction(ctrl ='',accepted=0){
         				setTimeout(function(){self.location='{{asset('/ar/admin')}}'},1500)
     				    
     				}
-                }	
-				else{
-                Swal.fire({
+                }else if( $('#removeTag').val()=='true'){
+                  Swal.fire({
+    				position: 'top-center',
+    				icon: 'success',
+    				title: 'تم انهاء الطلب من طرفكم بنجاح',
+    				showConfirmButton: false,
+    				timer: 1500
+    				});
+        				writeUserForward('viewTicket/'+data.app_id+'/'+data.app_type);
+        				$('.frm2').trigger('reset');
+                        $('.loader').hide()
+        				setTimeout(function(){self.location='{{asset('/ar/admin')}}'},1500)
+                } else{
+                    Swal.fire({
         				position: 'top-center',
         				icon: 'success',
         				title: 'تم حفظ البيانات بنجاح',
@@ -2903,6 +3012,7 @@ function SaveReplay(){
     $(".frm1 .attachName1").each(function(){
         $(".frm2 .attachCopy").append('<input type="hidden" name="attachName1[]" value="'+$(this).val()+'">')
         $(".frm2 .attachCopy").append('<input type="hidden" name="attach_ids[]" value="'+$(this).parent().next().children().first().children().first().children().first().next().val()+'">')
+        $(".frm2 .attachCopy").append('<input type="hidden" name="notArchived1[]" value="'+$(this).parent().next().children().first().children().first().children().first().next().val()+'">')
     });
     $("#frm2details").val($(".frm1 #details").val());
     $('.loader').show()
@@ -2972,7 +3082,6 @@ function SaveReplay(){
             processData: false
         });
 }
-
 
     function scanToJpg() {
         scanner.scan(displayImagesOnPage,
@@ -3069,9 +3178,11 @@ function SaveReplay(){
                         shortCutID=response.file.id;
                         
                         urlfile='{{ asset('') }}';
-                        
-                        urlfile+=response.file.url;
-                        
+                        if(response.file.type!=2){
+                            urlfile+=response.file.url;
+                        }else{
+                            urlfile=response.file.url;
+                        }
                         shortCutName=shortCutName.substring(0, 40)
                             if(response.file.extension=="jpg"||response.file.extension=="png")
                             fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/image.png';
@@ -3140,7 +3251,8 @@ function SaveReplay(){
             return true;
     }
 
-attach_index={{ sizeof($ticket->Files)}};
+
+attach_index={{ sizeof($ticket->Files)+2}};
     function addNewAttatch() {
         // if($(".attachName").last().val().length>0){
             var row = '<li style="font-size: 17px !important;color:#000000">' +
@@ -3202,7 +3314,11 @@ function startUpload(formDataStr)
                          shortCutName=file.real_name;
                                 shortCutName=shortCutName.substring(0, 15);
                                 urlfile='{{asset('')}}';
-                                urlfile+=file.url;
+                                if(file.type!=2){
+                                    urlfile+=file.url;
+                                }else{
+                                    urlfile=file.url;
+                                }
                                 if(file.extension=="jpg"||file.extension=="png")
                                 fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/image.png';
                                 else if(file.extension=="pdf")
@@ -3229,6 +3345,7 @@ function startUpload(formDataStr)
                     $(".attach_row_"+id).append($actionBtn)
                     $(".loader").addClass('hide');
                     $(".attachfile").val('');
+                    
                     $(".group1").colorbox({rel:'group1'});
                     setTimeout(function(){
                         $(".alert-danger").addClass("hide");
@@ -3264,7 +3381,14 @@ function startUpload(formDataStr)
                 total += parseInt($(this).val())
         })
         
-        $('#total').val(total)
+        $('#total2').val(total)
+        total2 = 0;
+        $(".FessVals2").each(function(){
+            if($(this).val().length>0)
+                total2 += parseInt($(this).val())
+        })
+        
+        $('#total2').val(total2)
 
     }
 
@@ -3274,8 +3398,11 @@ function startUpload(formDataStr)
                 '<div class="col-sm-8 feestextmob ">' +
                 '<input type="text" onblur="addExtraRow()" class="form-control feesText" name="feesText[]" value=""> ' +
                 '</div>' +
-                '<div class="col-sm-3 feesnummob ">' +
+                '<div class="col-sm-2 feesnummob ">' +
                 '<input type="number" name="feesValue[]" id="feesValue[]" class="form-control FessVals"onblur="calcTotal()" onchange="calcTotal()"> ' +
+                '</div>' +
+                '<div class="col-sm-2 feesnummob ">' +
+                '<input type="number" name="feesValue2[]" id="feesValue2[]" class="form-control FessVals2"onblur="calcTotal()" onchange="calcTotal()"> ' +
                 '</div>' +
                 '</div></li>'
             lastCntr++
@@ -3313,6 +3440,9 @@ function startUpload(formDataStr)
         }
     $(document).ready(function () {
         resize()
+        calcDebtTotal()
+        calcDebtrest()
+        calcDebtPayed()
         $( ".debtEmp" ).autocomplete({
     		source:'{{route('emp_auto_complete')}}',
     		minLength: 1,
@@ -3322,36 +3452,76 @@ function startUpload(formDataStr)
     		}
     	});
     });
+    function defineEmp($id){
+        if($(`.payedDebt${$id}`).val().length>0){
+            $(`.debtEmp${$id}`).val("{{Auth()->user()->nick_name}}");
+        }else{
+            $(`.debtEmp${$id}`).val("");
+        }
+        setRequired($id)
+    }
+    function setRequired($id){
+        if($( `.debtVoucher${$id}` ).val().length <= 0 && $(`.payedDebt${$id}`).val().length>0){
+            $( `.debtVoucher${$id}` ).get(0).setCustomValidity('يرجى ادخال 	رقم الوصل  ');
+            $( `.debtVoucher${$id}` ).on('input',function(){
+                if($( `.debtVoucher${$id}` ).val().length>0){
+                    this.setCustomValidity('')  
+                }else{
+                    this.setCustomValidity('يرجى ادخال 	رقم الوصل  ');
+                }
+            })
+        }else{
+            $(`.debtVoucher${$id}`).get(0).setCustomValidity('');
+        }
+    }
     function calcDebtTotal() {
         
         total = 0;
+        total2 = 0;
         $(".debtValue").each(function(){
             if($(this).val().length>0)
                 total += parseInt($(this).val())
         })
+        $(".debtValue2").each(function(){
+            if($(this).val().length>0)
+                total2 += parseInt($(this).val())
+        })
         
         $('#debtTotal').val(total)
+        $('#debtTotal2').val(total2)
 
     }
     function calcDebtrest() {
         
         $res = 0;
+        $res2 = 0;
           $res=$('#debtTotal').val()-$("#payment").val();
+          $res2=$('#debtTotal2').val()-$("#payment2").val();
         $('.rest').val($res);
+        $('.rest2').val($res2);
 
     }
     function calcDebtPayed() {
         
         total = 0;
+        total2 = 0;
         $(".debtPayed").each(function(){
             if($(this).val().length>0)
                 total += parseInt($(this).val())
         })
+        $(".debtPayed2").each(function(){
+            if($(this).val().length>0)
+                total2 += parseInt($(this).val())
+        })
         
         $('#payment').val(total);
+        $('#payment2').val(total2);
         $res = 0;
+        $res2 = 0;
         $res =parseInt($('#debtTotal').val())- parseInt($('#payment').val());
+        $res2 =parseInt($('#debtTotal2').val())- parseInt($('#payment2').val());
         $('.rest').val($res);
+        $('.rest2').val($res2);
 
     }
     function addDebt(){

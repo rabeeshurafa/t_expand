@@ -141,7 +141,7 @@ function startUpload1(formDataStr)
                     $(".alert-success").removeClass('hide');
                     $(".attach_row1_"+id).append($actionBtn)
                     $(".loader").addClass('hide');
-                    
+                    $("#attachfile").val('');
                     $(".group1").colorbox({rel:'group1'});
                     setTimeout(function(){
                         $(".alert-danger").addClass("hide");

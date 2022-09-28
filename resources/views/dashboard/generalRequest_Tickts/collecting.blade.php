@@ -221,14 +221,40 @@ $(document).ready(function(){
         $("#money").on('change',function(){
         let money = $("#money").val()
         $("#moneyText").val(tafqeet (+money)+' '+$("#CurrencyID1 option:selected").text());
-
+        fraction=money.split(".");
+        if(fraction.length>1){
+            moneyText=$("#moneyText").val();
+            moneyText+=' و '+tafqeet (+fraction[1]);
+            if($("#CurrencyID1").val()==26){
+                moneyText+=' اغورة ';
+            }else if ($("#CurrencyID1").val()==28){
+                moneyText+=' قرش ';
+            }else if ($("#CurrencyID1").val()==27){
+                moneyText+=' سنت ';
+            }
+            
+            $("#moneyText").val(moneyText);
+        }
         });
     })
 $(document).ready(function(){
         $("#CurrencyID1").on('change',function(){
         let money = $("#money").val()
         $("#moneyText").val(tafqeet (+money)+' '+$("#CurrencyID1 option:selected").text());
-
+        fraction=money.split(".");
+        if(fraction.length>1){
+            moneyText=$("#moneyText").val();
+            moneyText+=' و '+tafqeet (+fraction[1]);
+            if($("#CurrencyID1").val()==26){
+                moneyText+=' اغورة ';
+            }else if ($("#CurrencyID1").val()==28){
+                moneyText+=' قرش ';
+            }else if ($("#CurrencyID1").val()==27){
+                moneyText+=' سنت ';
+            }
+            
+            $("#moneyText").val(moneyText);
+        }
         });
     })
 

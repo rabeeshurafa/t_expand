@@ -322,7 +322,7 @@
 // var customerName='';
 // var nationalId=0;
 
-
+DrawPreview();
 $(document).ready(
     
     
@@ -362,9 +362,10 @@ $(document).ready(
             source: "subscribe_auto_complete",
             minLength: 2,
             select: function( event, ui ) {
-                //$("#NameAR").val(ui.item.label)
+                $("#name2").val(ui.item.name);
+                $("#ssn2").val(ui.item.national_id);
                 $("#id2").val(ui.item.id)
-                $("#ssn2").val(ui.item.NationalID)
+                $("#id1").val(ui.item.id)
             
             }
         });
@@ -664,7 +665,8 @@ $(document).ready(
                 $('#projectid').val('');
                 $('#id1').val('');
                 $('#id2').val('');
-                let url=`{{ route('admin.dashboard') }}/printLicEarth/${response.id}`
+                console.log(response)
+                let url=`{{ route('admin.dashboard') }}/printLicEarth/${response.earchLic.id}`
                 window.open(url, '_blank');
                 $('#editBtn').css('display','none');
                 $('#saveBtn').css('display','inline-block');
@@ -746,13 +748,17 @@ $(document).ready(
                 
                 if(response.hod_no.length>0)
                     $('#sequareNo_2').val(response.hod_no[(response.hod_no.length-1)]);
-                
+                else
+                    $('#sequareNo_2').val(response.sequareNo_2);
+                    
                 if(response.pice_no.length>0)
                     $('#peaceNo_2').val(response.pice_no[(response.pice_no.length-1)]);
-                
+                else
+                    $('#peaceNo_2').val(response.peaceNo_2);
                 
                 
                 var len = response.user_name.length;
+                var len2 = response.name2.length;
                 $('#delegateList').html('');
                 $('#OwnerList').html('');
                 
@@ -760,11 +766,21 @@ $(document).ready(
                     
                     var name = response.user_name[i];
                     var id = response.user_id[i];
-                    var pice_no = response.pice_no[i];
-                    var hod_no = response.hod_no[i];
-                    var notes1 = response.notes1[i];
-                    var notes2 = response.notes2[i];
+                    var pice_no = '';
+                    var hod_no = '';
+                    var notes1 = (response.notes1[i]??'');
+                    var notes2 = (response.notes2[i]??'');
                     var user_national = response.user_national[i];
+                    
+                    if(response.peaceNo_2!=null)
+                        pice_no = response.peaceNo_2;
+                    else
+                        pice_no = response.pice_no[i];
+                        
+                    if(response.sequareNo_2!=null)
+                        hod_no = response.sequareNo_2;
+                    else
+                        hod_no = response.hod_no[i];
                     if(name!=null){
                         $("#delegateList").append('<tr>'    
                                             +'<td>'+name
@@ -789,6 +805,29 @@ $(document).ready(
                                             +'   </td>'
                                             +'</tr>')
                                             
+                    }
+                }
+                
+                for(var i=0; i<len2; i++){
+                    
+                    var name = response.name2[i];
+                    var id = response.id2[i];
+                    // var pice_no = '';
+                    // var hod_no = '';
+                    var notes2 = (response.notes2[i]??'');
+                    var user_national = response.user_national[i];
+                    
+                    // if(response.peaceNo_2!=null)
+                    //     pice_no = response.peaceNo_2;
+                    // else
+                    //     pice_no = response.pice_no[i];
+                        
+                    // if(response.sequareNo_2!=null)
+                    //     hod_no = response.sequareNo_2;
+                    // else
+                    //     hod_no = response.hod_no[i];
+                    if(name!=null){
+                        
                         $("#OwnerList").append('<tr>'    
                                         +'    <td>'+name
                                         +'          <input type="hidden" value="'+name+'" name="name2[]" class="form-control cac1" placeholder="الاسم" autocomplete="off">'

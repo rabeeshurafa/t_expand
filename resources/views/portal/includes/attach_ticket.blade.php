@@ -130,7 +130,7 @@ function startUpload(formDataStr)
                     $(".alert-success").removeClass('hide');
                     $(".attach_row_"+id).append($actionBtn)
                     $(".loader").addClass('hide');
-                    
+                    $("#attachfile").val('');
                     $(".group1").colorbox({rel:'group1'});
                     setTimeout(function(){
                         $(".alert-danger").addClass("hide");

@@ -66,6 +66,42 @@
                                     <div class="card-body" style="padding-bottom: 0px;">
                                         <div class="form-body">
                                             <div class="row">
+                                                <div class="col-lg-3 col-md-12 " style="padding-left: 0px;">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                      تاريخ الشهادة
+                                                    </span>
+                                                        </div>
+                                                        <input required type="text" id="cer_date" data-mask="00/00/0000" maxlength="10"  class="form-control" onblur="$('.cer_date').html($(this).val());" name="cer_date" value="<?php  echo date('d/m/Y'); ?>"style="color:darkslategrey; border-color: slategray;">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 col-md-12 pr-s-12">
+                                                    <div class="form-group">
+                                                        <div class="input-group w-s-87 mt-s-6">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text" id="basic-addon1">
+                                                                  العام 
+                                                                </span>
+                                                            </div>
+                                                            <input  type="text" id="certYear" class="form-control" onblur="$('.serial_no').html(($(serial_per_year).val()+'/'+ $(this).val()));" 
+                                                            name="certYear" value="<?php  echo date('Y'); ?>" style="color:darkslategrey; border-color: slategray;">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-12 pr-s-12"  style="padding-left: 49px;padding-right: 0px;">
+                                                    <div class="form-group">
+                                                        <div class="input-group w-s-87 mt-s-6">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text" id="basic-addon1">
+                                                                  رقم الشهادة
+                                                                </span>
+                                                            </div>
+                                                            <input  type="text" id="serial_per_year" class="form-control" name="serial_per_year" value="{{$CertCount}}"  
+                                                            onblur="$('#certCnt').html($(this).val());$('.serial_no').html(($(this).val()+'/'+ $('#certYear').val()));"  style="color:darkslategrey; border-color: slategray;">
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="col-lg-4 col-md-12 pr-0 pr-s-12"  >
                                                     <div class="form-group">
                                                         <div class="input-group w-s-87">
@@ -77,28 +113,6 @@
                                                             <input type="text" id="recept_no" class="form-control numFeild" placeholder="رقم الوصل" name="recept_no"  autocomplete="off" style="color:darkslategrey; border-color: slategray;  margin-left: 15px;">
                                                             <input type="hidden" id="pk_i_id" name="pk_i_id" value="0">
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-md-12 pr-s-12"  style="margin-right: -10px;margin-left: 10px;padding-left: 26px;">
-                                                    <div class="form-group">
-                                                        <div class="input-group w-s-87 mt-s-6">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text" id="basic-addon1">
-                                                                  رقم الشهادة
-                                                                </span>
-                                                            </div>
-                                                            <input  type="text" id="serial_per_year" class="form-control" name="serial_per_year" value="{{$CertCount}}/{{date('Y')}}"  onblur="$('#certCnt').html($(this).val());$('.serial_no').html($(this).val());"style="color:darkslategrey; border-color: slategray;">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-md-12 ">
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="basic-addon1">
-                                                      تاريخ الشهادة
-                                                    </span>
-                                                        </div>
-                                                        <input required type="text" id="cer_date" data-mask="00/00/0000" maxlength="10"  class="form-control" onblur="$('.cer_date').html($(this).val());" name="cer_date" value="<?php  echo date('d/m/Y'); ?>"style="color:darkslategrey; border-color: slategray;">
                                                     </div>
                                                 </div>
                                             </div>
@@ -202,7 +216,7 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-lg-12 col-md-12 pr-s-12" style="">
+                                            <div class="col-lg-9 col-md-12 pr-s-12" style="">
                                                 <div class="form-group">
                                                     <div class="input-group w-s-87 mt-s-6">
                                                         <div class="input-group-prepend">
@@ -210,11 +224,22 @@
                                                                   الجهة المستفيدة
                                                                 </span>
                                                         </div>
-                                                        <input  type="text" id="benefitS" name="benefitS" class="form-control " placeholder=" " onkeyup="$('#benefitside').html($('#benefitS').val())" aria-describedby="basic-addon1" style="color:darkslategrey; border-color: slategray" value="الى من يهمه الأمر">
+                                                        <input  type="text" id="benefitS" name="benefitS" class="form-control " placeholder=" " onkeyup="$('#benefitside').html($('#benefitS').val())" aria-describedby="basic-addon1" style="color:darkslategrey; border-color: slategray" value="لمن يهمه الأمر">
+                                                        
                                                         <input  type="hidden" id="benefitside_cd" name="benefitside_cd" value="0">
                                                         <input  type="hidden" id="benefitside_lbl" name="benefitside_lbl" value="0">
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-12">
+                                                <label for="radio-1">
+                                                    وسط
+                                                </label>
+                                                <input type="radio" name="phase[]" checked="" id="radio-1" class="jui-radio-buttons" value="1" onclick="setbenefitStyle(1);">
+                                                <label for="radio-2" style="padding-right:10px">
+                                                    يمين
+                                                </label>
+                                                <input type="radio" name="phase[]" id="radio-2" class="jui-radio-buttons" value="2" onclick="setbenefitStyle(2);">
                                             </div>
                                         </div>
 
@@ -240,7 +265,7 @@
 
                                 <div class="card-header">
                                     <h4 class="card-title">شهادة
-                                    &nbsp;(<span id="certCnt"> {{$CertCount}}/{{date('Y')}}
+                                    &nbsp;(<span id="certCnt"> {{$CertCount}}
                                     </span>)</h4>
                                     <!-- <a class="heading-elements-toggle">
                                         <i class="ft-align-justify font-medium-3"></i></a> -->
@@ -256,52 +281,42 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="text-align:right; direction:rtl;padding-bottom: 10px !important;">التاريخ
+                                                    <td style="text-align:right; direction:rtl;">رقم الشهادة:
+                                                        <span class="serial_no">
+                                                            {{$CertCount??0}}/<?php  echo date('Y'); ?>
+                                                        </span>
+                                                    </td>
+                                                    <td></td>
+                                                    <td style="text-align:left; direction:rtl">التاريخ
                                                     <span class="cer_date">
                                                             <?php echo date('d/m/Y')?>
                                                         </span>
                                                     </td>
-                                                    <td></td>
-                                                    <td style="text-align:left; direction:ltr;    padding-bottom: 10px !important;">
-                                                    </td>
                                                 </tr>
+                                                
                                                 <tr>
-                                                    <td style="text-align:right; direction:rtl;padding-bottom: 10px !important;">
-                                                        رقم الشهادة:
-                                                        <span class="serial_no">{{$CertCount}}/{{date('Y')}}</span>
-                                                    </td>
-                                                    <td>
-                                                        
-                                                    </td>
-                                                    <td style="text-align:right; direction:ltr;    padding-bottom: 10px !important;">
-                                                        
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="3" align="center">
-                                                        <h2 id="msg_title" style="font-family: Helvetica,Arial, sans-serif !important; font-weight:bold;display:none">
+                                                    <td colspan="3" align="center" style="padding-top:50px !important">
+                                                        <h2 id="benefitside" class="benefitside" style="font-family: Helvetica,Arial, sans-serif !important; font-weight:bold ">
+                                                            لمن يهمه الأمر
+                                                            
+                                                        </h2>
+                                                        <h2 style="font-family: Helvetica,Arial, sans-serif !important;text-align: right;">
+                                                            تحية طيبة وبعد ،،،،  
                                                             
                                                         </h2>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="3" align="center">
-                                                        <h2 id="benefitside" style="font-family: Helvetica,Arial, sans-serif !important; font-weight:bold">
-                                                            { الى من يهمه الأمر }
-                                                            
-                                                        </h2>
+                                                        <u>
+                                                            <h2 id="msg_title" style="font-family: Helvetica,Arial, sans-serif !important; font-weight:bold;display:none">
+                                                                
+                                                            </h2>
+                                                        </u>
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="3" align="center " style="padding-bottom: 20px !important;">
-                                                        <h2 id="certName" style="font-family: Helvetica,Arial, sans-serif !important; font-weight:bold">
-                                                            
-                                                            
-                                                        </h2>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="3" style="direction: rtl; line-height:1.5 ; padding-left: 90px !important;padding-right: 90px !important;" id="fullBody">
+                                                    <td colspan="3" style="direction: rtl; line-height:1.5" id="fullBody">
                                                         <span id="msg_content" style="font-family: Arial, sans-serif !important; font-size: 18px !important; font-weight: 500;">
                                                             
                                                         </span>
@@ -310,7 +325,7 @@
                                              
                                             </table>
                                         
-                                            <table  width="100%" class="footerLine" style="border:0px solid #ffffff; margin-bottom:20px;">
+                                            <table  width="100%" class="footerLine" style="border:0px solid #ffffff;">
                                                 <tr>
                                                     <td style="border:0px solid #ffffff;">
                                                         <img src="{{$setting->footer_img}}" width="100%">
@@ -323,7 +338,9 @@
                                         <div class="form-actions" style="border-top:0px;">
                                             <div class="text-right">
                                                 <button class="btn btn-primary" id="saveBtn">حفظ وطباعة <i class="fa fa-print"></i></button>
-                                               {{-- <a class="btn btn-primary" style="color: #FFF;" onclick="printDiv()"> معاينة قبل الطباعة <i class="fa fa-print"></i></a>--}}
+                                                @if(Auth()->user()->id)
+                                                <a class="btn btn-primary" style="color: #FFF;" onclick="printDiv()"> معاينة قبل الطباعة <i class="fa fa-print"></i></a>
+                                                @endif
                                                 <button type="reset" onclick="resetFunction();" class="btn btn-warning">اعادة تعيين <i class="ft-refresh-cw position-right"></i></button>
                                             </div>
                                         </div>
@@ -470,7 +487,7 @@
                         <div class="input-group w-s-87">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1" style="width: 85px;">
-                                    يشهد
+                                    تشهد
                                 </span>
                             </div>
                             <input readonly type="text" id="cerText" class="form-control" placeholder="" name="cerText">
@@ -549,6 +566,24 @@ var cerIn = CKEDITOR.replace('cercontent', {
 
 @section('script')
 <script>
+function css(element, style) {
+    for (const property in style)
+        element.style[property] = style[property];
+}
+
+function setbenefitStyle(val){
+    const note = document.querySelector('.benefitside');
+    if (val == 1){
+        css(note, {
+            'text-align': 'center'
+        });
+    }else {
+        css(note, {
+            'text-align': 'right'
+        });
+    }
+}
+
 var editor = CKEDITOR.replace('summary-ckeditor', {
       // Define the toolbar groups as it is a more accessible solution.
       defaultLanguage : 'ar',
@@ -701,7 +736,8 @@ function AddNew(ctrl,title){
     //$(".form-actions").addClass('hide');
 
     DrawCert()
-    str='يشهد '
+    str='بالاشارة الي الموضوع اعلاه '+
+    'تشهد '
                     +'{{$setting->name_ar}}'                                        
                     +' بأن السيد/ة '
                     +''+$("#citizen_name").val()+''                                        
@@ -766,6 +802,8 @@ function saveCertD(){
               .map(function(){return $(this).val();}).get();
         var attach_ids = $("input[name='attach_ids[]']")
               .map(function(){return $(this).val();}).get();
+        var notArchived = $("input[name='notArchived[]']")
+              .map(function(){return $(this).val();}).get();
         var attachName = $("input[name='attachName[]']")
               .map(function(){return $(this).val();}).get();
         var formData = {
@@ -793,8 +831,10 @@ function saveCertD(){
             'debtEmp' : debtEmp,
             'cost' : $("#cost").val(),
             'attach_ids' : attach_ids,
+            'notArchived' : notArchived,
             'attachName' : attachName,
             'model': $("#model").val(),
+            'certYear': $("#certYear").val(),
             };
         $.ajax({
             url: 'saveCertDetails',
@@ -831,11 +871,10 @@ function saveCertD(){
                         </div>
                     </li>
                 `);
+                
                 $(".form-actions").removeClass('hide');
                 $("#applicantID").val('');
-                currentYear=new Date().getFullYear();
                 $("#cer_pk_id").val('');
-                $('#serial_per_year').val(data.CertCount+'/'+currentYear);
             },
             error: function(response) {
                 $(".form-actions").removeClass('hide');
@@ -1043,23 +1082,25 @@ function copytxt(id){
                   
                     // str='<h3 style="text-align: right;"><span style="font-size:16px;"><strong>رقم الشهادة : </strong></span><span class="serial_no">'+$("#serial_per_year").val()+'</span></h3>'
                     // +'<h3 style="text-align: right;"><span style="font-size:16px;"><strong>تاريخ الشهادة : </strong></span><span class="cer_date">'+$("#cer_date").val()+'</span></h3><br>'
-                    str='<span style="font-size: 22px;"><strong> يشهد '
+                    str='<span style="font-size: 22px;"> بالاشارة الي الموضوع اعلاه تشهد '
                     +'{{$setting->name_ar}}'                                        
-                    +' بأن السيد/ة ""'
+                    +' بأن السيد/ة '
                     +'<b class="citizenName">'+$("#citizen_name").val()+'</b>'                                        
-                    +' حامل هوية رقم/ ""'
-                    +'<b class="citizenID" id="citizenID">'+$("#NationalID").val()+'</b> <strong>';
+                    +' حامل هوية رقم/ '
+                    +'<b class="citizenID" id="citizenID">'+$("#NationalID").val()+'</b>';
                     data.cercontent=str+' '+data.cercontent+'</span>'
-                    console.log(data.cercontent);
                     editor.setData(data.cercontent)
                     $("#msg_title").html(data.s_name_ar);
-                    $("#certName").html(data.s_name_ar);
                     $("#cost").val(data.cost_cert);
+                    // $('#serial_per_year').val(data.certCount);
+                    // $('#certCnt').html(data.certCount);
+                    // $('.serial_no').html((data.certCount+'/'+$('#certYear').val()));
                     // $("iframe").contents().find(".serial_no").html($("#serial_per_year").val())
                     // $("iframe").contents().find(".cer_date").html($("#cer_date").val())
                     // $("iframe").contents().find(".citizenName").html($("#citizen_name").val())
                     // $("iframe").contents().find(".citizenID").html($("#NationalID").val()+' ')
-                    
+
+  
                 
                         resize();
 
@@ -1131,7 +1172,7 @@ function update(id){
                 var debtVoucher=$('.debtVoucher');
                 
                 $('#certCnt').html(data.serial_per_year);
-                $('.serial_no').html(data.serial_per_year);
+                $('.serial_no').html((data.serial_per_year+'/'+data.cert_year));
                 if(data.debt_json)
                 {
                     // count=deptval.length-(lastCntr)
@@ -1156,6 +1197,7 @@ function update(id){
                     $(".waslNo").val(data.debt_json.waslNo);
                 }
                 var attach_template='';
+                var attachCount=1;
                 if(data.all_files.length>0)
                 {
                     $('.addAttatch').html(' ');
@@ -1168,28 +1210,35 @@ function update(id){
                                     <div class="col-sm-6">
                                         <input type="text" id="attachName[]" name="attachName[]" class="form-control attachName" placeholder="أدخل اسم المرفق" value="">
                                     </div>
-                                    <div class="col-sm-5 attach_row_${i}">
+                                    <div class="col-sm-5 attach_row_${(i+1)}">
                                         
                                     </div>
                                     <div class="col-sm-1">
                                         <img src="{{ asset('assets/images/ico/upload.png') }}" width="40"
                                             height="40" style="cursor:pointer"
-                                            onclick="$('#currFile').val(${i});$('#attachfile').trigger('click');">
+                                            onclick="$('#currFile').val(${(i+1)});$('#attachfile').trigger('click');">
                                     </div>
                                 </div>
                             </li>`
                             attach_index=i+1;
+                            attachCount+=1;
                         }
                         else{
+                            if(data.all_files[i].Files[0].type==2){
+                                url=`${data.all_files[i].Files[0].url}`
+                            }else{
+                                url=`{{asset("")}}${data.all_files[i].Files[0].url}`
+                            }
+                            
                         attach_template+=`<li style="font-size: 17px !important;color:#000000">
                             <div class="row">
                                 <div class="col-sm-6">
                               <input type="text" reuired="" id="attachName[]" name="attachName[]" class="form-control attachName" value="${data.all_files[i].attachName}">
                                 </div>
-                                <div class="col-sm-5 attach_row_${i+1}">
+                                <div class="col-sm-5 attach_row_${(i+1)}">
                                     <div id="attach" class=" col-sm-12 ">
                                         <div class="attach"> 
-                                            <a class="attach-close1" href="https://t.expand.ps/expand_repov1/public/${data.all_files[i].Files[0].url}" style="color: #74798D; float:left;" 
+                                            <a class="attach-close1" href="${url}" style="color: #74798D; float:left;" 
                                             target="_blank">  
                                                 <span class="attach-text">${data.all_files[i].Files[0].real_name}</span>    
                                                 <img style="width: 20px;" src="https://t.expand.ps/expand_repov1/public/assets/images/ico/image.png">
@@ -1203,10 +1252,13 @@ function update(id){
                                 </div> 
                             </div> 
                         </li>`
+                        attach_index=i+1;
+                        attachCount+=1;
                         }
                     }
                 }
-                
+                setAttach_index(attach_index+1);
+                $('#currFile').val(attachCount);
                 $('.addAttatch').append(attach_template);
                 window.scrollTo(0, 0);
             },

@@ -135,11 +135,135 @@
                                     <input type="hidden" name="subscriptionID" id="subscriptionID">
                                     <input type="hidden" id="dept_id"  name="dept_id" value="{{$ticketInfo->dept_id}}">
                                     <input type="hidden" id="app_type"  name="app_type" value="3">
-                                    
                                     <input type="hidden" id="buildingStatus"  name="buildingStatus" value="0">
-                                    @include('dashboard.includes.subscriber')                                    
+                                    @include('dashboard.includes.subscriber')                       
+                                    @include('dashboard.includes.beneficiaries')                       
+                                    {{--<div id="subscriber">
+                                        <div class="row" style="position: relative; "> 
+                                            <div class="col-md-7">
+                                                <div class="form-group paddmob">
+                                                    <div class="input-group subscribermob">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1">
+                                                                {{ 'مقدم الطلب' }}
+                                                            </span>
+                                                        </div>
+                                                        <input type="text" id="subscriber_name" 
+                                                            class="form-control numFeild"  placeholder="{{ 'مقدم الطلب' }}"
+                                                            name="subscriber_name">
+                                                        <input type="hidden" id="subscriber_id" name="subscriber_id" value="0" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 paddleft">
+                                                <div class="form-group paddmob">
+                                                    <div class="input-group width100" >
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text input-group-text1" id="basic-addon1">
+                                                                <img id="mobImg" src="https://db.expand.ps/images/jawwal35.png">
+                                                            </span>
+                                                        </div>
+                                                        <input type="text" id="MobileNo"  maxlength="10" name="MobileNo"
+                                                            class="form-control noleft numFeild" placeholder="0590000000"
+                                                            aria-describedby="basic-addon1"
+                                                            onblur="$('#username').val($(this).val())">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @if($ticketInfo->show_nationalID == 1)
+                                        <div calss="row" style="position: relative; ">
+                                            <div class="col-md-7" style="padding-right: 0px;">
+                                                <div class="form-group paddmob">
+                                                    <div class="input-group subscribermob">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1">
+                                                                {{ 'رقم الهوية' }}
+                                                            </span>
+                                                        </div>
+                                                        <input type="text" id="national_id" maxlength="9" minlength="9"
+                                                            class="form-control numFeild" placeholder="{{ 'رقم الهوية' }}"
+                                                            name="national_id">
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endif
+                                    </div>--}}
                                     @include('dashboard.includes.regionsTemplate')
-                                    @include('dashboard.includes.hod')
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group paddmob">
+                                                <div class="input-group" style="width: 100% !important;">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            {{ 'رقم القطعة' }}
+                                                        </span>
+                                                    </div>
+                                                    <input class="form-control" type="text" id="pieceNo" name="pieceNo"
+                                                        class="form-control noleft" placeholder="رقم القطعة"
+                                                        aria-describedby="basic-addon1">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group paddmob">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            {{ 'رقم الحي' }}
+                                                        </span>
+                                                    </div>
+                                                    <input class="form-control" type="text" id="quarterNo" name="quarterNo"
+                                                        class="form-control noleft" placeholder="رقم الحي"
+                                                        aria-describedby="basic-addon1">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group paddmob">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            {{ 'رقم الحوض' }}
+                                                        </span>
+                                                    </div>
+                                                    <input class="form-control" type="text" id="hodNo" name="hodNo"
+                                                        class="form-control noleft" placeholder="رقم الحوض"
+                                                        aria-describedby="basic-addon1">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group paddmob">
+                                                <div class="input-group" style="width: 100% !important;">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            {{ 'مساحة القطعة' }}
+                                                        </span>
+                                                    </div>
+                                                    <input class="form-control" type="text" id="square" name="square"
+                                                        class="form-control noleft" placeholder="مساحة القطعة"
+                                                        aria-describedby="basic-addon1">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group paddmob">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            {{ 'اسم الحوض' }}
+                                                        </span>
+                                                    </div>
+                                                    <input class="form-control" type="text" id="hodName" name="hodName"
+                                                        class="form-control noleft" placeholder="اسم الحوض"
+                                                        aria-describedby="basic-addon1">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     @include('dashboard.includes.buildType')
                                     
 

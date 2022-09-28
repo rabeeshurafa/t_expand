@@ -398,10 +398,10 @@ function getFullData(id){
             				showConfirmButton: true,
             				})
                 }
-                iif(response.errorList.length==0 && response.elec.length!=0){
+                if(response.errorList.length==0 && response.elec.length!=0){
                     $(".btnArea").removeClass("hide");
                     //$(".errArea").addClass("hide");
-                }else{
+                }else if(response.errorList.length!=0 && response.elec.length!=0){
                     $(".btnArea").addClass("hide");
                         //$(".errArea").removeClass("hide");
                         err='<ul>'

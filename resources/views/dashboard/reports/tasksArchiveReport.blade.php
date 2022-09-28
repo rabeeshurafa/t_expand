@@ -394,9 +394,9 @@ function calcDuration(str){
 
                         shortCutName=elem.files[j].real_name;
 
-                        urlfile='{{ asset('') }}';
+                        // urlfile='{{ asset('') }}';
 
-                        urlfile+=elem.files[j].url;
+                        urlfile=elem.files[j].url;
 
                         if(elem.files[j].extension=="jpg"||elem.files[j].extension=="png")
 

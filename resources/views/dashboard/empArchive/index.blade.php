@@ -333,7 +333,6 @@
 @section('script')
 
 <script>
-
     function scanToJpg() {
         scanner.scan(displayImagesOnPage,
             {
@@ -473,7 +472,11 @@
 
                         urlfile='{{ asset('') }}';
 
-                        urlfile+=response.file.url;
+                        if(response.file.type==1){
+                            urlfile+=response.file.url;
+                        }else{
+                            urlfile=response.file.url;
+                        }
 
                             shortCutName=shortCutName.substring(0, 40)
 
@@ -814,9 +817,11 @@
 
                         urlfile='{{ asset('') }}';
 
-                        console.log(urlfile);
-
-                        urlfile+=response.files[j].url;
+                        if(response.files[j].type==1){
+                            urlfile+=response.files[j].url;
+                        }else{
+                            urlfile=response.files[j].url;
+                        }
 
                         formDataStr="formDataaa";
 

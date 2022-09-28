@@ -187,7 +187,7 @@
                                                         </span>
                                                     </div>
                                                     <input type="text" id="national_id" 
-                                                        class="form-control numFeild" placeholder="{{ 'رقم الهوية' }}"
+                                                        class="form-control numFeild" maxlength="9" placeholder="{{ 'رقم الهوية' }}"
                                                         @if(isset($ticket))
                                                         value="{{ $ticket->national_id }}"
                                                         readonly

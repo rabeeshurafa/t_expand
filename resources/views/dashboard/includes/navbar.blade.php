@@ -24,7 +24,14 @@ foreach($allPer as $row){
     <div class="navbar-container main-menu-content container center-layout" data-menu="menu-container">
       <ul class="nav navbar-nav" id="main-menu-navigation" data-menu="menu-navigation">
     <?php foreach($currList as $row){
-    if(sizeof($row[0]->children)>0&&$row[0]->show_in_menu==1){
+        $showInBlackMenue=false;
+        foreach($row[0]->children as $children){
+            $showInBlackMenue=($children->show_in_menu==1);
+            if($showInBlackMenue){
+                break;
+            }
+        }
+    if(sizeof($row[0]->children)>0&&$row[0]->show_in_menu==1&& $showInBlackMenue){
     ?>
         <li class="dropdown nav-item" data-menu="dropdown">
             <a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown">

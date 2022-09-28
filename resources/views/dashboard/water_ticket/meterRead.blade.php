@@ -429,7 +429,7 @@ function getFullData(id){
                 if(response.errorList.length==0 && response.water.length!=0){
                     $(".btnArea").removeClass("hide");
                     //$(".errArea").addClass("hide");
-                }else{
+                }else if(response.errorList.length!=0 && response.water.length!=0){
                     $(".btnArea").addClass("hide");
                         //$(".errArea").removeClass("hide");
                         err='<ul>'

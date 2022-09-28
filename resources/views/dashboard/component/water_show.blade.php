@@ -10,6 +10,9 @@
                   <span aria-hidden="true">&times;</span>
               </button>
             </div>
+            <div id="printWater">
+                
+            </div>
             <div class="modal-body_water">
                 
                 
@@ -21,7 +24,11 @@
 <script>
 function getWater($id)
 {
-    
+    $("#printWater").html(`
+        <a class="pt-1 pr-1" style="float: left;" target="_blank" href="{{asset(app()->getLocale()).'/admin/printWater/'}}${$id}">
+            <img class="fa fa-print" tabindex="0" title="print" src="https://tf.palexpand.ps/assets/images/ico/Printer.png " style="cursor:pointer;height: 32px;display:inline">
+        </a>
+    `)
     let subscriber_id = $id;
     $.ajax({
     type: 'get', // the method (could be GET btw)
