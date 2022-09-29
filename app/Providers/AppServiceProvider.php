@@ -41,20 +41,20 @@ class AppServiceProvider extends ServiceProvider
         $admin=Admin::find(Auth()->user()->id);
         $roles=Role::find($admin->role_id);
         $list=json_decode($roles->permissions);
-        
+
         $allPer=Menu::get();
         $SysPer=Menu::where('b_enabled',1)->get();
         $userPer=Menu::whereIn('s_function_url',$list)->get();*/
-        
+
         view::composer('*' , function ($view){
             $id=0;
             $userPer=array();
-        if(isset(Auth()->user()->id)) {    
+        if(isset(Auth()->user()->id)) {
             $id=Auth()->user()->id;
             $admin=Admin::find(Auth()->user()->id);
             $roles=Role::find($admin->role_id);
             $list=$roles->permissions;
-        
+
             $userPer=Menu::whereIn('s_function_url',$list)->where('b_enabled',1)->get();
         }
         $allPer=Menu::get();
@@ -64,7 +64,7 @@ class AppServiceProvider extends ServiceProvider
         $rMsgemp=Message::whereIn('id',MessageReciver::select('i_message_id')->where('i_receiver_id',$id)->where('is_seen',0)->get())->get();
         //dd($rMsgemp);
         //$sMsgemp=Message::where('created_by',Auth()->user()->id)->get();
-        
+
             $setting = Setting::first();
             if($setting->city_id){
                 $city_id = $setting->city_id;
