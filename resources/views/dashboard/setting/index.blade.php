@@ -4,7 +4,7 @@
     }
       .detailsTB th,.detailsTB td{
         text-align:right !important;
-        
+
     }
     .recList>tr>td{
         font-size:12px;
@@ -41,7 +41,7 @@
 
 <form method="post" id="setting_form" enctype="multipart/form-data">
 
-    @csrf  
+    @csrf
     <div class="row white-row">
         <div class="col-sm-12 col-lg-6 col-md-12">
             <div class="card leftSide">
@@ -59,10 +59,10 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text" id="basic-addon1">
                                                             {{trans('admin.municipality_name_ar')}}
-                                                        </span>                                            
+                                                        </span>
                                                     </div>
                                                     <input type="text" id="name_ar" class="form-control"
-                                                        placeholder="{{trans('admin.municipality_name_ar')}}" 
+                                                        placeholder="{{trans('admin.municipality_name_ar')}}"
                                                         name="name_ar" value="{{$setting->name_ar}}">
                                                         </div>
                                             </div>
@@ -72,10 +72,10 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1">
                                                         {{trans('admin.municipality_name_en')}}
-                                                    </span>                                            
+                                                    </span>
                                                 </div>
                                                 <input type="text" id="name_en" class="form-control"
-                                                    placeholder="{{trans('admin.municipality_name_en')}}" 
+                                                    placeholder="{{trans('admin.municipality_name_en')}}"
                                                     name="name_en" value="{{$setting->name_en}}">
                                                     </div>
                                         </div>
@@ -103,7 +103,7 @@
                                                         <img src="https://db.expand.ps/images/call-pinar35.png">
                                                         </span>
                                                     </div>
-                                                    <input type="text" id="phone_two" name="phone_two" class="form-control noleft" maxlength="9" placeholder="090000000" aria-describedby="basic-addon1" 
+                                                    <input type="text" id="phone_two" name="phone_two" class="form-control noleft" maxlength="9" placeholder="090000000" aria-describedby="basic-addon1"
                                                     value="{{$setting->phone_two}}">
                                                 </div>
                                             </div>
@@ -159,7 +159,7 @@
                                             <input type="text" id="email" name="email" class="form-control noleft" placeholder="Example@domain.com" value="{{$setting->email}}">
                                         </div>
                                     </div>
-            
+
 
                                 </div>
                             </div>
@@ -171,7 +171,7 @@
                 @can('mun_archives')
                 <div class="card-header" style="padding-top:0px;">
                     <h4 class="card-title">
-                        <img src="{{ asset('assets/images/ico/msg.png') }}" width="32" height="32"> 
+                        <img src="{{ asset('assets/images/ico/msg.png') }}" width="32" height="32">
                         {{trans('admin.sub_archives')}}
                     </h4>
                 </div>
@@ -194,12 +194,12 @@
                 <div class="card-header" style="padding-top:0px;">
                     <h4 class="card-title">
                         {{trans('admin.storage')}}
-                    </h4>                    
+                    </h4>
                 </div>
 
                 <div class="card-content collapse show">
                     <div class="card-body" style="padding-bottom: 0px;">
-                    
+
                         <div class="row">
                             <div class="col-lg-6 col-md-12 pr-s-12 pr-0">
                                 <div class="form-group">
@@ -223,31 +223,32 @@
 
                                         </span>
                                         </div>
-                                        <input type="number" id="max_upload" name="max_upload" class="form-control" maxlength="9" placeholder="20MB" 
+                                        <input type="number" id="max_upload" name="max_upload" class="form-control" maxlength="9" placeholder="20MB"
                                         aria-describedby="basic-addon1" value="{{$setting->max_upload}}">
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <a href="{{ route('download_backup') }}" class="btn btn-sm btn-primary"><i class="fa fa-download"></i>Download Backup</a>
                     </div>
                 </div>
-                
+
                 <hr>
                 <div class="card-header" style="padding-top:0px;">
                     <h4 class="card-title">
                         الترويسة
-                    </h4>                    
+                    </h4>
                 </div>
                 <div class="card-content collapse show">
                     <div class="card-body" style="padding-bottom: 0px;">
-                    
+
                     <div class="row">
                         <div class="col-lg-4 col-md-12 pr-s-12 pr-0">
                                 <div class="form-group">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text input-group-text1" id="basic-addon1">
-                                        
+
                                             </span>
                                         </div>
                                         <img id="userHeaderImg" src="{{$setting->header_img}}" style="height: 50px; cursor:pointer" onclick="document.getElementById('header_img_file').click(); return false">
@@ -259,7 +260,7 @@
                                 </div>
                             </div>
                         <!--<div class="col-md-4" style="text-align: center;">-->
-                            
+
                         <!--</div>-->
                         <div class="col-md-4" style="text-align: center;">
                             <img id="userFooterImg" src="{{$setting->footer_img}}" style="height: 50px; cursor:pointer" onclick="document.getElementById('footer_img_file').click(); return false">
@@ -267,7 +268,7 @@
                             <input type="hidden" id="footer_img" name="footer_img">
                             <meta name="csrf-token" content="{{ csrf_token() }}" />
                         </div>
-                    </div>  
+                    </div>
                     </div>
                 </div>
                 <hr>
@@ -322,10 +323,10 @@
 
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="alert alert-icon-right alert-warning alert-dismissible mb-2" 
+                                        <div class="alert alert-icon-right alert-warning alert-dismissible mb-2"
                                         role="alert"
                                         style="position: static;margin-right: 0px;margin-left: 0px;width: 100%;border-right-width: 0px;z-index: 1;">
-                            
+
                                             <strong>ملاحظة !</strong> الحضور من  <a class="alert-link">08:00 صباحا</a> حتى <a class="alert-link">02:00 ظهرا </a> عدا يوم الخميس <a class="alert-link">01:00 ظهرا </a>.<br> إظغط <a class="alert-link" onclick="$('#timeTable').toggle()"> هنا </a> لتغيير الإعدادات
                                         </div>
                                     </div>
@@ -485,11 +486,11 @@
                 <div class="card-content collapse show">
                     <div class="card-body">
 
-                    
+
 
 @include('dashboard.component.address')
 
-                       				
+
 
 
 
@@ -545,19 +546,19 @@
 										<a class="nav-link active" style="color: #0073AA;" id="base-tab1" data-toggle="tab" aria-controls="ctab1" href="#ctab1" aria-expanded="true">
                                         <b>
                                         {{trans('admin.mnicipality_archive')}}
-											(<span id="ctabCnt1"></span>) 
+											(<span id="ctabCnt1"></span>)
 
 										</b></a>
 
 									</li>
 									@endcan
-									
+
 									@can('Organization_law')
 									<li class="nav-item">
 
 										<a class="nav-link" style="color: #0073AA;" id="base-tab2" data-toggle="tab" aria-controls="ctab2" href="#ctab2" aria-expanded="false">
                                         <b>
-                                        
+
                                         {{trans('archive.law_archive')}}
 											(<span id="ctabCnt2"></span>)
                                         </b></a>
@@ -569,87 +570,87 @@
 				                <div class="tab-content px-1 pt-1" style="margin-top:0px !important ;">
 
                 					<div role="tabpanel" class="tab-pane active" id="ctab1" aria-expanded="true" aria-labelledby="base-tab1">
-                
+
                 						<p>
-                
+
                 							<table style="width:100%; margin-top: 10px;direction: rtl;" class="detailsTB table hdrTbl1 archivetbl" >
-                
+
                 							    <thead>
-                
+
                 									<tr>
-                
+
                 										<th scope="col" style="text-align: right;color:#ffffff; width: 10px;">#</th>
-                
+
                 										<th scope="col"  style="text-align:  right; direction:rtl; font-family: Arial, sans-serif !important;color:#ffffff; width: 150px;">
-                                                        
+
                                                         {{trans('archive.archive_No')}} </th>
-                
+
                 										<th scope="col" style="text-align: right; font-family: Arial, sans-serif !important;color:#ffffff">
-                
+
                                                         {{trans('archive.date')}}</th>
-                
+
                                                         <th scope="col" style="text-align: right; font-family: Arial, sans-serif !important;color:#ffffff">
-                                                        
+
                                                         {{trans('archive.title_name')}}</th>
-                
+
                 										<th scope="col" style="text-align: center; font-family: Arial, sans-serif !important;color:#ffffff">
-                
+
                                                         {{trans('archive.type')}}</th>
                 										<th scope="col" style="text-align: center; font-family: Arial, sans-serif !important;color:#ffffff">
-                
+
                                                         {{trans('archive.attach')}}</th>
-                
+
                 									</tr>
-                
+
                 								</thead>
-                
+
                 						</table>
-                
+
                 						</p>
-                
+
                 					</div>
-                
+
                 					<div class="tab-pane " id="ctab2" aria-labelledby="base-tab2">
-                
+
                 						<p>
-                						    
+
                 						<table style="width:100%; margin-top: 10px;direction: rtl;" class="detailsTB table hdrTbl1 lawtbl"  >
-                
+
                 						    <thead>
-                
+
                 							    <tr>
             										<th scope="col" style="text-align: right;color:#ffffff">#</th>
-            
+
             										<th scope="col" style="text-align:  right; direction:rtl; font-family: Arial, sans-serif !important;color:#ffffff">
-            
+
                                                     {{trans('archive.date')}}  </th>
-            
+
                                                     <th scope="col" style="text-align: right; font-family: Arial, sans-serif !important;color:#ffffff">
-            
+
                                                     {{trans('archive.title_name')}}</th>
-            
+
             										<th scope="col" style="text-align: right; font-family: Arial, sans-serif !important;color:#ffffff">
-            
+
                                                     {{trans('archive.type')}}</th>
-            
+
             										<th scope="col" style="text-align: center; font-family: Arial, sans-serif !important;color:#ffffff">
-                                                    
+
                                                     {{trans('admin.notes')}}</th>
             										<th scope="col" style="text-align: center; font-family: Arial, sans-serif !important;color:#ffffff">
-            
+
                                                     {{trans('archive.attach')}}</th>
-                									
-                
+
+
                 							    </tr>
-                
+
                 							</thead>
-                							
+
                 						</table>
-                
+
                 						</p>
-                
+
                 					</div>
-                
+
                 				</div>
 
                             </div>
@@ -693,7 +694,7 @@ $(document).ready(function () {
            contentType: false,
            processData: false,
            success: (response) => {
-            $('.wtbl').DataTable().ajax.reload();  
+            $('.wtbl').DataTable().ajax.reload();
              if (response) {
                 $(".loader").addClass('hide');
 			Swal.fire({
@@ -773,7 +774,7 @@ $(document).ready(function () {
                 },
                 });
     });
-    
+
     $( function() {
             $.ajax({
             type: 'get', // the method (could be GET btw)
@@ -792,9 +793,9 @@ $(document).ready(function () {
                 },
 			});
 
-        
+
     });
-    
+
     @can('Organization_law')
     $( function(){
 
@@ -804,11 +805,11 @@ $(document).ready(function () {
         columns:[
                     { data: 'DT_RowIndex', name: 'DT_RowIndex' , orderable: false, searchable: false},
                     {data:'date'},
-                    
+
                     {data:'title'},
-                    
+
                     {
-                        data: null, 
+                        data: null,
                         render:function(data,row,type){
                             $type ='';
                             if(data.archive_type!=null)
@@ -816,14 +817,14 @@ $(document).ready(function () {
                                 return $type;
                         },
                         name:'name',
-                    
+
                     },
                     {data:'serisal'},
                     {
                         data: null,
-                        
+
                         render:function(data,row,type){
-                            if(data.files.length>0){ 
+                            if(data.files.length>0){
                                 var i=1;
                                 $actionBtn="<div class='row' style='margin-left:0px;'>";
                                 data.files.forEach(file => {
@@ -840,7 +841,7 @@ $(document).ready(function () {
                                     else
                                     fileimage='{{ asset('assets/images/ico/file.png') }}';
                                     $actionBtn += '<div id="attach" class=" col-sm-12 ">'
-                                        +'<div class="attach">'                                        
+                                        +'<div class="attach">'
                                         +' <a class="attach-close1" href="'+urlfile+'" style="color: #74798D; float:left;" target="_blank">'
                                             +'  <span class="attach-text">'+shortCutName+'</span>'
                                             +'    <img style="width: 20px;"src="'+fileimage+'">'
@@ -848,16 +849,16 @@ $(document).ready(function () {
                                         +'</div>'
                                         +'</div>'
                                     +'<div></div>'
-                                        ; 
+                                        ;
                                 });
                                 $actionBtn += '</div>';
                                 return $actionBtn;
                             }
                             else{return '';}
                         },
-                        name:'fileIDS',                    
+                        name:'fileIDS',
                     },
-                    
+
                 ],
 
                     dom: 'Bfltip',
@@ -908,7 +909,7 @@ $(document).ready(function () {
 
                             customize: function ( win ) {
 
-                        
+
 
 
 
@@ -922,7 +923,7 @@ $(document).ready(function () {
 
                         ],
 
-                    
+
 
                     "language": {
 
@@ -970,28 +971,28 @@ $(document).ready(function () {
 
                             }
 
-                });           
+                });
 
 
 
     });
     @endcan
-    
-    
+
+
     @can('Organization_info')
     $( function(){
 
             var table = $('.archivetbl').DataTable({
-            
+
             ajax:"{{ route('Organization_info') }}",
             columns:[
                         { data: 'DT_RowIndex', name: 'DT_RowIndex' , orderable: false, searchable: false},
                         {data:'serisal'},
-                        
+
                         {data:'date'},
                         {data:'title'},
                         {
-                            data: null, 
+                            data: null,
                             render:function(data,row,type){
                                 $type ='';
                                 if(data.archive_type!=null)
@@ -999,13 +1000,13 @@ $(document).ready(function () {
                                     return $type;
                             },
                             name:'name',
-                        
+
                         },
                         {
                             data: null,
-                            
+
                             render:function(data,row,type){
-                                if(data.files.length>0){ 
+                                if(data.files.length>0){
                                     var i=1;
                                     $actionBtn="<div class='row' style='margin-left:0px;'>";
                                     data.files.forEach(file => {
@@ -1022,25 +1023,25 @@ $(document).ready(function () {
                                         else
                                         fileimage='{{ asset('assets/images/ico/file.png') }}';
                                         $actionBtn += '<div id="attach" class=" col-sm-12 ">'
-                                            +'<div class="attach">'                                        
+                                            +'<div class="attach">'
                                             +' <a class="attach-close1" href="'+urlfile+'" style="color: #74798D; float:left;" target="_blank">'
                                                 +'  <span class="attach-text">'+shortCutName+'</span>'
                                                 +'    <img style="width: 20px;"src="'+fileimage+'">'
                                                 +'</a>'
                                             +'</div>'
                                             +'</div>'
-                                            
+
                                     +'<div></div>'
-                                            ; 
+                                            ;
                                     });
                                     $actionBtn += '</div>';
                                     return $actionBtn;
                                 }
                                 else{return '';}
                             },
-                            name:'fileIDS',                    
+                            name:'fileIDS',
                         },
-                        
+
                     ],
 
                         dom: 'Bfltip',
@@ -1091,9 +1092,9 @@ $(document).ready(function () {
 
                                 customize: function ( win ) {
 
-                            
 
-            
+
+
 
                                 $(win.document.body).find( 'table' ).find('tbody')
 
@@ -1105,7 +1106,7 @@ $(document).ready(function () {
 
                             ],
 
-                        
+
 
                         "language": {
 
@@ -1153,7 +1154,7 @@ $(document).ready(function () {
 
                                 }
 
-                    });           
+                    });
 
 
 
@@ -1163,7 +1164,7 @@ $(document).ready(function () {
 
 
 
-   
+
 </script>
 @endsection
 @endsection

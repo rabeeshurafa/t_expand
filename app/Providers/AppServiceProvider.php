@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use App\Support\Storage\Contracts\StorageInterface;
 use App\Support\Storage\SessionStorage;
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Setting;
 use App\Models\Menu;
@@ -12,7 +14,9 @@ use App\Models\Message;
 use App\Models\MessageReciver;
 use App\Models\Admin;
 use App\Models\Role;
-
+use League\Flysystem\Filesystem;
+use Spatie\Dropbox\Client as DropboxClient;
+use Spatie\FlysystemDropbox\DropboxAdapter;
 use View;
 
 class AppServiceProvider extends ServiceProvider
@@ -45,6 +49,17 @@ class AppServiceProvider extends ServiceProvider
         $allPer=Menu::get();
         $SysPer=Menu::where('b_enabled',1)->get();
         $userPer=Menu::whereIn('s_function_url',$list)->get();*/
+        Storage::extend('dropbox', function ($app, $config) {
+            $adapter = new DropboxAdapter(new DropboxClient(
+                $config['dropbox_authorization_token']
+            ));
+
+            return new FilesystemAdapter(
+                new Filesystem($adapter, $config),
+                $adapter,
+                $config
+            );
+        });
 
         view::composer('*' , function ($view){
             $id=0;

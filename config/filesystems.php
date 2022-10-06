@@ -86,6 +86,14 @@ return [
             'visibility' => 'public',
         ],
 
+        'dropbox' => [
+            'driver' => 'dropbox',
+            'dropbox_authorization_token' => 'sl.BQp4FlqKgUtNFqmgNL_LcAeR7JvkNKUc70ODDVayaaWazmb7g0oociaNWR24eMPSzoBwFTSibZ7Z14y0p3bJ5sdoxaH5lA6oR3jXPlLULk_8P1cnsL7Bz75jMH4eQLMG9AXIsmohXAI',
+            'App folder name' => 'expand.ps',
+            'App key' => '0lblk827w2xtgiv',
+            'App secret' => 'n04l8yjtmyd72cw',
+        ],
+
         'ftp' => [
             'driver' => 'ftp',
             'host' => env('FTP_HOST', 'u319352.your-storagebox.de'),
