@@ -1173,14 +1173,15 @@ class ArchieveController extends Controller
             $imageName = $prefix . rand(3, 999) . '-' . time() . '.' . $files->getClientOriginalExtension();
             Storage::disk('ftp')->put(('expand/texpand/' . $imageName), fopen($file, 'r+'));
             Storage::disk('s3')->put($imageName, fopen($file, 'r+'));
-            Storage::disk('dropbox')->put(('texpand/' .$imageName), fopen($file, 'r+'));
-            $dropbox = Storage::disk('dropbox')->url(('texpand/' .$imageName));
+            $res=Storage::disk('dropbox')->put(('texpand/'.$imageName), fopen($file, 'r+'));
+            $dropbox = ('texpand/'.$imageName);
+            if($res) {
+                $fileLinks['dropbox'] = $dropbox;
+            }
             $ftp = Storage::disk('ftp')->url(('texpand/' . $imageName));
             $s3 = Storage::disk('s3')->url($imageName);
-
             $fileLinks['s3'] = $s3;
             $fileLinks['ftp'] = $ftp;
-            $fileLinks['dropbox'] = $dropbox;
 
             return [
                 'name' => $file->getClientOriginalName(),
