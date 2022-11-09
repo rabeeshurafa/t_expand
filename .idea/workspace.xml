@@ -4,99 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a16e4324-61f7-4759-b5ed-4280ce8af87e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/DailyWorkController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Requests/TicketRequest45.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/AppTicket41.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/AppTicket43.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/AppTicket45.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/DailyWork.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_09_22_081332_add_track_link_to_agenda_topics_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_09_22_081332_add_track_link_to_archive_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_09_22_081332_update_agenda_topics_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_09_22_081332_update_archive_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_10_20_104303_drop_daily_work_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_10_20_104728_create_daily_works_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_10_20_105219_create_works_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_10_20_131255_add_notes_to_works_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_10_20_145209_add_soft_delete_to_works_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_10_20_151646_add_dates_to_works_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_10_22_102257_add_files_to_daily_work_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_11_09_193620_update_to_ticket_configs.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/dailyWork/dailyWork.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/dailyWork/print.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/dailyWork/report.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/generalRequest_Tickts/ambulance.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/outspreadTasks/trashTasks.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/outspreadTasks/wasteComplaint.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketPrint/print45.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket45.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/trackingArchive/component/jalArchive.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/water_ticket/buildingSewage.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/portal/outspreadTasks/trashTasks.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/portal/services/appTicket3.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/portal/water_ticket/appTicket3.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/AppOp.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/AppOp.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/AppPortal.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/AppPortal.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/BuildingTicketController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/BuildingTicketController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/DashboardController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/GeneralRequescontroller.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/GeneralRequescontroller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/OutspreadTaskController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/OutspreadTaskController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/PrintTicket.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/PrintTicket.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/Reporth.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ReporthController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/TasksTableController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/TasksTableController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/WaterTicketController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/WaterTicketController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/elecTicketController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/elecTicketController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Portal/AppPortal.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Portal/AppPortal.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Portal/PortalElec.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Portal/PortalElec.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Portal/PortalOutspread.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Portal/PortalOutspread.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Portal/PortalWater.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Portal/PortalWater.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/TicketConfig.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/TicketConfig.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/building_ticket/licenseFile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/building_ticket/licenseFile.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/fetch_Task_table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/fetch_Task_table.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/myTasksModel.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/myTasksModel.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/ticket_config.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/ticket_config.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/outspreadTasks/quittance.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/outspreadTasks/quittance.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/services/appTicket3.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/services/appTicket3.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/services/meterTransfer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/services/meterTransfer.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/services/ticket27.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/services/ticket27.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/services/ticket29.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/services/ticket29.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/services/ticket36.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/services/ticket36.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/services/ticket37.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/services/ticket37.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/ticketPrint/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketPrint/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/ticketPrint/objectionPrint.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketPrint/objectionPrint.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/ticketPrint/print42.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketPrint/print42.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/ticketPrint/wasl.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketPrint/wasl.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket15.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket15.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket16.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket16.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket19.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket19.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket23.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket23.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket27.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket27.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket3.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket3.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket46.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/viewTicket46.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/trackingArchive/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/trackingArchive/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/water_ticket/appTicket3.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/water_ticket/appTicket3.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/portal/front/portal.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/portal/front/portal.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/portal/includes/mailPage.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/portal/includes/mailPage.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/portal/includes/regionsTemplate.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/portal/includes/regionsTemplate.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/portal/includes/regionsTemplate1.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/portal/includes/regionsTemplate1.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/portal/includes/regionsTemplate_rec.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/portal/includes/regionsTemplate_rec.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/portal/includes/subscriber.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/portal/includes/subscriber.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/portal/outspreadTasks/outspreadTask.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/portal/outspreadTasks/outspreadTask.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/portal/outspreadTasks/publicComplaint.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/portal/outspreadTasks/publicComplaint.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/portal/services/globalMalfunction.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/portal/services/globalMalfunction.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/portal/services/meterTransfer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/portal/services/meterTransfer.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/portal/services/ticket27.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/portal/services/ticket27.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/portal/services/ticket29.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/portal/services/ticket29.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/portal/services/ticket37.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/portal/services/ticket37.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/portal/water_ticket/meterTransfer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/portal/water_ticket/meterTransfer.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-    </list>
+    <list default="true" id="a16e4324-61f7-4759-b5ed-4280ce8af87e" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -360,7 +268,7 @@
       <workItem from="1666714449858" duration="10412000" />
       <workItem from="1667986902138" duration="886000" />
       <workItem from="1667995433674" duration="1144000" />
-      <workItem from="1668009787777" duration="9963000" />
+      <workItem from="1668009787777" duration="10356000" />
     </task>
     <servers />
   </component>
