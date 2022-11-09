@@ -127,8 +127,11 @@ Route::group([
         Route::post('saveTicket38', 'AppOp@saveTicket38')->name('saveTicket38');
         Route::post('saveTicket39', 'AppOp@saveTicket39')->name('saveTicket39');
         Route::post('saveTicket40', 'AppOp@saveTicket40')->name('saveTicket40');
+        Route::post('saveTicket40', 'AppOp@saveTicket40')->name('saveTicket41');
         Route::post('saveTicket42', 'AppOp@saveTicket42')->name('saveTicket42');
+        Route::post('saveTicket42', 'AppOp@saveTicket42')->name('saveTicket43');
         Route::post('saveTicket44', 'AppOp@saveTicket44')->name('saveTicket44');
+        Route::post('saveTicket44', 'AppOp@saveTicket44')->name('saveTicket45');
         Route::post('saveTicket46', 'AppOp@saveTicket46')->name('saveTicket46');
         Route::post('saveSparPart', 'AppOp@saveSparPart')->name('saveSparPart');
         Route::post('dowaivesubscription', 'AppOp@dowaivesubscription')->name('dowaivesubscription');
@@ -149,6 +152,7 @@ Route::group([
         Route::post('saveEditTicket', 'PrintTicket@saveEditTicket')->name('saveEditTicket');
         Route::post('savePrintTicket39No', 'PrintTicket@savePrintTicket39No')->name('savePrintTicket39No');
         Route::get('printTicket39/{id}/{type}', 'PrintTicket@printTicket39')->name('printTicket39');
+        Route::get('print45/{id}', 'PrintTicket@print45')->name('print45');
 
         Route::put('TicketDel', 'AppOp@deleteTicket')->name('TicketDel');
         Route::put('updateVac', 'AppOp@updateVac')->name('updateVac');
@@ -208,6 +212,10 @@ Route::group([
         Route::get('getWaterPermissionTickets', 'TasksTableController@getWaterPermissionTickets')->name('getWaterPermissionTickets');
         Route::get('getElecPermissionTickets', 'TasksTableController@getElecPermissionTickets')->name('getElecPermissionTickets');
         Route::get('getInternalMemoTickets', 'TasksTableController@getInternalMemoTickets')->name('getInternalMemoTickets');
+        Route::get('getBuildingSewageTickets', 'TasksTableController@getBuildingSewageTickets')->name('getBuildingSewageTickets');
+        Route::get('getWasteComplaintTickets', 'TasksTableController@getWasteComplaintTickets')->name('getWasteComplaintTickets');
+        Route::get('getTrashTickets', 'TasksTableController@getTrashTickets')->name('getTrashTickets');
+        Route::get('getAmbulanceTickets', 'TasksTableController@getAmbulanceTickets')->name('getAmbulanceTickets');
 
         Route::get('/', 'DashboardController@index')->name('admin.dashboard');  // the first page admin visits if authenticated
         Route::get('getMyTaskAjax', 'DashboardController@getMyTaskAjax')->name('getMyTaskAjax');
@@ -215,6 +223,15 @@ Route::group([
         Route::get('getTaggedTaskAjax', 'DashboardController@getTaggedTaskAjax')->name('getTaggedTaskAjax');
         Route::get('getSenTTaskAjax', 'DashboardController@getSenTTaskAjax')->name('getSenTTaskAjax');
         Route::get('logout', 'LoginController@logout')->name('admin.logout');
+
+        Route::get('updateReport','DailyWorkController@updateReport')->name('updateReport');
+        Route::post('saveReport','DailyWorkController@saveReport')->name('saveReport');
+        Route::get('showReport','DailyWorkController@showReport')->name('showReport');
+        Route::get('dailyWork','DailyWorkController@index')->name('dailyWork');
+        Route::get('update_by_field','DailyWorkController@update_by_field')->name('update_by_field');
+        Route::get('reportIndex','DailyWorkController@reportIndex')->name('reportIndex')->middleware('can:reportIndex');
+        Route::get('searchReport','DailyWorkController@workReport')->name('searchReport');
+        Route::get('printdailywork/{from}/{to}/{emp_id}/{mostt}/{state}','DailyWorkController@printDailyWorkReport')->name('printdailywork');
 
         Route::get('mailPage', 'mailController@mailPage')->name('mailPage');
         Route::post('getMessage', 'mailController@getMessage')->name('getMessage');
@@ -302,12 +319,7 @@ Route::group([
         Route::get('waterMeterTransfer', 'WaterTicketController@meterTransfer')->name('waterMeterTransfer');
         Route::get('waterFinancialTransfer', 'WaterTicketController@waterFinancialTransfer')->name('waterFinancialTransfer');
         Route::post('appCustomer', 'WaterTicketController@appCustomer')->name('appCustomer');
-
-        Route::get('updateReport','DailyReport@updateReport')->name('updateReport');
-        Route::post('saveReport','DailyReport@saveReport')->name('saveReport');
-        Route::get('showReport','DailyReport@showReport')->name('showReport');
-        Route::get('dailyWork','DailyReport@index')->name('dailyWork');
-        Route::get('update_by_field','DailyReport@update_by_field')->name('update_by_field');
+        Route::get('buildingSewage', 'WaterTicketController@buildingSewage')->name('buildingSewage');
 
         Route::get('counterReadReport', 'CounterReadReport@index')->name('counterReadReport');
         Route::get('finaicalRequest', 'FinaicalRequestController@index')->name('finaicalRequest');
@@ -458,7 +470,9 @@ Route::group([
         Route::get('engineeringValidation', 'BuildingTicketController@engineeringValidation')->name('engineeringValidation');
 
         Route::get('outspreadTasks', 'OutspreadTaskController@outspreadTasks')->name('outspreadTasks');
+        Route::get('trashTasks', 'OutspreadTaskController@trashTasks')->name('trashTasks');
         Route::get('quittance', 'OutspreadTaskController@quittance')->name('quittance');
+        Route::get('wasteComplaint', 'OutspreadTaskController@wasteComplaint')->name('wasteComplaint');
         Route::get('publicComplaint', 'OutspreadTaskController@publicComplaint')->name('publicComplaint');
         Route::get('citizenComplaint', 'OutspreadTaskController@citizenComplaint')->name('citizenComplaint');
         Route::get('innerQuittance', 'OutspreadTaskController@innerQuittance')->name('innerQuittance');
@@ -473,6 +487,7 @@ Route::group([
         Route::get('vehicleMaintenance', 'GeneralRequescontroller@vehicleMaintenance')->name('vehicleMaintenance');
         Route::get('refueling', 'GeneralRequescontroller@refueling')->name('refueling');
         Route::get('trackingArchive/{type}/{id}', 'GeneralRequescontroller@trackingArchive')->name('trackingArchive');
+        Route::get('ambulance', 'GeneralRequescontroller@ambulance')->name('ambulance');
 
         Route::get('elecSubscription', 'elecTicketController@elecSubscription')->name('elecSubscription');
         Route::get('elecMalfunction', 'elecTicketController@elecMalfunction')->name('elecMalfunction');

@@ -97,9 +97,9 @@
                                                                             aria-invalid="false"
                                                                             style="height: 34px !important;">
                                                                         <option
-                                                                            value="1" {{ $ticketInfo->single_receive==1?'selected':'' }}> {{'نعم'}} </option>
+                                                                                value="1" {{ $ticketInfo->single_receive==1?'selected':'' }}> {{'نعم'}} </option>
                                                                         <option
-                                                                            value="2" {{ $ticketInfo->single_receive==2?'selected':'' }}> {{'لا'}} </option>
+                                                                                value="2" {{ $ticketInfo->single_receive==2?'selected':'' }}> {{'لا'}} </option>
                                                                     </select>
                                                                     <a class="add-btn" onclick="addFlow();"
                                                                        style="margin-left: 0px; margin-right: 8px; padding-top: 7px;">
@@ -110,71 +110,71 @@
                                                             </div>
                                                         </li>
                                                         @for($i=1;$i< sizeof($ticketInfo->flows) ;$i++)
-                                                            <?php $flow=$ticketInfo->flows[$i]?>
-                                                        <li>
-                                                            <div class="row">
-                                                                <div class="col-md-4">
-                                                                    <div class="form-group paddmob">
-                                                                        <div class="input-group ">
-                                                                            <div class="input-group-prepend">
-                                                                                <span class="input-group-text" id="basic-addon1"> القسم</span>
+                                                                <?php $flow=$ticketInfo->flows[$i]?>
+                                                            <li>
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group paddmob">
+                                                                            <div class="input-group ">
+                                                                                <div class="input-group-prepend">
+                                                                                    <span class="input-group-text" id="basic-addon1"> القسم</span>
+                                                                                </div>
+                                                                                <select type="text" id="nextDeptId[]" name="nextDeptId[]"
+                                                                                        class="form-control deptFlow{{($i)}}" aria-invalid="false"
+                                                                                        onchange="ShowDeptEmpFlow({{($i)}})">
+                                                                                    <option disabled="" selected="" value="0"> -- اختيار القسم --</option>
+                                                                                    @foreach ($department as $dept)
+                                                                                        <option value="{{$dept->id}}" {{$flow->nextDeptId == $dept->id?'selected':''}}>{{$dept->name}}</option>
+                                                                                    @endforeach
+                                                                                </select>
                                                                             </div>
-                                                                            <select type="text" id="nextDeptId[]" name="nextDeptId[]"
-                                                                                    class="form-control deptFlow{{($i)}}" aria-invalid="false"
-                                                                                    onchange="ShowDeptEmpFlow({{($i)}})">
-                                                                                <option disabled="" selected="" value="0"> -- اختيار القسم --</option>
-                                                                                @foreach ($department as $dept)
-                                                                                    <option value="{{$dept->id}}" {{$flow->nextDeptId == $dept->id?'selected':''}}>{{$dept->name}}</option>
-                                                                                @endforeach
-                                                                            </select>
                                                                         </div>
                                                                     </div>
-                                                                </div>
 
-                                                                <div class="col-md-4"
-                                                                     style="padding-right: 0px;">
-                                                                    <div class="form-group paddmob">
-                                                                        <div class="input-group ">
-                                                                            <div class="input-group-prepend">
-                                                                                <span class="input-group-text" id="basic-addon1">اختر الموظف</span>
-                                                                            </div>
-                                                                            <select type="text" id="nextEmpId[]" name="nextEmpId[]" class="form-control empFlow{{($i)}}" aria-invalid="false">
-                                                                                <option selected="" value="0"> -- اختيار الموظف --</option>
-                                                                                @foreach ($employees as $emp)
-                                                                                    <option class="allDept{{($i)}}  {{$emp->department_id == $flow->nextDeptId?"":"hide" }}
+                                                                    <div class="col-md-4"
+                                                                         style="padding-right: 0px;">
+                                                                        <div class="form-group paddmob">
+                                                                            <div class="input-group ">
+                                                                                <div class="input-group-prepend">
+                                                                                    <span class="input-group-text" id="basic-addon1">اختر الموظف</span>
+                                                                                </div>
+                                                                                <select type="text" id="nextEmpId[]" name="nextEmpId[]" class="form-control empFlow{{($i)}}" aria-invalid="false">
+                                                                                    <option selected="" value="0"> -- اختيار الموظف --</option>
+                                                                                    @foreach ($employees as $emp)
+                                                                                        <option class="allDept{{($i)}}  {{$emp->department_id == $flow->nextDeptId?"":"hide" }}
                                                                                         empFlow{{($i)}}_{{$emp->department_id}}" value="{{$emp->id}}"
-                                                                                        {{$flow->nextEmpId == $emp->id?'selected':''}}>
-                                                                                        {{$emp->nick_name}}
-                                                                                    </option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                            
+                                                                                                {{$flow->nextEmpId == $emp->id?'selected':''}}>
+                                                                                            {{$emp->nick_name}}
+                                                                                        </option>
+                                                                                    @endforeach
+                                                                                </select>
+
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="input-group col-md-4"
-                                                                     style="padding-left: 69px;padding-right: 0px;">
-                                                                    <div class="input-group-prepend"
-                                                                         style="height: 34px;">
+                                                                    <div class="input-group col-md-4"
+                                                                         style="padding-left: 69px;padding-right: 0px;">
+                                                                        <div class="input-group-prepend"
+                                                                             style="height: 34px;">
                                                                         <span class="input-group-text" id="basic-addon1">
                                                                             {{"الموظف اجباري"}}
                                                                         </span>
+                                                                        </div>
+                                                                        <select type="text" id="nextIsMandatory[]" name="nextIsMandatory[]"
+                                                                                class="form-control myselect2" aria-invalid="false" style="height: 34px !important;">
+                                                                            <option
+                                                                                    value="1" {{ $flow->nextIsMandatory ==1?'selected':'' }}> {{'نعم'}} </option>
+                                                                            <option
+                                                                                    value="2" {{ $flow->nextIsMandatory ==2?'selected':'' }}> {{'لا'}} </option>
+                                                                        </select>
+                                                                        <a class="add-btn" onclick="$(this).parent().parent().parent().remove()"
+                                                                           style="margin-left: 0px; margin-right: 8px; padding-top: 7px;">
+                                                                            <i class="fa fa-trash"
+                                                                               style="color:#1E9FF2;"></i>
+                                                                        </a>
                                                                     </div>
-                                                                    <select type="text" id="nextIsMandatory[]" name="nextIsMandatory[]"
-                                                                            class="form-control myselect2" aria-invalid="false" style="height: 34px !important;">
-                                                                        <option
-                                                                            value="1" {{ $flow->nextIsMandatory ==1?'selected':'' }}> {{'نعم'}} </option>
-                                                                        <option
-                                                                            value="2" {{ $flow->nextIsMandatory ==2?'selected':'' }}> {{'لا'}} </option>
-                                                                    </select>
-                                                                    <a class="add-btn" onclick="$(this).parent().parent().parent().parent().parent().remove()"
-                                                                       style="margin-left: 0px; margin-right: 8px; padding-top: 7px;">
-                                                                        <i class="fa fa-trash"
-                                                                           style="color:#1E9FF2;"></i>
-                                                                    </a>
                                                                 </div>
-                                                            </div>
-                                                        </li>
+                                                            </li>
                                                         @endfor
                                                     </ol>
                                                 </div>
@@ -194,7 +194,7 @@
                                                             if (isset($employees) && !empty($employees) && count($employees) > 0){ ?>
                                                                 <?php foreach ($employees as $key => $value){ ?>
                                                             <option
-                                                                value="<?php echo $value->id; ?>" <?php echo in_array($value->id, json_decode($ticketInfo->emp_to_close_json)) ? "selected" : "" ?>><?php echo $value->nick_name; ?></option>
+                                                                    value="<?php echo $value->id; ?>" <?php echo in_array($value->id, json_decode($ticketInfo->emp_to_close_json)) ? "selected" : "" ?>><?php echo $value->nick_name; ?></option>
                                                             <?php } ?>
                                                             <?php } ?>
                                                         </select>
@@ -215,7 +215,7 @@
                                                             if (isset($employees) && !empty($employees) && count($employees) > 0){ ?>
                                                                 <?php foreach ($employees as $key => $value){ ?>
                                                             <option
-                                                                value="<?php echo $value->id; ?>" <?php echo in_array($value->id, json_decode($ticketInfo->emp_to_revoke_json)) ? "selected" : "" ?>><?php echo $value->nick_name; ?></option>
+                                                                    value="<?php echo $value->id; ?>" <?php echo in_array($value->id, json_decode($ticketInfo->emp_to_revoke_json)) ? "selected" : "" ?>><?php echo $value->nick_name; ?></option>
                                                             <?php } ?>
                                                             <?php } ?>
                                                         </select>
@@ -237,7 +237,7 @@
                                                             if (isset($employees) && !empty($employees) && count($employees) > 0){ ?>
                                                                 <?php foreach ($employees as $key => $value){ ?>
                                                             <option
-                                                                value="<?php echo $value->id; ?>" <?php echo in_array($value->id, json_decode($ticketInfo->emp_to_update_json)) ? "selected" : "" ?>><?php echo $value->nick_name; ?></option>
+                                                                    value="<?php echo $value->id; ?>" <?php echo in_array($value->id, json_decode($ticketInfo->emp_to_update_json)) ? "selected" : "" ?>><?php echo $value->nick_name; ?></option>
                                                             <?php } ?>
                                                             <?php } ?>
                                                         </select>
@@ -246,7 +246,7 @@
 
                                                 <div class="form-group">
                                                     <div class="input-group">
-                                                        <div class="input-group-prepend" style="width:25% ;">
+                                                        <div class="input-group-prepend" style="width:30% ;">
                                                             <span class="input-group-text" id="basic-addon1"
                                                                   style=" width: 100%; ">
                                                                 {{ 'المسموح له إعادة فتح الطلب' }}
@@ -259,7 +259,7 @@
                                                             if (isset($employees) && !empty($employees) && count($employees) > 0){ ?>
                                                                 <?php foreach ($employees as $key => $value){ ?>
                                                             <option
-                                                                value="<?php echo $value->id; ?>" <?php echo in_array($value->id, json_decode($ticketInfo->emp_to_reopen_ticket)) ? "selected" : "" ?>><?php echo $value->nick_name; ?></option>
+                                                                    value="<?php echo $value->id; ?>" <?php echo in_array($value->id, json_decode($ticketInfo->emp_to_reopen_ticket)) ? "selected" : "" ?>><?php echo $value->nick_name; ?></option>
                                                             <?php } ?>
                                                             <?php } ?>
                                                         </select>
@@ -281,7 +281,7 @@
                                                             if (isset($employees) && !empty($employees) && count($employees) > 0){ ?>
                                                                 <?php foreach ($employees as $key => $value){ ?>
                                                             <option
-                                                                value="<?php echo $value->id; ?>" <?php echo in_array($value->id, json_decode($ticketInfo->emp_to_report_ticket)) ? "selected" : "" ?>><?php echo $value->nick_name; ?></option>
+                                                                    value="<?php echo $value->id; ?>" <?php echo in_array($value->id, json_decode($ticketInfo->emp_to_report_ticket)) ? "selected" : "" ?>><?php echo $value->nick_name; ?></option>
                                                             <?php } ?>
                                                             <?php } ?>
                                                         </select>
@@ -303,7 +303,7 @@
                                                             if (isset($employees) && !empty($employees) && count($employees) > 0){ ?>
                                                                 <?php foreach ($employees as $key => $value){ ?>
                                                             <option
-                                                                value="<?php echo $value->id; ?>" <?php echo in_array($value->id, json_decode($ticketInfo->emp_to_tag_ticket)) ? "selected" : "" ?>><?php echo $value->nick_name; ?></option>
+                                                                    value="<?php echo $value->id; ?>" <?php echo in_array($value->id, json_decode($ticketInfo->emp_to_tag_ticket)) ? "selected" : "" ?>><?php echo $value->nick_name; ?></option>
                                                             <?php } ?>
                                                             <?php } ?>
                                                         </select>
@@ -312,7 +312,7 @@
 
                                                 <div class="form-group">
                                                     <div class="input-group">
-                                                        <div class="input-group-prepend" style="width:40% ;">
+                                                        <div class="input-group-prepend width-30-per" style="width:25%;">
                                                             <span class="input-group-text" id="basic-addon1"
                                                                   style=" width: 100%; ">
                                                                 المسؤول عن استقبال الطلب من البورتال
@@ -326,7 +326,7 @@
                                                             if (isset($employees) && !empty($employees) && count($employees) > 0){ ?>
                                                                 <?php foreach ($employees as $key => $value){ ?>
                                                             <option
-                                                                value="<?php echo $value->id; ?>" <?php echo in_array($value->id, (json_decode($ticketInfo->emp_to_access_portal)) ?? array()) ? "selected" : "" ?>><?php echo $value->nick_name; ?></option>
+                                                                    value="<?php echo $value->id; ?>" <?php echo in_array($value->id, (json_decode($ticketInfo->emp_to_access_portal)) ?? array()) ? "selected" : "" ?>><?php echo $value->nick_name; ?></option>
                                                             <?php } ?>
                                                             <?php } ?>
                                                         </select>
@@ -415,7 +415,7 @@
                                                                 aria-invalid="false">
                                                             <?php foreach ($department as $row){ ?>
                                                             <option
-                                                                value="{{$row->id}}" {{ $ticketInfo->dept_id==$row->id?'selected':'' }}> {{$row->name}} </option>
+                                                                    value="{{$row->id}}" {{ $ticketInfo->dept_id==$row->id?'selected':'' }}> {{$row->name}} </option>
                                                             <?php } ?>
                                                         </select>
                                                     </div>
@@ -445,9 +445,9 @@
                                                                 class="form-control myselect2"
                                                                 aria-invalid="false">
                                                             <option
-                                                                value="1" {{ $ticketInfo->show_receipt==1?'selected':'' }}> {{'نعم'}} </option>
+                                                                    value="1" {{ $ticketInfo->show_receipt==1?'selected':'' }}> {{'نعم'}} </option>
                                                             <option
-                                                                value="2" {{ $ticketInfo->show_receipt==2?'selected':'' }}> {{'لا'}} </option>
+                                                                    value="2" {{ $ticketInfo->show_receipt==2?'selected':'' }}> {{'لا'}} </option>
                                                         </select>
                                                     </div>
 
@@ -461,9 +461,9 @@
                                                                 class="form-control myselect2"
                                                                 aria-invalid="false">
                                                             <option
-                                                                value="1" {{ $ticketInfo->receipt_is_need==1?'selected':'' }}> {{'نعم'}} </option>
+                                                                    value="1" {{ $ticketInfo->receipt_is_need==1?'selected':'' }}> {{'نعم'}} </option>
                                                             <option
-                                                                value="2" {{ $ticketInfo->receipt_is_need==2?'selected':'' }}> {{'لا'}} </option>
+                                                                    value="2" {{ $ticketInfo->receipt_is_need==2?'selected':'' }}> {{'لا'}} </option>
                                                         </select>
                                                     </div>
 
@@ -481,9 +481,9 @@
                                                                 class="form-control myselect2"
                                                                 aria-invalid="false">
                                                             <option
-                                                                value="1" {{ $ticketInfo->has_price_list==1?'selected':'' }}> {{'نعم'}} </option>
+                                                                    value="1" {{ $ticketInfo->has_price_list==1?'selected':'' }}> {{'نعم'}} </option>
                                                             <option
-                                                                value="2" {{ $ticketInfo->has_price_list==2?'selected':'' }}> {{'لا'}} </option>
+                                                                    value="2" {{ $ticketInfo->has_price_list==2?'selected':'' }}> {{'لا'}} </option>
                                                         </select>
                                                     </div>
                                                     <div class="input-group col-md-6" style=" padding-bottom: 10px">
@@ -496,9 +496,9 @@
                                                                 class="form-control myselect2"
                                                                 aria-invalid="false">
                                                             <option
-                                                                value="1" {{ $ticketInfo->has_debt_list==1?'selected':'' }}> {{'نعم'}} </option>
+                                                                    value="1" {{ $ticketInfo->has_debt_list==1?'selected':'' }}> {{'نعم'}} </option>
                                                             <option
-                                                                value="2" {{ $ticketInfo->has_debt_list==2?'selected':'' }}> {{'لا'}} </option>
+                                                                    value="2" {{ $ticketInfo->has_debt_list==2?'selected':'' }}> {{'لا'}} </option>
                                                         </select>
                                                     </div>
 
@@ -517,9 +517,9 @@
                                                                 class="form-control myselect2"
                                                                 aria-invalid="false">
                                                             <option
-                                                                value="1" {{ $ticketInfo->has_attach==1?'selected':'' }}> {{'نعم'}} </option>
+                                                                    value="1" {{ $ticketInfo->has_attach==1?'selected':'' }}> {{'نعم'}} </option>
                                                             <option
-                                                                value="2" {{ $ticketInfo->has_attach==2?'selected':'' }}> {{'لا'}} </option>
+                                                                    value="2" {{ $ticketInfo->has_attach==2?'selected':'' }}> {{'لا'}} </option>
                                                         </select>
                                                     </div>
 
@@ -533,9 +533,9 @@
                                                                 class="form-control myselect2"
                                                                 aria-invalid="false">
                                                             <option
-                                                                value="1" {{ $ticketInfo->force_attach==1?'selected':'' }}> {{'نعم'}} </option>
+                                                                    value="1" {{ $ticketInfo->force_attach==1?'selected':'' }}> {{'نعم'}} </option>
                                                             <option
-                                                                value="2" {{ $ticketInfo->force_attach==2?'selected':'' }}> {{'لا'}} </option>
+                                                                    value="2" {{ $ticketInfo->force_attach==2?'selected':'' }}> {{'لا'}} </option>
                                                         </select>
                                                     </div>
 
@@ -553,9 +553,9 @@
                                                                 class="form-control myselect2"
                                                                 aria-invalid="false">
                                                             <option
-                                                                value="1" {{ $ticketInfo->send_sms==1?'selected':'' }}> {{'نعم'}} </option>
+                                                                    value="1" {{ $ticketInfo->send_sms==1?'selected':'' }}> {{'نعم'}} </option>
                                                             <option
-                                                                value="2" {{ $ticketInfo->send_sms==2?'selected':'' }}> {{'لا'}} </option>
+                                                                    value="2" {{ $ticketInfo->send_sms==2?'selected':'' }}> {{'لا'}} </option>
                                                         </select>
                                                     </div>
 
@@ -571,9 +571,9 @@
                                                                 class="form-control myselect2"
                                                                 aria-invalid="false">
                                                             <option
-                                                                value="1" {{ $ticketInfo->apply_for_band_customer==1?'selected':'' }}> {{'نعم'}} </option>
+                                                                    value="1" {{ $ticketInfo->apply_for_band_customer==1?'selected':'' }}> {{'نعم'}} </option>
                                                             <option
-                                                                value="2" {{ $ticketInfo->apply_for_band_customer==2?'selected':'' }}> {{'لا'}} </option>
+                                                                    value="2" {{ $ticketInfo->apply_for_band_customer==2?'selected':'' }}> {{'لا'}} </option>
                                                         </select>
                                                     </div>
 
@@ -591,9 +591,9 @@
                                                                 class="form-control myselect2"
                                                                 aria-invalid="false">
                                                             <option
-                                                                value="1" {{ $ticketInfo->apply_with_finished_license==1?'selected':'' }}> {{'نعم'}} </option>
+                                                                    value="1" {{ $ticketInfo->apply_with_finished_license==1?'selected':'' }}> {{'نعم'}} </option>
                                                             <option
-                                                                value="2" {{ $ticketInfo->apply_with_finished_license==2?'selected':'' }}> {{'لا'}} </option>
+                                                                    value="2" {{ $ticketInfo->apply_with_finished_license==2?'selected':'' }}> {{'لا'}} </option>
                                                         </select>
 
                                                     </div>
@@ -608,9 +608,9 @@
                                                                 class="form-control myselect2"
                                                                 aria-invalid="false">
                                                             <option
-                                                                value="1" {{ $ticketInfo->show_archive==1?'selected':'' }}> {{'نعم'}} </option>
+                                                                    value="1" {{ $ticketInfo->show_archive==1?'selected':'' }}> {{'نعم'}} </option>
                                                             <option
-                                                                value="2" {{ $ticketInfo->show_archive==2?'selected':'' }}> {{'لا'}} </option>
+                                                                    value="2" {{ $ticketInfo->show_archive==2?'selected':'' }}> {{'لا'}} </option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -626,9 +626,9 @@
                                                                 class="form-control myselect2"
                                                                 aria-invalid="false">
                                                             <option
-                                                                value="1" {{ $ticketInfo->public_app==1?'selected':'' }}> {{'نعم'}} </option>
+                                                                    value="1" {{ $ticketInfo->public_app==1?'selected':'' }}> {{'نعم'}} </option>
                                                             <option
-                                                                value="2" {{ $ticketInfo->public_app==2?'selected':'' }}> {{'لا'}} </option>
+                                                                    value="2" {{ $ticketInfo->public_app==2?'selected':'' }}> {{'لا'}} </option>
                                                         </select>
                                                     </div>
                                                     <div class="input-group col-md-6" style=" padding-bottom: 10px">
@@ -641,9 +641,9 @@
                                                                 class="form-control myselect2"
                                                                 aria-invalid="false">
                                                             <option
-                                                                value="1" {{ $ticketInfo->apps_btn==1?'selected':'' }}> {{'نعم'}} </option>
+                                                                    value="1" {{ $ticketInfo->apps_btn==1?'selected':'' }}> {{'نعم'}} </option>
                                                             <option
-                                                                value="2" {{ $ticketInfo->apps_btn==2?'selected':'' }}> {{'لا'}} </option>
+                                                                    value="2" {{ $ticketInfo->apps_btn==2?'selected':'' }}> {{'لا'}} </option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -660,9 +660,9 @@
                                                                 class="form-control myselect2"
                                                                 aria-invalid="false">
                                                             <option
-                                                                value="1" {{ $ticketInfo->joblic_btn==1?'selected':'' }}> {{'نعم'}} </option>
+                                                                    value="1" {{ $ticketInfo->joblic_btn==1?'selected':'' }}> {{'نعم'}} </option>
                                                             <option
-                                                                value="2" {{ $ticketInfo->joblic_btn==2?'selected':'' }}> {{'لا'}} </option>
+                                                                    value="2" {{ $ticketInfo->joblic_btn==2?'selected':'' }}> {{'لا'}} </option>
                                                         </select>
                                                     </div>
                                                     <div class="input-group col-md-6" style=" padding-bottom: 10px">
@@ -706,9 +706,9 @@
                                                                 class="form-control myselect2"
                                                                 aria-invalid="false">
                                                             <option
-                                                                value="1" {{ $ticketInfo->has_clearance==1?'selected':'' }}> {{'نعم'}} </option>
+                                                                    value="1" {{ $ticketInfo->has_clearance==1?'selected':'' }}> {{'نعم'}} </option>
                                                             <option
-                                                                value="2" {{ $ticketInfo->has_clearance==2?'selected':'' }}> {{'لا'}} </option>
+                                                                    value="2" {{ $ticketInfo->has_clearance==2?'selected':'' }}> {{'لا'}} </option>
                                                         </select>
                                                     </div>
 
@@ -727,9 +727,9 @@
                                                                     class="form-control myselect2"
                                                                     aria-invalid="false">
                                                                 <option
-                                                                    value="1" {{ $ticketInfo->show_nationalID==1?'selected':'' }}> {{'نعم'}} </option>
+                                                                        value="1" {{ $ticketInfo->show_nationalID==1?'selected':'' }}> {{'نعم'}} </option>
                                                                 <option
-                                                                    value="2" {{ $ticketInfo->show_nationalID==2?'selected':'' }}> {{'لا'}} </option>
+                                                                        value="2" {{ $ticketInfo->show_nationalID==2?'selected':'' }}> {{'لا'}} </option>
                                                             </select>
                                                         </div>
                                                         <div class="input-group col-md-6" style=" padding-bottom: 10px">
@@ -743,9 +743,9 @@
                                                                     class="form-control myselect2"
                                                                     aria-invalid="false">
                                                                 <option
-                                                                    value="1" {{ $ticketInfo->required_nationalID==1?'selected':'' }}> {{'نعم'}} </option>
+                                                                        value="1" {{ $ticketInfo->required_nationalID==1?'selected':'' }}> {{'نعم'}} </option>
                                                                 <option
-                                                                    value="2" {{ $ticketInfo->required_nationalID==2?'selected':'' }}> {{'لا'}} </option>
+                                                                        value="2" {{ $ticketInfo->required_nationalID==2?'selected':'' }}> {{'لا'}} </option>
                                                             </select>
                                                         </div>
 
@@ -785,17 +785,17 @@
 </div>
 @section('script')
     <script>
-        function ShowDeptEmpFlow(count){
-            dept=$(`.deptFlow${count}`).val();
-            $(`.allDept${count}`).addClass("hide");
-            $(`.empFlow${count}_${dept}`).removeClass("hide");
+      function ShowDeptEmpFlow(count){
+        dept=$(`.deptFlow${count}`).val();
+        $(`.allDept${count}`).addClass("hide");
+        $(`.empFlow${count}_${dept}`).removeClass("hide");
 
-        }
-        let flowCount={{sizeof($ticketInfo->flows)-1}};
-        function addFlow() {
-            flowCount++;
-            const temp=flowCount;
-            const row =`<li>
+      }
+      let flowCount={{sizeof($ticketInfo->flows)-1}};
+      function addFlow() {
+        flowCount++;
+        const temp=flowCount;
+        const row =`<li>
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group paddmob">
@@ -808,236 +808,234 @@
                                         onchange="ShowDeptEmpFlow(${temp})">
                                     <option disabled="" selected="" value="0"> -- اختيار القسم --</option>
                                     @foreach ($department as $dept)
-                                    <option value="{{$dept->id}}">{{$dept->name}}</option>
+                                        <option value="{{$dept->id}}">{{$dept->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                     </div>
-
                     <div class="col-md-4"
-                         style="padding-right: 0px;">
+                     style="padding-right: 0px;">
                         <div class="form-group paddmob">
                             <div class="input-group ">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">اختر الموظف</span>
                                 </div>
                                     <select type="text" id="nextEmpId[]" name="nextEmpId[]" class="form-control empFlow${flowCount}" aria-invalid="false">
-                                    <option selected="" value="0"> -- اختيار الموظف --</option>
-                                    @foreach ($employees as $emp)
-                                    <option class="allDept${flowCount} hide empFlow${flowCount}_{{$emp->department_id}}" value="{{$emp->id}}">
-                                        {{$emp->nick_name}}
-                                    </option>
-                                    @endforeach
+                                        <option selected="" value="0"> -- اختيار الموظف --</option>
+                                        @foreach ($employees as $emp)
+                                                <option class="allDept${flowCount} hide empFlow${flowCount}_{{$emp->department_id}}" value="{{$emp->id}}">
+                                                                                {{$emp->nick_name}}
+                                                </option>
+                                        @endforeach
                                     </select>
-                                    <a class="add-btn" onclick="$(this).parent().parent().parent().parent().parent().remove()"
-                                       style="margin-left: 0px; margin-right: 8px; padding-top: 7px;">
-                                        <i class="fa fa-trash"
-                                           style="color:#1E9FF2;"></i>
-                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="input-group col-md-4"
-                         style="padding-left: 69px;padding-right: 0px;">
-                        <div class="input-group-prepend"
-                             style="height: 34px;">
-                            <span class="input-group-text" id="basic-addon1">
-                                {{"الموظف اجباري"}}
-                            </span>
+                        <div class="input-group col-md-4"
+                            style="padding-left: 69px;padding-right: 0px;">
+                            <div class="input-group-prepend"
+                                style="height: 34px;">
+                                <span class="input-group-text" id="basic-addon1">
+                                    {{"الموظف اجباري"}}
+                                </span>
+                            </div>
+                            <select type="text" id="nextIsMandatory[]" name="nextIsMandatory[]"
+                                    class="form-control myselect2" aria-invalid="false" style="height: 34px !important;">
+                                <option
+                                    value="1"> {{'نعم'}} </option>
+                                <option
+                                    value="2"> {{'لا'}} </option>
+                            </select>
+                            <a class="add-btn" onclick="$(this).parent().parent().parent().remove()"
+                               style="margin-left: 0px; margin-right: 8px; padding-top: 7px;">
+                                <i class="fa fa-trash"
+                                   style="color:#1E9FF2;"></i>
+                            </a>
                         </div>
-                        <select type="text" id="nextIsMandatory[]" name="nextIsMandatory[]"
-                                class="form-control myselect2" aria-invalid="false" style="height: 34px !important;">
-                            <option
-                                value="1"> {{'نعم'}} </option>
-                            <option
-                                value="2"> {{'لا'}} </option>
-                        </select>
-                        <a class="add-btn" onclick="$(this).parent().parent().parent().parent().parent().remove()"
-                           style="margin-left: 0px; margin-right: 8px; padding-top: 7px;">
-                            <i class="fa fa-trash"
-                               style="color:#1E9FF2;"></i>
-                        </a>
-                    </div>
-                </div>
-            </li>`
-            $('#ticketRout').append(row);
+                     </div>
+                </li>`
+        $('#ticketRout').append(row);
+      }
+
+      $('#AppModal').on('hidden.bs.modal', function (e)
+        {
+          location.reload(true);
         }
+      )
+      $('#ClearanceModal').on('hidden.bs.modal', function (e)
+        {
+          location.reload(true);
+        }
+      )
+      $(function ()
+        {
+          $(".modalAC").autocomplete({
+            source: "{{route('emp_auto_complete')}}",
+            minLength: 2,
 
-        $('#AppModal').on('hidden.bs.modal', function (e)
-            {
-                location.reload(true);
+            select: function (event, ui) {
+              $("#reciver").val(ui.item.id)
             }
-        )
+          });
+          $('#ticketConfigModal').submit(function (e) {
+            $(".loader").removeClass('hide');
+            if ($("#reciver_name").val().length == 0) {
+              console.log($("#reciver_name").val().length);
+              $("#reciver").val('0');
+            }
 
-        $(function ()
-            {
-                $(".modalAC").autocomplete({
-                    source: "{{route('emp_auto_complete')}}",
-                    minLength: 2,
+            let formData = new FormData(this);
+            e.preventDefault();
+            $.ajax({
+              type: 'POST',
+              url: "{{route('store_config')}}",
+              data: formData,
+              contentType: false,
+              processData: false,
+              //dataType:json ,
+              success: (response) => {
+                if (response) {
+                  $(".loader").addClass('hide');
+                  Swal.fire({
+                    position: 'top-center',
+                    icon: 'success',
+                    title: 'تم حفظ الإعدادات',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+                }
 
-                    select: function (event, ui) {
-                        $("#reciver").val(ui.item.id)
-                    }
-                });
-                $('#ticketConfigModal').submit(function (e) {
-                    $(".loader").removeClass('hide');
-                    if ($("#reciver_name").val().length == 0) {
-                        console.log($("#reciver_name").val().length);
-                        $("#reciver").val('0');
-                    }
-
-                    let formData = new FormData(this);
-                    e.preventDefault();
-                    $.ajax({
-                        type: 'POST',
-                        url: "{{route('store_config')}}",
-                        data: formData,
-                        contentType: false,
-                        processData: false,
-                        //dataType:json ,
-                        success: (response) => {
-                            if (response) {
-                                $(".loader").addClass('hide');
-                                Swal.fire({
-                                    position: 'top-center',
-                                    icon: 'success',
-                                    title: 'تم حفظ الإعدادات',
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                })
+                $("#AppModal").modal('show')
+              },
+              error: function (response) {
+                $(".loader").addClass('hide');
+                /*
+                            $("#Name").on('keyup', function (e) {
+                                    if ($(this).val().length > 0) {
+                                        $( "#Name" ).removeClass( "error" );
+                                    }
+                                });
+                                $("#NationalID").on('keyup', function (e) {
+                                    if ($(this).val().length > 0) {
+                                        $( "#NationalID" ).removeClass( "error" );
+                                    }
+                                });
+                                $("#NickName").on('keyup', function (e) {
+                                    if ($(this).val().length > 0) {
+                                        $( "#NickName" ).removeClass( "error" );
+                                    }
+                                });
+                                $("#DepartmentID").on('change', function (e) {
+                                        $( "#DepartmentID" ).removeClass( "error" );
+                                });
+                                $("#Position").on('change', function (e) {
+                                        $( "#Position" ).removeClass( "error" );
+                                });
+                                $("#JobType").on('change', function (e) {
+                                        $( "#JobType" ).removeClass( "error" );
+                                });
+                                $("#DirectManager").on('change', function (e) {
+                                        $( "#DirectManager" ).removeClass( "error" );
+                                });
+                                $("#MobileNo1").on('keyup', function (e) {
+                                    if ($(this).val().length > 0) {
+                                        $( "#MobileNo1" ).removeClass( "error" );
+                                    }
+                                });
+                                $("#HiringDate").on('keyup', function (e) {
+                                    if ($(this).val().length > 0) {
+                                        $( "#HiringDate" ).removeClass( "error" );
+                                    }
+                                });*/
+                /*
+                            if(response.responseJSON.errors.Name){
+                                $( "#Name" ).addClass( "error" );
                             }
+                            if(response.responseJSON.errors.NationalID){
+                                $( "#NationalID" ).addClass( "error" );
+                            }
+                            if(response.responseJSON.errors.NickName){
+                                $( "#NickName" ).addClass( "error" );
+                            }
+                            if(response.responseJSON.errors.DepartmentID){
+                                $( "#DepartmentID" ).addClass( "error" );
+                            }
+                            if(response.responseJSON.errors.Position){
+                                $( "#Position" ).addClass( "error" );
+                            }
+                            if(response.responseJSON.errors.JobType){
+                                $( "#JobType" ).addClass( "error" );
+                            }
+                            if(response.responseJSON.errors.HiringDate){
+                                $( "#HiringDate" ).addClass( "error" );
+                            }
+                            if(response.responseJSON.errors.DirectManager){
+                                $( "#DirectManager" ).addClass( "error" );
+                            }
+                            if(response.responseJSON.errors.MobileNo1){
+                                $( "#MobileNo1" ).addClass( "error" );
+                            }*/
 
-                            $("#AppModal").modal('show')
-                        },
-                        error: function (response) {
-                            $(".loader").addClass('hide');
-                            /*
-                                        $("#Name").on('keyup', function (e) {
-                                                if ($(this).val().length > 0) {
-                                                    $( "#Name" ).removeClass( "error" );
-                                                }
-                                            });
-                                            $("#NationalID").on('keyup', function (e) {
-                                                if ($(this).val().length > 0) {
-                                                    $( "#NationalID" ).removeClass( "error" );
-                                                }
-                                            });
-                                            $("#NickName").on('keyup', function (e) {
-                                                if ($(this).val().length > 0) {
-                                                    $( "#NickName" ).removeClass( "error" );
-                                                }
-                                            });
-                                            $("#DepartmentID").on('change', function (e) {
-                                                    $( "#DepartmentID" ).removeClass( "error" );
-                                            });
-                                            $("#Position").on('change', function (e) {
-                                                    $( "#Position" ).removeClass( "error" );
-                                            });
-                                            $("#JobType").on('change', function (e) {
-                                                    $( "#JobType" ).removeClass( "error" );
-                                            });
-                                            $("#DirectManager").on('change', function (e) {
-                                                    $( "#DirectManager" ).removeClass( "error" );
-                                            });
-                                            $("#MobileNo1").on('keyup', function (e) {
-                                                if ($(this).val().length > 0) {
-                                                    $( "#MobileNo1" ).removeClass( "error" );
-                                                }
-                                            });
-                                            $("#HiringDate").on('keyup', function (e) {
-                                                if ($(this).val().length > 0) {
-                                                    $( "#HiringDate" ).removeClass( "error" );
-                                                }
-                                            });*/
-                            /*
-                                        if(response.responseJSON.errors.Name){
-                                            $( "#Name" ).addClass( "error" );
-                                        }
-                                        if(response.responseJSON.errors.NationalID){
-                                            $( "#NationalID" ).addClass( "error" );
-                                        }
-                                        if(response.responseJSON.errors.NickName){
-                                            $( "#NickName" ).addClass( "error" );
-                                        }
-                                        if(response.responseJSON.errors.DepartmentID){
-                                            $( "#DepartmentID" ).addClass( "error" );
-                                        }
-                                        if(response.responseJSON.errors.Position){
-                                            $( "#Position" ).addClass( "error" );
-                                        }
-                                        if(response.responseJSON.errors.JobType){
-                                            $( "#JobType" ).addClass( "error" );
-                                        }
-                                        if(response.responseJSON.errors.HiringDate){
-                                            $( "#HiringDate" ).addClass( "error" );
-                                        }
-                                        if(response.responseJSON.errors.DirectManager){
-                                            $( "#DirectManager" ).addClass( "error" );
-                                        }
-                                        if(response.responseJSON.errors.MobileNo1){
-                                            $( "#MobileNo1" ).addClass( "error" );
-                                        }*/
+                Swal.fire({
+                  position: 'top-center',
+                  icon: 'error',
+                  title: '{{trans('admin.error_save')}}',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+              }
+            });
+          });
 
-                            Swal.fire({
-                                position: 'top-center',
-                                icon: 'error',
-                                title: '{{trans('admin.error_save')}}',
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                        }
-                    });
-                });
-
-            }
-        );
+        }
+      );
 
 
-        function ShowConfigModal(bindTo)
-            {
+      function ShowConfigModal(bindTo)
+      {
 
 // $("#CitizenName").html($("#formDataNameAR").val())
 
-                $("#AppModal").modal('show')
+        $("#AppModal").modal('show')
 
-            }
+      }
 
-        $(document).ready(function ()
-            {
-                $('#plusElement3').click(function () {
-                    $("#msgRList3").append('' +
-                        '<tr>' +
-                        '<td class="col-md-6">' +
-                        ' <input  class="form-control"  type="text" onclick="adddept()"  name="department[]">' +
-                        ' </td>' +
-                        '<td class="col-md-5" >' +
-                        '<input class="form-control"   type="text" name="comment[]">' +
-                        '</td>' +
-                        '<td onclick="$(this).parent().remove()" >' +
-                        '  <i class="fa fa-trash" id="plusElement1" style="padding-top:10px;position: relative;left: 3%;cursor: pointer;  color:#1E9FF2;font-size: 15pt; "></i>' +
-                        '</td>' +
-                        ' </tr>'
-                    );
-                });
-            }
+      $(document).ready(function ()
+        {
+          $('#plusElement3').click(function () {
+            $("#msgRList3").append('' +
+              '<tr>' +
+              '<td class="col-md-6">' +
+              ' <input  class="form-control"  type="text" onclick="adddept()"  name="department[]">' +
+              ' </td>' +
+              '<td class="col-md-5" >' +
+              '<input class="form-control"   type="text" name="comment[]">' +
+              '</td>' +
+              '<td onclick="$(this).parent().remove()" >' +
+              '  <i class="fa fa-trash" id="plusElement1" style="padding-top:10px;position: relative;left: 3%;cursor: pointer;  color:#1E9FF2;font-size: 15pt; "></i>' +
+              '</td>' +
+              ' </tr>'
+            );
+          });
+        }
+      );
+
+      function adddept()
+      {
+        $("#msgRList3").append('' +
+          '<tr>' +
+          '<td class="col-md-6">' +
+          ' <input  class="form-control"  type="text" onclick="adddept()"  name="department[]">' +
+          ' </td>' +
+          '<td class="col-md-5" >' +
+          '<input class="form-control"   type="text" name="comment[]">' +
+          '</td>' +
+          '<td onclick="$(this).parent().remove()" >' +
+          '  <i class="fa fa-trash" id="plusElement1" style="padding-top:10px;position: relative;left: 3%;cursor: pointer;  color:#1E9FF2;font-size: 15pt; "></i>' +
+          '</td>' +
+          ' </tr>'
         );
-
-        function adddept()
-            {
-                $("#msgRList3").append('' +
-                    '<tr>' +
-                    '<td class="col-md-6">' +
-                    ' <input  class="form-control"  type="text" onclick="adddept()"  name="department[]">' +
-                    ' </td>' +
-                    '<td class="col-md-5" >' +
-                    '<input class="form-control"   type="text" name="comment[]">' +
-                    '</td>' +
-                    '<td onclick="$(this).parent().remove()" >' +
-                    '  <i class="fa fa-trash" id="plusElement1" style="padding-top:10px;position: relative;left: 3%;cursor: pointer;  color:#1E9FF2;font-size: 15pt; "></i>' +
-                    '</td>' +
-                    ' </tr>'
-                );
-            }
+      }
     </script>
 @endsection

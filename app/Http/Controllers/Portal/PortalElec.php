@@ -45,11 +45,8 @@ class PortalElec extends Controller
         $region=Region::where('town_id',$setting->town_id)->get();
         $type = 'newTicket16';
         $ticketInfo=$this->loadDefaul($type);
-        // $department=Department::where('enabled','=','1')->get();
         $app_type=1;
-        // $fees=$this->fees;
         $app_no=13;
-        // $archive_config = ArchiveRole::where('empid', Auth()->user()->id)->where('type', $type)->get();
         return view('portal.services.ticket16', compact('type','region','ticketInfo','app_type','app_no'));
     }
     public function newTicket27()
@@ -191,12 +188,18 @@ class PortalElec extends Controller
     {
         $setting = Setting::first();
         $region=Region::where('town_id',$setting->town_id)->get();
+        $subsList=Constant::where('parent',6032)->get();
+        $converterNos=Constant::where('parent',6208)->get();
         $type = 'elecPermission';
         $ticketInfo=$this->loadDefaul($type);
+        // dd($ticketInfo);
         // $department=Department::where('enabled','=','1')->get();
         $app_type=1;
         // $fees=$this->fees;
-        return view('portal.services.permission', compact('type','region','ticketInfo','app_type'));
+        // $fees2=$this->fees2;
+        // $archive_config = ArchiveRole::where('empid', Auth()->user()->id)->where('type', $type)->get();
+        $app_no=3; 
+        return view('portal.services.appTicket3', compact('type','region','ticketInfo','app_type','subsList','app_no','converterNos'));
     }
     public function elecLineReconnect()
     {

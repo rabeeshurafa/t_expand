@@ -111,7 +111,7 @@
                         {{"رقم الرخصة"}}
                         </span>
                     </div>
-                    <input type="text" id="licNo" name="licNo" class="form-control valid" {{ $readonly?"readonly":"" }} value="{{($ticket->license->licNo??'')}}" placeholder="" autocomplete="off">
+                    <input type="text" id="licNo" name="licNo" class="form-control valid" {{ $readonly?"readonly":"" }} value="{{($ticket->licNo??'')}}" placeholder="" autocomplete="off">
                 </div>
             </div>
         </div>

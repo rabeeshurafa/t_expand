@@ -149,10 +149,14 @@
                                     @include('dashboard.includes.subscriber')
                                     <input type="hidden" id="app_type"  name="app_type" value="2">
                                     <input type="hidden" id="dept_id"  name="dept_id" value="{{$ticketInfo->dept_id}}">
-                                    
+                                    <input type="hidden" id="portal_id"  name="portal_id" 
+                                    @if(isset($ticket)) 
+                                        value="{{$ticket->id}}"
+                                    @else 
+                                        value="0"
+                                    @endif>
                                     {{--@include('dashboard.includes.regionsTemplate')--}}
                                     <div class="row business_container">
-                        
                                             <div class="col-lg-6 col-md-12">
                                                 <div class="form-group">
                                                     <div class="input-group">
@@ -161,7 +165,9 @@
                                                              موقع الطلب                                                           
                                                           </span>
                                                         </div>                              
-                                                        <input type="text" id="address" name="address"  value='' class="form-control" placeholder="  " aria-describedby="basic-addon1">
+                                                        <input type="text" id="address" name="address" @if(isset($ticket))
+                                                            value="{{ $ticket->address }}"
+                                                            @endif class="form-control" placeholder="  " aria-describedby="basic-addon1">
                                                     </div>
                                                 </div>
                                             </div>
@@ -173,7 +179,9 @@
                                                              رقم الحوض                                                           
                                                           </span>
                                                         </div>                              
-                                                        <input type="text" id="hodNo" name="hodNo"  value='' class="form-control" placeholder="  " aria-describedby="basic-addon1">
+                                                        <input type="text" id="hodNo" name="hodNo" @if(isset($ticket))
+                                                            value="{{ $ticket->hodNo }}"
+                                                            @endif class="form-control" placeholder="  " aria-describedby="basic-addon1">
                                                     </div>
                                                 </div>
                                             </div>
@@ -184,7 +192,10 @@
                                                             رقم القطعة
                                                       </span>
                                                     </div>
-                                                    <input type="text" id="pieceNo" name="pieceNo" value="" class="form-control " placeholder="  " aria-describedby="basic-addon1">
+                                                    <input type="text" id="pieceNo" name="pieceNo" 
+                                                        @if(isset($ticket))
+                                                        value="{{ $ticket->pieceNo }}"
+                                                        @endif class="form-control " placeholder="  " aria-describedby="basic-addon1">
                                                 </div>
                                             </div>
                                     </div>
@@ -203,12 +214,18 @@
                                                             onchange="if($(this).prop('checked'))$('.attach-required').hide()"
                                                             type="radio" name="Ownership[]" checked="" id="radio-3"
                                                             class="jui-radio-buttons" value="1"
+                                                            @if(isset($ticket))
+                                                            {{ $ticket->ownership_type==1?"checked":"" }}
+                                                            @endif
                                                             onclick="$('.ownertypes').hide();$('.owner').show();">
                                                         <label for="radio-4">{{ 'إيجار' }} </label>
                                                         <input
                                                             onchange="if($(this).prop('checked'))$('.attach-required').show()"
                                                             type="radio" name="Ownership[]" id="radio-4"
                                                             class="jui-radio-buttons" value="2"
+                                                            @if(isset($ticket))
+                                                            {{ $ticket->ownership_type==2?"checked":"" }}
+                                                            @endif
                                                             onclick="$('.ownertypes').hide();$('.rent').show();">
                                                     </div>
                                                 </div>
@@ -216,7 +233,11 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
+                                    <div class="row @if(isset($ticket))
+                                        {{ $ticket->ownership_type==1?"hide":"" }}
+                                        @else
+                                        hide
+                                        @endif">
 
                                         <div class="col-md-7 ownertypes rent" style="display: none;">
                                             <div class="form-group">
@@ -229,8 +250,13 @@
                                                     <input type="text" id="OwnerName"
                                                         class="form-control ac10 ui-autocomplete-input"
                                                         placeholder="اسم المالك" name="OwnerName" style="height: 35px;"
+                                                        @if(isset($ticket))
+                                                        value="{{ $ticket->owner_name }}"
+                                                        @endif
                                                         autocomplete="off">
-                                                    <input type="hidden" id="SubscriberID1" name="SubscriberID1">
+                                                    <input type="hidden" id="SubscriberID1" name="SubscriberID1"@if(isset($ticket))
+                                                        value="{{ $ticket->owner_id }}"
+                                                        @endif>
                                                 </div>
                                             </div>
                                         </div>
@@ -350,7 +376,7 @@ $(document).ready(function () {
 
 
     $( "#subscriber_name" ).autocomplete({
-		source:'subscribe_auto_complete',
+		source:"{{route('subscribe_auto_complete')}}",
 		minLength: 1,
         select: function( event, ui ) {
             $("#subscriber_id").val(ui.item.id)
@@ -361,7 +387,7 @@ $(document).ready(function () {
 		}
 	});
     $( ".ac10" ).autocomplete({
-		source:'subscribe_auto_complete',
+		source:"{{route('subscribe_auto_complete')}}",
 		minLength: 1,
         select: function( event, ui ) {
             $("#SubscriberID1").val(ui.item.id)
@@ -381,7 +407,7 @@ $(document).ready(function () {
        let formData = new FormData(this);
        $.ajax({
           type:'POST',
-          url: "saveTicket3",
+          url: "{{route('saveTicket3')}}",
            data: formData,
            contentType: false,
            processData: false,
@@ -524,7 +550,7 @@ function getFullData(id){
     formData={'id':id}
        $.ajax({
           type:'POST',
-          url: "appCustomer",
+          url: "{{route('appCustomer')}}",
            data: formData,
            /*contentType: false,
            processData: false,*/
@@ -754,7 +780,7 @@ function getSubscriberTasks(id){
 
                 type: 'get',
 
-                url: "subscriber_tasks",
+                url: "{{route('subscriber_tasks')}}",
 
                 data: {
 

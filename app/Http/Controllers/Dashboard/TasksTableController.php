@@ -2,6 +2,9 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\AppTicket41;
+use App\Models\AppTicket43;
+use App\Models\AppTicket45;
 use Illuminate\Http\Request;
 use App\Models\File;
 use App\Models\Admin;
@@ -67,8 +70,9 @@ use App\Models\ArchiveRole;
 
 class TasksTableController extends Controller
 {
-    public function getWaterTickets(Request $request){
-        
+    public function getWaterTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -86,24 +90,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket1::select('app_ticket1s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_type',2)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket1s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket1s.region')
-                        ->orderBy('app_ticket1s.created_at', 'DESC');
-                        
+
+
+        $waterTicket = AppTicket1::select('app_ticket1s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_type', 2)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket1s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket1s.region')
+                ->orderBy('app_ticket1s.created_at', 'DESC');
+
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getElecSubscriptionTickets(Request $request){
-        
+
+    public function getElecSubscriptionTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -121,24 +125,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket1::select('app_ticket1s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_type',1)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket1s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket1s.region')
-                        ->orderBy('app_ticket1s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket1::select('app_ticket1s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_type', 1)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket1s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket1s.region')
+                ->orderBy('app_ticket1s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getWaterMalfuncTickets(Request $request){
-        
+
+    public function getWaterMalfuncTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -156,24 +160,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket2::select('app_ticket2s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_type',2)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket2s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket2s.region')
-                        ->orderBy('app_ticket2s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket2::select('app_ticket2s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_type', 2)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket2s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket2s.region')
+                ->orderBy('app_ticket2s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getElecMalfuncTickets(Request $request){
-        
+
+    public function getElecMalfuncTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -191,24 +195,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket2::select('app_ticket2s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_type',1)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket2s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket2s.region')
-                        ->orderBy('app_ticket2s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket2::select('app_ticket2s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_type', 1)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket2s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket2s.region')
+                ->orderBy('app_ticket2s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getWaterPermissionTickets(Request $request){
-        
+
+    public function getWaterPermissionTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -226,22 +230,22 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket3::select('app_ticket3s.*','admins.nick_name as added_by')
-                        ->where('app_type',2)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket3s.created_by')
-                        ->orderBy('app_ticket3s.created_at', 'DESC');
-                        
+
+
+        $waterTicket = AppTicket3::select('app_ticket3s.*', 'admins.nick_name as added_by')
+                ->where('app_type', 2)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket3s.created_by')
+                ->orderBy('app_ticket3s.created_at', 'DESC');
+
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    public function getElecPermissionTickets(Request $request){
-        
+
+    public function getElecPermissionTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -259,23 +263,22 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket3::select('app_ticket3s.*','admins.nick_name as added_by')
-                        ->where('app_type',1)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket3s.created_by')
-                        ->orderBy('app_ticket3s.created_at', 'DESC');
-                        
+
+
+        $waterTicket = AppTicket3::select('app_ticket3s.*', 'admins.nick_name as added_by')
+                ->where('app_type', 1)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket3s.created_by')
+                ->orderBy('app_ticket3s.created_at', 'DESC');
+
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getWaterDisconnectTickets(Request $request){
-        
+
+    public function getWaterDisconnectTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -293,24 +296,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket6::select('app_ticket6s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_type',2)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket6s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket6s.region')
-                        ->orderBy('app_ticket6s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket6::select('app_ticket6s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_type', 2)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket6s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket6s.region')
+                ->orderBy('app_ticket6s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getElecDisconnectTickets(Request $request){
-        
+
+    public function getElecDisconnectTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -328,24 +331,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket6::select('app_ticket6s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_type',1)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket6s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket6s.region')
-                        ->orderBy('app_ticket6s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket6::select('app_ticket6s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_type', 1)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket6s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket6s.region')
+                ->orderBy('app_ticket6s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getWaterFinancTransferTickets(Request $request){
-        
+
+    public function getWaterFinancTransferTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -363,23 +366,22 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket11::select('app_ticket11s.*','admins.nick_name as added_by')
-                        ->where('app_ticket11s.app_type',2)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket11s.created_by')
-                        ->orderBy('app_ticket11s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket11::select('app_ticket11s.*', 'admins.nick_name as added_by')
+                ->where('app_ticket11s.app_type', 2)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket11s.created_by')
+                ->orderBy('app_ticket11s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getElecFinancTransferTickets(Request $request){
-        
+
+    public function getElecFinancTransferTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -397,23 +399,22 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket11::select('app_ticket11s.*','admins.nick_name as added_by')
-                        ->where('app_ticket11s.app_type',1)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket11s.created_by')
-                        ->orderBy('app_ticket11s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket11::select('app_ticket11s.*', 'admins.nick_name as added_by')
+                ->where('app_ticket11s.app_type', 1)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket11s.created_by')
+                ->orderBy('app_ticket11s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getWaterGlblMulfuncTickets(Request $request){
-        
+
+    public function getWaterGlblMulfuncTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -431,24 +432,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket4::select('app_ticket4s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket4s.app_type',2)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket4s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket4s.region')
-                        ->orderBy('app_ticket4s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket4::select('app_ticket4s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket4s.app_type', 2)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket4s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket4s.region')
+                ->orderBy('app_ticket4s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getElecGlblMulfuncTickets(Request $request){
-        
+
+    public function getElecGlblMulfuncTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -466,24 +467,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket4::select('app_ticket4s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket4s.app_type',1)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket4s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket4s.region')
-                        ->orderBy('app_ticket4s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket4::select('app_ticket4s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket4s.app_type', 1)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket4s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket4s.region')
+                ->orderBy('app_ticket4s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getWaterMeterChekTickets(Request $request){
-        
+
+    public function getWaterMeterChekTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -501,24 +502,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket5::select('app_ticket5s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket5s.app_type',2)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket5s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket5s.region')
-                        ->orderBy('app_ticket5s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket5::select('app_ticket5s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket5s.app_type', 2)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket5s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket5s.region')
+                ->orderBy('app_ticket5s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getElecMeterChekTickets(Request $request){
-        
+
+    public function getElecMeterChekTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -536,24 +537,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket5::select('app_ticket5s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket5s.app_type',1)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket5s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket5s.region')
-                        ->orderBy('app_ticket5s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket5::select('app_ticket5s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket5s.app_type', 1)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket5s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket5s.region')
+                ->orderBy('app_ticket5s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getWaterMeterReadTickets(Request $request){
-        
+
+    public function getWaterMeterReadTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -571,24 +572,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket9::select('app_ticket9s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket9s.app_type',2)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket9s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket9s.region')
-                        ->orderBy('app_ticket9s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket9::select('app_ticket9s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket9s.app_type', 2)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket9s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket9s.region')
+                ->orderBy('app_ticket9s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getElecMeterReadTickets(Request $request){
-        
+
+    public function getElecMeterReadTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -606,24 +607,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket9::select('app_ticket9s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket9s.app_type',1)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket9s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket9s.region')
-                        ->orderBy('app_ticket9s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket9::select('app_ticket9s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket9s.app_type', 1)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket9s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket9s.region')
+                ->orderBy('app_ticket9s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getWaterMeterTransfrTickets(Request $request){
-        
+
+    public function getWaterMeterTransfrTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -641,24 +642,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket10::select('app_ticket10s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket10s.app_type',2)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket10s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket10s.region')
-                        ->orderBy('app_ticket10s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket10::select('app_ticket10s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket10s.app_type', 2)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket10s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket10s.region')
+                ->orderBy('app_ticket10s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getElecMeterTransfrTickets(Request $request){
-        
+
+    public function getElecMeterTransfrTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -676,24 +677,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket10::select('app_ticket10s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket10s.app_type',1)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket10s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket10s.region')
-                        ->orderBy('app_ticket10s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket10::select('app_ticket10s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket10s.app_type', 1)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket10s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket10s.region')
+                ->orderBy('app_ticket10s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getWaterLineRecnctTickets(Request $request){
-        
+
+    public function getWaterLineRecnctTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -711,24 +712,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket7::select('app_ticket7s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket7s.app_type',2)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket7s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket7s.region')
-                        ->orderBy('app_ticket7s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket7::select('app_ticket7s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket7s.app_type', 2)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket7s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket7s.region')
+                ->orderBy('app_ticket7s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getElecLineRecnctTickets(Request $request){
-        
+
+    public function getElecLineRecnctTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -746,24 +747,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket7::select('app_ticket7s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket7s.app_type',1)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket7s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket7s.region')
-                        ->orderBy('app_ticket7s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket7::select('app_ticket7s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket7s.app_type', 1)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket7s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket7s.region')
+                ->orderBy('app_ticket7s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getWaiveWaterSubsTickets(Request $request){
-        
+
+    public function getWaiveWaterSubsTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -781,24 +782,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket8::select('app_ticket8s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket8s.app_type',2)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket8s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket8s.region')
-                        ->orderBy('app_ticket8s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket8::select('app_ticket8s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket8s.app_type', 2)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket8s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket8s.region')
+                ->orderBy('app_ticket8s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getWaiveElecSubsTickets(Request $request){
-        
+
+    public function getWaiveElecSubsTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -816,24 +817,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket8::select('app_ticket8s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket8s.app_type',1)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket8s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket8s.region')
-                        ->orderBy('app_ticket8s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket8::select('app_ticket8s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket8s.app_type', 1)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket8s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket8s.region')
+                ->orderBy('app_ticket8s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getElec16Tickets(Request $request){
-        
+
+    public function getElec16Tickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -851,24 +852,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket13::select('app_ticket13s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket13s.app_type',1)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket13s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket13s.region')
-                        ->orderBy('app_ticket13s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket13::select('app_ticket13s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket13s.app_type', 1)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket13s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket13s.region')
+                ->orderBy('app_ticket13s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getElec37Tickets(Request $request){
-        
+
+    public function getElec37Tickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -886,24 +887,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket12::select('app_ticket12s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket12s.app_type',1)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket12s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket12s.region')
-                        ->orderBy('app_ticket12s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket12::select('app_ticket12s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket12s.app_type', 1)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket12s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket12s.region')
+                ->orderBy('app_ticket12s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getElec27Tickets(Request $request){
-        
+
+    public function getElec27Tickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -921,24 +922,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket14::select('app_ticket14s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket14s.app_type',1)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket14s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket14s.region')
-                        ->orderBy('app_ticket14s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket14::select('app_ticket14s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket14s.app_type', 1)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket14s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket14s.region')
+                ->orderBy('app_ticket14s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getElec29Tickets(Request $request){
-        
+
+    public function getElec29Tickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -956,24 +957,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket15::select('app_ticket15s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket15s.app_type',1)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket15s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket15s.region')
-                        ->orderBy('app_ticket15s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket15::select('app_ticket15s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket15s.app_type', 1)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket15s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket15s.region')
+                ->orderBy('app_ticket15s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getElec36Tickets(Request $request){
-        
+
+    public function getElec36Tickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -991,24 +992,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket16::select('app_ticket16s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket16s.app_type',1)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket16s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket16s.region')
-                        ->orderBy('app_ticket16s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket16::select('app_ticket16s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket16s.app_type', 1)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket16s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket16s.region')
+                ->orderBy('app_ticket16s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getElec39Tickets(Request $request){
-        
+
+    public function getElec39Tickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -1026,24 +1027,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket17::select('app_ticket17s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket17s.app_type',1)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket17s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket17s.region')
-                        ->orderBy('app_ticket17s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket17::select('app_ticket17s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket17s.app_type', 1)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket17s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket17s.region')
+                ->orderBy('app_ticket17s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getBuildingLicTickets(Request $request){
-        
+
+    public function getBuildingLicTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -1061,24 +1062,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket18::select('app_ticket18s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket18s.app_type',3)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket18s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket18s.region')
-                        ->orderBy('app_ticket18s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket18::select('app_ticket18s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket18s.app_type', 3)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket18s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket18s.region')
+                ->orderBy('app_ticket18s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getEngValedTickets(Request $request){
-        
+
+    public function getEngValedTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -1096,24 +1097,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket22::select('app_ticket22s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket22s.app_type',3)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket22s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket22s.region')
-                        ->orderBy('app_ticket22s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket22::select('app_ticket22s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket22s.app_type', 3)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket22s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket22s.region')
+                ->orderBy('app_ticket22s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getLicFileTickets(Request $request){
-        
+
+    public function getLicFileTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -1131,24 +1132,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket19::select('app_ticket19s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket19s.app_type',3)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket19s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket19s.region')
-                        ->orderBy('app_ticket19s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket19::select('app_ticket19s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket19s.app_type', 3)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket19s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket19s.region')
+                ->orderBy('app_ticket19s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getOwnershipTransferTickets(Request $request){
-        
+
+    public function getOwnershipTransferTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -1166,24 +1167,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket35::select('app_ticket35s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket35s.app_type',3)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket35s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket35s.region')
-                        ->orderBy('app_ticket35s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket35::select('app_ticket35s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket35s.app_type', 3)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket35s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket35s.region')
+                ->orderBy('app_ticket35s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getRetriveLicTickets(Request $request){
-        
+
+    public function getRetriveLicTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -1201,24 +1202,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket26::select('app_ticket26s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket26s.app_type',3)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket26s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket26s.region')
-                        ->orderBy('app_ticket26s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket26::select('app_ticket26s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket26s.app_type', 3)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket26s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket26s.region')
+                ->orderBy('app_ticket26s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getSitePlanTickets(Request $request){
-        
+
+    public function getSitePlanTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -1236,23 +1237,22 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket21::select('app_ticket21s.*','admins.nick_name as added_by')
-                        ->where('app_ticket21s.app_type',3)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket21s.created_by')
-                        ->orderBy('app_ticket21s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket21::select('app_ticket21s.*', 'admins.nick_name as added_by')
+                ->where('app_ticket21s.app_type', 3)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket21s.created_by')
+                ->orderBy('app_ticket21s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getStraighteningTickets(Request $request){
-        
+
+    public function getStraighteningTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -1270,24 +1270,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket20::select('app_ticket20s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket20s.app_type',3)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket20s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket20s.region')
-                        ->orderBy('app_ticket20s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket20::select('app_ticket20s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket20s.app_type', 3)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket20s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket20s.region')
+                ->orderBy('app_ticket20s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getCollectingTickets(Request $request){
-        
+
+    public function getCollectingTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -1305,270 +1305,264 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket29::select('app_ticket29s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket29s.app_type',5)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket29s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket29s.region')
-                        ->orderBy('app_ticket29s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket29::select('app_ticket29s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket29s.app_type', 5)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket29s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket29s.region')
+                ->orderBy('app_ticket29s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getLeaveTickets(Request $request){
-        
+
+    public function getLeaveTickets(Request $request)
+    {
+
         $type = $request['type'];
         $archive_config = ArchiveRole::where('type', $type)->get();
-        $my_id=strval(Auth()->user()->id);
-        $ids=[];
-        $t=[];
-            for($i=0 ; $i<count($archive_config);$i++)
-            {
-                $t=json_decode($archive_config[$i]->archiveroles);
-                for($j=0 ; $j<count($t);$j++)
-                {
-                    if($t[$j] == $my_id)
-                        {
-                            array_push($ids,$archive_config[$i]->empid);
-                        }
+        $my_id = strval(Auth()->user()->id);
+        $ids = [];
+        $t = [];
+        for ($i = 0; $i < count($archive_config); $i++) {
+            $t = json_decode($archive_config[$i]->archiveroles);
+            for ($j = 0; $j < count($t); $j++) {
+                if ($t[$j] == $my_id) {
+                    array_push($ids, $archive_config[$i]->empid);
                 }
             }
-        array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket28::select('app_ticket28s.*','admins.nick_name as added_by','t_constant.name as leave_name')
-                        ->where('app_ticket28s.app_type',5)
-                        ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket28s.created_by')
-                        ->leftJoin('t_constant','t_constant.id','app_ticket28s.leave_type')
-                        ->orderBy('app_ticket28s.created_at', 'DESC');
+        }
+        array_push($ids, (int) $my_id);
+
+
+        $waterTicket = AppTicket28::select('app_ticket28s.*', 'admins.nick_name as added_by',
+                't_constant.name as leave_name')
+                ->where('app_ticket28s.app_type', 5)
+                ->whereIn('created_by', $ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket28s.created_by')
+                ->leftJoin('t_constant', 't_constant.id', 'app_ticket28s.leave_type')
+                ->orderBy('app_ticket28s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getVacationTickets(Request $request){
-        
+
+    public function getVacationTickets(Request $request)
+    {
+
         $type = $request['type'];
         $archive_config = ArchiveRole::where('type', $type)->get();
-        $my_id=strval(Auth()->user()->id);
-        $ids=[];
-        $t=[];
-            for($i=0 ; $i<count($archive_config);$i++)
-            {
-                $t=json_decode($archive_config[$i]->archiveroles);
-                for($j=0 ; $j<count($t);$j++)
-                {
-                    if($t[$j] == $my_id)
-                        {
-                            array_push($ids,$archive_config[$i]->empid);
-                        }
+        $my_id = strval(Auth()->user()->id);
+        $ids = [];
+        $t = [];
+        for ($i = 0; $i < count($archive_config); $i++) {
+            $t = json_decode($archive_config[$i]->archiveroles);
+            for ($j = 0; $j < count($t); $j++) {
+                if ($t[$j] == $my_id) {
+                    array_push($ids, $archive_config[$i]->empid);
                 }
             }
-        array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket32::select('app_ticket32s.*','admins.nick_name as added_by','t_constant.name as vac_name')
-                        ->where('app_ticket32s.app_type',5)
-                        ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket32s.created_by')
-                        ->leftJoin('t_constant','t_constant.id','app_ticket32s.vac_type')
-                        ->orderBy('app_ticket32s.created_at', 'DESC');
-
-        return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
-    }
-    
-    public function getNetworkDevelopTickets(Request $request){
-        
-        $type = $request['type'];
-        // $archive_config = ArchiveRole::where('type', $type)->get();
-        // $my_id=strval(Auth()->user()->id);
-        // $ids=[];
-        // $t=[];
-        //     for($i=0 ; $i<count($archive_config);$i++)
-        //     {
-        //         $t=json_decode($archive_config[$i]->archiveroles);
-        //         for($j=0 ; $j<count($t);$j++)
-        //         {
-        //             if($t[$j] == $my_id)
-        //                 {
-        //                     array_push($ids,$archive_config[$i]->empid);
-        //                 }
-        //         }
-        //     }
-        // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket30::select('app_ticket30s.*','admins.nick_name as added_by','t_constant.name as net_name','regions.name as regionName')
-                        ->where('app_ticket30s.app_type',5)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket30s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket30s.region')
-                        ->leftJoin('t_constant','t_constant.id','app_ticket30s.network_type')
-                        ->orderBy('app_ticket30s.created_at', 'DESC');
-
-        return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
-    }
-    
-    public function getPurchaseTickets(Request $request){
-        
-        $type = $request['type'];
-        // $archive_config = ArchiveRole::where('type', $type)->get();
-        // $my_id=strval(Auth()->user()->id);
-        // $ids=[];
-        // $t=[];
-        //     for($i=0 ; $i<count($archive_config);$i++)
-        //     {
-        //         $t=json_decode($archive_config[$i]->archiveroles);
-        //         for($j=0 ; $j<count($t);$j++)
-        //         {
-        //             if($t[$j] == $my_id)
-        //                 {
-        //                     array_push($ids,$archive_config[$i]->empid);
-        //                 }
-        //         }
-        //     }
-        // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket31::select('app_ticket31s.*','admins.nick_name as added_by')
-                        ->where('app_ticket31s.app_type',5)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket31s.created_by')
-                        ->orderBy('app_ticket31s.created_at', 'DESC');
-
-        return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
-    }
-    
-    public function getRequestSpareTickets(Request $request){
-        
-        $type = $request['type'];
-        // $archive_config = ArchiveRole::where('type', $type)->get();
-        // $my_id=strval(Auth()->user()->id);
-        // $ids=[];
-        // $t=[];
-        //     for($i=0 ; $i<count($archive_config);$i++)
-        //     {
-        //         $t=json_decode($archive_config[$i]->archiveroles);
-        //         for($j=0 ; $j<count($t);$j++)
-        //         {
-        //             if($t[$j] == $my_id)
-        //                 {
-        //                     array_push($ids,$archive_config[$i]->empid);
-        //                 }
-        //         }
-        //     }
-        // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket33::select('app_ticket33s.*','admins.nick_name as added_by')
-                        ->where('app_ticket33s.app_type',5)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket33s.created_by')
-                        ->orderBy('app_ticket33s.created_at', 'DESC');
-
-        return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
-    }
-    
-    public function getOutspreadTickets(Request $request){
-        
-        $type = $request['type'];
-        // $archive_config = ArchiveRole::where('type', $type)->get();
-        // $my_id=strval(Auth()->user()->id);
-        // $ids=[];
-        // $t=[];
-        //     for($i=0 ; $i<count($archive_config);$i++)
-        //     {
-        //         $t=json_decode($archive_config[$i]->archiveroles);
-        //         for($j=0 ; $j<count($t);$j++)
-        //         {
-        //             if($t[$j] == $my_id)
-        //                 {
-        //                     array_push($ids,$archive_config[$i]->empid);
-        //                 }
-        //         }
-        //     }
-        // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket23::select('app_ticket23s.*','admins.nick_name as added_by','t_constant.name as task_name','regions.name as regionName')
-                        ->where('app_ticket23s.app_type',4)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket23s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket23s.region')
-                        ->leftJoin('t_constant','t_constant.id','app_ticket23s.task_type')
-                        ->orderBy('app_ticket23s.created_at', 'DESC');
-                        
-        if($request->search_task_type != null && $request->search_task_type != 0){
-            $waterTicket=$waterTicket->where('app_ticket23s.task_type',$request->search_task_type);
         }
-        if($request->search_status != null && $request->search_status != 0){
-            $waterTicket=$waterTicket->where('app_ticket23s.ticket_status',$request->search_status);
+        array_push($ids, (int) $my_id);
+
+
+        $waterTicket = AppTicket32::select('app_ticket32s.*', 'admins.nick_name as added_by',
+                't_constant.name as vac_name')
+                ->where('app_ticket32s.app_type', 5)
+                ->whereIn('created_by', $ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket32s.created_by')
+                ->leftJoin('t_constant', 't_constant.id', 'app_ticket32s.vac_type')
+                ->orderBy('app_ticket32s.created_at', 'DESC');
+
+        return DataTables::of($waterTicket)
+                ->addIndexColumn()
+                ->make(true);
+    }
+
+    public function getNetworkDevelopTickets(Request $request)
+    {
+
+        $type = $request['type'];
+        // $archive_config = ArchiveRole::where('type', $type)->get();
+        // $my_id=strval(Auth()->user()->id);
+        // $ids=[];
+        // $t=[];
+        //     for($i=0 ; $i<count($archive_config);$i++)
+        //     {
+        //         $t=json_decode($archive_config[$i]->archiveroles);
+        //         for($j=0 ; $j<count($t);$j++)
+        //         {
+        //             if($t[$j] == $my_id)
+        //                 {
+        //                     array_push($ids,$archive_config[$i]->empid);
+        //                 }
+        //         }
+        //     }
+        // array_push($ids,(int)$my_id);
+
+
+        $waterTicket = AppTicket30::select('app_ticket30s.*', 'admins.nick_name as added_by',
+                't_constant.name as net_name', 'regions.name as regionName')
+                ->where('app_ticket30s.app_type', 5)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket30s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket30s.region')
+                ->leftJoin('t_constant', 't_constant.id', 'app_ticket30s.network_type')
+                ->orderBy('app_ticket30s.created_at', 'DESC');
+
+        return DataTables::of($waterTicket)
+                ->addIndexColumn()
+                ->make(true);
+    }
+
+    public function getPurchaseTickets(Request $request)
+    {
+
+        $type = $request['type'];
+        // $archive_config = ArchiveRole::where('type', $type)->get();
+        // $my_id=strval(Auth()->user()->id);
+        // $ids=[];
+        // $t=[];
+        //     for($i=0 ; $i<count($archive_config);$i++)
+        //     {
+        //         $t=json_decode($archive_config[$i]->archiveroles);
+        //         for($j=0 ; $j<count($t);$j++)
+        //         {
+        //             if($t[$j] == $my_id)
+        //                 {
+        //                     array_push($ids,$archive_config[$i]->empid);
+        //                 }
+        //         }
+        //     }
+        // array_push($ids,(int)$my_id);
+
+
+        $waterTicket = AppTicket31::select('app_ticket31s.*', 'admins.nick_name as added_by')
+                ->where('app_ticket31s.app_type', 5)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket31s.created_by')
+                ->orderBy('app_ticket31s.created_at', 'DESC');
+
+        return DataTables::of($waterTicket)
+                ->addIndexColumn()
+                ->make(true);
+    }
+
+    public function getRequestSpareTickets(Request $request)
+    {
+
+        $type = $request['type'];
+        // $archive_config = ArchiveRole::where('type', $type)->get();
+        // $my_id=strval(Auth()->user()->id);
+        // $ids=[];
+        // $t=[];
+        //     for($i=0 ; $i<count($archive_config);$i++)
+        //     {
+        //         $t=json_decode($archive_config[$i]->archiveroles);
+        //         for($j=0 ; $j<count($t);$j++)
+        //         {
+        //             if($t[$j] == $my_id)
+        //                 {
+        //                     array_push($ids,$archive_config[$i]->empid);
+        //                 }
+        //         }
+        //     }
+        // array_push($ids,(int)$my_id);
+
+
+        $waterTicket = AppTicket33::select('app_ticket33s.*', 'admins.nick_name as added_by')
+                ->where('app_ticket33s.app_type', 5)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket33s.created_by')
+                ->orderBy('app_ticket33s.created_at', 'DESC');
+
+        return DataTables::of($waterTicket)
+                ->addIndexColumn()
+                ->make(true);
+    }
+
+    public function getOutspreadTickets(Request $request)
+    {
+
+        $type = $request['type'];
+        // $archive_config = ArchiveRole::where('type', $type)->get();
+        // $my_id=strval(Auth()->user()->id);
+        // $ids=[];
+        // $t=[];
+        //     for($i=0 ; $i<count($archive_config);$i++)
+        //     {
+        //         $t=json_decode($archive_config[$i]->archiveroles);
+        //         for($j=0 ; $j<count($t);$j++)
+        //         {
+        //             if($t[$j] == $my_id)
+        //                 {
+        //                     array_push($ids,$archive_config[$i]->empid);
+        //                 }
+        //         }
+        //     }
+        // array_push($ids,(int)$my_id);
+
+
+        $waterTicket = AppTicket23::select('app_ticket23s.*', 'admins.nick_name as added_by',
+                't_constant.name as task_name', 'regions.name as regionName')
+                ->where('app_ticket23s.app_type', 4)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket23s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket23s.region')
+                ->leftJoin('t_constant', 't_constant.id', 'app_ticket23s.task_type')
+                ->orderBy('app_ticket23s.created_at', 'DESC');
+
+        if ($request->search_task_type != null && $request->search_task_type != 0) {
+            $waterTicket = $waterTicket->where('app_ticket23s.task_type', $request->search_task_type);
         }
-        $from=null;
-        $to=null;
+        if ($request->search_status != null && $request->search_status != 0) {
+            $waterTicket = $waterTicket->where('app_ticket23s.ticket_status', $request->search_status);
+        }
+        $from = null;
+        $to = null;
         if ($request->search_from && $request->search_to) {
-            try{
+            try {
                 $from = date_create(($request->get('search_from')));
-    
+
                 $from = explode('/', ($request->get('search_from')));
-    
-                $from = $from[2] . '-' . $from[1] . '-' . $from[0].' '.'00:00:00';
-    
+
+                $from = $from[2].'-'.$from[1].'-'.$from[0].' '.'00:00:00';
+
                 $to = date_create(($request->get('search_to')));
-    
+
                 $to = explode('/', ($request->get('search_to')));
-                if($to[0]==31)
-                    $to = $to[2] . '-' . $to[1] . '-' . ($to[0]).' '.'00:00:00';
-                else
-                    $to = $to[2] . '-' . $to[1] . '-' . ($to[0]+1).' '.'00:00:00';
-            }catch (\Exception $e){
-                $from=null;
-                $to=null;
+                if ($to[0] == 31) {
+                    $to = $to[2].'-'.$to[1].'-'.($to[0]).' '.'00:00:00';
+                } else {
+                    $to = $to[2].'-'.$to[1].'-'.($to[0] + 1).' '.'00:00:00';
+                }
+            } catch (\Exception $e) {
+                $from = null;
+                $to = null;
             }
 
         }
-        
-        if($to !=null && $from != null){
-            if (DateTime::createFromFormat('Y-m-d H:i:s', $to) !== false && DateTime::createFromFormat('Y-m-d H:i:s', $to) !== $from) {
-              $waterTicket=$waterTicket->whereBetween('app_ticket23s.created_at',[$from,$to]);
+
+        if ($to != null && $from != null) {
+            if (DateTime::createFromFormat('Y-m-d H:i:s', $to) !== false && DateTime::createFromFormat('Y-m-d H:i:s',
+                            $to) !== $from) {
+                $waterTicket = $waterTicket->whereBetween('app_ticket23s.created_at', [$from, $to]);
             }
         }
-        
+
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getPublicComplaintTickets(Request $request){
-        
+
+    public function getPublicComplaintTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -1586,23 +1580,22 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket24::select('app_ticket24s.*','admins.nick_name as added_by')
-                        ->where('app_ticket24s.app_type',4)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket24s.created_by')
-                        ->orderBy('app_ticket24s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket24::select('app_ticket24s.*', 'admins.nick_name as added_by')
+                ->where('app_ticket24s.app_type', 4)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket24s.created_by')
+                ->orderBy('app_ticket24s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getCitizenComplaintTickets(Request $request){
-        
+
+    public function getCitizenComplaintTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -1620,23 +1613,22 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket25::select('app_ticket25s.*','admins.nick_name as added_by')
-                        ->where('app_ticket25s.app_type',4)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket25s.created_by')
-                        ->orderBy('app_ticket25s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket25::select('app_ticket25s.*', 'admins.nick_name as added_by')
+                ->where('app_ticket25s.app_type', 4)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket25s.created_by')
+                ->orderBy('app_ticket25s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getQuittanceTickets(Request $request){
-        
+
+    public function getQuittanceTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -1654,23 +1646,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket27::select('app_ticket27s.*','admins.nick_name as added_by','t_constant.name as reason_name')
-                        ->where('app_ticket27s.app_type',4)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket27s.created_by')
-                        ->leftJoin('t_constant','t_constant.id','app_ticket27s.reason')
-                        ->orderBy('app_ticket27s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket27::select('app_ticket27s.*', 'admins.nick_name as added_by',
+                't_constant.name as reason_name')
+                ->where('app_ticket27s.app_type', 4)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket27s.created_by')
+                ->leftJoin('t_constant', 't_constant.id', 'app_ticket27s.reason')
+                ->orderBy('app_ticket27s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    public function getInnerQuittanceTickets(Request $request){
-        
+
+    public function getInnerQuittanceTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -1688,23 +1681,22 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket36::select('app_ticket36s.*','admins.nick_name as added_by')
-                        ->where('app_ticket36s.app_type',4)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket36s.created_by')
-                        ->orderBy('app_ticket36s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket36::select('app_ticket36s.*', 'admins.nick_name as added_by')
+                ->where('app_ticket36s.app_type', 4)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket36s.created_by')
+                ->orderBy('app_ticket36s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getVehicleMaintenanceTickets(Request $request){
-        
+
+    public function getVehicleMaintenanceTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -1722,22 +1714,22 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $Ticket= AppTicket37::select('app_ticket37s.*','admins.nick_name as added_by')
-                        ->where('app_ticket37s.app_type',5)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket37s.created_by')
-                        ->orderBy('app_ticket37s.created_at', 'DESC');
+
+
+        $Ticket = AppTicket37::select('app_ticket37s.*', 'admins.nick_name as added_by')
+                ->where('app_ticket37s.app_type', 5)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket37s.created_by')
+                ->orderBy('app_ticket37s.created_at', 'DESC');
 
         return DataTables::of($Ticket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    public function getRefuelingTickets(Request $request){
-        
+
+    public function getRefuelingTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -1755,23 +1747,22 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $Ticket= AppTicket38::select('app_ticket38s.*','admins.nick_name as added_by')
-                        ->where('app_ticket38s.app_type',5)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket38s.created_by')
-                        ->orderBy('app_ticket38s.created_at', 'DESC');
+
+
+        $Ticket = AppTicket38::select('app_ticket38s.*', 'admins.nick_name as added_by')
+                ->where('app_ticket38s.app_type', 5)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket38s.created_by')
+                ->orderBy('app_ticket38s.created_at', 'DESC');
 
         return DataTables::of($Ticket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getConcreteTickets(Request $request){
-        
+
+    public function getConcreteTickets(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -1789,24 +1780,24 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket39::select('app_ticket39s.*','admins.nick_name as added_by','regions.name as regionName')
-                        ->where('app_ticket39s.app_type',3)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket39s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket39s.region')
-                        ->orderBy('app_ticket39s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket39::select('app_ticket39s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_ticket39s.app_type', 3)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket39s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket39s.region')
+                ->orderBy('app_ticket39s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getTicket40s(Request $request){
-        
+
+    public function getTicket40s(Request $request)
+    {
+
         $type = $request['type'];
         // $archive_config = ArchiveRole::where('type', $type)->get();
         // $my_id=strval(Auth()->user()->id);
@@ -1824,55 +1815,267 @@ class TasksTableController extends Controller
         //         }
         //     }
         // array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket40::select('app_ticket40s.*','admins.nick_name as added_by','regions.name as regionName')
-                        // ->where('app_ticket40s.app_type',3)
-                        // ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket40s.created_by')
-                        ->leftJoin('regions','regions.id','app_ticket40s.region')
-                        ->orderBy('app_ticket40s.created_at', 'DESC');
+
+
+        $waterTicket = AppTicket40::select('app_ticket40s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                // ->where('app_ticket40s.app_type',3)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket40s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket40s.region')
+                ->orderBy('app_ticket40s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
-
-                            ->addIndexColumn()
-
-                            ->make(true);
+                ->addIndexColumn()
+                ->make(true);
     }
-    
-    public function getInternalMemoTickets(Request $request){
-        
+
+    public function getInternalMemoTickets(Request $request)
+    {
+
         $type = $request['type'];
         $archive_config = ArchiveRole::where('type', $type)->get();
-        $my_id=strval(Auth()->user()->id);
-        $ids=[];
-        $t=[];
-            for($i=0 ; $i<count($archive_config);$i++)
-            {
-                $t=json_decode($archive_config[$i]->archiveroles);
-                for($j=0 ; $j<count($t);$j++)
-                {
-                    if($t[$j] == $my_id)
-                        {
-                            array_push($ids,$archive_config[$i]->empid);
-                        }
+        $my_id = strval(Auth()->user()->id);
+        $ids = [];
+        $t = [];
+        for ($i = 0; $i < count($archive_config); $i++) {
+            $t = json_decode($archive_config[$i]->archiveroles);
+            for ($j = 0; $j < count($t); $j++) {
+                if ($t[$j] == $my_id) {
+                    array_push($ids, $archive_config[$i]->empid);
                 }
             }
-        array_push($ids,(int)$my_id);
-        
-        
-        $waterTicket= AppTicket44::select('app_ticket44s.*','admins.nick_name as added_by')
-                        ->where('app_ticket44s.app_type',5)
-                        ->whereIn('created_by',$ids)
-                        ->leftJoin('admins','admins.id','app_ticket44s.created_by')
-                        ->orderBy('app_ticket44s.created_at', 'DESC');
+        }
+        array_push($ids, (int) $my_id);
+
+
+        $waterTicket = AppTicket44::select('app_ticket44s.*', 'admins.nick_name as added_by')
+                ->where('app_ticket44s.app_type', 5)
+                ->whereIn('created_by', $ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket44s.created_by')
+                ->orderBy('app_ticket44s.created_at', 'DESC');
+
+        return DataTables::of($waterTicket)
+                ->addIndexColumn()
+                ->make(true);
+    }
+
+    public function getTrashTickets(Request $request)
+    {
+
+        $type = $request['type'];
+        // $archive_config = ArchiveRole::where('type', $type)->get();
+        // $my_id=strval(Auth()->user()->id);
+        // $ids=[];
+        // $t=[];
+        //     for($i=0 ; $i<count($archive_config);$i++)
+        //     {
+        //         $t=json_decode($archive_config[$i]->archiveroles);
+        //         for($j=0 ; $j<count($t);$j++)
+        //         {
+        //             if($t[$j] == $my_id)
+        //                 {
+        //                     array_push($ids,$archive_config[$i]->empid);
+        //                 }
+        //         }
+        //     }
+        // array_push($ids,(int)$my_id);
+        $ticketTypes = Constant::where('parent', 6458)->get();
+        $typeIds = [];
+        foreach ($ticketTypes as $ticketType) {
+            $typeIds[] = $ticketType->id;
+        }
+        $waterTicket = AppTicket23::select('app_ticket23s.*', 'admins.nick_name as added_by',
+                't_constant.name as task_name', 'regions.name as regionName')
+                ->where('app_ticket23s.app_type', 4)
+                ->whereIn('app_ticket23s.task_type', $typeIds)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket23s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket23s.region')
+                ->leftJoin('t_constant', 't_constant.id', 'app_ticket23s.task_type')
+                ->orderBy('app_ticket23s.created_at', 'DESC');
+
+        if ($request->search_task_type != null && $request->search_task_type != 0) {
+            $waterTicket = $waterTicket->where('app_ticket23s.task_type', $request->search_task_type);
+        }
+        if ($request->search_status != null && $request->search_status != 0) {
+            $waterTicket = $waterTicket->where('app_ticket23s.ticket_status', $request->search_status);
+        }
+        $from = null;
+        $to = null;
+        if ($request->search_from && $request->search_to) {
+            try {
+                $from = date_create(($request->get('search_from')));
+
+                $from = explode('/', ($request->get('search_from')));
+
+                $from = $from[2].'-'.$from[1].'-'.$from[0].' '.'00:00:00';
+
+                $to = date_create(($request->get('search_to')));
+
+                $to = explode('/', ($request->get('search_to')));
+                if ($to[0] == 31) {
+                    $to = $to[2].'-'.$to[1].'-'.($to[0]).' '.'00:00:00';
+                } else {
+                    $to = $to[2].'-'.$to[1].'-'.($to[0] + 1).' '.'00:00:00';
+                }
+            } catch (\Exception $e) {
+                $from = null;
+                $to = null;
+            }
+
+        }
+
+        if ($to != null && $from != null) {
+            if (DateTime::createFromFormat('Y-m-d H:i:s', $to) !== false && DateTime::createFromFormat('Y-m-d H:i:s',
+                            $to) !== $from) {
+                $waterTicket = $waterTicket->whereBetween('app_ticket23s.created_at', [$from, $to]);
+            }
+        }
+
+        return DataTables::of($waterTicket)
+                ->addIndexColumn()
+                ->make(true);
+    }
+
+    public function getAmbulanceTickets(Request $request){
+
+        $type = $request['type'];
+        // $archive_config = ArchiveRole::where('type', $type)->get();
+        // $my_id=strval(Auth()->user()->id);
+        // $ids=[];
+        // $t=[];
+        //     for($i=0 ; $i<count($archive_config);$i++)
+        //     {
+        //         $t=json_decode($archive_config[$i]->archiveroles);
+        //         for($j=0 ; $j<count($t);$j++)
+        //         {
+        //             if($t[$j] == $my_id)
+        //                 {
+        //                     array_push($ids,$archive_config[$i]->empid);
+        //                 }
+        //         }
+        //     }
+        // array_push($ids,(int)$my_id);
+
+
+        $waterTicket= AppTicket45::select('app_ticket45s.*','admins.nick_name as added_by')
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins','admins.id','app_ticket45s.created_by')
+                ->orderBy('app_ticket45s.created_at', 'DESC');
 
         return DataTables::of($waterTicket)
 
-                            ->addIndexColumn()
+                ->addIndexColumn()
 
-                            ->make(true);
+                ->make(true);
     }
-    
-    
+
+    public function getWasteComplaintTickets(Request $request)
+    {
+
+        $type = $request['type'];
+        // $archive_config = ArchiveRole::where('type', $type)->get();
+        // $my_id=strval(Auth()->user()->id);
+        // $ids=[];
+        // $t=[];
+        //     for($i=0 ; $i<count($archive_config);$i++)
+        //     {
+        //         $t=json_decode($archive_config[$i]->archiveroles);
+        //         for($j=0 ; $j<count($t);$j++)
+        //         {
+        //             if($t[$j] == $my_id)
+        //                 {
+        //                     array_push($ids,$archive_config[$i]->empid);
+        //                 }
+        //         }
+        //     }
+        // array_push($ids,(int)$my_id);
+
+        $waterTicket = AppTicket43::select('app_ticket43s.*', 'admins.nick_name as added_by',
+                't_constant.name as task_name', 'regions.name as regionName')
+                ->where('app_ticket43s.app_type', 4)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket43s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket43s.region')
+                ->leftJoin('t_constant', 't_constant.id', 'app_ticket43s.task_type')
+                ->orderBy('app_ticket43s.created_at', 'DESC');
+
+        if ($request->search_task_type != null && $request->search_task_type != 0) {
+            $waterTicket = $waterTicket->where('app_ticket43s.task_type', $request->search_task_type);
+        }
+        if ($request->search_status != null && $request->search_status != 0) {
+            $waterTicket = $waterTicket->where('app_ticket43s.ticket_status', $request->search_status);
+        }
+        $from = null;
+        $to = null;
+        if ($request->search_from && $request->search_to) {
+            try {
+                $from = date_create(($request->get('search_from')));
+
+                $from = explode('/', ($request->get('search_from')));
+
+                $from = $from[2].'-'.$from[1].'-'.$from[0].' '.'00:00:00';
+
+                $to = date_create(($request->get('search_to')));
+
+                $to = explode('/', ($request->get('search_to')));
+                if ($to[0] == 31) {
+                    $to = $to[2].'-'.$to[1].'-'.($to[0]).' '.'00:00:00';
+                } else {
+                    $to = $to[2].'-'.$to[1].'-'.($to[0] + 1).' '.'00:00:00';
+                }
+            } catch (\Exception $e) {
+                $from = null;
+                $to = null;
+            }
+
+        }
+
+        if ($to != null && $from != null) {
+            if (DateTime::createFromFormat('Y-m-d H:i:s', $to) !== false && DateTime::createFromFormat('Y-m-d H:i:s',
+                            $to) !== $from) {
+                $waterTicket = $waterTicket->whereBetween('app_ticket43s.created_at', [$from, $to]);
+            }
+        }
+
+        return DataTables::of($waterTicket)
+                ->addIndexColumn()
+                ->make(true);
+    }
+
+    public function getBuildingSewageTickets(Request $request)
+    {
+
+        $type = $request['type'];
+        // $archive_config = ArchiveRole::where('type', $type)->get();
+        // $my_id=strval(Auth()->user()->id);
+        // $ids=[];
+        // $t=[];
+        //     for($i=0 ; $i<count($archive_config);$i++)
+        //     {
+        //         $t=json_decode($archive_config[$i]->archiveroles);
+        //         for($j=0 ; $j<count($t);$j++)
+        //         {
+        //             if($t[$j] == $my_id)
+        //                 {
+        //                     array_push($ids,$archive_config[$i]->empid);
+        //                 }
+        //         }
+        //     }
+        // array_push($ids,(int)$my_id);
+
+
+        $waterTicket = AppTicket41::select('app_ticket41s.*', 'admins.nick_name as added_by',
+                'regions.name as regionName')
+                ->where('app_type', 2)
+                // ->whereIn('created_by',$ids)
+                ->leftJoin('admins', 'admins.id', 'app_ticket41s.created_by')
+                ->leftJoin('regions', 'regions.id', 'app_ticket41s.region')
+                ->orderBy('app_ticket41s.created_at', 'DESC');
+
+        return DataTables::of($waterTicket)
+                ->addIndexColumn()
+                ->make(true);
+    }
 }

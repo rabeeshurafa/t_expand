@@ -30,3 +30,20 @@
         </div>
     </div>
 </div>
+<div calss="row" style="position: relative; ">
+    <div class="col-md-7" style="padding-right: 0px;">
+        <div class="form-group paddmob">
+            <div class="input-group subscribermob">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">
+                        {{ 'رقم الهوية' }}
+                    </span>
+                </div>
+                <input type="text" id="national_id" maxlength="9" minlength="9"
+                    class="form-control numFeild" placeholder="{{ 'رقم الهوية' }}"
+                    name="national_id">
+                
+            </div>
+        </div>
+    </div>
+</div>

@@ -39,6 +39,19 @@ class PortalOutspread extends Controller{
         $app_no=23;
         return view('portal.outspreadTasks.outspreadTask',  compact('type','ticketTypeList','region','ticketInfo','app_no'));
     }
+    public function trashTasks()
+    {
+//        $ticketTypeList = Constant::where('parent',6029)->where('status',1)->get();
+        $setting = Setting::first();
+        $region=Region::where('town_id',$setting->town_id)->get();
+        $type = 'outspreadTasks';
+        $ticketInfo=$this->loadDefaul($type);
+        // $department=Department::where('enabled',1)->get();
+        // $fees=$this->fees;
+        // $archive_config = ArchiveRole::where('empid', Auth()->user()->id)->where('type', $type)->get();
+        $app_no=23;
+        return view('portal.outspreadTasks.trashTasks',  compact('type','region','ticketInfo','app_no'));
+    }
     public function quittance()
     {
         $resonTypeList = Constant::where('parent',6033)->where('status',1)->get();

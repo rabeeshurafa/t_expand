@@ -120,7 +120,9 @@
                             @elseif($type=="requestSpareParts")
                             ارشيف اذن اخراج مواد   
                             @elseif($type=="outspreadTasks")
-                            ارشيف المهام المتفرقة   
+                            ارشيف المهام المتفرقة
+                            @elseif($type=="trashTasks")
+                                ارشيف خدمة النفايات
                             @elseif($type=="publicComplaint")
                             ارشيف الشكاوى العامة   
                             @elseif($type=="citizenComplaint")
@@ -139,6 +141,12 @@
                             ارشيف طلب توحيد / افراز    
                             @elseif($type=="internalMemo")
                             ارشيف المذكرات الداخلية
+                            @elseif($type=="buildingSewage")
+                                طلب شبك عقار بالصرف الصحي
+                            @elseif($type=="wasteComplaint")
+                                ارشيف شكاوي النفايات
+                            @elseif($type=="ambulance")
+                                ارشيف طلبات الاسعاف
                             @endif
                             
                             <div class="dt-buttons" style="height: 20px;padding-top: 10px;" title="الاعدادات">
@@ -156,7 +164,7 @@
                     
                     <div class="card-body">
                         <div class="form-body">
-                            @if($type=="outspreadTasks")
+                            @if($type=="outspreadTasks" || $type=="wasteComplaint"||$type=="trashTasks")
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
@@ -419,7 +427,7 @@
                                                     طباعة الطلب
                                                 </th>
                                             </tr>
-                                            @elseif($type=="outspreadTasks")
+                                            @elseif($type=="outspreadTasks" || $type=="wasteComplaint" ||$type=="trashTasks")
                                             <tr style="text-align:center !important;background: #00A3E8;">
                                                 <th width="10px;">
                                                     #
@@ -568,9 +576,11 @@
                                                 <th width="50px;">
                                                     رقم الطلب
                                                 </th>
-                                                <th width="80px;">
-                                                    المنطقة 
-                                                </th>
+                                                @if($type!="ambulance")
+                                                    <th width="80px;">
+                                                        المنطقة
+                                                    </th>
+                                                @endif
                                                 <th width="80px;" >
                                                    حالة الطلب
                                                 </th>
@@ -703,6 +713,13 @@
                     d.type = $('#type').val();
                 }
             },
+            @elseif ($type=="ambulance")
+            ajax: {
+              url: '{{ route('getAmbulanceTickets') }}',
+              data: function (d) {
+                d.type = $('#type').val();
+              }
+            },
             @elseif ($type=="waterMeterRead")
             ajax: {
                 url: '{{ route('getWaterMeterReadTickets') }}',
@@ -786,6 +803,24 @@
                 data: function (d) {
                     d.type = $('#type').val();
                 }
+            },
+            @elseif ($type=="wasteComplaint")
+            ajax: {
+              url: '{{ route('getWasteComplaintTickets') }}',
+              data: function (d) {
+                d.type = $('#type').val();
+                d.search_task_type = $('#search_task_type').val();
+                d.search_status = $('#search_status').val();
+                d.search_from = $('#search_from').val();
+                d.search_to = $('#search_to').val();
+              }
+            },
+            @elseif ($type=="buildingSewage")
+            ajax: {
+              url: '{{ route('getBuildingSewageTickets') }}',
+              data: function (d) {
+                d.type = $('#type').val();
+              }
             },
             @elseif ($type=="elecLineReconnect")
             ajax: {
@@ -926,6 +961,17 @@
                 data: function (d) {
                     d.type = $('#type').val();
                 }
+            },
+            @elseif ($type=="trashTasks")
+            ajax: {
+              url: '{{ route('getTrashTickets') }}',
+              data: function (d) {
+                d.type = $('#type').val();
+                d.search_task_type = $('#search_task_type').val();
+                d.search_status = $('#search_status').val();
+                d.search_from = $('#search_from').val();
+                d.search_to = $('#search_to').val();
+              }
             },
             @elseif ($type=="outspreadTasks")
             ajax: {
@@ -1394,7 +1440,7 @@
                    
                 ],
                 
-            @elseif($type=="outspreadTasks") 
+            @elseif($type=="outspreadTasks" || $type=="wasteComplaint" ||$type=="trashTasks")
             columns:[
                     { data: 'DT_RowIndex', name: 'DT_RowIndex' , orderable: false, searchable: false},
                     {
@@ -1782,7 +1828,9 @@
                     // {data:'customer_name',name:'customer_name'},
                     {data:'customer_mobile',name:'customer_mobile'},
                     {data:'app_no',name:'app_no'},
+                    @if($type!="ambulance")
                     {data:'regionName',name:'regions.name'},
+                    @endif
                     { 
                         data:null, 
                         render:function(data,row,type){

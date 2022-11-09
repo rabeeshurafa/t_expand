@@ -1,6 +1,6 @@
 <?php $fcmdomain = $_SERVER['SERVER_NAME'];
 ?>
-    <!DOCTYPE html>
+        <!DOCTYPE html>
 
 <html class="loading" lang="en" data-textdirection="{{ app() -> getLocale() === 'ar' ? 'rtl' : 'ltr'}}">
 
@@ -34,9 +34,9 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('storage/favicon.ico')}}">
 
     <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Quicksand:300,400,500,700"
+            href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Quicksand:300,400,500,700"
 
-        rel="stylesheet">
+            rel="stylesheet">
 
     <!--<link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css"rel="stylesheet">-->
 
@@ -1067,105 +1067,103 @@
         </div>
 
         <script>
-            var print = false;
+          var print = false;
 
-            function printFunction() {
-                print = true;
-                $('#ticketFrm').submit()
-            }
+          function printFunction() {
+            print = true;
+            $('#ticketFrm').submit()
+          }
 
-            function noti() {
-                $.ajax({
-                    type: 'get', // the method (could be GET btw)
-                    url: "{{ route('get_noti') }}",
-                    success: function (response) {
-                        if (response.copyTo) {
-                            var typeArray = {
-                                "outArchive": '{{trans('archive.out_archive')}}',
-                                "inArchive": '{{trans('archive.in_archive')}}',
-                                "projArchive": '{{trans('archive.proj_archive')}}',
-                                "munArchive": '{{trans('archive.mun_archive')}}',
-                                "empArchive": '{{trans('archive.emp_archive')}}',
-                                "depArchive": '{{trans('archive.dep_archive')}}',
-                                "assetsArchive": '{{trans('archive.assets_archive')}}',
-                                "citArchive": '{{trans('archive.cit_archive')}}',
-                                "licArchive": '{{trans('archive.lic_archive')}}',
-                                "licFileArchive": '{{trans('archive.licFile_archive')}}'
-                            };
-                            var baseUrl = '{{ route('admin.dashboard') }}/';
-                            $('.setAllAsRead').html(response.CopyToCount)
-                            let cc = "#F2F3F5"
-                            for (let i = 0; i < response.copyTo.length; i++) {
-                                if (response.copyTo[i].archive.url == 'contract_archieve')
-                                    response.copyTo[i].archive.url = 'dep_archieve';
-                                if (response.copyTo[i].model_id != null) {
-                                    var timestamp = response.copyTo[i].archive.created_at;
-                                    var date = new Date(timestamp);
+          function noti() {
+            $.ajax({
+              type: 'get', // the method (could be GET btw)
+              url: "{{ route('get_noti') }}",
+              success: function (response) {
+                if (response.copyTo) {
+                  var typeArray = {
+                    "outArchive": '{{trans('archive.out_archive')}}',
+                    "inArchive": '{{trans('archive.in_archive')}}',
+                    "projArchive": '{{trans('archive.proj_archive')}}',
+                    "munArchive": '{{trans('archive.mun_archive')}}',
+                    "empArchive": '{{trans('archive.emp_archive')}}',
+                    "depArchive": '{{trans('archive.dep_archive')}}',
+                    "assetsArchive": '{{trans('archive.assets_archive')}}',
+                    "citArchive": '{{trans('archive.cit_archive')}}',
+                    "licArchive": '{{trans('archive.lic_archive')}}',
+                    "licFileArchive": '{{trans('archive.licFile_archive')}}'
+                  };
+                  var baseUrl = '{{ route('admin.dashboard') }}/';
+                  $('.setAllAsRead').html(response.CopyToCount)
+                  let cc = "#F2F3F5"
+                  for (let i = 0; i < response.copyTo.length; i++) {
+                    if (response.copyTo[i].model_id != null) {
+                      var timestamp = response.copyTo[i].archive.created_at;
+                      var date = new Date(timestamp);
 
-                                    date_str = 'بتاريخ :' + date.getDate() +
-                                        "/" + (date.getMonth() + 1) +
-                                        "/" + date.getFullYear() +
-                                        " الساعة: " +
-                                        " " + date.getHours() +
-                                        ":" + date.getMinutes() +
-                                        ":" + date.getSeconds();
-                                    var attach = '';
-                                    if (response.copyTo[i].archive.files.length > 0) {
-                                        let row = '';
+                      date_str = 'بتاريخ :' + date.getDate() +
+                        "/" + (date.getMonth() + 1) +
+                        "/" + date.getFullYear() +
+                        " الساعة: " +
+                        " " + date.getHours() +
+                        ":" + date.getMinutes() +
+                        ":" + date.getSeconds();
+                      var attach = '';
+                      if (response.copyTo[i].archive.files.length > 0) {
+                        let row = '';
 
-                                        var j = 0;
+                        var j = 0;
 
-                                        for (j = 0; j < response.copyTo[i].archive.files.length; j++) {
+                        for (j = 0; j < response.copyTo[i].archive.files.length; j++) {
 
-                                            shortCutName = response.copyTo[i].archive.files[j].real_name;
+                          shortCutName = response.copyTo[i].archive.files[j].real_name;
 
-                                            urlfile = '{{ asset('') }}';
+                          urlfile = '{{ asset('') }}';
 
-                                            urlfile += response.copyTo[i].archive.files[j].url;
+                          urlfile += response.copyTo[i].archive.files[j].url;
 
-                                            if (response.copyTo[i].archive.files[j].extension == "jpg" || response.copyTo[i].archive.files[j].extension == "png" || response.copyTo[i].archive.files[j].extension == "jfif")
+                          if (response.copyTo[i].archive.files[j].extension == "jpg" || response.copyTo[i].archive.files[j].extension == "png" || response.copyTo[i].archive.files[j].extension == "jfif")
 
-                                                fileimage = '{{ asset('assets/images/ico/image.png') }}';
+                            fileimage = '{{ asset('assets/images/ico/image.png') }}';
 
-                                            else if (response.copyTo[i].archive.files[j].extension == "pdf")
+                          else if (response.copyTo[i].archive.files[j].extension == "pdf")
 
-                                                fileimage = '{{ asset('assets/images/ico/pdf.png') }}';
-                                            else if (response.copyTo[i].archive.files[j].extension == "doc")
-                                                fileimage = 'https://template.expand.ps/public/assets/images/ico/word.png';
-                                            else if (response.copyTo[i].archive.files[j].extension == "excel" || response.copyTo[i].archive.files[j].extension == "xsc")
+                            fileimage = '{{ asset('assets/images/ico/pdf.png') }}';
+                          else if (response.copyTo[i].archive.files[j].extension == "doc")
+                            fileimage = 'https://template.expand.ps/public/assets/images/ico/word.png';
+                          else if (response.copyTo[i].archive.files[j].extension == "excel" || response.copyTo[i].archive.files[j].extension == "xsc")
 
-                                                fileimage = '{{ asset('assets/images/ico/excellogo.png') }}';
+                            fileimage = '{{ asset('assets/images/ico/excellogo.png') }}';
 
-                                            else
+                          else
 
-                                                fileimage = '{{ asset('assets/images/ico/file.png') }}';
+                            fileimage = '{{ asset('assets/images/ico/file.png') }}';
 
-                                            shortCutName = shortCutName.substring(0, 20);
+                          shortCutName = shortCutName.substring(0, 20);
 
-                                            attach += '<div id="attach" class=" col-sm-3 col-md-6 onmobatt">' +
+                          attach += '<div id="attach" class=" col-sm-3 col-md-6 onmobatt">' +
 
-                                                '   <div class="attach" onmouseover="$(this).children().first().next().show()">'
+                            '   <div class="attach" onmouseover="$(this).children().first().next().show()">'
 
-                                                + '    '
+                            + '    '
 
-                                                + '    <a class="attach-close1" href="' + urlfile + '" style="color: #74798D; float:left;" target="_blank"><span class="attach-text hidemob">' + shortCutName + '</span><img style="width: 20px;"src="' + fileimage + '"></a>'
+                            + '    <a class="attach-close1" href="' + urlfile + '" style="color: #74798D; float:left;" target="_blank"><span class="attach-text hidemob">' + shortCutName + '</span><img style="width: 20px;"src="' + fileimage + '"></a>'
 
-                                                + '      <input type="hidden" id="formDataaaimgUploads[]" name="formDataaaimgUploads[]" value="' + shortCutName + '">'
+                            + '      <input type="hidden" id="formDataaaimgUploads[]" name="formDataaaimgUploads[]" value="' + shortCutName + '">'
 
-                                                + '             <input type="hidden" id="formDataaaorgNameList[]" name="formDataaaorgNameList[]" value="' + shortCutName + '">'
+                            + '             <input type="hidden" id="formDataaaorgNameList[]" name="formDataaaorgNameList[]" value="' + shortCutName + '">'
 
-                                                + '    </div>'
+                            + '    </div>'
 
-                                                + '  </div>';
-                                        }
+                            + '  </div>';
+                        }
 
-                                        row += attach;
-                                        // ${typeArray[response.copyTo[i].archive.type]}
-                                    }
-                                    if (response.copyTo[i].archive.url == 'contract_archieve') {
-                                        response.copyTo[i].archive.url = 'dep_archieve'
-                                    }
-                                    var noti_template = `<div class="media" ${(response.copyTo[i].is_seen == 0) ? `style="background-color:${cc}" ` : ''}>
+                        row += attach;
+                        // ${typeArray[response.copyTo[i].archive.type]}
+                      }
+                      if (response.copyTo[i].archive.url == 'contract_archieve') {
+                        response.copyTo[i].archive.url = 'dep_archieve'
+                      }
+                      var noti_template = `<div class="media" ${(response.copyTo[i].is_seen == 0) ? `style="background-color:${cc}" ` : ''}>
                           <div class="media-body">
                           <div class="row" >
                             <a style="margin-bottom: 15px;" class=" col-10" href="${baseUrl + response.copyTo[i].archive.url + '?id=' + response.copyTo[i].archive.id}" onclick="seen_noti(${response.copyTo[i].id})">
@@ -1188,23 +1186,23 @@
                           </div>
 
                         </div>`;
-                                    $('.noti_list').append(noti_template);
-                                } else {
-                                    var timestamp = response.copyTo[i].created_at;
-                                    var date = new Date(timestamp);
-                                    taskname = response.copyTo[i].ticket_config.ticket_name;
-                                    if (response.copyTo[i].app_no == 23) {
-                                        taskname = response.copyTo[i].taskName;
-                                    }
-                                    date_str = 'بتاريخ :' + date.getDate() +
-                                        "/" + (date.getMonth() + 1) +
-                                        "/" + date.getFullYear() +
-                                        " الساعة: " +
-                                        " " + date.getHours() +
-                                        ":" + date.getMinutes() +
-                                        ":" + date.getSeconds();
-                                    //   ${baseUrl+response.copyTo[i].archive.url+'?id='+response.copyTo[i].id}
-                                    var noti_template = `<div class="media" ${(response.copyTo[i].is_seen == 0) ? `style="background-color:${cc}" ` : ''}>
+                      $('.noti_list').append(noti_template);
+                    } else {
+                      var timestamp = response.copyTo[i].created_at;
+                      var date = new Date(timestamp);
+                      taskname = response.copyTo[i].ticket_config.ticket_name;
+                      if (response.copyTo[i].app_no == 23) {
+                        taskname = response.copyTo[i].taskName;
+                      }
+                      date_str = 'بتاريخ :' + date.getDate() +
+                        "/" + (date.getMonth() + 1) +
+                        "/" + date.getFullYear() +
+                        " الساعة: " +
+                        " " + date.getHours() +
+                        ":" + date.getMinutes() +
+                        ":" + date.getSeconds();
+                      //   ${baseUrl+response.copyTo[i].archive.url+'?id='+response.copyTo[i].id}
+                      var noti_template = `<div class="media" ${(response.copyTo[i].is_seen == 0) ? `style="background-color:${cc}" ` : ''}>
                           <div class="media-body">
                           <div class="row" >
                             <a style="margin-bottom: 15px;" class=" col-10" href="{{route('admin.dashboard')}}/viewTicketPortal/${response.copyTo[i].id}" onclick="seen_noti(${response.copyTo[i].id})">
@@ -1224,153 +1222,153 @@
                           </div>
 
                         </div>`;
-                                    $('.noti_list').append(noti_template);
-
-                                }
-                            }
-                        }
-                    },
-                });
-            }
-
-            noti();
-
-            function noti_delete(id) {
-                if (confirm('هل انت متاكد من حذف الاشعار؟ لن يمكنك استرجاعه')) {
-                    $.ajax({
-                        type: 'get', // the method (could be GET btw)
-                        url: "noti_delete",
-                        data: {
-                            c_id: id,
-                        },
-                        success: function (response) {
-                            $('.noti_list').html('');
-                            noti();
-                        },
-                    });
-
-                    return true;
-                }
-                return false;
-            }
-
-            function seen_noti(id) {
-                $.ajax({
-                    type: 'get', // the method (could be GET btw)
-                    url: "noti_seen",
-                    data: {
-
-                        c_id: id,
-
-                    },
-                    success: function (response) {
-                        console.log('s')
-                    },
-                });
-            }
-
-            function drawVac($id) {
-
-                let emp_id = $id;
-                $.ajax({
-
-                    type: 'get',
-
-                    // the method (could be GET btw)
-
-                    url: 'getVacForEmployee/' + emp_id,
-                    success: function (response) {
-
-                        if (response.success == 'getData') {
-                            $('#r_balance').html(response.infoVac.balance)
-                            $('#r_spent').html(response.infoVac.balance_done)
-                            $('#r_remain').html(response.infoVac.restB)
-                            $('#u_balance').html(response.infoVac.emergency)
-                            $('#u_spent').html(response.infoVac.emergency_done)
-                            $('#u_remain').html(response.infoVac.restE)
-                        } else {
-
-                        }
-                    },
-
-                });
-
-            }
-
-            $('#store-modal').submit(function (e) {
-
-                $(".loader").removeClass('hide');
-
-                contid = $("#contid").val();
-
-                if (contid == 33) {
-
-                    fillIn = 'area_data';
-
-                } else if (contid == 77) {
-
-                    fillIn = 'region_data';
-
-                } else {
-
-                    fillIn = $("#ctrlToRefresh").val();
-
-                }
-
-                e.preventDefault();
-
-                $("#NationalID").removeClass("error");
-
-                let formData = new FormData(this);
-
-                $.ajax({
-
-                    type: 'POST',
-
-                    url: "store_model",
-
-                    data: formData,
-
-                    contentType: false,
-
-                    processData: false,
-
-                    success: function (data) {
-
-                        $(".loader").addClass('hide');
-
-                        if (data) {
-
-                            $("#" + fillIn).append(new Option(data.name, data.id));
-
-                        }
-
-                        $(".loader").addClass('hide');
-
-                        //$(".form-actions").removeClass('hide');
-
-                        $("#s_name_ar1").val('')
-
-                        $("#QuickAdd").modal('hide');
-
-                    },
-
-                    error: function (response) {
-
-                        $(".loader").addClass('hide');
-
-                        if (response.responseJSON.errors.s_name_ar1) {
-
-                            $("#s_name_ar1").addClass("error");
-
-                        }
-
+                      $('.noti_list').append(noti_template);
 
                     }
+                  }
+                }
+              },
+            });
+          }
 
-                });
+          noti();
+
+          function noti_delete(id) {
+            if (confirm('هل انت متاكد من حذف الاشعار؟ لن يمكنك استرجاعه')) {
+              $.ajax({
+                type: 'get', // the method (could be GET btw)
+                url: "noti_delete",
+                data: {
+                  c_id: id,
+                },
+                success: function (response) {
+                  $('.noti_list').html('');
+                  noti();
+                },
+              });
+
+              return true;
+            }
+            return false;
+          }
+
+          function seen_noti(id) {
+            $.ajax({
+              type: 'get', // the method (could be GET btw)
+              url: "noti_seen",
+              data: {
+
+                c_id: id,
+
+              },
+              success: function (response) {
+                console.log('s')
+              },
+            });
+          }
+
+          function drawVac($id) {
+
+            let emp_id = $id;
+            $.ajax({
+
+              type: 'get',
+
+              // the method (could be GET btw)
+
+              url: 'getVacForEmployee/' + emp_id,
+              success: function (response) {
+
+                if (response.success == 'getData') {
+                  $('#r_balance').html(response.infoVac.balance)
+                  $('#r_spent').html(response.infoVac.balance_done)
+                  $('#r_remain').html(response.infoVac.restB)
+                  $('#u_balance').html(response.infoVac.emergency)
+                  $('#u_spent').html(response.infoVac.emergency_done)
+                  $('#u_remain').html(response.infoVac.restE)
+                } else {
+
+                }
+              },
 
             });
+
+          }
+
+          $('#store-modal').submit(function (e) {
+
+            $(".loader").removeClass('hide');
+
+            contid = $("#contid").val();
+
+            if (contid == 33) {
+
+              fillIn = 'area_data';
+
+            } else if (contid == 77) {
+
+              fillIn = 'region_data';
+
+            } else {
+
+              fillIn = $("#ctrlToRefresh").val();
+
+            }
+
+            e.preventDefault();
+
+            $("#NationalID").removeClass("error");
+
+            let formData = new FormData(this);
+
+            $.ajax({
+
+              type: 'POST',
+
+              url: "store_model",
+
+              data: formData,
+
+              contentType: false,
+
+              processData: false,
+
+              success: function (data) {
+
+                $(".loader").addClass('hide');
+
+                if (data) {
+
+                  $("#" + fillIn).append(new Option(data.name, data.id));
+
+                }
+
+                $(".loader").addClass('hide');
+
+                //$(".form-actions").removeClass('hide');
+
+                $("#s_name_ar1").val('')
+
+                $("#QuickAdd").modal('hide');
+
+              },
+
+              error: function (response) {
+
+                $(".loader").addClass('hide');
+
+                if (response.responseJSON.errors.s_name_ar1) {
+
+                  $("#s_name_ar1").addClass("error");
+
+                }
+
+
+              }
+
+            });
+
+          });
 
         </script>
 
@@ -1624,584 +1622,584 @@
 
         <script>
 
-            // the selection for menu search
+          // the selection for menu search
 
 
-            $(function () {
+          $(function () {
 
-                $(".full_search").autocomplete({
+            $(".full_search").autocomplete({
 
-                    source: "{{route('search')}}",
+              source: "{{route('search')}}",
 
-                    minLength: 1,
+              minLength: 1,
 
 
-                    select: function (event, ui) {
+              select: function (event, ui) {
 
-                        var id = ui.item.id;
-                        if (ui.item.url == 'contract_archieve')
-                            ui.item.url = 'dep_archieve';
+                var id = ui.item.id;
+                if (ui.item.url == 'contract_archieve')
+                  ui.item.url = 'dep_archieve';
 
-                        var url = '{{ route('admin.dashboard') }}/' + ui.item.url;
+                var url = '{{ route('admin.dashboard') }}/' + ui.item.url;
 
-                        var fullUrl = url + '?id' + '=' + id;
+                var fullUrl = url + '?id' + '=' + id;
 
-                        $(location).attr('href', fullUrl)
+                $(location).attr('href', fullUrl)
 
-                    }
-
-                });
+              }
 
             });
 
-
-            $(function () {
-
-                $(".home_search").autocomplete({
-
-                    source: 'search',
-
-                    minLength: 1,
+          });
 
 
-                    select: function (event, ui) {
+          $(function () {
 
-                        var id = ui.item.id;
-                        if (ui.item.url == 'contract_archieve')
-                            ui.item.url = 'dep_archieve';
-                        var url = ui.item.url;
+            $(".home_search").autocomplete({
 
-                        var fullUrl = 'admin/' + url + '?id' + '=' + id;
+              source: 'search',
 
-                        $(location).attr('href', fullUrl)
+              minLength: 1,
 
-                    }
 
-                });
+              select: function (event, ui) {
+
+                var id = ui.item.id;
+                if (ui.item.url == 'contract_archieve')
+                  ui.item.url = 'dep_archieve';
+                var url = ui.item.url;
+
+                var fullUrl = 'admin/' + url + '?id' + '=' + id;
+
+                $(location).attr('href', fullUrl)
+
+              }
 
             });
 
+          });
 
-            function QuickAdd(contid, ctrl, title) {
 
-                return;
+          function QuickAdd(contid, ctrl, title) {
 
-                $(".loader").removeClass('hide');
+            return;
+
+            $(".loader").removeClass('hide');
 
 //$(".form-actions").addClass('hide');
 
 
-                DrawTable(contid)
+            DrawTable(contid)
 
-                $("#fk_i_constant_id1").val(contid);
+            $("#fk_i_constant_id1").val(contid);
 
-                $("#ctrlToRefresh").val(ctrl);
+            $("#ctrlToRefresh").val(ctrl);
 
-                $("#contid").val(contid);
+            $("#contid").val(contid);
 
-                $("#ModalTitle").html(title);
+            $("#ModalTitle").html(title);
 
-                $("#ModalTitle1").html(title);
+            $("#ModalTitle1").html(title);
 
-                $("#QuickAdd").modal('show');
+            $("#QuickAdd").modal('show');
+
+
+            $(".loader").addClass('hide');
+
+          }
+
+          function doUploadPic() {
+
+            $.ajaxSetup({
+
+              headers: {
+
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+
+              }
+
+            });
+
+            $(".loader").removeClass('hide');
+
+            $(".form-actions").addClass('hide');
+
+            var formData = new FormData($("#setting_form")[0]);
+
+            $.ajax({
+
+
+              url: 'uploadPic',
+
+              type: 'POST',
+
+              data: formData,
+
+              dataType: "json",
+
+              async: true,
+
+              success: function (data) {
+
+                if (data) {
+                  console.log(data);
+                  $(".alert-danger").addClass("hide");
+
+                  $(".alert-success").removeClass('hide');
+
+                  //$("#userProfileImg").attr('src', window.location.origin+'/'+data.url);
+
+
+                  if (data.Input == 'imgPic') {
+                    $("#userProfileImg").attr('src', "{{ asset('') }}" + data.file.url);
+
+                    $("#userimgpath").val(data.file.url);
+
+                    $("#file_id").val(data.file.id);
+
+                    $("#userimgpath").trigger('change')
+                  } else if (data.Input == 'header_img') {
+
+                    $("#userHeaderImg").attr('src', "{{ asset('') }}" + data.file.url);
+
+                    $("#header_img").val(data.file.url);
+
+                    $("#file_id").val(data.file.id);
+
+                    $("#header_img").trigger('change')
+                  } else if (data.Input == 'footer_img') {
+
+                    $("#userFooterImg").attr('src', "{{ asset('') }}" + data.file.url);
+
+                    $("#footer_img").val(data.file.url);
+
+                    $("#file_id").val(data.file.id);
+
+                    $("#footer_img").trigger('change')
+                  }
+
+                  setTimeout(function () {
+
+                    $(".alert-danger").addClass("hide");
+
+                    $(".alert-success").addClass("hide");
+
+                  }, 2000)
+
+                } else {
+
+                  $(".alert-success").addClass("hide");
+
+                  $(".alert-danger").removeClass('hide');
+
+                  $("#errMsg").text(data.status.msg)
+
+                }
+
+                $(".loader").addClass('hide');
+
+                $(".form-actions").removeClass('hide');
+
+              },
+
+              error: function () {
+
+                $(".alert-success").addClass("hide");
+
+                $(".alert-danger").removeClass('hide');
+
+                $("#errMsg").text(data.status.msg)
+
+                $(".loader").addClass('hide');
+
+                $(".form-actions").removeClass('hide');
+
+              },
+
+              cache: false,
+
+              contentType: false,
+
+              processData: false
+
+            });
+
+          }
+
+          function doUploadAttach(formDataStr) {
+
+            $.ajaxSetup({
+
+              headers: {
+
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
+
+              }
+
+            });
+
+            $(".loader").removeClass('hide');
+
+            $(".form-actions").addClass('hide');
+
+            var formData = new FormData($("#" + formDataStr)[0]);
+
+            $.ajax({
+
+              url: 'uploadAttach',
+
+              type: 'POST',
+
+              data: formData,
+
+              dataType: "json",
+
+              async: true,
+
+              success: function (data) {
+
+                row = '';
+
+                console.log(data.all_files);
+
+                if (data.all_files) {
+
+                  var j = 0;
+
+                  for (j = 0; j < data.all_files.length; j++) {
+                    row += attacheView(data.all_files[j], formDataStr);
+                  }
+                  $(".form-control-file").val('');
+
+                  $(".alert-danger").addClass("hide");
+
+                  $(".alert-success").removeClass('hide');
+
+                  $("." + formDataStr + "FilesArea").append(row)
+
+                  $(".loader").addClass('hide');
+
+                  //document.getElementById(""+formDataStr+"upload-file[]").value="";
+
+                  $(".group1").colorbox({rel: 'group1'});
+
+                  setTimeout(function () {
+
+                    $(".alert-danger").addClass("hide");
+
+                    $(".alert-success").addClass("hide");
+
+                  }, 2000)
+
+                } else {
+
+                  $(".alert-success").addClass("hide");
+
+                  $(".alert-danger").removeClass('hide');
+
+                }
+
+                $(".loader").addClass('hide');
+
+                $(".form-actions").removeClass('hide');
+
+              },
+
+              error: function () {
+
+                $(".alert-success").addClass("hide");
+
+                $(".alert-danger").removeClass('hide');
+
+                $(".loader").addClass('hide');
+
+                $(".form-actions").removeClass('hide');
+
+              },
+
+              cache: false,
+
+              contentType: false,
+
+              processData: false
+
+            });
+
+          }
+
+          function DrawTable(id) {
+
+            var formData = {
+
+              'pk_i_id': id,
+
+              _token: '{{csrf_token()}}',
+
+            };
+
+
+            $.ajax({
+
+              url: 'getConstantChildren',
+
+              type: 'POST',
+
+              data: formData,
+
+              dataType: "json",
+
+              async: true,
+
+              success: function (data) {
+
+                i = 1;
+
+                row = '';
+
+                for (j = 0; j < data['data'].length; j++) {
+
+                  row += '<tr>'
+
+                    + '<td width="20px">'
+
+                    + i
+
+                    + '</td>'
+
+                    + '<td>'
+
+                    + data['data'][j].name
+
+                    + '</td>'
+
+                    + '<td width="40px">'
+
+                    + '<i class="fa fa-edit" id="trash" aria-hidden="true" style="color:#1E9FF2;padding-top:10px;position: relative;left: 3%;cursor: pointer;" onclick="editConstant(' + data['data'][j].id + ',\'' + data['data'][j].name + '\',\'' + data['pj_i_id'] + '\')"></i>'
+
+                    + '<i class="fa fa-trash" id="trash" aria-hidden="true" style="padding-top:10px;position: relative;left: 3%;cursor: pointer;" onclick="deleteConstant(' + data['data'][j].id + ')"></i>'
+
+                    + '</td>'
+
+                    + '</tr>'
+
+                  i++
+
+                }
+
+
+                $("#subTaskpop").html(row);
+
+              },
+
+              error: function () {
+
+                $(".alert-success").addClass("hide");
+
+                // $(".alert-danger").removeClass('hide');
+
+                $("#errMsg").text(data.status.msg)
+
+                $(".loader").addClass('hide');
+
+                //$(".form-actions").removeClass('hide');
+
+              },
+
+              /*cache: false,
+
+               contentType: false,
+
+               processData: false*/
+
+            });
+
+          }
+
+          function editConstant(id, title, pj_i_id) {
+
+            console.log(id, title, pj_i_id);
+
+            $("#s_name_ar1").val(title);
+
+            $("#pj_i_id").val(pj_i_id);
+
+            $("#fk_i_constantdet_id1").val(id);
+
+
+            $(".modalBtn").text('update')
+
+          }
+
+          function deleteConstant(id) {
+
+            //deleteSubConstant
+
+            fillIn = $("#ctrlToRefresh").val();
+
+            if (!confirm('Are you sure you want to delete this record?'))
+
+              return
+
+            var formData = {
+
+              'pk_i_id': id,
+
+              'fk_i_constant_id': $("#fk_i_constant_id1").val(),
+
+              _token: '{{csrf_token()}}',
+
+
+            };
+
+            console.log(formData);
+
+            $.ajax({
+
+              url: 'deleteSubConstant',
+
+              type: 'POST',
+
+              data: formData,
+
+              dataType: "json",
+
+              async: true,
+
+              success: function (data) {
+
+                location.reload();
+
+                $("#" + fillIn).html(new Option(" Select ", ''));
+
+                if (data.constList.length > 0) {
+
+                  for (i = 0; i < data.constList.length; i++)
+
+                    $("#" + fillIn).append(new Option(data.constList[i].s_name_ar, data.constList[i].pk_i_id));
+
+                } else {
+
+                  //$("#"+fillIn).append(new Option(data.constList[0].s_name_ar, data.currNode[0].pk_i_id));
+
+                }
 
 
                 $(".loader").addClass('hide');
 
-            }
 
-            function doUploadPic() {
+                //$("#QuickAdd").modal('hide');
 
-                $.ajaxSetup({
+                DrawTable($("#fk_i_constant_id1").val())
 
-                    headers: {
+                $("#fk_i_constantdet_id1").val('0')
 
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
 
-                    }
+              error: function () {
 
-                });
+                $(".alert-success").addClass("hide");
 
-                $(".loader").removeClass('hide');
+                $(".alert-danger").removeClass('hide');
 
-                $(".form-actions").addClass('hide');
+                // $("#errMsg").text(data.status.msg)
 
-                var formData = new FormData($("#setting_form")[0]);
+                $(".loader").addClass('hide');
 
-                $.ajax({
+              },
 
+              /*cache: false,
 
-                    url: 'uploadPic',
+               contentType: false,
 
-                    type: 'POST',
+               processData: false*/
 
-                    data: formData,
+            });
 
-                    dataType: "json",
+          }
 
-                    async: true,
+          $(document).ready(function () {
 
-                    success: function (data) {
 
-                        if (data) {
-                            console.log(data);
-                            $(".alert-danger").addClass("hide");
+            $(".select2").select2();
 
-                            $(".alert-success").removeClass('hide');
 
-                            //$("#userProfileImg").attr('src', window.location.origin+'/'+data.url);
+            //$(".sticky-wrapper").css("display", "none");
 
+            $("#nav_hover").click(function () {
 
-                            if (data.Input == 'imgPic') {
-                                $("#userProfileImg").attr('src', "{{ asset('') }}" + data.file.url);
 
-                                $("#userimgpath").val(data.file.url);
+              /* if ( $('#nav_expanded_nav').css('display') == 'none' || $('#nav_expanded_nav').css("visibility") == "hidden"){
 
-                                $("#file_id").val(data.file.id);
+                        // $("#nav_expanded_nav").css("display", "block");
 
-                                $("#userimgpath").trigger('change')
-                            } else if (data.Input == 'header_img') {
+                         //$("#nav_expanded_nav").css("visibility", "visible");
 
-                                $("#userHeaderImg").attr('src', "{{ asset('') }}" + data.file.url);
+                         //$(".sticky-wrapper").css("display", "block");
 
-                                $("#header_img").val(data.file.url);
+                         //$(".sticky-wrapper").css("height", "70px");
 
-                                $("#file_id").val(data.file.id);
 
-                                $("#header_img").trigger('change')
-                            } else if (data.Input == 'footer_img') {
 
-                                $("#userFooterImg").attr('src', "{{ asset('') }}" + data.file.url);
+               }else{
 
-                                $("#footer_img").val(data.file.url);
+                       //  $("#nav_expanded_nav").css("display", "none");
 
-                                $("#file_id").val(data.file.id);
+                         //$("#nav_expanded_nav").css("visibility", "hidden");
 
-                                $("#footer_img").trigger('change')
-                            }
+                         //$(".sticky-wrapper").css("display", "none");
 
-                            setTimeout(function () {
-
-                                $(".alert-danger").addClass("hide");
-
-                                $(".alert-success").addClass("hide");
-
-                            }, 2000)
-
-                        } else {
-
-                            $(".alert-success").addClass("hide");
-
-                            $(".alert-danger").removeClass('hide');
-
-                            $("#errMsg").text(data.status.msg)
-
-                        }
-
-                        $(".loader").addClass('hide');
-
-                        $(".form-actions").removeClass('hide');
-
-                    },
-
-                    error: function () {
-
-                        $(".alert-success").addClass("hide");
-
-                        $(".alert-danger").removeClass('hide');
-
-                        $("#errMsg").text(data.status.msg)
-
-                        $(".loader").addClass('hide');
-
-                        $(".form-actions").removeClass('hide');
-
-                    },
-
-                    cache: false,
-
-                    contentType: false,
-
-                    processData: false
-
-                });
-
-            }
-
-            function doUploadAttach(formDataStr) {
-
-                $.ajaxSetup({
-
-                    headers: {
-
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
-
-                    }
-
-                });
-
-                $(".loader").removeClass('hide');
-
-                $(".form-actions").addClass('hide');
-
-                var formData = new FormData($("#" + formDataStr)[0]);
-
-                $.ajax({
-
-                    url: 'uploadAttach',
-
-                    type: 'POST',
-
-                    data: formData,
-
-                    dataType: "json",
-
-                    async: true,
-
-                    success: function (data) {
-
-                        row = '';
-
-                        console.log(data.all_files);
-
-                        if (data.all_files) {
-
-                            var j = 0;
-
-                            for (j = 0; j < data.all_files.length; j++) {
-                                row += attacheView(data.all_files[j], formDataStr);
-                            }
-                            $(".form-control-file").val('');
-
-                            $(".alert-danger").addClass("hide");
-
-                            $(".alert-success").removeClass('hide');
-
-                            $("." + formDataStr + "FilesArea").append(row)
-
-                            $(".loader").addClass('hide');
-
-                            //document.getElementById(""+formDataStr+"upload-file[]").value="";
-
-                            $(".group1").colorbox({rel: 'group1'});
-
-                            setTimeout(function () {
-
-                                $(".alert-danger").addClass("hide");
-
-                                $(".alert-success").addClass("hide");
-
-                            }, 2000)
-
-                        } else {
-
-                            $(".alert-success").addClass("hide");
-
-                            $(".alert-danger").removeClass('hide');
-
-                        }
-
-                        $(".loader").addClass('hide');
-
-                        $(".form-actions").removeClass('hide');
-
-                    },
-
-                    error: function () {
-
-                        $(".alert-success").addClass("hide");
-
-                        $(".alert-danger").removeClass('hide');
-
-                        $(".loader").addClass('hide');
-
-                        $(".form-actions").removeClass('hide');
-
-                    },
-
-                    cache: false,
-
-                    contentType: false,
-
-                    processData: false
-
-                });
-
-            }
-
-            function DrawTable(id) {
-
-                var formData = {
-
-                    'pk_i_id': id,
-
-                    _token: '{{csrf_token()}}',
-
-                };
-
-
-                $.ajax({
-
-                    url: 'getConstantChildren',
-
-                    type: 'POST',
-
-                    data: formData,
-
-                    dataType: "json",
-
-                    async: true,
-
-                    success: function (data) {
-
-                        i = 1;
-
-                        row = '';
-
-                        for (j = 0; j < data['data'].length; j++) {
-
-                            row += '<tr>'
-
-                                + '<td width="20px">'
-
-                                + i
-
-                                + '</td>'
-
-                                + '<td>'
-
-                                + data['data'][j].name
-
-                                + '</td>'
-
-                                + '<td width="40px">'
-
-                                + '<i class="fa fa-edit" id="trash" aria-hidden="true" style="color:#1E9FF2;padding-top:10px;position: relative;left: 3%;cursor: pointer;" onclick="editConstant(' + data['data'][j].id + ',\'' + data['data'][j].name + '\',\'' + data['pj_i_id'] + '\')"></i>'
-
-                                + '<i class="fa fa-trash" id="trash" aria-hidden="true" style="padding-top:10px;position: relative;left: 3%;cursor: pointer;" onclick="deleteConstant(' + data['data'][j].id + ')"></i>'
-
-                                + '</td>'
-
-                                + '</tr>'
-
-                            i++
-
-                        }
-
-
-                        $("#subTaskpop").html(row);
-
-                    },
-
-                    error: function () {
-
-                        $(".alert-success").addClass("hide");
-
-                        // $(".alert-danger").removeClass('hide');
-
-                        $("#errMsg").text(data.status.msg)
-
-                        $(".loader").addClass('hide');
-
-                        //$(".form-actions").removeClass('hide');
-
-                    },
-
-                    /*cache: false,
-
-                     contentType: false,
-
-                     processData: false*/
-
-                });
-
-            }
-
-            function editConstant(id, title, pj_i_id) {
-
-                console.log(id, title, pj_i_id);
-
-                $("#s_name_ar1").val(title);
-
-                $("#pj_i_id").val(pj_i_id);
-
-                $("#fk_i_constantdet_id1").val(id);
-
-
-                $(".modalBtn").text('update')
-
-            }
-
-            function deleteConstant(id) {
-
-                //deleteSubConstant
-
-                fillIn = $("#ctrlToRefresh").val();
-
-                if (!confirm('Are you sure you want to delete this record?'))
-
-                    return
-
-                var formData = {
-
-                    'pk_i_id': id,
-
-                    'fk_i_constant_id': $("#fk_i_constant_id1").val(),
-
-                    _token: '{{csrf_token()}}',
-
-
-                };
-
-                console.log(formData);
-
-                $.ajax({
-
-                    url: 'deleteSubConstant',
-
-                    type: 'POST',
-
-                    data: formData,
-
-                    dataType: "json",
-
-                    async: true,
-
-                    success: function (data) {
-
-                        location.reload();
-
-                        $("#" + fillIn).html(new Option(" Select ", ''));
-
-                        if (data.constList.length > 0) {
-
-                            for (i = 0; i < data.constList.length; i++)
-
-                                $("#" + fillIn).append(new Option(data.constList[i].s_name_ar, data.constList[i].pk_i_id));
-
-                        } else {
-
-                            //$("#"+fillIn).append(new Option(data.constList[0].s_name_ar, data.currNode[0].pk_i_id));
-
-                        }
-
-
-                        $(".loader").addClass('hide');
-
-
-                        //$("#QuickAdd").modal('hide');
-
-                        DrawTable($("#fk_i_constant_id1").val())
-
-                        $("#fk_i_constantdet_id1").val('0')
-
-                    },
-
-                    error: function () {
-
-                        $(".alert-success").addClass("hide");
-
-                        $(".alert-danger").removeClass('hide');
-
-                        // $("#errMsg").text(data.status.msg)
-
-                        $(".loader").addClass('hide');
-
-                    },
-
-                    /*cache: false,
-
-                     contentType: false,
-
-                     processData: false*/
-
-                });
-
-            }
-
-            $(document).ready(function () {
-
-
-                $(".select2").select2();
-
-
-                //$(".sticky-wrapper").css("display", "none");
-
-                $("#nav_hover").click(function () {
-
-
-                    /* if ( $('#nav_expanded_nav').css('display') == 'none' || $('#nav_expanded_nav').css("visibility") == "hidden"){
-
-                              // $("#nav_expanded_nav").css("display", "block");
-
-                               //$("#nav_expanded_nav").css("visibility", "visible");
-
-                               //$(".sticky-wrapper").css("display", "block");
-
-                               //$(".sticky-wrapper").css("height", "70px");
-
-
-
-                     }else{
-
-                             //  $("#nav_expanded_nav").css("display", "none");
-
-                               //$("#nav_expanded_nav").css("visibility", "hidden");
-
-                               //$(".sticky-wrapper").css("display", "none");
-
-                     } */
-
-
-                });
-
-
-                leftSide = $(".leftSide").height()
-
-                rightSide = $(".rightSide").height()
-
-
-                setTimeout(function () {
-
-                    if (screen.width > 600) {
-
-                        if (leftSide > rightSide)
-
-                            $(".rightSide").attr("style", "min-height:" + ($(".leftSide").height() + "px"))
-
-                        else
-
-                            $(".leftSide").attr("style", "min-height:" + ($(".rightSide").height() + "px"))
-
-
-                        $(".selectize-input .item").html('')
-
-                    }
-
-
-                }, 1000)
-
-                $(".select2").attr('style', 'width:90%');
-
-                $("#emp_to_close_json").next().attr('style', 'width:70%');
-                $("#emp_to_close_json").prev().attr('style', 'width:30%');
-                $("#emp_to_revoke_json").next().attr('style', 'width:70%');
-                $("#emp_to_revoke_json").prev().attr('style', 'width:30%');
-                $("#emp_to_update_json").next().attr('style', 'width:70%');
-                $("#emp_to_update_json").prev().attr('style', 'width:30%');
-// 		$("#allowed_emp").next().attr('style','width:58% !important');
-// 		$("#allowed_emp").prev().attr('style','width:40% !important');
-                $("#emp_to_reopen_ticket").next().attr('style', 'width:70%');
-                $("#emp_to_reopen_ticket").prev().attr('style', 'width:30%');
-                $("#emp_to_report_ticket").next().attr('style', 'width:70%');
-                $("#emp_to_report_ticket").prev().attr('style', 'width:30%');
-                $("#emp_to_tag_ticket").next().attr('style', 'width:70%');
-                $("#emp_to_tag_ticket").prev().attr('style', 'width:30%');
-                $("#emp_to_access_portal").next().attr('style', 'width:60%');
-                $("#emp_to_access_portal").prev().attr('style', 'width:40%');
+               } */
 
 
             });
+
+
+            leftSide = $(".leftSide").height()
+
+            rightSide = $(".rightSide").height()
+
+
+            setTimeout(function () {
+
+              if (screen.width > 600) {
+
+                if (leftSide > rightSide)
+
+                  $(".rightSide").attr("style", "min-height:" + ($(".leftSide").height() + "px"))
+
+                else
+
+                  $(".leftSide").attr("style", "min-height:" + ($(".rightSide").height() + "px"))
+
+
+                $(".selectize-input .item").html('')
+
+              }
+
+
+            }, 1000)
+
+            $(".select2").attr('style', 'width:90%');
+
+            $("#emp_to_close_json").next().attr('style', 'width:70%');
+            $("#emp_to_close_json").prev().attr('style', 'width:30%');
+            $("#emp_to_revoke_json").next().attr('style', 'width:70%');
+            $("#emp_to_revoke_json").prev().attr('style', 'width:30%');
+            $("#emp_to_update_json").next().attr('style', 'width:70%');
+            $("#emp_to_update_json").prev().attr('style', 'width:30%');
+// 		$("#allowed_emp").next().attr('style','width:58% !important');
+// 		$("#allowed_emp").prev().attr('style','width:40% !important');
+            $("#emp_to_reopen_ticket").next().attr('style', 'width:70%');
+            $("#emp_to_reopen_ticket").prev().attr('style', 'width:30%');
+            $("#emp_to_report_ticket").next().attr('style', 'width:70%');
+            $("#emp_to_report_ticket").prev().attr('style', 'width:30%');
+            $("#emp_to_tag_ticket").next().attr('style', 'width:70%');
+            $("#emp_to_tag_ticket").prev().attr('style', 'width:30%');
+            $("#emp_to_access_portal").next().attr('style', 'width:60%');
+            $("#emp_to_access_portal").prev().attr('style', 'width:40%');
+
+
+          });
 
         </script>
         <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
@@ -2210,183 +2208,183 @@
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
         <script>
-            userProile = 0;
-            $(document).ready(function () {
-                userProile = $("#Assigned2ID").val();
+          userProile = 0;
+          $(document).ready(function () {
+            userProile = $("#Assigned2ID").val();
+          })
+
+          function writeUserData(redirecURL) {
+
+            userProile = $("#Assigned2ID").val();
+            // console.log(userProile+'   '+ typeof(userProile));
+            let tags = $('#tags').val()
+            tags.unshift(userProile)
+            senderName = '<?php echo Auth()->user()->nick_name; ?>'
+            tags.map((userId) => {
+              firebase.firestore().collection("Users").doc(userId).collection('notifications').add({
+                data: 'قام ' + senderName + ' بإرسال طلب  ' +
+                  $(".leftSide .card-title").children().first().next().text(),
+                url: realPath + redirecURL,
+                domain: '<?php echo $fcmdomain ?>',
+                type: "added"
+              });
             })
 
-            function writeUserData(redirecURL) {
+            return true;
+          }
 
-                userProile = $("#Assigned2ID").val();
-                // console.log(userProile+'   '+ typeof(userProile));
-                let tags = $('#tags').val()
-                tags.unshift(userProile)
-                senderName = '<?php echo Auth()->user()->nick_name; ?>'
-                tags.map((userId) => {
-                    firebase.firestore().collection("Users").doc(userId).collection('notifications').add({
-                        data: 'قام ' + senderName + ' بإرسال طلب  ' +
-                            $(".leftSide .card-title").children().first().next().text(),
-                        url: realPath + redirecURL,
-                        domain: '<?php echo $fcmdomain ?>',
-                        type: "added"
+          function writeUserForward(redirecURL) {
+
+            userProile = '' + $(".frm2 #Assigned2ID").val() + '';
+            senderName = '<?php echo Auth()->user()->nick_name; ?>'
+
+            console.log(userProile, senderName, redirecURL)
+            firebase.firestore().collection("Users").doc(userProile).collection('notifications').add({
+              data: 'قام ' + senderName + ' بتحويل طلب ' +
+                $(".leftSide .card-title").children().first().next().text(),
+              url: realPath + redirecURL,
+              domain: '<?php echo $fcmdomain ?>',
+              type: "added"
+            });
+          }
+
+          function writeRespondApp(redirecURL, userProile, str) {
+            str = '';
+            console.log(redirecURL, userProile)
+            //userProile=$("#Assigned2ID").val();
+            senderName = '<?php echo Auth()->user()->nick_name; ?>'
+            firebase.firestore().collection("Users").doc(userProile).collection('notifications').add({
+              data: 'قام ' + senderName + ' ' + str +
+                $(".leftSide .card-title").children().first().next().text(),
+              url: realPath + redirecURL,
+              domain: '<?php echo $fcmdomain ?>',
+              type: "added"
+            });
+          }
+
+          const firebaseConfig = {
+            // apiKey: "AIzaSyAvvlz9UceU_DOIf83MKg7QtgqqiLwiDrI",
+            // authDomain: "expand.ps",
+            // databaseURL: "https://users.firebaseio.com",
+            // projectId: "expand-bcbbc",
+            // storageBucket: "expand-bcbbc.appspot.com",
+            /*messagingSenderId: "",
+            appId: ""*/
+            apiKey: "AIzaSyBCoSmxbAHFwzaikWRu98cw8rEr3Tt7lC8",
+            authDomain: "expand-7d71c.firebaseapp.com",
+            projectId: "expand-7d71c",
+            storageBucket: "expand-7d71c.appspot.com",
+            messagingSenderId: "906710062876",
+            appId: "1:906710062876:web:2f4a40467d69b3cfd18cd9",
+            measurementId: "G-9G3JCQ6MPK"
+          };
+
+
+          var user = "<?php echo Auth()->user()->id; ?>";
+          firebase.initializeApp(firebaseConfig);
+          firebase.firestore().collection("Users").doc(user).collection('notifications').onSnapshot(function (snapshot) {
+            snapshot.docChanges().forEach(function (change) {
+              if (change.type === "added") {
+                if (change.doc.data().domain == '<?php echo $fcmdomain ?>') {
+                  firebase.firestore().collection("Users").doc(user).collection('notifications').doc(change.doc.id).delete();
+                  /*loadNoti();
+                  loadOutApp();*/
+                  $('.myTaskTable101').DataTable().ajax.reload();
+
+                  $('.myTaskTable101').DataTable().on('init.dt', function () {
+                    $(".odd").each(function () {
+                      $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
                     });
-                })
+                    $(".even").each(function () {
+                      $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
+                    });
+                  })
+                  $('.wtbl201').DataTable().ajax.reload();
+                  $('.wtbl401').DataTable().ajax.reload();
+                  $('.wtbl301').DataTable().ajax.reload();
+                  // watingTaskTable.DataTable().ajax.reload();
+                  // watingTaskTable.on('init.dt', function() {
+                  //     $(".odd").each(function(){
+                  //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
+                  //     });
+                  //     $(".even").each(function(){
+                  //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
+                  //     });
+                  //     $(".nottes").each(function(){
+                  //         $(this).html($(this).text());
+                  //     });
+                  //   })
+                  // sentTaskTable.DataTable().ajax.reload();
+                  // sentTaskTable.on('init.dt', function() {
+                  //     $(".odd").each(function(){
+                  //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
+                  //     });
+                  //     $(".even").each(function(){
+                  //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
+                  //     });
+                  //     $(".nottes").each(function(){
+                  //         $(this).html($(this).text());
+                  //     });
+                  //   })
 
-                return true;
-            }
-
-            function writeUserForward(redirecURL) {
-
-                userProile = '' + $(".frm2 #Assigned2ID").val() + '';
-                senderName = '<?php echo Auth()->user()->nick_name; ?>'
-
-                console.log(userProile, senderName, redirecURL)
-                firebase.firestore().collection("Users").doc(userProile).collection('notifications').add({
-                    data: 'قام ' + senderName + ' بتحويل طلب ' +
-                        $(".leftSide .card-title").children().first().next().text(),
-                    url: realPath + redirecURL,
-                    domain: '<?php echo $fcmdomain ?>',
-                    type: "added"
-                });
-            }
-
-            function writeRespondApp(redirecURL, userProile, str) {
-                str = '';
-                console.log(redirecURL, userProile)
-                //userProile=$("#Assigned2ID").val();
-                senderName = '<?php echo Auth()->user()->nick_name; ?>'
-                firebase.firestore().collection("Users").doc(userProile).collection('notifications').add({
-                    data: 'قام ' + senderName + ' ' + str +
-                        $(".leftSide .card-title").children().first().next().text(),
-                    url: realPath + redirecURL,
-                    domain: '<?php echo $fcmdomain ?>',
-                    type: "added"
-                });
-            }
-
-            const firebaseConfig = {
-                // apiKey: "AIzaSyAvvlz9UceU_DOIf83MKg7QtgqqiLwiDrI",
-                // authDomain: "expand.ps",
-                // databaseURL: "https://users.firebaseio.com",
-                // projectId: "expand-bcbbc",
-                // storageBucket: "expand-bcbbc.appspot.com",
-                /*messagingSenderId: "",
-                appId: ""*/
-                apiKey: "AIzaSyBCoSmxbAHFwzaikWRu98cw8rEr3Tt7lC8",
-                authDomain: "expand-7d71c.firebaseapp.com",
-                projectId: "expand-7d71c",
-                storageBucket: "expand-7d71c.appspot.com",
-                messagingSenderId: "906710062876",
-                appId: "1:906710062876:web:2f4a40467d69b3cfd18cd9",
-                measurementId: "G-9G3JCQ6MPK"
-            };
-
-
-            var user = "<?php echo Auth()->user()->id; ?>";
-            firebase.initializeApp(firebaseConfig);
-            firebase.firestore().collection("Users").doc(user).collection('notifications').onSnapshot(function (snapshot) {
-                snapshot.docChanges().forEach(function (change) {
-                    if (change.type === "added") {
-                        if (change.doc.data().domain == '<?php echo $fcmdomain ?>') {
-                            firebase.firestore().collection("Users").doc(user).collection('notifications').doc(change.doc.id).delete();
-                            /*loadNoti();
-                            loadOutApp();*/
-                            $('.myTaskTable101').DataTable().ajax.reload();
-
-                            $('.myTaskTable101').DataTable().on('init.dt', function () {
-                                $(".odd").each(function () {
-                                    $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
-                                });
-                                $(".even").each(function () {
-                                    $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
-                                });
-                            })
-                            $('.wtbl201').DataTable().ajax.reload();
-                            $('.wtbl401').DataTable().ajax.reload();
-                            $('.wtbl301').DataTable().ajax.reload();
-                            // watingTaskTable.DataTable().ajax.reload();
-                            // watingTaskTable.on('init.dt', function() {
-                            //     $(".odd").each(function(){
-                            //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
-                            //     });
-                            //     $(".even").each(function(){
-                            //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
-                            //     });
-                            //     $(".nottes").each(function(){
-                            //         $(this).html($(this).text());
-                            //     });
-                            //   })
-                            // sentTaskTable.DataTable().ajax.reload();
-                            // sentTaskTable.on('init.dt', function() {
-                            //     $(".odd").each(function(){
-                            //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
-                            //     });
-                            //     $(".even").each(function(){
-                            //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
-                            //     });
-                            //     $(".nottes").each(function(){
-                            //         $(this).html($(this).text());
-                            //     });
-                            //   })
-
-                            // tagedTaskTable.DataTable().ajax.reload();
-                            // tagedTaskTable.on('init.dt', function() {
-                            //     $(".odd").each(function(){
-                            //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
-                            //     });
-                            //     $(".even").each(function(){
-                            //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
-                            //     });
-                            //     $(".nottes").each(function(){
-                            //         $(this).html($(this).text());
-                            //     });
-                            // })
-                            Notification.requestPermission().then(function (permission) {
-                                // If the user accepts, let's create a notification
-                                if (permission === "granted") {
-                                    var notification = new Notification(change.doc.data().data);
-                                    notification.onclick = function (event) {
-                                        event.preventDefault(); // prevent the browser from focusing the Notification's tab
-                                        window.open(change.doc.data().url, '_blank');
-                                    }
-                                    // notification.onclick = function(){self.loction=change.doc.data().url};
-                                }
-                            });
-                        }
+                  // tagedTaskTable.DataTable().ajax.reload();
+                  // tagedTaskTable.on('init.dt', function() {
+                  //     $(".odd").each(function(){
+                  //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
+                  //     });
+                  //     $(".even").each(function(){
+                  //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
+                  //     });
+                  //     $(".nottes").each(function(){
+                  //         $(this).html($(this).text());
+                  //     });
+                  // })
+                  Notification.requestPermission().then(function (permission) {
+                    // If the user accepts, let's create a notification
+                    if (permission === "granted") {
+                      var notification = new Notification(change.doc.data().data);
+                      notification.onclick = function (event) {
+                        event.preventDefault(); // prevent the browser from focusing the Notification's tab
+                        window.open(change.doc.data().url, '_blank');
+                      }
+                      // notification.onclick = function(){self.loction=change.doc.data().url};
                     }
-                });
-
+                  });
+                }
+              }
             });
 
+          });
 
-            function notifyMe() {
-                // Let's check if the browser supports notifications
-                if (!("Notification" in window)) {
-                    alert("This browser does not support desktop notification");
-                }
 
-                // Let's check whether notification permissions have already been granted
-                else if (Notification.permission === "granted") {
-                    // If it's okay let's create a notification
-                    //var notification = new Notification("Hi there!");
-                }
-
-                // Otherwise, we need to ask the user for permission
-                else if (Notification.permission !== "denied") {
-                    Notification.requestPermission().then(function (permission) {
-                        // If the user accepts, let's create a notification
-                        if (permission === "granted") {
-                            /*var notification = new Notification("Hi there!");
-                            notification.onclick = function(){self.loction='https://expand.ps'};*/
-                        }
-                    });
-                }
-
-                // At last, if the user has denied notifications, and you
-                // want to be respectful there is no need to bother them any more.
+          function notifyMe() {
+            // Let's check if the browser supports notifications
+            if (!("Notification" in window)) {
+              alert("This browser does not support desktop notification");
             }
 
-            notifyMe();
+            // Let's check whether notification permissions have already been granted
+            else if (Notification.permission === "granted") {
+              // If it's okay let's create a notification
+              //var notification = new Notification("Hi there!");
+            }
+
+            // Otherwise, we need to ask the user for permission
+            else if (Notification.permission !== "denied") {
+              Notification.requestPermission().then(function (permission) {
+                // If the user accepts, let's create a notification
+                if (permission === "granted") {
+                  /*var notification = new Notification("Hi there!");
+                  notification.onclick = function(){self.loction='https://expand.ps'};*/
+                }
+              });
+            }
+
+            // At last, if the user has denied notifications, and you
+            // want to be respectful there is no need to bother them any more.
+          }
+
+          notifyMe();
         </script>
 
         <!-- END PAGE LEVEL JS-->

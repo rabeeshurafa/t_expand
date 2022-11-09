@@ -16,7 +16,22 @@
     </div>
 </div>
 <div class="row d-flex justify-content-sm-center" style="">
-
+	<div class="col-md-1 w-iconmob" style="text-align: center; padding: 5px;">
+		<a class="dropdown-item" href="{{route('portal')}}/outspreadTasks" style="padding-top: 0.5rem">
+			<span style="display: inline;">
+				<img src="{{asset('assets/images/TaskIcons8.png')}}" style="padding:5px; ;height: 64px;">
+				<div style="color: #000000;">مهام متفرقة</div>
+			</span>
+		</a>
+	</div>
+	<div class="col-md-1 w-iconmob" style="text-align: center; padding: 5px;">
+		<a class="dropdown-item" href="{{route('portal')}}/trashTasks" style="padding-top: 0.5rem">
+			<span style="display: inline;">
+				<img src="https://db.expand.ps/bs/trashicon.png" style="padding:5px; ;height: 64px;">
+				<div style="color: #000000;">خدمة النفايات</div>
+			</span>
+		</a>
+	</div>
 	<div class="col-md-1 w-iconmob" style="text-align: center; padding: 5px;">
 		<a class="dropdown-toggle nav-link" style="color: #ffffff;" href="/" data-toggle="dropdown" aria-expanded="true">
 			<span style="display: inline;">
@@ -72,12 +87,6 @@
 				</span>
 			</a>
 			<ul class="dropdown-menu menumob" style="width: 200px;list-style: none">
-			    
-	            @can('outspreadTasks')
-				<li data-menu="">
-					<a class="dropdown-item" href="{{route('portal')}}/outspreadTasks">مهام متفرقة</a>
-				</li>
-				@endcan
 	            @can('publicComplaint')
 				<li data-menu="">
 					<a class="dropdown-item" href="{{route('portal')}}/publicComplaint">شكوى عامة</a>
@@ -111,6 +120,7 @@
 				@endif
 			</ul>
 	</div>
+
 	{{--<div class="col-md-1 w-iconmob" style="text-align: center; padding: 5px;">
 			<a class="dropdown-toggle nav-link" style="color: #ffffff;" href="/" data-toggle="dropdown" aria-expanded="true">
 				<span style="display: inline;">

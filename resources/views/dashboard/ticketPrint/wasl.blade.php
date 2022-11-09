@@ -86,7 +86,7 @@
         
         <div class="row">
             
-            <span style="font-weight: bold;"> عنوانه : اليامون/ </span>
+            <span style="font-weight: bold;"> عنوانه : قطنة/ </span>
             <input name="address" id="address" value="{{($wasl!=null?$wasl->address:'')}}">
         </div>
         <div class="row">

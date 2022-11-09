@@ -25,6 +25,7 @@ Route::group(['namespace' => 'Portal','prefix' =>'portal'], function () {
         Route::get('/waterMeterRead', 'PortalWater@meterRead')->name('portal.waterMeterRead');
         Route::get('/waterMeterTransfer', 'PortalWater@meterTransfer')->name('portal.waterMeterTransfer');
         Route::get('/waterFinancialTransfer', 'PortalWater@waterFinancialTransfer')->name('portal.waterFinancialTransfer');
+        Route::get('/waterPermission', 'PortalWater@waterPermission')->name('portal.waterPermission');
         
         Route::get('/elecLineDisconnect', 'PortalElec@elecLineDisconnect')->name('portal.elecLineDisconnect');
         Route::get('/elecFinancialTransfer', 'PortalElec@elecFinancialTransfer')->name('portal.elecFinancialTransfer');
@@ -42,8 +43,10 @@ Route::group(['namespace' => 'Portal','prefix' =>'portal'], function () {
         Route::get('/newTicket29', 'PortalElec@newTicket29')->name('portal.newTicket29');
         Route::get('/newTicket36', 'PortalElec@newTicket36')->name('portal.newTicket36');
         Route::get('/newTicket39', 'PortalElec@newTicket39')->name('portal.newTicket39');
+        Route::get('/elecPermission', 'PortalElec@elecPermission')->name('portal.elecPermission');
         
         Route::get('/outspreadTasks', 'PortalOutspread@outspreadTasks')->name('portal.outspreadTasks');
+        Route::get('/trashTasks', 'PortalOutspread@trashTasks')->name('portal.trashTasks');
         Route::get('/publicComplaint', 'PortalOutspread@publicComplaint')->name('portal.publicComplaint');
         Route::get('/citizenComplaint', 'PortalOutspread@citizenComplaint')->name('portal.citizenComplaint');
         Route::get('/quittance', 'PortalOutspread@quittance')->name('portal.quittance');
@@ -57,6 +60,7 @@ Route::group(['namespace' => 'Portal','prefix' =>'portal'], function () {
         /************ ticket area ***************/
         Route::post('portal_saveTicket1', 'AppPortal@saveTicket1')->name('portal_saveTicket1');
         Route::post('portal_saveTicket2', 'AppPortal@saveTicket2')->name('portal_saveTicket2');
+        Route::post('portal_saveTicket3', 'AppPortal@saveTicket3')->name('portal_saveTicket3');
         Route::post('portal_saveTicket4', 'AppPortal@saveTicket4')->name('portal_saveTicket4');
         Route::post('portal_saveTicket5', 'AppPortal@saveTicket5')->name('portal_saveTicket5');
         Route::post('portal_saveTicket6', 'AppPortal@saveTicket6')->name('portal_saveTicket6');
