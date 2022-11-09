@@ -11,6 +11,7 @@ use App\Models\Constant;
 use App\Models\Region;
 use App\Models\AppTicket1;
 use App\Models\AppTicket2;
+use App\Models\AppTicket3;
 use App\Models\AppTicket4;
 use App\Models\AppTicket5;
 use App\Models\AppTicket6;
@@ -348,6 +349,7 @@ and `related`=".$related."
 order by created_at asc"); 
 
     }
+    var $fees2=array();
     function loadDefaul($type=''){
         $screen=Menu::where('s_function_url','=',$type)->get()->first();
         $ticket=TicketConfig::where('id','=',$screen->pk_i_id)->with('Admin')->get()->first();
@@ -426,8 +428,39 @@ order by created_at asc");
                 return view('dashboard.services.malfunction', compact('ticket','type','region','ticketInfo','department','app_type','fees','app_no','archive_config'));
                 
             }
-            
-
+		}
+		if($related==3){
+		    $setting = Setting::first();
+            $region=Region::where('town_id',$setting->town_id)->get();
+            $subsList=Constant::where('parent',6032)->get();
+            $converterNos=Constant::where('parent',6208)->get();
+            $department=Department::where('enabled','=','1')->get();
+            $app_no=3;
+            $license=license::where('id',$ticket->LicenceNo)->first();
+		    if($license!=null){
+		        $ticket->setAttribute('licNo',$license->licNo);
+		    }
+            if($ticket->detail)
+		    {
+		        $detail=json_decode($ticket->detail);
+                $ticket->setAttribute('detailData',$detail);
+		    }
+		    if($ticket->app_type==2){
+		        $type = 'waterPermission';
+                $ticketInfo=$this->loadDefaul($type);
+                $fees=$this->fees;
+                $app_type=2;
+                $archive_config = ArchiveRole::where('empid', Auth()->user()->id)->where('type', $type)->get();
+                return view('dashboard.water_ticket.appTicket3', compact('ticket','type','region','ticketInfo','department','app_type','subsList','fees','archive_config','app_no','converterNos'));
+		    }else{
+		        $type = 'elecPermission';
+                $ticketInfo=$this->loadDefaul($type);
+                $fees=$this->fees;
+                $fees2=$this->fees2;
+                $app_type=1;
+                $archive_config = ArchiveRole::where('empid', Auth()->user()->id)->where('type', $type)->get();
+		        return view('dashboard.services.appTicket3', compact('ticket','type','region','ticketInfo','department','app_type','subsList','fees','archive_config','app_no','converterNos','fees2'));
+		    }
 		}
 		if($related==4){
 		   if($ticket->app_type==2)
@@ -772,9 +805,17 @@ order by created_at asc");
             $helpers['region']=Region::get();
 		}
 		if($related==12){
-		    $ticket=AppTicket12::find($ticket_id);
-		    $helpers['ticketTypeList']=Constant::where('parent',6011)->where('status',1)->get();
-            $helpers['region']=Region::get();
+            $setting = Setting::first();
+            $region=Region::where('town_id',$setting->town_id)->get();
+            $type = 'newTicket37';
+            $ticketTypeList = Constant::where('parent',6011)->where('status',1)->get();
+            $ticketInfo=$this->loadDefaul($type);
+            $department=Department::where('enabled','=','1')->get();
+            $app_type=1;
+            $fees=$this->fees;
+            $app_no=12;
+            $archive_config = ArchiveRole::where('empid', Auth()->user()->id)->where('type', $type)->get();
+            return view('dashboard.services.ticket37', compact('ticket','type','region','ticketInfo','ticketTypeList','department','app_type','fees','archive_config','app_no'));
 		}
 		if($related==13){
 		    $ticket=AppTicket13::find($ticket_id);
@@ -808,31 +849,59 @@ order by created_at asc");
             $ticket->setAttribute('subscription',$subs);
             $helpers['region']=Region::get();
 		}
-		if($related==14){
-		    $ticket=AppTicket14::find($ticket_id);
-		    $helpers['fixTypeList']=Constant::where('parent',6064)->where('status',1)->get();
-            $helpers['region']=Region::get();
-		}
+        if($related==14){
+            $setting = Setting::first();
+            $region=Region::where('town_id',$setting->town_id)->get();
+            $type = 'newTicket27';
+            $ticketInfo=$this->loadDefaul($type);
+            $department=Department::where('enabled','=','1')->get();
+            $fixTypeList = Constant::where('parent',6064)->where('status',1)->get();
+            $app_type=1;
+            $fees=$this->fees;
+            $app_no=14;
+            $archive_config = ArchiveRole::where('empid', Auth()->user()->id)->where('type', $type)->get();
+            return view('dashboard.services.ticket27', compact('ticket','type','region','ticketInfo','department','app_type','fees','fixTypeList','archive_config','app_no'));
+        }
 		if($related==15){
-		    $ticket=AppTicket15::find($ticket_id);
-		    if($ticket->subs)
-		    $subsId=json_decode($ticket->subs);
-		    else
-		    $subsId=["0"];
-            $subs=elec::where('elecs.enabled',1)->where('elecs.id',$subsId)->select('elecs.*', 'users.name as user_name','a.name as subscription_Type_name','b.name as counter_Type_name','d.name as payType_name')
-                ->leftJoin('t_constant as a', 'a.id', 'elecs.subscription_Type')
+		  //  $type = 'newTicket29';
+		  //  $ticketInfo=$this->loadDefaul($type);
+    //         $department=Department::where('enabled',1)->get();
+    //         $fees=$this->fees;
+    //         $archive_config = ArchiveRole::where('empid', Auth()->user()->id)->where('type', $type)->get();
+    //         $app_no=15;
+		  //  if($ticket->subs)
+		  //  $subsId=json_decode($ticket->subs);
+		  //  else
+		  //  $subsId=["0"];
+    //         $subs=elec::where('elecs.enabled',1)->where('elecs.id',$subsId)->select('elecs.*', 'users.name as user_name','a.name as subscription_Type_name','b.name as counter_Type_name','d.name as payType_name')
+    //             ->leftJoin('t_constant as a', 'a.id', 'elecs.subscription_Type')
         
-                ->leftJoin('t_constant as b', 'b.id', 'elecs.counter_Type')
+    //             ->leftJoin('t_constant as b', 'b.id', 'elecs.counter_Type')
         
-                ->leftJoin('t_constant as d', 'd.id', 'elecs.payType')
+    //             ->leftJoin('t_constant as d', 'd.id', 'elecs.payType')
         
-                ->leftJoin('users','users.id','elecs.user_id')
-                ->get();
+    //             ->leftJoin('users','users.id','elecs.user_id')
+    //             ->get();
             
-            $ticket->setAttribute('subscription',$subs);
-            $lic = License::where('id','=',$ticket->licNo)->first();
-            $ticket->setAttribute('license',$lic);
-            $helpers['region']=Region::get();
+    //         $ticket->setAttribute('subscription',$subs);
+    //         $lic = License::where('id','=',$ticket->licNo)->first();
+    //         $ticket->setAttribute('license',$lic);
+    //         $helpers['region']=Region::get();
+    //         return view('dashboard.services.ticket29', compact('ticket','type','ticketInfo','fees','archive_config','app_no','helpers'));
+            
+            $setting = Setting::first();
+            $region=Region::where('town_id',$setting->town_id)->get();
+            $subsList=Constant::where('parent',39)->get();
+            $type = 'newTicket29';
+            $ticketInfo=$this->loadDefaul($type);
+            $department=Department::where('enabled','=','1')->get();
+            $app_type=1;
+            $fees=$this->fees;
+            $app_no=15;
+            $archive_config = ArchiveRole::where('empid', Auth()->user()->id)->where('type', $type)->get();
+            return view('dashboard.services.ticket29', compact('ticket','type','region','subsList','ticketInfo','department','app_type','fees','archive_config','app_no'));
+
+
 		}
 		if($related==16){
 		    $ticket=AppTicket16::find($ticket_id);
@@ -899,8 +968,23 @@ order by created_at asc");
             $department=Department::where('enabled',1)->get();
             $fees=$this->fees;
             $archive_config = ArchiveRole::where('empid', Auth()->user()->id)->where('type', $type)->get();
+            $ticket_status=Constant::where('parent',5001)->where('status',1)->get();
             $app_no=23;
-            return view('dashboard.outspreadTasks.outspreadTask',  compact('ticket','type','ticketTypeList','region','ticketInfo','department','fees','archive_config','app_no'));
+            $task_type=Constant::find($ticket->task_type);
+            if ($task_type) {
+                if($task_type->parent==6029){
+                    return view('dashboard.outspreadTasks.outspreadTask',  compact('ticket','ticket_status','type','ticketTypeList','region','ticketInfo','department','fees','archive_config','app_no'));
+                }else{
+                    $type = 'trashTasks';
+                    $ticketTypeList = Constant::where('parent',6458)->where('status',1)->get();
+                    $ticketInfo=$this->loadDefaul($type);
+                    $department=Department::where('enabled',1)->get();
+                    $fees=$this->fees;
+                    $archive_config = ArchiveRole::where('empid', Auth()->user()->id)->where('type', $type)->get();
+                    return view('dashboard.outspreadTasks.trashTasks',  compact('ticket','ticket_status','type','ticketTypeList','region','ticketInfo','department','fees','archive_config','app_no'));
+                }
+            }
+            return view('dashboard.outspreadTasks.outspreadTask',  compact('ticket','ticket_status','type','ticketTypeList','region','ticketInfo','department','fees','archive_config','app_no'));
 		}
 		if($related==24){
 		    $type = 'publicComplaint';
@@ -908,8 +992,9 @@ order by created_at asc");
             $department=Department::where('enabled',1)->get();
             $fees=$this->fees;
             $archive_config = ArchiveRole::where('empid', Auth()->user()->id)->where('type', $type)->get();
+            $complaintTypes = Constant::where('parent',6113)->where('status',1)->get();
             $app_no=24;
-            return view('dashboard.outspreadTasks.publicComplaint', compact('ticket','type','ticketInfo','department','fees','archive_config','app_no'));
+            return view('dashboard.outspreadTasks.publicComplaint', compact('ticket','type','ticketInfo','department','fees','archive_config','app_no','complaintTypes'));
 		}
 		if($related==25){
 		    $ticket=AppTicket25::find($ticket_id);

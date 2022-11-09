@@ -20,7 +20,7 @@
     'Friday'=>'الجمعة',
 );?>
 <?php
-    $archiveNames=array(
+$archiveNames=array(
         'out_archieve'=>'صادر',
         'in_archieve'=>'وارد',
         'mun_archieve'=>'المؤسسة',
@@ -34,7 +34,8 @@
         'finance_archive'=>'قسم المالية',
         'trade_archive'=>'المعاملات',
         'agenda_archieve'=>'الجلسات',
-        );
+        'jal_archieve'=>'الجلسات',
+);
     if($config[0]->ticket_no==46)
     $config[0]->ticket_name.=' '.$archiveNames[$ticket->archive_type];
 ?>
@@ -633,12 +634,17 @@
                                                 تحرير وطباعة الطلب
                                             </a>
                                             @endif
+                                            @if($config[0]->ticket_no == 45)
+                                                <a style="padding: .5rem 1rem;" href="{{url('ar/admin/print45/'.$ticket->id)}}" class="btn btn-info" target="_blank">
+                                                    طباعة التقرير
+                                                </a>
+                                            @endif
                                             @if($config[0]->ticket_no==3)
                                             <a style="padding: .5rem 1rem;" href="{{url('ar/admin/printTicket3/'.$ticket->id)}}" class="btn btn-info" target="_blank">
                                                 تحرير وطباعة الطلب
                                             </a>
                                             <a style="padding: .5rem 1rem;" href="{{url('ar/admin/objectionPrint/'.$ticket->id.'/'.$ticket->history[0]->related)}}" class="btn btn-info" target="_blank">
-                                                طباعة عدم ممانعة  
+                                                طباعة عدم ممانعة
                                             </a>
                                             @endif
                                             @if($config[0]->ticket_no == 18)

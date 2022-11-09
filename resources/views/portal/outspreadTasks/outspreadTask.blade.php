@@ -79,7 +79,7 @@
 
 
     <link rel="stylesheet" type="text/css"
-        href="https://template.expand.ps/app-assets/global/plugins/jquery-multi-select/css/multi-select-rtl.css" />
+          href="https://template.expand.ps/app-assets/global/plugins/jquery-multi-select/css/multi-select-rtl.css" />
 
     <script src="https://db.expand.ps/assets/jquery.min.js" type="text/javascript"></script>
 
@@ -106,14 +106,27 @@
                                                             {{ 'نوع الطلب' }}
                                                         </span>
                                                     </div>
-                                                    <select id="task_type" name="task_type" type="text"
+                                                    <select id="task_type" name="task_type" type="text" class="form-control valid task_type" onchange="putDesc();" aria-invalid="false">
+                                                        <option value="6030">طلب مطب</option>
+                                                        <option value="6053">إثبات مهنه</option>
+                                                        <option value="6079">استغلال شارع عام لحفله</option>
+                                                        <option value="6226">طلب رخصة حرف</option>
+                                                        <option value="6227">اغلاق رخصة حرف وصناعات</option>
+                                                        <option value="6452">إثبات سكن</option>
+                                                        <option value="6453">إثبات ورثة</option>
+                                                        <option value="6454">طلب حالة إنسانية</option>
+                                                        <option value="6455">طلب مساعدة</option>
+                                                        <option value="6456">طلب براءة ذمة للطابو</option>
+                                                        <option value="6457">طلب براءة ذمة عن الديون</option>
+                                                    </select>
+                                                    <!--                                                    <select id="task_type" name="task_type" type="text"
                                                         class="form-control valid task_type" onchange="putDesc();" aria-invalid="false">
                                                         <option value="" selected=""> {{ 'نوع الطلب' }} </option>
                                                         @foreach($ticketTypeList as $ticketType)
                                                         <option value="{{ $ticketType->id }}">{{ $ticketType->name }}</option>
                                                         @endforeach
-                                                    </select>
-                                                    
+                                                    </select>-->
+
                                                 </div>
                                             </div>
                                         </div>
@@ -129,8 +142,8 @@
                                                         </span>
                                                     </div>
                                                     <textarea type="text" id="malDesc" class="form-control"
-                                                        placeholder="وصف الطلب" name="malDesc"
-                                                        style="height: 35px;"></textarea>
+                                                              placeholder="وصف الطلب" name="malDesc"
+                                                              style="height: 35px;"></textarea>
 
                                                 </div>
                                             </div>
@@ -153,7 +166,7 @@
                             </div>
 
                         </div>
-                        
+
                         <input type="hidden" name="subscriptionID" id="subscriptionID">
                         <input type="hidden" id="dept_id"  name="dept_id" value="{{$ticketInfo->dept_id}}">
                         <input type="hidden" id="app_type"  name="app_type" value="4">
@@ -161,7 +174,7 @@
                         <div style="padding-right:20px">
                             @include('portal.includes.subscriber')
                         </div>
-                        @include('portal.includes.forward') 
+                        @include('portal.includes.forward')
                     </div>
                 </div>
             </div>
@@ -173,188 +186,196 @@
         </form>
     </section>
 
-<script>
+    <script>
 
-function putDesc(){
-    document.getElementById("malDesc").value =$( "#task_type option:selected" ).text();
+      function putDesc(){
+        document.getElementById("malDesc").value =$( "#task_type option:selected" ).text();
 
-}
-    $(document).ready(function () {
+      }
+      $(document).ready(function () {
 
-    $( "#subscriber_name" ).autocomplete({
-		source:'{{route("portal_auto_complete")}}',
-		minLength: 1,
-        select: function( event, ui ) {
+        $( "#subscriber_name" ).autocomplete({
+          source:'{{route("portal_auto_complete")}}',
+          minLength: 1,
+          select: function( event, ui ) {
             $("#subscriber_id").val(ui.item.id)
-            getFullData(ui.item.id)
-		}
-	});
+            // getFullData(ui.item.id)
+          }
+        });
 
 
-    $('#ticketFrm').submit(function(e) {
-        $(".loader").removeClass('hide');
-        $(".form-actions").addClass('hide'); 
-       e.preventDefault();
-       $( "#subscriber_name" ).removeClass( "error" );
-        $( "#subscriber_id" ).removeClass( "error" );
-        $( "#MobileNo" ).removeClass( "error" );
-        $( "#AreaID" ).removeClass( "error" );
-        $( "#malDesc" ).removeClass( "error" );
-        $( "#task_type" ).removeClass( "error" );
-       let formData = new FormData(this);
-       $.ajax({
-          type:'POST',
-          url: '{{route("portal_saveTicket23")}}',
-           data: formData,
-           contentType: false,
-           processData: false,
+        $('#ticketFrm').submit(function(e) {
+          $(".loader").removeClass('hide');
+          $(".form-actions").addClass('hide');
+          e.preventDefault();
+          $( "#subscriber_name" ).removeClass( "error" );
+          $( "#subscriber_id" ).removeClass( "error" );
+          $( "#MobileNo" ).removeClass( "error" );
+          $( "#AreaID" ).removeClass( "error" );
+          $( "#malDesc" ).removeClass( "error" );
+          $( "#task_type" ).removeClass( "error" );
+          $( "#national_id" ).removeClass( "error" );
+          let formData = new FormData(this);
+          $.ajax({
+            type:'POST',
+            url: '{{route("portal_saveTicket23")}}',
+            data: formData,
+            contentType: false,
+            processData: false,
             success: (response) => {
-            $(".form-actions").removeClass('hide');  
-            // console.log('response');
-             if (response.success!=null) {
+              $(".form-actions").removeClass('hide');
+              // console.log('response');
+              if (response.success!=null) {
                 $(".loader").addClass('hide');
-			    Swal.fire({
-				position: 'top-center',
-				icon: 'success',
-				title: '{{trans('admin.data_added')}}',
-				showConfirmButton: false,
-				timer: 1500
-				})
+                Swal.fire({
+                  position: 'top-center',
+                  icon: 'success',
+                  title: '{{trans('admin.data_added')}}',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
 
-				// setTimeout(function(){self.location='{{asset('/ar/admin')}}'},1500)
-               this.reset();
+                // setTimeout(function(){self.location='{{asset('/ar/admin')}}'},1500)
+                this.reset();
 
-             }else{
-                 console.log(response.error);
-                 if(response.error=='no_attatch'){
-                     
-                     $(".attachName").addClass('error');
-                     Swal.fire({
-    				position: 'top-center',
-    				icon: 'error',
-    				title: 'أدخل المرفقات',
-    				showConfirmButton: true,
-    				timer: 2000
-    				})
-                    $(".loader").addClass('hide');
-    				return false;
-                 }
-                 $(".loader").addClass('hide');
+              }else{
+                console.log(response.error);
+                if(response.error=='no_attatch'){
 
-    			Swal.fire({
-    				position: 'top-center',
-    				icon: 'error',
-    				title: '{{trans('admin.error_save')}}',
-    				showConfirmButton: false,
-    				timer: 1500
-    				})
-                 }
-             //location.reload();
+                  $(".attachName").addClass('error');
+                  Swal.fire({
+                    position: 'top-center',
+                    icon: 'error',
+                    title: 'أدخل المرفقات',
+                    showConfirmButton: true,
+                    timer: 2000
+                  })
+                  $(".loader").addClass('hide');
+                  return false;
+                }
+                $(".loader").addClass('hide');
 
-           },
+                Swal.fire({
+                  position: 'top-center',
+                  icon: 'error',
+                  title: '{{trans('admin.error_save')}}',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+              }
+              //location.reload();
+
+            },
             error: function(response){
-            $(".loader").addClass('hide');
-            $(".form-actions").removeClass('hide');
-			if(response.responseJSON.errors.subscriber_name){
+              $(".loader").addClass('hide');
+              $(".form-actions").removeClass('hide');
+              if(response.responseJSON.errors.subscriber_name){
                 $( "#subscriber_name" ).addClass( "error" );
                 $( "#subscriber_name" ).get(0).setCustomValidity('أدخل اسم معرف مسبقا ');
                 $( "#subscriber_name" ).on('input',function(){
-                    this.setCustomValidity('')
+                  this.setCustomValidity('')
                 })
-            }
-            if(response.responseJSON.errors.subscriber_id){
+              }
+              if(response.responseJSON.errors.subscriber_id){
                 $( "#subscriber_id" ).addClass( "error" );
                 $( "#subscriber_name" ).get(0).setCustomValidity('أدخل اسم معرف مسبقا ');
                 $( "#subscriber_name" ).on('input',function(){
-                    this.setCustomValidity('')
+                  this.setCustomValidity('')
                 })
-            }
-            if(response.responseJSON.errors.MobileNo){
+              }
+              if(response.responseJSON.errors.national_id){
+                $( "#national_id" ).addClass( "error" );
+                $( "#national_id" ).get(0).setCustomValidity('أدخل رقم الهوية ');
+                $( "#national_id" ).on('input',function(){
+                  this.setCustomValidity('')
+                })
+              }
+              if(response.responseJSON.errors.MobileNo){
                 $( "#MobileNo" ).addClass( "error" );
                 $( "#MobileNo" ).get(0).setCustomValidity('أدخل رقم جوال ');
                 $( "#MobileNo" ).on('blur',function(){
-                    this.setCustomValidity('')
+                  this.setCustomValidity('')
                 })
-            }
-            if(response.responseJSON.errors.AreaID){
+              }
+              if(response.responseJSON.errors.AreaID){
                 $( "#AreaID" ).addClass( "error" );
                 $( "#AreaID" ).get(0).setCustomValidity('يرجى اختيار المنطقة ');
                 $( "#AreaID" ).on('blur',function(){
-                    this.setCustomValidity('')
+                  this.setCustomValidity('')
                 })
-            }
-            if(response.responseJSON.errors.malDesc){
+              }
+              if(response.responseJSON.errors.malDesc){
                 $( "#malDesc" ).addClass( "error" );
                 $( "#malDesc" ).get(0).setCustomValidity('يرجى ادخال سبب الطلب ');
                 $( "#malDesc" ).on('blur',function(){
-                    this.setCustomValidity('')
+                  this.setCustomValidity('')
                 })
-            }
-            if(response.responseJSON.errors.task_type){
+              }
+              if(response.responseJSON.errors.task_type){
                 $( "#task_type" ).addClass( "error" );
                 $( "#task_type" ).get(0).setCustomValidity('يرجى اختيار نوع الاشتراك ');
                 $( "#task_type" ).on('blur',function(){
-                    this.setCustomValidity('')
+                  this.setCustomValidity('')
                 })
+              }
+              Swal.fire({
+                position: 'top-center',
+                icon: 'error',
+                title: 'يرجى تعبئة الحقول الاجبارية',
+                showConfirmButton: false,
+                timer: 1500
+              })
             }
-			Swal.fire({
-				position: 'top-center',
-				icon: 'error',
-				title: 'يرجى تعبئة الحقول الاجبارية',
-				showConfirmButton: false,
-				timer: 1500
-				})
-           }
-       });
-  });
-});
+          });
+        });
+      });
 
-function getFullData(id){
-    
+      function getFullData(id){
+
         $.ajaxSetup({
 
-            headers: {
+          headers: {
 
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
+
+          }
+
+        });
+        formData={'id':id}
+        $.ajax({
+          type:'POST',
+          url: '{{route("portal_appCustomer")}}',
+          data: formData,
+          /*contentType: false,
+          processData: false,*/
+          success: (response) => {
+            if (response) {
+              srch=response.phone_one==null?(response.phone_two==null?'':response.phone_two):response.phone_one
+              if(srch.search("056")>=0)
+                $('#mobImg').attr('src','{{asset('assets/images/w35.png')}}');
+              else
+                $('#mobImg').attr('src','{{asset('assets/images/jawwal35.png')}}');
+              $('#MobileNo').val(response.phone_one==null?(response.phone_two==null?'':response.phone_two):response.phone_one)
+              $(".loader").addClass('hide');
+
 
             }
 
-        });
-    formData={'id':id}
-       $.ajax({
-          type:'POST',
-          url: '{{route("portal_appCustomer")}}',
-           data: formData,
-           /*contentType: false,
-           processData: false,*/
-           success: (response) => {
-             if (response) {
-                 srch=response.phone_one==null?(response.phone_two==null?'':response.phone_two):response.phone_one
-                if(srch.search("056")>=0)
-                    $('#mobImg').attr('src','{{asset('assets/images/w35.png')}}');
-                else
-                    $('#mobImg').attr('src','{{asset('assets/images/jawwal35.png')}}');
-                $('#MobileNo').val(response.phone_one==null?(response.phone_two==null?'':response.phone_two):response.phone_one)
-                $(".loader").addClass('hide');
-                
-               
-             }
-
-           },
-           error: function(response){
+          },
+          error: function(response){
             $(".loader").addClass('hide');
 
-			Swal.fire({
-				position: 'top-center',
-				icon: 'error',
-				title: '{{trans('admin.error_save')}}',
-				showConfirmButton: false,
-				timer: 1500
-				})
-           }
-       });
-}
+            Swal.fire({
+              position: 'top-center',
+              icon: 'error',
+              title: '{{trans('admin.error_save')}}',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }
+        });
+      }
 
-</script>
+    </script>
 @stop
 

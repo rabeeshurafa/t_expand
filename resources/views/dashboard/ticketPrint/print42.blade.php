@@ -199,12 +199,12 @@
         <div class="row" style="padding-top: 50px;">
             <div class="col-12" style="text-align:left">
                 <span> 
-                بسام خمايسة  
+                سعد فتحي عواد
                 </span>
                 
             </div>
             <div class="col-12" style="padding-top: 50px;text-align:left">
-                <span>رئيس قسم الايرادات </span>
+                <span>رئيس المجلس </span>
                 
             </div>
         </div>

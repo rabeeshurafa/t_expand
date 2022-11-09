@@ -86,12 +86,23 @@ return [
             'visibility' => 'public',
         ],
 
+        'dropbox' => [
+            'driver' => 'dropbox',
+            'App folder name' => 'expandbropbox',
+            'App key' => '8f7l1qrwph13rql',
+            'appKey' => '8f7l1qrwph13rql',
+            'App secret' => 'a2hp0e30uhq76si',
+            'appSecret' => 'a2hp0e30uhq76si',
+            'client_id'=>  "8f7l1qrwph13rql",
+            'client_secret'=>  "a2hp0e30uhq76si"
+        ],
+
         'ftp' => [
             'driver' => 'ftp',
             'host' => env('FTP_HOST', 'u319352.your-storagebox.de'),
             'username' => env('FTP_USERNAME', 'u319352'),
             'password' => env('FTP_PASSWORD', 'QiuJ591eBDbFE5hR'),
-            'url' => env('FTP_URl'),
+            'url' => env('FTP_URL'),
             'visibility' => 'public',
             // Optional FTP Settings...
             // 'port' => env('FTP_PORT', 21),

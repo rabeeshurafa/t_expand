@@ -47,7 +47,7 @@
 
 @if($ticket->app_type==1)
 <div class="row">
-    <div class="col-md-7">
+    <div class="col-md-12">
         <input type="hidden" name="lastRec" id="lastRec" value="4">
         <div class="form-group" style="margin-bottom: 0rem!important;">
             <div class="input-group" >
@@ -55,13 +55,13 @@
                 <div class="input-group-prepend posmob"> <!--posmob-->
                 <label class="form-label " style="color: #ff9149; font-weight:bold">القدرة</label>
                 </div>
-                <div class="col-sm-6 poselecmob">
+                <div class="col-sm-3 poselecmob">
                     <input type="radio" {{ $readonly?"readonly":"" }} name="phase[]" {{ $ticket->phase==1?' class=hidemob jui-radio-buttons checked ':' class=hidemob jui-radio-buttons  ' }} id="radio-1"  value="1" onclick="">
                     <label {{ $ticket->phase==1?'':"class=hidemob" }} for="radio-1">1 فاز</label>
                     <input type="radio" {{ $readonly?"readonly":"" }} name="phase[]" {{ $ticket->phase==2?' class=hidemob jui-radio-buttons checked ':' class=hidemob jui-radio-buttons  ' }} id="radio-2"  value="2" onclick="">
                     <label {{ $ticket->phase==2?'':"class=hidemob" }} for="radio-2">3 فاز</label>
                  </div>
-                <div class="col-sm-6 col-md-3 hide"    style="padding-bottom: 15px;" >
+                <div class="col-sm-6 col-md-3"    style="padding-bottom: 15px;" >
                     <div class="float-left">
                         <input type="number" class="form-control numFeild" {{ $readonly?"readonly":"" }} style="width:60px;"  name="inAmper" id="inAmper" value="{{ $ticket->inAmper }}" placeholder="30 أمبير">
                     </div> &nbsp;
@@ -70,28 +70,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <div class="input-group" style="">
-                <div class="input-group-prepend">
-                    <span class="input-group-text " id="basic-addon1">
-                        {{ 'الغاية' }}
-                    </span>
-                </div>
-                <select id="task_type" {{ $readonly?"readonly":"" }}  name="task_type" type="text"
-                    class="form-control valid ticket_type" style="" aria-invalid="false">
-                    @foreach($helpers['task_types'] as $ticketType)
-                    <option value="{{ $ticketType->id }}" {{ $ticket->task_type==$ticketType->id?'selected':"" }} >{{ $ticketType->name }}</option>
-                    @endforeach
-                </select>
-                <div class="input-group-append hidemob"onclick="ShowConstantModal(6465,'ticket_type','الغاية')">
-                    <span class="input-group-text input-group-text2">
-                        <i class="fa fa-external-link"></i>
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
 
 </div>

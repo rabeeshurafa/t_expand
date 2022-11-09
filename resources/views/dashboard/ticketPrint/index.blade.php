@@ -25,37 +25,37 @@
         .hidePrint{
             display: none;
         }
-    .form-check-input{
-        position:relative;
-        margin-right:-0.25rem;!important
+        .form-check-input{
+            position:relative;
+            margin-right:-0.25rem;!important
         }
         .form-control input{
             background-color: #e9ecef!important;
             opacity: 1!important;
         }
         .
-            .input-group {
-                width: 99% !important;
-            }
-            .marginrightminus30 {
-                margin-right: 0px;
-            }
-        
+        .input-group {
+            width: 99% !important;
+        }
+        .marginrightminus30 {
+            margin-right: 0px;
+        }
+
     }
     span{
-            margin-right: 20px;
+        margin-right: 20px;
     }
     .footerLine{
         width:100%;
         text-align:center;
         margin-top:10%;
     }
-    
+
 </style>
 <img src="{{$setting->header_img}}" width="100%" style="max-width:100%">
 <!--<div>-->
 <!--    <span width="50%" align="right">-->
-        
+
 <!--    </span>-->
 <!--    <span width="50%" align="right">-->
 <!--            <h6 style="margin-top:10px;font-size:16pt;font-weight:bold;">تاريخ الطلب :-->
@@ -65,114 +65,113 @@
 
 <!--</div>-->
 
-
 <form method="post" id="rpFrm" dir="rtl" style="min-height:950px;padding-top: 35px;">
-        <div class="row" style="text-align:center">
-            <div class="col-12" style="text-align:center">
-                <h1 class=" " style="text-align:center;font-weight: bold;display:inline;">
-                    
-                    @if( $config[0]->ticket_no==23)
-                        {{$helpers['ticketType']->name}}
-                    @elseif( $config[0]->ticket_no==24 || $config[0]->ticket_no==27)
-                        {{ $config[0]->ticket_name }} ({{ $ticket->ticket_type_name }})
-                    @else
-                        {{ $config[0]->ticket_name }}
-                    @endif
-                </h1>
-                <span style="font-size:16pt;">رقم الطلب :
+    <div class="row" style="text-align:center">
+        <div class="col-12" style="text-align:center">
+            <h1 class=" " style="text-align:center;font-weight: bold;display:inline;">
+
+                @if( $config[0]->ticket_no==23)
+                    {{$helpers['ticketType']->name}}
+                @elseif( $config[0]->ticket_no==24 || $config[0]->ticket_no==27)
+                    {{ $config[0]->ticket_name }} ({{ $ticket->ticket_type_name }})
+                @else
+                    {{ $config[0]->ticket_name }}
+                @endif
+            </h1>
+            <span style="font-size:16pt;">رقم الطلب :
                     ({{$ticket->app_no}})  
                 </span>
-            </div>
         </div>
-        <div class="row">
-            <div class="col-6" style="text-align:right">
-                @if( $config[0]->ticket_no==31)
-                    <span style="margin-top:10px;font-size:16pt;" align="right">
+    </div>
+    <div class="row">
+        <div class="col-6" style="text-align:right">
+            @if( $config[0]->ticket_no==31)
+                <span style="margin-top:10px;font-size:16pt;" align="right">
                         تاريخ الطلب :
                         <?php echo $ticket->date_buy ; ?>
                     </span>
-                @else
-                    <span style="margin-top:10px;font-size:16pt;" align="right">
+            @else
+                <span style="margin-top:10px;font-size:16pt;" align="right">
                         تاريخ الطلب :
                         <?php echo date('d/m/Y',strtotime($ticket->created_at )); ?>
                     </span>
-                @endif
-            
-            
-            </div>
+            @endif
+
+
         </div>
-        <div class="row">
-            <div class="col-6" style="text-align:right">
-                @if( $config[0]->ticket_no!=37)
+    </div>
+    <div class="row">
+        <div class="col-6" style="text-align:right">
+            @if( $config[0]->ticket_no!=37)
                 <span> مقدم الطلب : </span>
-                @else
+            @else
                 <span> اسم المركبة  : </span>
-                @endif
-                
-                <span>
+            @endif
+
+            <span>
                     {{ $ticket->customer_name }}
                 </span>
-            </div>
-            
+        </div>
+        @if( $config[0]->ticket_no!=28)
             <div class="col-6" style="text-align:right">
-                
+
                 <span> عنوانه : </span>
                 <span>
                     {{ $ticket->region_name }} /
-                    {{ $ticket->address }}  
-                    
+                    {{ $ticket->address }}
+
                 </span>
             </div>
-        </div>
-        <div class="row" style="margin-bottom:10px;">
-            <div class="col-6" style="text-align:right">
-                @if( $config[0]->ticket_no!=37)
+        @endif
+    </div>
+    <div class="row" style="margin-bottom:10px;">
+        <div class="col-6" style="text-align:right">
+            @if( $config[0]->ticket_no!=37)
                 <span> رقم الهوية : </span>
-                @else
+            @else
                 <span> رقم المركبة : </span>
-                @endif
-                <span>{{$ticket->national}}</span>
-            </div>
-            <div class="col-6" style="text-align:right">
-                <span> الجوال : </span>
-               <span>{{ $ticket->customer_mobile }}</span>
-            </div>
+            @endif
+            <span>{{$ticket->national}}</span>
         </div>
-        @if( $config[0]->ticket_no==1)
-        <div class="row" style="margin-bottom:10px;">
-            <div class="col-6" style="text-align:right">
-                <span> نوع الاشتراك : </span>
-                <span>{{$ticket->subscription_type_name->name}}</span>
-            </div>
-            @if( $ticket->app_type==1)
-            <div class="col-6" style="text-align:right">
-                <span> القدرة : </span>
-                @if($ticket->phase==1)
-               <span>1 فاز</span>
-               @else
-               <span>3 فاز</span>
-               @endif
-            </div>
-            @endif  
+        <div class="col-6" style="text-align:right">
+            <span> الجوال : </span>
+            <span>{{ $ticket->customer_mobile }}</span>
         </div>
-        @endif  
-        @if( isset($ticket->subscription))
-        <div class="row" style="margin-bottom:10px;">
-            <div class="col-12" style="text-align:right">
-                <span> رقم الاشتراك : </span>
-                <span>{{$ticket->subscription[0]->subscription_no}}</span>
-            </div>
-        </div>
-        @endif  
-        @if($ticket->malDesc != null)
+    </div>
+    @if($ticket->malDesc != null && $config[0]->ticket_no!=28)
         <div class="row" style="margin-bottom:10px;">
             <div class="col-12" style="text-align:right">
                 <span> وصف الطلب: </span>
                 <span>{{$ticket->malDesc}}</span>
             </div>
         </div>
-        @endif  
-        @if( $config[0]->ticket_no==39)
+    @elseif($config[0]->ticket_no==28)
+        <div class="row" style="margin-bottom:10px;">
+            <div class="col-6" style="text-align:right">
+                <span> سبب المغادرة: </span>
+                <span>{{$ticket->malDesc}}</span>
+            </div>
+            <div class="col-6" style="text-align:right">
+                <span> نوع المغادرة: </span>
+                <span>{{$ticket->leave_type_name}}</span>
+            </div>
+        </div>
+        <div class="row" style="margin-bottom:10px;">
+            <div class="col-4" style="text-align:right">
+                <span> وقت الخروج: </span>
+                <span>{{$ticket->start}}</span>
+            </div>
+            <div class="col-4" style="text-align:right">
+                <span> وقت العودة : </span>
+                <span>{{$ticket->end_dior}}</span>
+            </div>
+            <div class="col-4" style="text-align:right">
+                <span> المدة الزمنية : </span>
+                <span>{{$ticket->period}}</span>
+            </div>
+        </div>
+    @endif
+    @if( $config[0]->ticket_no==39)
         <div class="row" style="margin-bottom:10px;">
             <div class="col-6" style="text-align:right">
                 <span> طبيعة العمل : </span>
@@ -181,49 +180,49 @@
             <div class="col-6" style="text-align:right">
                 <span> رقم الرخصة : </span>
                 @if(isset($ticket->license))
-               <span>{{ $ticket->license->licNo}}</span>
-               @else
-               <span>{{ $ticket->licNo }}</span>
-               @endif  
+                    <span>{{ $ticket->license->licNo}}</span>
+                @else
+                    <span>{{ $ticket->licNo }}</span>
+                @endif
             </div>
         </div>
-        @endif  
-        
-        @if( $config[0]->ticket_no==40)
+    @endif
+
+    @if( $config[0]->ticket_no==40)
         <div class="row" style="margin-bottom:10px;">
             <div class="col-6" style="text-align:right">
                 <span> استعمال البناء  : </span>
                 @if($ticket->buildingUse == 1)
-                <span>شقق</span>
+                    <span>شقق</span>
                 @else
-                <span>ارض</span>
+                    <span>ارض</span>
                 @endif
             </div>
             <div class="col-6" style="text-align:right">
                 <span> رقم الرخصة : </span>
                 @if(isset($ticket->license))
-               <span>{{ $ticket->license->licNo}}</span>
-               @else
-               <span>{{ $ticket->licNo }}</span>
-               @endif  
+                    <span>{{ $ticket->license->licNo}}</span>
+                @else
+                    <span>{{ $ticket->licNo }}</span>
+                @endif
             </div>
         </div>
-        @endif  
-        
-        @if( $config[0]->ticket_no==8)
-        
-            @if($ticket->Applicanttype==2)
+    @endif
+
+    @if( $config[0]->ticket_no==8)
+
+        @if($ticket->Applicanttype==2)
             <div class="row" style="margin-bottom:10px;">
                 <div class="col-6" style="text-align:right">
                     <span> ممثل عنه  : </span>
-                    
+
                     <span>
                         {{ $ticket->customer_name2 }}
                     </span>
                 </div>
-                
+
                 <div class="col-6" style="text-align:right">
-                    
+
                     <span> رقم الهاتف : </span>
                     <span>
                         {{ $ticket->customer_mobile2 }} 
@@ -231,61 +230,60 @@
                     </span>
                 </div>
             </div>
-            @endif    
-        @endif  
-        @if( $config[0]->ticket_no==37)
-            <div class="row" style="margin-bottom:10px;">
-                <div class="col-6" style="text-align:right">
-                    <span> وصف الصيانة   : </span>
-                    
-                    <span>
+        @endif
+    @endif
+    @if( $config[0]->ticket_no==37)
+        <div class="row" style="margin-bottom:10px;">
+            <div class="col-6" style="text-align:right">
+                <span> وصف الصيانة   : </span>
+
+                <span>
                         {{ $ticket->malDesc }}
                     </span>
-                </div>
-            </div>  
-        @endif  
-        
+            </div>
+        </div>
+    @endif
+    @if($config[0]->has_debt_list==1)
         <div class="row"style="margin-bottom:10px;" >
             <div class="col-md-12 attachs-section"  style="margin-left: 25px; margin-right: 25px;text-align: right;margin-bottom: 0;">
             </div>
         </div>
         <div class="row">
-        @if($config[0]->has_debt_list==1)
             <div class="row" style="width:50%">
-                    <div class="card-body" style="padding:0;">
-                       <div class="form-group col-md-12">
+                <div class="card-body" style="padding:0;">
+                    <div class="form-group col-md-12">
                         <table class="detailsTB table" style="margin-left: 15px;">
                             <thead>
-                                <tr>
-                                    <th scope="col" style="border-top:0;">
-                                        {{ '' }}
-                                    </th>
-                                    <th scope="col" class=" col-md-2 col-sm-4" style="border-top:0;text-align:center;font-size: 16pt;text-align: -webkit-center;">
-                                        {{ 'البند' }}
-                                    </th>
-                                    <th scope="col" class=" col-md-2 col-sm-4" style="border-top:0;text-align:center;font-size: 16pt;text-align: -webkit-center;">
-                                        {{ 'المبغ المستحق' }}
-                                    </th>
-                                    <th scope="col" class=" col-md-2" style="border-top:0;text-align:center;font-size: 16pt;text-align: -webkit-center;">
-                                        {{ 'المبلغ المدفوع' }}
-                                    </th>
-                                    <th scope="col" class="hidemob col-md-2" style="border-top:0;text-align:center;font-size: 16pt;text-align: -webkit-center;">
-                                        {{ 'رقم الوصل' }}
-                                    </th>
-                                    <th scope="col" class=" col-md-3 col-sm-4" style="border-top:0;text-align:center;font-size: 16pt;text-align: -webkit-center;">
-                                        {{ 'الموظف' }}
-                                    </th>
-                                    <th scope="col" style="border-top:0;"></th>
-                                </tr>
+                            <tr>
+                                <th scope="col" style="border-top:0;">
+                                    {{ '' }}
+                                </th>
+                                <th scope="col" class=" col-md-2 col-sm-4" style="border-top:0;text-align:center;font-size: 16pt;text-align: -webkit-center;">
+                                    {{ 'البند' }}
+                                </th>
+                                <th scope="col" class=" col-md-2 col-sm-4" style="border-top:0;text-align:center;font-size: 16pt;text-align: -webkit-center;">
+                                    {{ 'المبغ المستحق' }}
+                                </th>
+                                <th scope="col" class=" col-md-2" style="border-top:0;text-align:center;font-size: 16pt;text-align: -webkit-center;">
+                                    {{ 'المبلغ المدفوع' }}
+                                </th>
+                                <th scope="col" class="hidemob col-md-2" style="border-top:0;text-align:center;font-size: 16pt;text-align: -webkit-center;">
+                                    {{ 'رقم الوصل' }}
+                                </th>
+                                <th scope="col" class=" col-md-3 col-sm-4" style="border-top:0;text-align:center;font-size: 16pt;text-align: -webkit-center;">
+                                    {{ 'الموظف' }}
+                                </th>
+                                <th scope="col" style="border-top:0;"></th>
+                            </tr>
                             </thead>
                             <tbody id="debtList">
-                                <?php $total=0; 
+                                <?php $total=0;
                                 $arr=json_decode($ticket->debt_json);
                                 $arr=is_array($arr)?$arr:array();?>
                                 <?php if(sizeof($arr)>0){ $i=1;?>
-                                @foreach($arr as $debt)
-                                    <tr>
-                                    <td style="color:#1E9FF2">{{$i++}}</td> 
+                            @foreach($arr as $debt)
+                                <tr>
+                                    <td style="color:#1E9FF2">{{$i++}}</td>
                                     <td>
                                         <input {{ $readonly?"readonly":"" }} type="text" class="form-control" name="debtname[]" value="{{$debt->debtName}}">
                                     </td>
@@ -293,14 +291,14 @@
                                         <input style="font-weight:bold;text-align:center;" {{ $readonly?"readonly":"" }} type="text" class="form-control alphaFeild debtValue" onblur="calcDebtTotal();" name="debtValue[]" value="{{$debt->debtValue}}">
                                     </td>
                                     <td class="" style="text-align: -webkit-center;">
-                                        <?php if(isset($debt->debtPayed)){ ?>
+                                            <?php if(isset($debt->debtPayed)){ ?>
                                         <input type="number" {{ $readonly?"readonly":"" }} class="form-control alphaFeild debtPayed" onblur="calcDebtPayed();" name="debtPayed[]" value="{{$debt->debtPayed}}">
                                         <?php } else{?>
                                         <input type="number" {{ $readonly?"readonly":"" }} class="form-control alphaFeild debtPayed" onblur="calcDebtPayed();" name="debtPayed[]" value="">
                                         <?php } ?>
                                     </td>
                                     <td class="hidemob" style="text-align: -webkit-center;">
-                                        <?php if(isset($debt->debtVoucher)) {?>
+                                            <?php if(isset($debt->debtVoucher)) {?>
                                         <input type="text" {{ $readonly?"readonly":"" }} class=" form-control alphaFeild"  name="debtVoucher[]" value="{{$debt->debtVoucher}}">
                                         <?php } else{?>
                                         <input type="text" {{ $readonly?"readonly":"" }} class=" form-control alphaFeild"  name="debtVoucher[]" value="">
@@ -311,97 +309,96 @@
                                         <input type="hidden" class="form-control"  name="debtEmpID[]" value="">
                                     </td>
                                     <td>
-                                        
+
                                     </td>
                                 </tr>
-                                @endforeach
-                                <?php } ?>
+                            @endforeach
+                            <?php } ?>
                             </tbody>
                             <tbody id="debtTotalList">
-                                <tr>
-                                    <td style="color:#1E9FF2"></td> 
-                                    <td style="text-align: left;">
-                                        {{'المجموع الكلى'}}
-                                    </td>
-                                    <td class="hideMob" style="text-align: -webkit-center;">
-                                        <input type="text" style="font-weight:bold;text-align:center;" {{ $readonly?"readonly":"" }} class="form-control alphaFeild" id="debtTotal" name="debtTotal" value="{{$ticket->debt_total}}">
-                                    </td>
-                                    <td style="text-align: -webkit-center;">
-                                    </td>
-                                    <td>
-                                                                
-                                    </td>
-                                    <td>
-                                        
-                                    </td>
-                                    <td>
-                                        
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="color:#1E9FF2"></td> 
-                                    <td style="text-align: left;">
-                                        {{'المبلغ المدفوع'}}
-                                    </td>
-                                    <td class="hideMob" style="text-align: -webkit-center;">
-                                        <input type="text" style="font-weight:bold;text-align:center;" {{ $readonly?"readonly":"" }} class="form-control alphaFeild" name="payment" value="{{$ticket->payment}}">
-                                    </td>
-                                    <td style="text-align: -webkit-center;">
-                                    </td>
-                                    <td>
-                                                                
-                                    </td>
-                                    <td>
-                                        
-                                    </td>
-                                    <td>
-                                        
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="color:#1E9FF2"></td> 
-                                    <td style="text-align: left;">
-                                        {{'الباقى'}}
-                                    </td>
-                                    <td class="hideMob" style="text-align: -webkit-center;">
-                                        <input type="text" style="font-weight:bold;text-align:center;" {{ $readonly?"readonly":"" }} class="form-control alphaFeild" name="rest" value="{{$ticket->rest}}">
-                                    </td>
-                                    <td>
-                                                                
-                                    </td>
-                                    <td>
-                                        
-                                    </td>
-                                    <td>
-                                        
-                                    </td>
-                                    <td>
-                                        
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td style="color:#1E9FF2"></td>
+                                <td style="text-align: left;">
+                                    {{'المجموع الكلى'}}
+                                </td>
+                                <td class="hideMob" style="text-align: -webkit-center;">
+                                    <input type="text" style="font-weight:bold;text-align:center;" {{ $readonly?"readonly":"" }} class="form-control alphaFeild" id="debtTotal" name="debtTotal" value="{{$ticket->debt_total}}">
+                                </td>
+                                <td style="text-align: -webkit-center;">
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="color:#1E9FF2"></td>
+                                <td style="text-align: left;">
+                                    {{'المبلغ المدفوع'}}
+                                </td>
+                                <td class="hideMob" style="text-align: -webkit-center;">
+                                    <input type="text" style="font-weight:bold;text-align:center;" {{ $readonly?"readonly":"" }} class="form-control alphaFeild" name="payment" value="{{$ticket->payment}}">
+                                </td>
+                                <td style="text-align: -webkit-center;">
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="color:#1E9FF2"></td>
+                                <td style="text-align: left;">
+                                    {{'الباقى'}}
+                                </td>
+                                <td class="hideMob" style="text-align: -webkit-center;">
+                                    <input type="text" style="font-weight:bold;text-align:center;" {{ $readonly?"readonly":"" }} class="form-control alphaFeild" name="rest" value="{{$ticket->rest}}">
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
-                    </div> 
                     </div>
-                    
                 </div>
-        @endif       
-        @if($config[0]->has_price_list==1)
+
+            </div>
+
             <div class="row attachs-body" style="width:50%">
-                
+
                 <div class="form-group col-12 mb-2" style="padding-top: 20px;">
-                    <div class="col-12 hide" style="text-align: center;font-size:20pt;">
+                    <div class="col-12" style="text-align: center;font-size:20pt;">
                          <span style="text-align: center;font-size:20pt;">
                              التكاليف
-                         </span> 
-                         </div>
-                        <?php $total=0; 
+                         </span>
+                    </div>
+                        <?php $total=0;
                         $arr=json_decode($ticket->fees_json);
                         $arr=is_array($arr)?$arr:array();?>
-                    <ol class="vasType 1vas addRec hide">
-                         <?php 
+                    <ol class="vasType 1vas addRec">
+                            <?php
                         if(sizeof($arr)>0){?>
-                            @foreach($arr as $fee)
+                        @foreach($arr as $fee)
                             <li style="font-size: 17px !important;color:#000000">
                                 <div class="row">
                                     <div class="col-sm-8">
@@ -412,16 +409,16 @@
                                     </div>
                                 </div>
                             </li>
-                            <?php $total+=$fee->feesValue; ?>
-                            @endforeach
+                                <?php $total+=$fee->feesValue; ?>
+                        @endforeach
                         <?php } ?>
                     </ol>
-            
+
                     <ol class="vasType 1vas " style="list-style-type: none;">
                         <li style="font-size: 17px !important;color:#000000">
                             <div class="row">
                                 <div class="col-sm-8">
-                                    اجمالي التكاليف
+                                    الإجمالي
                                 </div>
                                 <div class="col-sm-3">
                                     <input type="number" style="font-weight:bold;text-align:center;" id="total" disabled="" name="total" class="form-control" value="{{$total}}">
@@ -431,9 +428,8 @@
                     </ol>
                 </div>
             </div>
-        @endif  
         </div>
-    
+    @endif
     <div class="row" >
         <div class="col-md-12 attachs-section"  style="margin-left: 25px; margin-right: 25px;text-align: right;margin-bottom: 0;right;margin-top: 25px;">
 
@@ -442,82 +438,84 @@
         </div>
     </div>
     <div id="responseList">
-    <?php 
-    $lastReciver=$ticket->history[0]->sender_id ;  
-    $tagArr=array() ; 
-    $lastTicket=array(); $i=0;?>
-    @foreach($ticket->history as $rowTicket)
-   <?php  
-   if($rowTicket->recive_type==1) 
-            $lastReciver=$rowTicket->reciver_id;
-        if(in_array($rowTicket->recive_type,array(1,2))) 
-            $lastTicket=$rowTicket;
-    ?>
-    
-    <div class="card-content collpase show ResponseList">
-        <div class="card-body" style="padding-bottom:0;">
-            <div class="row"
-                style="background-color: #ffffff; margin-left: 15px;margin-right: 15px;">
-                <!--<div class="col-sm-12 col-md-2 imgAvatar" style="text-align: center;">-->
-                <!--    <span class="avatar" style="width: 60px;">-->
-                <!--        <img src="{{ $rowTicket->sender_image }}"-->
-                <!--            style="border: 1px solid #c7c7c7;padding: 2px; max-height:60px;">-->
-                <!--    </span>-->
-                <!--</div>-->
-                <div class="col-sm-12 col-md-3 marginrightminus30 infoAvatar" style="text-align: right;">
-                    <a style="color:#385898;font-weight: 600;">{{ $rowTicket->sender_name }}</a>
-                    <br>
-                    <time class="fs14">
-                        {{ date('d/m/Y',strtotime($rowTicket->created_at)) }}
-                        الساعة : 
-                        {{ date('H:i',strtotime($rowTicket->created_at)) }} </time>
-                </div>
-                <div class="col-sm-12 col-md-8 marginrightminus30">
-                    <?php if($i==0){ $i++ ?>
-                    <h5 style="text-align: right;">
-                        <time style="font-family: Helvetica, Arial, sans-serif !important;; color:#000000; font-size: 17px !important;font-weight: 500;">
+        <?php
+        $lastReciver=$ticket->history[0]->sender_id ;
+        $tagArr=array() ;
+        $lastTicket=array(); $i=0;?>
+        @foreach($ticket->history as $rowTicket)
+                <?php
+                if($rowTicket->recive_type==1)
+                    $lastReciver=$rowTicket->reciver_id;
+                if(in_array($rowTicket->recive_type,array(1,2)))
+                    $lastTicket=$rowTicket;
+                ?>
 
-                            {{"تم إنشاء الطلب بواسطة:"}}
-                            <b>{{ $rowTicket->sender_name }} </b>
-                        </time>
-                    </h5>
-                    <?php 
-                    if(strlen(trim($rowTicket->trans_note))+strlen(trim($rowTicket->s_note))>0){
-                    ?>
-                    <br />
-                    <p style="text-align: right;"><b style="color:#5599FE">ملاحظات: </b>
-                    <?php echo $rowTicket->trans_note." ".$rowTicket->s_note?>   </p>
-                    <?php }}else{ 
-                    //var_dump($rowTicket);?><h5 style="text-align: right;">
-                        <time style="font-family: Helvetica, Arial, sans-serif !important;; color:#000000; font-size: 17px !important;font-weight: 500;">
-                            <?php  echo$rowTicket->s_note ?>
-                            <?php 
-        if(in_array($rowTicket->recive_type,array(1,2))) 
-        echo strlen(trim($rowTicket->trans_note))>0?'<br />'.$rowTicket->trans_note:''?>
-                        </time>
-                    </h5>
-                        <?php }
-                        ?>
+            <div class="card-content collpase show ResponseList">
+                <div class="card-body" style="padding-bottom:0;">
+                    <div class="row"
+                         style="background-color: #ffffff; margin-left: 15px;margin-right: 15px;">
+                        <!--<div class="col-sm-12 col-md-2 imgAvatar" style="text-align: center;">-->
+                        <!--    <span class="avatar" style="width: 60px;">-->
+                        <!--        <img src="{{ $rowTicket->sender_image }}"-->
+                        <!--            style="border: 1px solid #c7c7c7;padding: 2px; max-height:60px;">-->
+                        <!--    </span>-->
+                        <!--</div>-->
+                        <div class="col-sm-12 col-md-3 marginrightminus30 infoAvatar" style="text-align: right;">
+                            <a style="color:#385898;font-weight: 600;">{{ $rowTicket->sender_name }}</a>
+                            <br>
+                            <time class="fs14">
+                                {{ date('d/m/Y',strtotime($rowTicket->created_at)) }}
+                                الساعة :
+                                {{ date('H:i',strtotime($rowTicket->created_at)) }} </time>
+                        </div>
+                        <div class="col-sm-12 col-md-8 marginrightminus30">
+                                <?php if($i==0){ $i++ ?>
+                            <h5 style="text-align: right;">
+                                <time style="font-family: Helvetica, Arial, sans-serif !important;; color:#000000; font-size: 17px !important;font-weight: 500;">
+
+                                    {{"تم إنشاء الطلب بواسطة:"}}
+                                    <b>{{ $rowTicket->sender_name }} </b>
+                                </time>
+                            </h5>
+                                <?php
+                            if(strlen(trim($rowTicket->trans_note))+strlen(trim($rowTicket->s_note))>0){
+                                ?>
+                            <br />
+                            <p style="text-align: right;"><b style="color:#5599FE">ملاحظات: </b>
+                                    <?php echo $rowTicket->trans_note." ".$rowTicket->s_note?>   </p>
+                            <?php }}else{
+                                //var_dump($rowTicket);?><h5 style="text-align: right;">
+                                <time style="font-family: Helvetica, Arial, sans-serif !important;; color:#000000; font-size: 17px !important;font-weight: 500;">
+                                        <?php  echo$rowTicket->s_note ?>
+                                        <?php
+                                        if(in_array($rowTicket->recive_type,array(1,2)))
+                                            echo strlen(trim($rowTicket->trans_note))>0?'<br />'.$rowTicket->trans_note:''?>
+                                </time>
+                            </h5>
+                            <?php }
+                                ?>
+                        </div>
+
+
+                    </div>
+
                 </div>
-                
-                
+                <div class="card-body"
+                     style="background-color: #F4F5FA; min-height:15px;padding-top: 0;padding-bottom: 0rem;">
+                </div>
             </div>
-            
-        </div>
-        <div class="card-body"
-            style="background-color: #F4F5FA; min-height:15px;padding-top: 0;padding-bottom: 0rem;">
-        </div>
+        @endforeach
     </div>
-    @endforeach
-    </div>
-    <div class="row" style="padding-top: 50px;">
-        <div class="col-12" style="text-align:left">
-            <span> 
-            توقيع مقدم الطلب  
-            </span>
-            
+    @if($config[0]->ticket_no==28)
+        <div class="row" style="margin-top:90px;">
+            <div class="col-8" style="text-align:right">
+                <span> </span>
+            </div>
+            <div class="col-4" style="text-align:center">
+                <span> موافقة رئيس البلدية </span>
+            </div>
         </div>
-    </div>
+    @endif
 </form>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

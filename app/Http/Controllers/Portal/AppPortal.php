@@ -11,6 +11,7 @@ use App\Models\Constant;
 use App\Models\Region;
 use App\Models\AppTicket1;
 use App\Models\AppTicket2;
+use App\Models\AppTicket3;
 use App\Models\AppTicket4;
 use App\Models\AppTicket5;
 use App\Models\AppTicket6;
@@ -46,10 +47,10 @@ use App\Models\AppTicket35;
 use App\Http\Requests\TicketRequest;
 use App\Http\Requests\TicketRequest2;
 use App\Http\Requests\TicketRequest3;
-use App\Http\Requests\TicketRequest4;
-use App\Http\Requests\TicketRequest5;
-use App\Http\Requests\TicketRequest6;
-use App\Http\Requests\TicketRequest7;
+use App\Http\Requests\PortalTicketRequest4;
+use App\Http\Requests\PortalTicketRequest5;
+use App\Http\Requests\PortalTicketRequest6;
+use App\Http\Requests\PortalTicketRequest7;
 use App\Http\Requests\TicketRequest8;
 use App\Http\Requests\TicketRequest9;
 use App\Http\Requests\TicketRequest10;
@@ -61,8 +62,12 @@ use App\Http\Requests\TicketRequest15;
 use App\Http\Requests\TicketRequest16;
 use App\Http\Requests\TicketRequest17;
 use App\Http\Requests\TicketRequest18;
-use App\Http\Requests\TicketRequest19;
-use App\Http\Requests\TicketRequest20;
+use App\Http\Requests\PortalTicketRequest19;
+use App\Http\Requests\PortalTicketRequest20;
+use App\Http\Requests\TicketRequest22;
+use App\Http\Requests\PortalTicketRequest22;
+use App\Http\Requests\PortalTicketRequest;
+use App\Http\Requests\PortalTicketRequest2;
 use App\Models\Setting;
 use App\Models\AppTrans;
 use App\Models\water;
@@ -76,6 +81,7 @@ use DB;
 use App\Models\Orgnization;
 use App\Models\Archive;
 use App\Models\PortalTicket;
+use stdClass;
 
 class AppPortal extends Controller
 {
@@ -358,6 +364,7 @@ order by created_at asc");
     public function viewTicketPortal($ticket_id=0)
 	{
 	    $ticket =PortalTicket::where('id',$ticket_id)->first;
+	    dd($ticket);
 	    $related=$ticket->app_no;
 		if($related==1){
 		    if($ticket->app_type==2){
@@ -982,11 +989,22 @@ order by created_at asc");
         }
     }
     
-	public function saveTicket1(TicketRequest $request){
+    public function addNewSubscriber($request){
+        $user = new User();
+        $user->name = $request->subscriber_name;
+        $user->phone_one = $request->MobileNo;
+        $user->national_id = $request->national_id;
+        $user->save();
+        $request->subscriber_id=$user->id;
+        return $user->id;
+    }
+	public function saveTicket1(PortalTicketRequest $request){
         $app_id=$request->app_id;
         $ticket_type=1;
         $config=TicketConfig::where('ticket_no',1)->where('app_type',$request->app_type)->first();
-
+        if($request->subscriber_id == null || $request->subscriber_id == 0 || $request->subscriber_id == ''){
+            $request->subscriber_id=$this->addNewSubscriber($request);
+        }
         if(!$app_id){
             
             $app=new PortalTicket();
@@ -997,7 +1015,8 @@ order by created_at asc");
             $app->subscription_type	=$request->subscriptionType;	
             $app->customer_id	=$request->subscriber_id;	
             $app->customer_name	=$request->subscriber_name;
-            $app->customer_mobile=$request->MobileNo;		
+            $app->customer_mobile=$request->MobileNo;
+            $app->national_id=$request->national_id;
             $app->region		=$request->AreaID;
             $app->rec_id		=($request->rec_id);
             $app->app_type		=$request->app_type;
@@ -1046,10 +1065,12 @@ order by created_at asc");
         }
     }
     
-    public function saveTicket2(TicketRequest2 $request){
+    public function saveTicket2(PortalTicketRequest2 $request){
         $app_id=$request->app_id;
         $ticket_type=2;
-
+        if($request->subscriber_id == null || $request->subscriber_id == 0 || $request->subscriber_id == ''){
+            $request->subscriber_id=$this->addNewSubscriber($request);
+        }
         $config=TicketConfig::where('ticket_no',2)->where('app_type',$request->app_type)->first();
         if(!$app_id){
             $app=new PortalTicket();
@@ -1058,7 +1079,8 @@ order by created_at asc");
             $app->currency		=$request->CurrencyID;
             $app->customer_id	=$request->subscriber_id;	
             $app->customer_name	=$request->subscriber_name;
-            $app->customer_mobile=$request->MobileNo;		
+            $app->customer_mobile=$request->MobileNo;
+            $app->national_id=$request->national_id;
             $app->region		=$request->AreaID;
             $app->address		=isset($request->Address)?$request->Address:'';
             $app->malDesc		=$request->malDesc;
@@ -1096,17 +1118,148 @@ order by created_at asc");
         }
     }
     
-    public function saveTicket4(TicketRequest2 $request){
+    public function saveTicket3(PortalTicketRequest22 $request){
+	   // dd($request->all());
+        $app_id=$request->app_id;
+        $ticket_type=3;
+        
+        if($request->subscriber_id == null || $request->subscriber_id == 0 || $request->subscriber_id == ''){
+            $request->subscriber_id=$this->addNewSubscriber($request);
+        }
+        
+        $config=TicketConfig::where('ticket_no',3)->where('app_type',$request->app_type)->first();
+        
+        if(!$app_id){
+            $detail = new stdClass();
+            $detail->appart = $request->appart;
+            $detail->typeStore = $request->typeStore;
+            $detail->office = $request->office;
+            $detail->elev = $request->elev;
+            $detail->stairs = $request->stairs;
+            $detail->floor = $request->floor;
+            $detail->notes1 = $request->notes1;
+            $detail->notes2 = $request->notes2;
+            $detail->notes3 = $request->notes3;
+            // dd($detail);
+            $app=new PortalTicket();
+            $app->app_no=3;
+            if(isset($request->phase))
+                $app->phase	        =$request->phase[0];	
+            $app->inAmper	    =$request->inAmper;	
+            $app->amount		=$request->AmountInNIS;
+            $app->currency		=$request->CurrencyID;
+            $app->subscription_type	=$request->subscriptionType;	
+            $app->customer_id	=$request->subscriber_id;	
+            $app->customer_name	=$request->subscriber_name;
+            $app->customer_mobile=$request->MobileNo;		            
+            $app->national_id=$request->national_id;		
+            $app->app_type		=$request->app_type;
+            $app->regionbuild		=$request->regionbuild;
+            $app->hodNo		=$request->hodNo;
+            $app->pieceNo		=$request->pieceNo;
+            $app->typebuild		=$request->typebuild;
+            $app->typestate		=$request->typestate;
+            $app->typebuilding		=$request->typebuilding;
+            $app->typebuildingother		=$request->typebuildingother;
+            $app->typebuildingnote		=$request->typebuildingnote;
+            // $app->typebuildingother		=$request->typebuildingother;
+            $app->detail	    =json_encode($detail);
+            $app->typeship		=$request->typeship;
+            $app->address		=$request->address;
+            $app->ownership_type=$request->Ownership[0];		
+            $app->owner_id		=$request->Ownership[0]==1?0:$request->SubscriberID1;
+            $app->owner_name	=$request->Ownership[0]==1?'':$request->OwnerName;	
+            $app->LicenceNo		=$request->LicenceNo;
+            $app->dept_id		=$request->dept_id;
+            $app->ticket_status =1;
+            $app->rec_id		=($request->rec_id);
+            $app->save();
+            
+            if ($app) {
+                return response()->json(['app_id'=>$app->id,'app_type'=>$ticket_type,'success'=>trans('تم الحفظ')]);
+            }
+            return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
+        }
+        else{
+            $detail = new stdClass();
+            $detail->appart = $request->appart;
+            $detail->typeStore = $request->typeStore;
+            $detail->office = $request->office;
+            $detail->elev = $request->elev;
+            $detail->stairs = $request->stairs;
+            $detail->floor = $request->floor;
+            $detail->notes1 = $request->notes1;
+            $detail->notes2 = $request->notes2;
+            $detail->notes3 = $request->notes3;
+
+            $app=AppTicket3::find($app_id);
+            $app->receipt_no	=$request->ReciptNo;
+            if(isset($request->phase))
+                $app->phase	        =$request->phase[0];	
+            $app->inAmper	    =$request->inAmper;
+            $app->amount		=$request->AmountInNIS;
+            $app->currency		=$request->CurrencyID;
+            $app->subscription_type	=$request->subscriptionType;	
+            $app->customer_id	=$request->subscriber_id;	
+            $app->customer_name	=$request->subscriber_name;
+            $app->customer_mobile=$request->MobileNo;		             
+            $app->national_id=$request->national_id;		
+            $app->region		=$request->AreaID;
+            $app->address		=isset($request->address)?$request->address:'';
+            $app->regionbuild		=$request->regionbuild;
+            $app->hodNo		=$request->hodNo;
+            $app->pieceNo		=$request->pieceNo;
+            $app->typebuild		=$request->typebuild;
+            $app->typestate		=$request->typestate;
+            $app->typebuilding		=$request->typebuilding;
+            $app->typebuildingother		=$request->typebuildingother;
+            $app->typebuildingnote		=$request->typebuildingnote;
+            // $app->typebuildingother		=$request->typebuildingother;
+            $app->detail	=json_encode($detail);
+            $app->typeship		=$request->typeship;
+
+            $app->ownership_type=$request->Ownership[0];		
+            $app->owner_id		=$request->Ownership[0]==1?0:$request->SubscriberID1;
+            $app->owner_name	=$request->Ownership[0]==1?'':$request->OwnerName;	
+            $app->LicenceNo		=$request->LicenceNo;
+            $app->app_type		=$request->app_type;
+            $app->updated_at	=date('Y-m-d H:i:s');
+            $app->dept_id		=$request->dept_id;
+            $app->debt_total		=$request->debtTotal;
+            $app->payment		=$request->payment;
+            $app->rest		=$request->rest;
+            $app->waslNo		=$request->waslNo;
+            $app->debt_json	=json_encode($this->prepeardebt($request));
+            $app->fees_json		=json_encode($this->prepearFees($request));
+            $app->file_ids	=json_encode($this->prepearAttach($request));
+            $app->save();
+            if ($app) {
+                if(($request->notArchived != null)){
+                    $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
+                    $name=$config->ticket_name.'  ('.$app->app_no.')';
+                    $this->saveScannedFilesArchieve($request,$name,$link);
+                }
+                
+                return response()->json(['app'=>$app,'app_id'=>$app->id,'app_type'=>$ticket_type,'success'=>trans('تم الحفظ')]);
+            }
+            return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
+        }
+    }
+    
+    public function saveTicket4(PortalTicketRequest2 $request){
         $app_id=$request->app_id;
         $ticket_type=4;
-        
+        if($request->subscriber_id == null || $request->subscriber_id == 0 || $request->subscriber_id == ''){
+            $request->subscriber_id=$this->addNewSubscriber($request);
+        }
         if(!$app_id){
             $app=new PortalTicket();
             $app->app_no=4;
             $app->customer_id	=$request->subscriber_id;	
             $app->customer_name	=$request->subscriber_name;
             $app->app_type		=$request->app_type;
-            $app->customer_mobile=$request->MobileNo;		
+            $app->customer_mobile=$request->MobileNo;
+            $app->national_id=$request->national_id;
             $app->region		=$request->AreaID;
             $app->address		=isset($request->Address)?$request->Address:'';
             $app->malDesc		=$request->malDesc;
@@ -1140,10 +1293,12 @@ order by created_at asc");
         }
     }
     
-    public function saveTicket5(TicketRequest2 $request){
+    public function saveTicket5(PortalTicketRequest2 $request){
         $app_id=$request->app_id;
         $ticket_type=5;
-        
+        if($request->subscriber_id == null || $request->subscriber_id == 0 || $request->subscriber_id == ''){
+            $request->subscriber_id=$this->addNewSubscriber($request);
+        }
         if(!$app_id){
             $app=new PortalTicket();
             $app->app_no=5;	
@@ -1152,7 +1307,8 @@ order by created_at asc");
             $app->currency		=$request->CurrencyID;
             $app->customer_id	=$request->subscriber_id;	
             $app->customer_name	=$request->subscriber_name;
-            $app->customer_mobile=$request->MobileNo;		
+            $app->customer_mobile=$request->MobileNo;
+            $app->national_id=$request->national_id;
             $app->region		=$request->AreaID;
             $app->address		=isset($request->Address)?$request->Address:'';
             $app->malDesc		=$request->malDesc;
@@ -1196,10 +1352,12 @@ order by created_at asc");
         }
     }
     
-    public function saveTicket6(TicketRequest2 $request){
+    public function saveTicket6(PortalTicketRequest2 $request){
         $app_id=$request->app_id;
         $ticket_type=6;
-
+        if($request->subscriber_id == null || $request->subscriber_id == 0 || $request->subscriber_id == ''){
+            $request->subscriber_id=$this->addNewSubscriber($request);
+        }
         if(!$app_id){
 
             $app=new PortalTicket();
@@ -1209,7 +1367,8 @@ order by created_at asc");
             $app->currency		=$request->CurrencyID;
             $app->customer_id	=$request->subscriber_id;	
             $app->customer_name	=$request->subscriber_name;
-            $app->customer_mobile=$request->MobileNo;		
+            $app->customer_mobile=$request->MobileNo;
+            $app->national_id=$request->national_id;
             $app->region		=$request->AreaID;
             $app->address		=isset($request->Address)?$request->Address:'';
             $app->malDesc		=$request->malDesc;
@@ -1256,10 +1415,12 @@ order by created_at asc");
         }
     }
     
-    public function saveTicket7(TicketRequest2 $request){
+    public function saveTicket7(PortalTicketRequest2 $request){
         $app_id=$request->app_id;
         $ticket_type=7;
-        
+        if($request->subscriber_id == null || $request->subscriber_id == 0 || $request->subscriber_id == ''){
+            $request->subscriber_id=$this->addNewSubscriber($request);
+        }
         if(!$app_id){
             $app=new PortalTicket();
             $app->app_no=7;
@@ -1268,7 +1429,8 @@ order by created_at asc");
             $app->currency		=$request->CurrencyID;
             $app->customer_id	=$request->subscriber_id;	
             $app->customer_name	=$request->subscriber_name;
-            $app->customer_mobile=$request->MobileNo;		
+            $app->customer_mobile=$request->MobileNo;
+            $app->national_id=$request->national_id;
             $app->region		=$request->AreaID;
             $app->address		=isset($request->Address)?$request->Address:'';
             $app->malDesc		=$request->malDesc;
@@ -1315,10 +1477,12 @@ order by created_at asc");
         }
     }
     
-    public function saveTicket8(TicketRequest19 $request){
+    public function saveTicket8(PortalTicketRequest19 $request){
         $app_id=$request->app_id;
         $ticket_type=8;
-        
+        if($request->subscriber_id == null || $request->subscriber_id == 0 || $request->subscriber_id == ''){
+            $request->subscriber_id=$this->addNewSubscriber($request);
+        }
         if(!$app_id){
             
             $app=new PortalTicket();
@@ -1327,7 +1491,8 @@ order by created_at asc");
             $app->currency		=$request->CurrencyID;
             $app->customer_id	=$request->subscriber_id;	
             $app->customer_name	=$request->subscriber_name;
-            $app->customer_mobile=$request->MobileNo;		
+            $app->customer_mobile=$request->MobileNo;
+            $app->national_id=$request->national_id;
             $app->region		=$request->AreaID;
             $app->address		=isset($request->Address)?$request->Address:'';
             $app->subs = json_encode($request->SubscribtionIdList);
@@ -1389,10 +1554,12 @@ order by created_at asc");
         }
     }
     
-    public function saveTicket9(TicketRequest5 $request){
+    public function saveTicket9(PortalTicketRequest5 $request){
         $app_id=$request->app_id;
         $ticket_type=9;
-        
+        if($request->subscriber_id == null || $request->subscriber_id == 0 || $request->subscriber_id == ''){
+            $request->subscriber_id=$this->addNewSubscriber($request);
+        }
         if(!$app_id){
            
             $app=new PortalTicket();
@@ -1402,7 +1569,8 @@ order by created_at asc");
             $app->currency		=$request->CurrencyID;
             $app->customer_id	=$request->subscriber_id;	
             $app->customer_name	=$request->subscriber_name;
-            $app->customer_mobile=$request->MobileNo;		
+            $app->customer_mobile=$request->MobileNo;
+            $app->national_id=$request->national_id;
             $app->region		=$request->AreaID;
             $app->address		=isset($request->Address)?$request->Address:'';
             $app->subs = $request->counters;
@@ -1446,10 +1614,12 @@ order by created_at asc");
         }
     }
 
-    public function saveTicket10(TicketRequest4 $request){
+    public function saveTicket10(PortalTicketRequest4 $request){
         $app_id=$request->app_id;
         $ticket_type=10;
-        
+        if($request->subscriber_id == null || $request->subscriber_id == 0 || $request->subscriber_id == ''){
+            $request->subscriber_id=$this->addNewSubscriber($request);
+        }
         if(!$app_id){
             
             $app=new PortalTicket();
@@ -1459,7 +1629,8 @@ order by created_at asc");
             $app->currency		=$request->CurrencyID;
             $app->customer_id	=$request->subscriber_id;	
             $app->customer_name	=$request->subscriber_name;
-            $app->customer_mobile=$request->MobileNo;		
+            $app->customer_mobile=$request->MobileNo;
+            $app->national_id=$request->national_id;
             $app->region		=$request->AreaID;
             $app->address		=isset($request->Address)?$request->Address:'';
             $app->subs = $request->counters;
@@ -1512,10 +1683,12 @@ order by created_at asc");
         }
     }
     
-    public function saveTicket11(TicketRequest6 $request){
+    public function saveTicket11(PortalTicketRequest6 $request){
         $app_id=$request->app_id;
         $ticket_type=10;
-        
+        if($request->subscriber_id == null || $request->subscriber_id == 0 || $request->subscriber_id == ''){
+            $request->subscriber_id=$this->addNewSubscriber($request);
+        }
         if(!$app_id){
             
             $app=new PortalTicket();
@@ -1525,7 +1698,8 @@ order by created_at asc");
             $app->app_no=11;
             $app->customer_id	=$request->subscriber_id;	
             $app->customer_name	=$request->subscriber_name;
-            $app->customer_mobile=$request->MobileNo;		
+            $app->customer_mobile=$request->MobileNo;
+            $app->national_id=$request->national_id;
             $app->rec_id		=$request->rec_id;
             $app->subs = $request->counters;
             $app->TransferAmount=$request->TransferAmount;		
@@ -1575,98 +1749,38 @@ order by created_at asc");
         // }
 }
 
-    public function saveTicket12(TicketRequest7 $request){
-        $app_id=$request->app_id;
-        $ticket_type=12;
-        $this->updateCMobile($request->subscriber_id,$request->MobileNo)  ; 
-        
-        $config=TicketConfig::where('ticket_no',12)->where('app_type',$request->app_type)->first();
-        if($config->force_attach==1 && sizeof($this->prepearAttach($request))<1){
-            return response()->json(['error'=>'no_attatch']);
+    public function saveTicket12(PortalTicketRequest7 $request){
+        if($request->subscriber_id == null || $request->subscriber_id == 0 || $request->subscriber_id == ''){
+            $request->subscriber_id=$this->addNewSubscriber($request);
         }
-        
-        if(!$app_id){
-            $maxRec=AppTicket12::select('app_no')->where('app_type',$request->app_type)->orderBy('id','desc')->limit(1)->get();
-            $max=1;
-            
-            if(sizeof($maxRec)>0)
-                $max=$maxRec[0]->app_no+1;
-            $app=new AppTicket12();
-            $app->app_no=$max;
-            $app->receipt_no	=$request->ReciptNo;	
-            $app->amount		=$request->AmountInNIS;
-            $app->currency		=$request->CurrencyID;
-            $app->customer_id	=$request->subscriber_id;	
-            $app->customer_name	=$request->subscriber_name;
-            $app->customer_mobile=$request->MobileNo;		
-            $app->region		=$request->AreaID;
-            $app->address		=isset($request->Address)?$request->Address:'';
-            $app->malDesc		=$request->malDesc;
-            $app->app_type		=$request->app_type;
-            $app->task_type	    =$request->task_type;
-            $app->b_enabled		=1;
-            $app->created_by	=Auth()->user()->id;
-            $app->dept_id		=$request->dept_id;
-            $app->debt_total		=$request->debtTotal;
-            $app->payment		=$request->payment;
-            $app->rest		=$request->rest;
-            $app->waslNo		=$request->waslNo;
-            $app->debt_json	=json_encode($this->prepeardebt($request));
-            $app->fees_json		=json_encode($this->prepearFees($request));
-            $app->file_ids	=json_encode($this->prepearAttach($request));
-            $app->hrs		=$request->restHrs;
-            $app->priority		=0;//$request->;
-            $app->ticket_status =1;
-            $app->active_trans	=1;	
-            $app->save();
-            $app->active_trans=$this->saveTrans($app->id,$request->app_type,$request->AssignedToID,$request->note,$request->AssDeptID,1,$ticket_type,$request);
-            $app->save();
-    		/*$tag=$request->tags?$request->tags:array();
-    		foreach($tag as $row)
-    			$this->saveTrans($app->id,$ticket_type,$row,$request->note,$request->AssDeptID,2);*/
-            if ($app) {
-                $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
-                $name=$config->ticket_name.'  ('.$app->app_no.')';
-                $this->saveCustomerFilesArchieve($request,$name,$link);
-                return response()->json(['app_id'=>$app->id,'app_type'=>$ticket_type,'success'=>trans('تم الحفظ')]);
-            }
-            return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
+        $app=new PortalTicket();
+        $app->app_no=12;
+        $app->customer_id	=$request->subscriber_id;
+        $app->customer_name	=$request->subscriber_name;
+        $app->customer_mobile=$request->MobileNo;
+        $app->national_id=$request->national_id;
+        $app->region		=$request->AreaID;
+        $app->address		=isset($request->Address)?$request->Address:'';
+        $app->malDesc		=$request->malDesc;
+        $app->app_type		=$request->app_type;
+        $app->task_type	=$request->task_type;
+        $app->dept_id		=$request->dept_id;
+        $app->rec_id		=($request->rec_id);
+        $app->ticket_status =1;
+        $res=$app->save();
+        if ($res) {
+            return response()->json(['app_id'=>$app->id,'success'=>trans('تم الحفظ')]);
         }
-        else{
-            $app=AppTicket12::find($app_id);
-            $app->receipt_no	=$request->ReciptNo;	
-            $app->amount		=$request->AmountInNIS;
-            $app->currency		=$request->CurrencyID;
-            $app->customer_id	=$request->subscriber_id;	
-            $app->customer_name	=$request->subscriber_name;
-            $app->customer_mobile=$request->MobileNo;		
-            $app->region		=$request->AreaID;
-            $app->address		=isset($request->Address)?$request->Address:'';
-            $app->malDesc		=$request->malDesc;
-            $app->app_type		=$request->app_type;
-            $app->debt_total		=$request->debtTotal;
-            $app->payment		=$request->payment;
-            $app->rest		=$request->rest;
-            $app->waslNo		=$request->waslNo;
-            $app->debt_json	=json_encode($this->prepeardebt($request));
-            $app->task_type	=$request->task_type;
-            $app->updated_at	=date('Y-m-d H:i:s');
-            $app->dept_id		=$request->dept_id;
-            $app->fees_json		=json_encode($this->prepearFees($request));
-            $app->file_ids	=json_encode($this->prepearAttach($request));
-            $app->save();
-            if ($app) {
-                return response()->json(['app_id'=>$app->id,'app_type'=>$ticket_type,'success'=>trans('تم الحفظ')]);
-            }
-            return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
-        }
+        return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
     }
     
-    public function saveTicket13(TicketRequest5 $request){
+    public function saveTicket13(PortalTicketRequest5 $request){
         $app_id=$request->app_id;
         $ticket_type=13;
         $this->updateCMobile($request->subscriber_id,$request->MobileNo)  ; 
-        
+        if($request->subscriber_id == null || $request->subscriber_id == 0 || $request->subscriber_id == ''){
+            $request->subscriber_id=$this->addNewSubscriber($request);
+        }
         $config=TicketConfig::where('ticket_no',13)->where('app_type',$request->app_type)->first();
         if($config->force_attach==1 && sizeof($this->prepearAttach($request))<1){
             return response()->json(['error'=>'no_attatch']);
@@ -1685,7 +1799,8 @@ order by created_at asc");
             $app->currency		=$request->CurrencyID;
             $app->customer_id	=$request->subscriber_id;	
             $app->customer_name	=$request->subscriber_name;
-            $app->customer_mobile=$request->MobileNo;		
+            $app->customer_mobile=$request->MobileNo;
+            $app->national_id=$request->national_id;
             $app->region		=$request->AreaID;
             $app->address		=isset($request->Address)?$request->Address:'';
             $app->subs = json_encode($request->SubscribtionIdList);
@@ -1751,151 +1866,67 @@ order by created_at asc");
             return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
         }
     }
-    
-    public function saveTicket14(TicketRequest7 $request){
-        $app_id=$request->app_id;
-        $ticket_type=14;
-        $this->updateCMobile($request->subscriber_id,$request->MobileNo)  ;
-        
-        $config=TicketConfig::where('ticket_no',14)->where('app_type',$request->app_type)->first();
-        if($config->force_attach==1 && sizeof($this->prepearAttach($request))<1){
-            return response()->json(['error'=>'no_attatch']);
+
+    public function saveTicket14(PortalTicketRequest7 $request){
+        if($request->subscriber_id == null || $request->subscriber_id == 0 || $request->subscriber_id == ''){
+            $request->subscriber_id=$this->addNewSubscriber($request);
         }
-        
-        if(!$app_id){
-            $maxRec=AppTicket14::select('app_no')->where('app_type',$request->app_type)->orderBy('id','desc')->limit(1)->get();
-            $max=1;
-            
-            if(sizeof($maxRec)>0)
-                $max=$maxRec[0]->app_no+1;
-            $app=new AppTicket14();
-            $app->app_no=$max;
-            $app->receipt_no	=$request->ReciptNo;	
-            $app->amount		=$request->AmountInNIS;
-            $app->currency		=$request->CurrencyID;
-            $app->customer_id	=$request->subscriber_id;	
-            $app->customer_name	=$request->subscriber_name;
-            $app->customer_mobile=$request->MobileNo;		
-            $app->region		=$request->AreaID;
-            $app->address		=isset($request->Address)?$request->Address:'';
-            $app->malDesc		=$request->malDesc;
-            $app->app_type		=$request->app_type;
-            $app->task_type	=$request->task_type;
-            $app->b_enabled		=1;
-            $app->created_by	=Auth()->user()->id;
-            $app->dept_id		=$request->dept_id;
-            $app->debt_total		=$request->debtTotal;
-            $app->payment		=$request->payment;
-            $app->rest		=$request->rest;
-            $app->waslNo		=$request->waslNo;
-            $app->debt_json	=json_encode($this->prepeardebt($request));
-            $app->fees_json		=json_encode($this->prepearFees($request));
-            $app->file_ids	=json_encode($this->prepearAttach($request));
-            $app->hrs		=$request->restHrs;
-            $app->priority		=0;//$request->;
-            $app->ticket_status =1;
-            $app->active_trans	=1;	
-            $app->save();
-            $app->active_trans=$this->saveTrans($app->id,$request->app_type,$request->AssignedToID,$request->note,$request->AssDeptID,1,$ticket_type,$request);
-            $app->save();
-    		/*$tag=$request->tags?$request->tags:array();
-    		foreach($tag as $row)
-    			$this->saveTrans($app->id,$ticket_type,$row,$request->note,$request->AssDeptID,2);*/
-            if ($app) {
-                $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
-                $name=$config->ticket_name.'  ('.$app->app_no.')';
-                $this->saveCustomerFilesArchieve($request,$name,$link);
-                return response()->json(['app_id'=>$app->id,'app_type'=>$ticket_type,'success'=>trans('تم الحفظ')]);
-            }
-            return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
+        $app=new PortalTicket();
+        $app->app_no=14;
+        $app->customer_id	=$request->subscriber_id;
+        $app->customer_name	=$request->subscriber_name;
+        $app->customer_mobile=$request->MobileNo;
+        $app->national_id=$request->national_id;
+        $app->region		=$request->AreaID;
+        $app->address		=isset($request->Address)?$request->Address:'';
+        $app->malDesc		=$request->malDesc;
+        $app->app_type		=$request->app_type;
+        $app->task_type	=$request->task_type;
+        $app->dept_id		=$request->dept_id;
+        $app->rec_id		=($request->rec_id);
+        $app->ticket_status =1;
+        $app->save();
+        if ($app) {
+            return response()->json(['app_id'=>$app->id,'success'=>trans('تم الحفظ')]);
         }
-        else{
-            $app=AppTicket14::find($app_id);
-            $app->receipt_no	=$request->ReciptNo;	
-            $app->amount		=$request->AmountInNIS;
-            $app->currency		=$request->CurrencyID;
-            $app->customer_id	=$request->subscriber_id;	
-            $app->customer_name	=$request->subscriber_name;
-            $app->customer_mobile=$request->MobileNo;		
-            $app->region		=$request->AreaID;
-            $app->address		=isset($request->Address)?$request->Address:'';
-            $app->malDesc		=$request->malDesc;
-            $app->app_type		=$request->app_type;
-            $app->task_type	=$request->task_type;
-            $app->updated_at	=date('Y-m-d H:i:s');
-            $app->dept_id		=$request->dept_id;
-            $app->debt_total		=$request->debtTotal;
-            $app->payment		=$request->payment;
-            $app->rest		=$request->rest;
-            $app->waslNo		=$request->waslNo;
-            $app->debt_json	=json_encode($this->prepeardebt($request));
-            $app->fees_json		=json_encode($this->prepearFees($request));
-            $app->file_ids	=json_encode($this->prepearAttach($request));
-            $app->save();
-            if ($app) {
-                return response()->json(['app_id'=>$app->id,'app_type'=>$ticket_type,'success'=>trans('تم الحفظ')]);
-            }
-            return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
-        }
+        return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
     }
     
-    public function saveTicket15(TicketRequest5 $request){
+    public function saveTicket15(PortalTicketRequest5 $request){
         $app_id=$request->app_id;
         $ticket_type=15;
-        $this->updateCMobile($request->subscriber_id,$request->MobileNo)  ; 
         
-        $config=TicketConfig::where('ticket_no',15)->where('app_type',$request->app_type)->first();
-        if($config->force_attach==1 && sizeof($this->prepearAttach($request))<1){
-            return response()->json(['error'=>'no_attatch']);
+        if($request->subscriber_id == null || $request->subscriber_id == 0 || $request->subscriber_id == ''){
+            $request->subscriber_id=$this->addNewSubscriber($request);
         }
         
+        $config=TicketConfig::where('ticket_no',15)->where('app_type',$request->app_type)->first();
+
         if(!$app_id){
-            $maxRec=AppTicket15::select('app_no')->where('app_type',$request->app_type)->orderBy('id','desc')->limit(1)->get();
-            $max=1;
-            
-            if(sizeof($maxRec)>0)
-                $max=$maxRec[0]->app_no+1;
-            $app=new AppTicket15();
-            $app->app_no=$max;
-            $app->receipt_no	=$request->ReciptNo;	
+            $app=new PortalTicket();
+            $app->phase	        =$request->phase[0];	
+            $app->inAmper	    =$request->inAmper;	
             $app->amount		=$request->AmountInNIS;
             $app->currency		=$request->CurrencyID;
+            $app->subscription_type	=$request->subscriptionType;	
             $app->customer_id	=$request->subscriber_id;	
             $app->customer_name	=$request->subscriber_name;
             $app->customer_mobile=$request->MobileNo;		
+            $app->national_id=$request->national_id;		
             $app->region		=$request->AreaID;
-            $app->address		=isset($request->Address)?$request->Address:'';
-            $app->malDesc		=$request->malDesc;
+            $app->rec_id		=($request->rec_id);
             $app->app_type		=$request->app_type;
-            $app->phase	        =$request->phase[0];
+            $app->app_no		=15;
+            $app->address		=isset($request->Address)?$request->Address:'';
+            $app->dept_id		=$request->dept_id;
+            $app->malDesc		=$request->malDesc;
             $app->kwatt	=$request->kwatt;
             $app->placement	=$request->placement;
             $app->licNo	=$request->licNo;
-            $app->subs = json_encode($request->SubscribtionIdList);
-            $app->b_enabled		=1;
-            $app->created_by	=Auth()->user()->id;
-            $app->dept_id		=$request->dept_id;
-            $app->debt_total		=$request->debtTotal;
-            $app->payment		=$request->payment;
-            $app->rest		=$request->rest;
-            $app->waslNo		=$request->waslNo;
-            $app->debt_json	=json_encode($this->prepeardebt($request));
-            $app->fees_json		=json_encode($this->prepearFees($request));
-            $app->file_ids	=json_encode($this->prepearAttach($request));
-            $app->hrs		=$request->restHrs;
-            $app->priority		=0;//$request->;
+
             $app->ticket_status =1;
-            $app->active_trans	=1;	
             $app->save();
-            $app->active_trans=$this->saveTrans($app->id,$request->app_type,$request->AssignedToID,$request->note,$request->AssDeptID,1,$ticket_type,$request);
-            $app->save();
-    		/*$tag=$request->tags?$request->tags:array();
-    		foreach($tag as $row)
-    			$this->saveTrans($app->id,$ticket_type,$row,$request->note,$request->AssDeptID,2);*/
             if ($app) {
-                $link='viewTicket/'.$app->id.'/'.$config->ticket_no;
-                $name=$config->ticket_name.'  ('.$app->app_no.')';
-                $this->saveCustomerFilesArchieve($request,$name,$link);
                 return response()->json(['app_id'=>$app->id,'app_type'=>$ticket_type,'success'=>trans('تم الحفظ')]);
             }
             return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
@@ -1934,9 +1965,14 @@ order by created_at asc");
         }
     }
     
-    public function saveTicket16(TicketRequest5 $request){
+    public function saveTicket16(PortalTicketRequest5 $request){
         $app_id=$request->app_id;
         $ticket_type=16;
+        
+        if($request->subscriber_id == null || $request->subscriber_id == 0 || $request->subscriber_id == ''){
+            $request->subscriber_id=$this->addNewSubscriber($request);
+        }
+        
         $this->updateCMobile($request->subscriber_id,$request->MobileNo)  ; 
         
         $config=TicketConfig::where('ticket_no',16)->where('app_type',$request->app_type)->first();
@@ -1957,7 +1993,8 @@ order by created_at asc");
             $app->currency		=$request->CurrencyID;
             $app->customer_id	=$request->subscriber_id;	
             $app->customer_name	=$request->subscriber_name;
-            $app->customer_mobile=$request->MobileNo;		
+            $app->customer_mobile=$request->MobileNo;
+            $app->national_id=$request->national_id;
             $app->region		=$request->AreaID;
             $app->address		=isset($request->Address)?$request->Address:'';
             $app->app_type		=$request->app_type;
@@ -2023,9 +2060,14 @@ order by created_at asc");
         }
     }
     
-    public function saveTicket17(TicketRequest5 $request){
+    public function saveTicket17(PortalTicketRequest5 $request){
         $app_id=$request->app_id;
         $ticket_type=17;
+        
+        if($request->subscriber_id == null || $request->subscriber_id == 0 || $request->subscriber_id == ''){
+            $request->subscriber_id=$this->addNewSubscriber($request);
+        }
+        
         $this->updateCMobile($request->subscriber_id,$request->MobileNo)  ; 
         
         $config=TicketConfig::where('ticket_no',17)->where('app_type',$request->app_type)->first();
@@ -2046,7 +2088,8 @@ order by created_at asc");
             $app->currency		=$request->CurrencyID;
             $app->customer_id	=$request->subscriber_id;	
             $app->customer_name	=$request->subscriber_name;
-            $app->customer_mobile=$request->MobileNo;		
+            $app->customer_mobile=$request->MobileNo;
+            $app->national_id=$request->national_id;
             $app->region		=$request->AreaID;
             $app->address		=isset($request->Address)?$request->Address:'';
             $app->app_type		=$request->app_type;
@@ -2628,10 +2671,13 @@ order by created_at asc");
         }
     }
     
-    public function saveTicket23(TicketRequest7 $request){
+    public function saveTicket23(PortalTicketRequest7 $request){
         $app_id=$request->app_id;
         $ticket_type=23;
-
+        if($request->subscriber_id == null || $request->subscriber_id == 0 || $request->subscriber_id == ''){
+            $request->subscriber_id=$this->addNewSubscriber($request);
+        }
+        
         if(!$app_id){
             $app=new PortalTicket();
             $app->app_no=23;	
@@ -2640,7 +2686,8 @@ order by created_at asc");
             $app->currency		=$request->CurrencyID;
             $app->customer_id	=$request->subscriber_id;	
             $app->customer_name	=$request->subscriber_name;
-            $app->customer_mobile=$request->MobileNo;		
+            $app->customer_mobile=$request->MobileNo;
+            $app->national_id=$request->national_id;
             $app->region		=$request->AreaID;
             $app->address		=isset($request->Address)?$request->Address:'';
             $app->malDesc		=$request->malDesc;
@@ -2658,10 +2705,12 @@ order by created_at asc");
         return response()->json(['app_id'=>0,'app_type'=>0,'error'=>'حدث خطأ']);
     }
     
-    public function saveTicket24(TicketRequest20 $request){
+    public function saveTicket24(PortalTicketRequest20 $request){
         $app_id=$request->app_id;
         $ticket_type=24;
-       
+        if($request->subscriber_id == null || $request->subscriber_id == 0 || $request->subscriber_id == ''){
+            $request->subscriber_id=$this->addNewSubscriber($request);
+        }
         
         if(!$app_id){
            
@@ -2672,7 +2721,8 @@ order by created_at asc");
             $app->currency		=$request->CurrencyID;
             $app->customer_id	=$request->subscriber_id;	
             $app->customer_name	=$request->subscriber_name;
-            $app->customer_mobile=$request->MobileNo;		
+            $app->customer_mobile=$request->MobileNo;
+            $app->national_id=$request->national_id;
             $app->malDesc		=$request->malDesc;
             $app->app_type		=$request->app_type;
             $app->dept_id		=$request->dept_id;

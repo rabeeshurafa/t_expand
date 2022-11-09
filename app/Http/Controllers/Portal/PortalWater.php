@@ -96,7 +96,8 @@ class PortalWater extends Controller
     
         $subscriber_data = $request['term'];
 
-        $names = User::where('name', 'like', '%' . $subscriber_data . '%')->where('enabled',1)->select('*', 'name as label')->get();
+        // $names = User::where('name', 'like', '%' . $subscriber_data . '%')->where('enabled',1)->select('*', 'name as label')->get();
+        $names = User::where('name', '=',$subscriber_data)->where('enabled',1)->select('*', 'name as label')->get();
 
         //$html = view('dashboard.component.auto_complete', compact('names'))->render();
 
@@ -441,12 +442,17 @@ class PortalWater extends Controller
     {
         $setting = Setting::first();
         $region=Region::where('town_id',$setting->town_id)->get();
+        $subsList=Constant::where('parent',6032)->get();
+        $converterNos=Constant::where('parent',6208)->get();
         $type = 'waterPermission';
         $ticketInfo=$this->loadDefaul($type);
-        $department=Department::where('enabled',1)->get();
+        // dd($ticketInfo);
+        // $department=Department::where('enabled','=','1')->get();
         $app_type=2;
-        $fees=$this->fees;
-        return view('portal.water_ticket.permission', compact('type','region','ticketInfo','department','app_type','fees'));
+        // $fees=$this->fees;
+        // $archive_config = ArchiveRole::where('empid', Auth()->user()->id)->where('type', $type)->get();
+        $app_no=3;
+        return view('portal.water_ticket.appTicket3', compact('type','region','ticketInfo','app_type','subsList','app_no','converterNos'));
     }
     public function waterLineReconnect()
     {

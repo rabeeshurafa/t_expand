@@ -254,7 +254,7 @@
                         <td> قائم </td>
                         <td><input name="appart[]" {{$ticket->detailData->appart ? in_array(1, $ticket->detailData->appart) ? 'checked' : '' : ''}} id="appart1" type="checkbox" class="form-check-input" value="1"></td>
                         <td><input name="typeStore[]" {{$ticket->detailData->typeStore ? in_array(1, $ticket->detailData->typeStore) ? 'checked' : '' : ''}} id="typeStore1" type="checkbox" class="form-check-input" value="1"></td>
-                        <td><input name="office[]" {{$ticket->detailData->office ? in_array(1, $ticket->detailData->appart) ? 'checked' : '' : ''}} id="office1" type="checkbox" class="form-check-input" value="1"></td>
+                        <td><input name="office[]" {{$ticket->detailData->office ? in_array(1, $ticket->detailData->office) ? 'checked' : '' : ''}} id="office1" type="checkbox" class="form-check-input" value="1"></td>
                         <td><input name="floor[]" {{$ticket->detailData->floor ? in_array(1, $ticket->detailData->floor) ? 'checked' : '' : ''}} id="floor1" type="checkbox" class="form-check-input" value="1"></td>
                         <td><input name="stairs[]" {{$ticket->detailData->stairs ? in_array(1, $ticket->detailData->stairs) ? 'checked' : '' : ''}} id="stairs1" type="checkbox" class="form-check-input" value="1"></td>
                         <td><input name="elev[]" {{$ticket->detailData->elev ? in_array(1, $ticket->detailData->elev) ? 'checked' : '' : ''}} id="elev1" type="checkbox" class="form-check-input" value="1"></td>

@@ -14,6 +14,8 @@
     @include('dashboard.trackingArchive.component.financeArchive')
 @elseif($ticket->archive_type == 'agenda_archieve')
     @include('dashboard.trackingArchive.component.agendaArchive')
+@elseif($ticket->archive_type == 'jal_archieve')
+    @include('dashboard.trackingArchive.component.jalArchive')
 @else
     @include('dashboard.trackingArchive.component.munArchive')
 @endif

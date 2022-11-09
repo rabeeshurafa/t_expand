@@ -39,7 +39,7 @@ Route::group(['namespace' => 'Dashboard'], function () {
     Route::get('/transferTransTable', 'TransImportController@transferTransTable')->name('admin.users.transferTransTable');
     Route::get('/transferTicketStatusTable', 'TransImportController@transferTicketStatusTable')->name('admin.users.transferTicketStatusTable');
     Route::get('/transferResponseTable', 'TransImportController@transferResponseTable')->name('admin.users.transferResponseTable');
-    
+
     Route::get('/transferMessageReceiversTable', 'MessageImportController@transferMessageReceiversTable')->name('admin.users.transferMessageReceiversTable');
     Route::get('/transferMessageTable', 'MessageImportController@transferMessageTable')->name('admin.users.transferMessageTable');
     Route::get('/transferMessageFilesTable', 'MessageImportController@transferMessageFilesTable')->name('admin.users.transferMessageFilesTable');
@@ -83,7 +83,7 @@ Route::group([
 ], function () {
 
     Route::group(['namespace' => 'Dashboard', 'middleware' => 'auth:admin', 'prefix' => 'admin'], function () {
-        
+
         Route::get('viewTicketPortal/{id}', 'AppPortal@viewTicketPortal')->name('viewTicketPortal');
 
         /************ ticket area ***************/
@@ -127,8 +127,11 @@ Route::group([
         Route::post('saveTicket38', 'AppOp@saveTicket38')->name('saveTicket38');
         Route::post('saveTicket39', 'AppOp@saveTicket39')->name('saveTicket39');
         Route::post('saveTicket40', 'AppOp@saveTicket40')->name('saveTicket40');
+        Route::post('saveTicket40', 'AppOp@saveTicket40')->name('saveTicket41');
         Route::post('saveTicket42', 'AppOp@saveTicket42')->name('saveTicket42');
+        Route::post('saveTicket42', 'AppOp@saveTicket42')->name('saveTicket43');
         Route::post('saveTicket44', 'AppOp@saveTicket44')->name('saveTicket44');
+        Route::post('saveTicket44', 'AppOp@saveTicket44')->name('saveTicket45');
         Route::post('saveTicket46', 'AppOp@saveTicket46')->name('saveTicket46');
         Route::post('saveSparPart', 'AppOp@saveSparPart')->name('saveSparPart');
         Route::post('dowaivesubscription', 'AppOp@dowaivesubscription')->name('dowaivesubscription');
@@ -149,13 +152,14 @@ Route::group([
         Route::post('saveEditTicket', 'PrintTicket@saveEditTicket')->name('saveEditTicket');
         Route::post('savePrintTicket39No', 'PrintTicket@savePrintTicket39No')->name('savePrintTicket39No');
         Route::get('printTicket39/{id}/{type}', 'PrintTicket@printTicket39')->name('printTicket39');
+        Route::get('print45/{id}', 'PrintTicket@print45')->name('print45');
 
         Route::put('TicketDel', 'AppOp@deleteTicket')->name('TicketDel');
         Route::put('updateVac', 'AppOp@updateVac')->name('updateVac');
         Route::get('getVacForEmployee/{id}', 'AppOp@getVacForEmployee')->name('getVacForEmployee');
         /****************************************/
-        
-        
+
+        Route::get('download_backup', 'BackupController@downloadBackup')->name('download_backup');
 
         Route::get('getWaterTickets', 'TasksTableController@getWaterTickets')->name('getWaterTickets');
         Route::get('getElecSubscriptionTickets', 'TasksTableController@getElecSubscriptionTickets')->name('getElecSubscriptionTickets');
@@ -164,58 +168,71 @@ Route::group([
         Route::get('getWaterFinancTransferTickets', 'TasksTableController@getWaterFinancTransferTickets')->name('getWaterFinancTransferTickets');
         Route::get('getWaterGlblMulfuncTickets', 'TasksTableController@getWaterGlblMulfuncTickets')->name('getWaterGlblMulfuncTickets');
         Route::get('getWaterMeterChekTickets', 'TasksTableController@getWaterMeterChekTickets')->name('getWaterMeterChekTickets');
-        Route::get('getWaterMeterReadTickets', 'TasksTableController@getWaterMeterReadTickets')->name('getWaterMeterReadTickets'); 
-        Route::get('getWaterMeterTransfrTickets', 'TasksTableController@getWaterMeterTransfrTickets')->name('getWaterMeterTransfrTickets'); 
-        Route::get('getWaterLineRecnctTickets', 'TasksTableController@getWaterLineRecnctTickets')->name('getWaterLineRecnctTickets'); 
-        Route::get('getWaiveWaterSubsTickets', 'TasksTableController@getWaiveWaterSubsTickets')->name('getWaiveWaterSubsTickets'); 
-        Route::get('getElecDisconnectTickets', 'TasksTableController@getElecDisconnectTickets')->name('getElecDisconnectTickets'); 
-        Route::get('getElecFinancTransferTickets', 'TasksTableController@getElecFinancTransferTickets')->name('getElecFinancTransferTickets'); 
-        Route::get('getElecGlblMulfuncTickets', 'TasksTableController@getElecGlblMulfuncTickets')->name('getElecGlblMulfuncTickets'); 
-        Route::get('getElecMalfuncTickets', 'TasksTableController@getElecMalfuncTickets')->name('getElecMalfuncTickets'); 
-        Route::get('getElecMeterChekTickets', 'TasksTableController@getElecMeterChekTickets')->name('getElecMeterChekTickets'); 
-        Route::get('getElecMeterReadTickets', 'TasksTableController@getElecMeterReadTickets')->name('getElecMeterReadTickets'); 
-        Route::get('getElecMeterTransfrTickets', 'TasksTableController@getElecMeterTransfrTickets')->name('getElecMeterTransfrTickets'); 
-        Route::get('getElecLineRecnctTickets', 'TasksTableController@getElecLineRecnctTickets')->name('getElecLineRecnctTickets'); 
-        Route::get('getElec16Tickets', 'TasksTableController@getElec16Tickets')->name('getElec16Tickets'); 
-        Route::get('getElec37Tickets', 'TasksTableController@getElec37Tickets')->name('getElec37Tickets'); 
-        Route::get('getElec27Tickets', 'TasksTableController@getElec27Tickets')->name('getElec27Tickets'); 
-        Route::get('getElec29Tickets', 'TasksTableController@getElec29Tickets')->name('getElec29Tickets'); 
-        Route::get('getElec36Tickets', 'TasksTableController@getElec36Tickets')->name('getElec36Tickets'); 
-        Route::get('getElec39Tickets', 'TasksTableController@getElec39Tickets')->name('getElec39Tickets'); 
-        Route::get('getWaiveElecSubsTickets', 'TasksTableController@getWaiveElecSubsTickets')->name('getWaiveElecSubsTickets'); 
-        Route::get('getBuildingLicTickets', 'TasksTableController@getBuildingLicTickets')->name('getBuildingLicTickets'); 
-        Route::get('getEngValedTickets', 'TasksTableController@getEngValedTickets')->name('getEngValedTickets'); 
-        Route::get('getLicFileTickets', 'TasksTableController@getLicFileTickets')->name('getLicFileTickets'); 
-        Route::get('getOwnershipTransferTickets', 'TasksTableController@getOwnershipTransferTickets')->name('getOwnershipTransferTickets'); 
-        Route::get('getRetriveLicTickets', 'TasksTableController@getRetriveLicTickets')->name('getRetriveLicTickets'); 
-        Route::get('getSitePlanTickets', 'TasksTableController@getSitePlanTickets')->name('getSitePlanTickets'); 
-        Route::get('getStraighteningTickets', 'TasksTableController@getStraighteningTickets')->name('getStraighteningTickets'); 
-        Route::get('getCollectingTickets', 'TasksTableController@getCollectingTickets')->name('getCollectingTickets'); 
-        Route::get('getLeaveTickets', 'TasksTableController@getLeaveTickets')->name('getLeaveTickets'); 
-        Route::get('getVacationTickets', 'TasksTableController@getVacationTickets')->name('getVacationTickets'); 
-        Route::get('getNetworkDevelopTickets', 'TasksTableController@getNetworkDevelopTickets')->name('getNetworkDevelopTickets'); 
-        Route::get('getPurchaseTickets', 'TasksTableController@getPurchaseTickets')->name('getPurchaseTickets'); 
-        Route::get('getRequestSpareTickets', 'TasksTableController@getRequestSpareTickets')->name('getRequestSpareTickets'); 
-        Route::get('getOutspreadTickets', 'TasksTableController@getOutspreadTickets')->name('getOutspreadTickets'); 
-        Route::get('getPublicComplaintTickets', 'TasksTableController@getPublicComplaintTickets')->name('getPublicComplaintTickets'); 
-        Route::get('getCitizenComplaintTickets', 'TasksTableController@getCitizenComplaintTickets')->name('getCitizenComplaintTickets'); 
-        Route::get('getQuittanceTickets', 'TasksTableController@getQuittanceTickets')->name('getQuittanceTickets'); 
-        Route::get('getInnerQuittanceTickets', 'TasksTableController@getInnerQuittanceTickets')->name('getInnerQuittanceTickets'); 
-        Route::get('getVehicleMaintenanceTickets', 'TasksTableController@getVehicleMaintenanceTickets')->name('getVehicleMaintenanceTickets'); 
-        Route::get('getRefuelingTickets', 'TasksTableController@getRefuelingTickets')->name('getRefuelingTickets'); 
-        Route::get('getConcreteTickets', 'TasksTableController@getConcreteTickets')->name('getConcreteTickets'); 
-        Route::get('getTicket40s', 'TasksTableController@getTicket40s')->name('getTicket40s'); 
-        Route::get('getWaterPermissionTickets', 'TasksTableController@getWaterPermissionTickets')->name('getWaterPermissionTickets'); 
-        Route::get('getElecPermissionTickets', 'TasksTableController@getElecPermissionTickets')->name('getElecPermissionTickets'); 
-        Route::get('getInternalMemoTickets', 'TasksTableController@getInternalMemoTickets')->name('getInternalMemoTickets'); 
-        
+        Route::get('getWaterMeterReadTickets', 'TasksTableController@getWaterMeterReadTickets')->name('getWaterMeterReadTickets');
+        Route::get('getWaterMeterTransfrTickets', 'TasksTableController@getWaterMeterTransfrTickets')->name('getWaterMeterTransfrTickets');
+        Route::get('getWaterLineRecnctTickets', 'TasksTableController@getWaterLineRecnctTickets')->name('getWaterLineRecnctTickets');
+        Route::get('getWaiveWaterSubsTickets', 'TasksTableController@getWaiveWaterSubsTickets')->name('getWaiveWaterSubsTickets');
+        Route::get('getElecDisconnectTickets', 'TasksTableController@getElecDisconnectTickets')->name('getElecDisconnectTickets');
+        Route::get('getElecFinancTransferTickets', 'TasksTableController@getElecFinancTransferTickets')->name('getElecFinancTransferTickets');
+        Route::get('getElecGlblMulfuncTickets', 'TasksTableController@getElecGlblMulfuncTickets')->name('getElecGlblMulfuncTickets');
+        Route::get('getElecMalfuncTickets', 'TasksTableController@getElecMalfuncTickets')->name('getElecMalfuncTickets');
+        Route::get('getElecMeterChekTickets', 'TasksTableController@getElecMeterChekTickets')->name('getElecMeterChekTickets');
+        Route::get('getElecMeterReadTickets', 'TasksTableController@getElecMeterReadTickets')->name('getElecMeterReadTickets');
+        Route::get('getElecMeterTransfrTickets', 'TasksTableController@getElecMeterTransfrTickets')->name('getElecMeterTransfrTickets');
+        Route::get('getElecLineRecnctTickets', 'TasksTableController@getElecLineRecnctTickets')->name('getElecLineRecnctTickets');
+        Route::get('getElec16Tickets', 'TasksTableController@getElec16Tickets')->name('getElec16Tickets');
+        Route::get('getElec37Tickets', 'TasksTableController@getElec37Tickets')->name('getElec37Tickets');
+        Route::get('getElec27Tickets', 'TasksTableController@getElec27Tickets')->name('getElec27Tickets');
+        Route::get('getElec29Tickets', 'TasksTableController@getElec29Tickets')->name('getElec29Tickets');
+        Route::get('getElec36Tickets', 'TasksTableController@getElec36Tickets')->name('getElec36Tickets');
+        Route::get('getElec39Tickets', 'TasksTableController@getElec39Tickets')->name('getElec39Tickets');
+        Route::get('getWaiveElecSubsTickets', 'TasksTableController@getWaiveElecSubsTickets')->name('getWaiveElecSubsTickets');
+        Route::get('getBuildingLicTickets', 'TasksTableController@getBuildingLicTickets')->name('getBuildingLicTickets');
+        Route::get('getEngValedTickets', 'TasksTableController@getEngValedTickets')->name('getEngValedTickets');
+        Route::get('getLicFileTickets', 'TasksTableController@getLicFileTickets')->name('getLicFileTickets');
+        Route::get('getOwnershipTransferTickets', 'TasksTableController@getOwnershipTransferTickets')->name('getOwnershipTransferTickets');
+        Route::get('getRetriveLicTickets', 'TasksTableController@getRetriveLicTickets')->name('getRetriveLicTickets');
+        Route::get('getSitePlanTickets', 'TasksTableController@getSitePlanTickets')->name('getSitePlanTickets');
+        Route::get('getStraighteningTickets', 'TasksTableController@getStraighteningTickets')->name('getStraighteningTickets');
+        Route::get('getCollectingTickets', 'TasksTableController@getCollectingTickets')->name('getCollectingTickets');
+        Route::get('getLeaveTickets', 'TasksTableController@getLeaveTickets')->name('getLeaveTickets');
+        Route::get('getVacationTickets', 'TasksTableController@getVacationTickets')->name('getVacationTickets');
+        Route::get('getNetworkDevelopTickets', 'TasksTableController@getNetworkDevelopTickets')->name('getNetworkDevelopTickets');
+        Route::get('getPurchaseTickets', 'TasksTableController@getPurchaseTickets')->name('getPurchaseTickets');
+        Route::get('getRequestSpareTickets', 'TasksTableController@getRequestSpareTickets')->name('getRequestSpareTickets');
+        Route::get('getOutspreadTickets', 'TasksTableController@getOutspreadTickets')->name('getOutspreadTickets');
+        Route::get('getPublicComplaintTickets', 'TasksTableController@getPublicComplaintTickets')->name('getPublicComplaintTickets');
+        Route::get('getCitizenComplaintTickets', 'TasksTableController@getCitizenComplaintTickets')->name('getCitizenComplaintTickets');
+        Route::get('getQuittanceTickets', 'TasksTableController@getQuittanceTickets')->name('getQuittanceTickets');
+        Route::get('getInnerQuittanceTickets', 'TasksTableController@getInnerQuittanceTickets')->name('getInnerQuittanceTickets');
+        Route::get('getVehicleMaintenanceTickets', 'TasksTableController@getVehicleMaintenanceTickets')->name('getVehicleMaintenanceTickets');
+        Route::get('getRefuelingTickets', 'TasksTableController@getRefuelingTickets')->name('getRefuelingTickets');
+        Route::get('getConcreteTickets', 'TasksTableController@getConcreteTickets')->name('getConcreteTickets');
+        Route::get('getTicket40s', 'TasksTableController@getTicket40s')->name('getTicket40s');
+        Route::get('getWaterPermissionTickets', 'TasksTableController@getWaterPermissionTickets')->name('getWaterPermissionTickets');
+        Route::get('getElecPermissionTickets', 'TasksTableController@getElecPermissionTickets')->name('getElecPermissionTickets');
+        Route::get('getInternalMemoTickets', 'TasksTableController@getInternalMemoTickets')->name('getInternalMemoTickets');
+        Route::get('getBuildingSewageTickets', 'TasksTableController@getBuildingSewageTickets')->name('getBuildingSewageTickets');
+        Route::get('getWasteComplaintTickets', 'TasksTableController@getWasteComplaintTickets')->name('getWasteComplaintTickets');
+        Route::get('getTrashTickets', 'TasksTableController@getTrashTickets')->name('getTrashTickets');
+        Route::get('getAmbulanceTickets', 'TasksTableController@getAmbulanceTickets')->name('getAmbulanceTickets');
+
         Route::get('/', 'DashboardController@index')->name('admin.dashboard');  // the first page admin visits if authenticated
         Route::get('getMyTaskAjax', 'DashboardController@getMyTaskAjax')->name('getMyTaskAjax');
         Route::get('getWatingTaskAjax', 'DashboardController@getWatingTaskAjax')->name('getWatingTaskAjax');
         Route::get('getTaggedTaskAjax', 'DashboardController@getTaggedTaskAjax')->name('getTaggedTaskAjax');
         Route::get('getSenTTaskAjax', 'DashboardController@getSenTTaskAjax')->name('getSenTTaskAjax');
         Route::get('logout', 'LoginController@logout')->name('admin.logout');
-        
+
+        Route::get('updateReport','DailyWorkController@updateReport')->name('updateReport');
+        Route::post('saveReport','DailyWorkController@saveReport')->name('saveReport');
+        Route::get('showReport','DailyWorkController@showReport')->name('showReport');
+        Route::get('dailyWork','DailyWorkController@index')->name('dailyWork');
+        Route::get('update_by_field','DailyWorkController@update_by_field')->name('update_by_field');
+        Route::get('reportIndex','DailyWorkController@reportIndex')->name('reportIndex')->middleware('can:reportIndex');
+        Route::get('searchReport','DailyWorkController@workReport')->name('searchReport');
+        Route::get('printdailywork/{from}/{to}/{emp_id}/{mostt}/{state}','DailyWorkController@printDailyWorkReport')->name('printdailywork');
+
         Route::get('mailPage', 'mailController@mailPage')->name('mailPage');
         Route::post('getMessage', 'mailController@getMessage')->name('getMessage');
         Route::post('getNextMessage', 'mailController@getNextMessage')->name('getNextMessage');
@@ -246,15 +263,15 @@ Route::group([
         Route::get('read_info_all','WaterReadController@read_info_all')->name('read_info_all');
         Route::post('store_read','WaterReadController@store_read')->name('store_read');
         Route::post('waterReadSMS','WaterReadController@waterReadSMS')->name('waterReadSMS');
-        
-        
+
+
         Route::get('addEarchLic','EarchLicController@index')->name('addEarchLic');
         Route::post('saveEarchLic','EarchLicController@saveEarchLic')->name('saveEarchLic');
         Route::get('printLicEarth/{id}', 'EarchLicController@printLicEarth')->name('printLicEarth');
         Route::get('all_EarchLic', 'EarchLicController@all_EarchLic')->name('all_EarchLic');
         Route::get('earchLic_info', 'EarchLicController@earchLic_info')->name('earchLic_info');
         Route::post('earchLic_delete', 'EarchLicController@earchLic_delete')->name('earchLic_delete');
-        
+
         Route::get('employee', 'EmployeeController@index')->name('employee')->middleware('can:employee');
         Route::post('changePassword', 'EmployeeController@changePassword')->name('changePassword');
         Route::get('password_index', 'EmployeeController@password_index')->name('password_index');
@@ -272,19 +289,19 @@ Route::group([
         Route::get('license', 'LicenseController@index')->name('license');
         Route::post('store_license', 'LicenseController@store_license')->name('store_license');
         Route::get('license_info_byUser', 'LicenseController@license_info_byUser')->name('license_info_byUser');
-        
+
         Route::get('warning', 'SubscriberWarning@index')->name('warning')->middleware('can:warning');
         Route::post('store_warning', 'SubscriberWarning@store_warning')->name('store_warning');
         Route::get('warning_info_all', 'SubscriberWarning@warning_info_all')->name('warning_info_all');
         Route::get('warning_info', 'SubscriberWarning@warning_info')->name('warning_info');
         Route::post('warning_delete', 'SubscriberWarning@warning_delete')->name('warning_delete');
-        
+
         Route::get('trade_archive','ArchieveController@tradeArchive')->name('trade_archive');
         Route::post('store_trade_archive','ArchieveController@store_trade_archive')->name('store_trade_archive');
         Route::get('archieveTrade_info_all','ArchieveController@archieveTrade_info_all')->name('archieveTrade_info_all');
         Route::get('tradeArchive_info','ArchieveController@tradeArchive_info')->name('tradeArchive_info');
         Route::post('tradeArchive_delete','ArchieveController@tradeArchive_delete')->name('tradeArchive_delete');
-        
+
         Route::get('phpinfo', 'ArchieveController@phpinfo')->name('phpinfo');
         Route::post('store_archive_config', 'ArchieveController@store_archive_config')->name('store_archive_config');
         Route::post ('saveScanedFile', 'ArchieveController@saveScanedFile')->name('saveScanedFile');
@@ -302,12 +319,7 @@ Route::group([
         Route::get('waterMeterTransfer', 'WaterTicketController@meterTransfer')->name('waterMeterTransfer');
         Route::get('waterFinancialTransfer', 'WaterTicketController@waterFinancialTransfer')->name('waterFinancialTransfer');
         Route::post('appCustomer', 'WaterTicketController@appCustomer')->name('appCustomer');
-
-        Route::get('updateReport','DailyReport@updateReport')->name('updateReport');
-        Route::post('saveReport','DailyReport@saveReport')->name('saveReport');
-        Route::get('showReport','DailyReport@showReport')->name('showReport');
-        Route::get('dailyWork','DailyReport@index')->name('dailyWork');
-        Route::get('update_by_field','DailyReport@update_by_field')->name('update_by_field');
+        Route::get('buildingSewage', 'WaterTicketController@buildingSewage')->name('buildingSewage');
 
         Route::get('counterReadReport', 'CounterReadReport@index')->name('counterReadReport');
         Route::get('finaicalRequest', 'FinaicalRequestController@index')->name('finaicalRequest');
@@ -322,7 +334,7 @@ Route::group([
         Route::get('sparePart_auto_complete', 'SparePartsController@sparePart_auto_complete')->name('sparePart_auto_complete');
         Route::get('sparePart_info', 'SparePartsController@sparePart_info')->name('sparePart_info');
         Route::get('sparePart_info_all', 'SparePartsController@sparePart_info_all')->name('sparePart_info_all');
-        
+
         Route::get('medicine', 'MedicineController@medicines')->name('medicine');
         Route::get('medicines/id/{id}', 'MedicineController@medicines');
         Route::post('store_medicines', 'MedicineController@store_medicines')->name('store_medicines');
@@ -367,14 +379,14 @@ Route::group([
         Route::get('vacationsReport', 'ReportController@vacationsReport')->name('vacationsReport');
         Route::get('subscriberReport', 'ReportController@subscriberReport')->name('subscriberReport');
         Route::get('taskArchiveReport', 'ReportController@taskArchiveReport')->name('taskArchiveReport');
-        
+
         /////////////////////////////////////////////////New Reports///////////////////////////////////////////////////////////
         Route::get('newSearchTasks', 'ReportController@newSearchTasks')->name('newSearchTasks');
-        
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
-        
-        
+
+
+
         Route::get('subscriberOutArchive', 'SubscriberController@subscriberOutArchive')->name('subscriberOutArchive');
         Route::get('subscriberInArchive', 'SubscriberController@subscriberInArchive')->name('subscriberInArchive');
         Route::get('subscriberLicArchive', 'SubscriberController@subscriberLicArchive')->name('subscriberLicArchive');
@@ -387,7 +399,7 @@ Route::group([
         Route::get('subscriberEarh_lic', 'SubscriberController@subscriberEarh_lic')->name('subscriberEarh_lic');
         Route::get('subscriberWarning', 'SubscriberController@subscriberWarning')->name('subscriberWarning');
         Route::post('mergeSubscribers', 'SubscriberController@mergeSubscribers')->name('mergeSubscribers');
-        
+
         Route::get('contractArchive', 'orginzationsController@contractArchive')->name('contractArchive');
         Route::get('orgOutArchive', 'orginzationsController@orgOutArchive')->name('orgOutArchive');
         Route::get('orgCert', 'orginzationsController@orgCert')->name('orgCert');
@@ -396,14 +408,14 @@ Route::group([
         Route::get('orgJalArchive', 'orginzationsController@orgJalArchive')->name('orgJalArchive');
         Route::get('orgOtherArchive', 'orginzationsController@orgOtherArchive')->name('orgOtherArchive');
         Route::get('finaceArchive', 'orginzationsController@finaceArchive')->name('finaceArchive');
-        
+
         Route::get('empContractArchive', 'EmployeeController@empContractArchive')->name('empContractArchive');
         Route::get('empOutArchive', 'EmployeeController@empOutArchive')->name('empOutArchive');
         Route::get('empInArchive', 'EmployeeController@empInArchive')->name('empInArchive');
         Route::get('empCopyArchive', 'EmployeeController@empCopyArchive')->name('empCopyArchive');
         Route::get('empJalArchive', 'EmployeeController@empJalArchive')->name('empJalArchive');
         Route::get('empOtherArchive', 'EmployeeController@empOtherArchive')->name('empOtherArchive');
-        
+
         Route::get('deptContractArchive', 'DepartmentController@deptContractArchive')->name('deptContractArchive');
         Route::get('deptOutArchive', 'DepartmentController@deptOutArchive')->name('deptOutArchive');
         Route::get('deptInArchive', 'DepartmentController@deptInArchive')->name('deptInArchive');
@@ -411,22 +423,22 @@ Route::group([
         Route::get('deptJalArchive', 'DepartmentController@deptJalArchive')->name('deptJalArchive');
         Route::get('deptOtherArchive', 'DepartmentController@deptOtherArchive')->name('deptOtherArchive');
         Route::get('deptLawArchive', 'DepartmentController@deptLawArchive')->name('deptLawArchive');
-        
+
         Route::get('projArchive', 'ProjectController@projArchive')->name('projArchive');
         Route::get('projCopyArchive', 'ProjectController@projCopyArchive')->name('projCopyArchive');
         Route::get('projJalArchive', 'ProjectController@projJalArchive')->name('projJalArchive');
         Route::get('projContractArchive', 'ProjectController@projContractArchive')->name('projContractArchive');
-        
+
         Route::get('equpArchive', 'AssetsController@equpArchive')->name('equpArchive');
         Route::get('equpCopyArchive', 'AssetsController@equpCopyArchive')->name('equpCopyArchive');
         Route::get('equpJalArchive', 'AssetsController@equpJalArchive')->name('equpJalArchive');
         Route::get('equpContractArchive', 'AssetsController@equpContractArchive')->name('equpContractArchive');
-        
+
         Route::get('vehcileArchive', 'vehicleController@vehcileArchive')->name('vehcileArchive');
         Route::get('vehcileCopyArchive', 'vehicleController@vehcileCopyArchive')->name('vehcileCopyArchive');
         Route::get('vehcileJalArchive', 'vehicleController@vehcileJalArchive')->name('vehcileJalArchive');
         Route::get('vehcileContractArchive', 'vehicleController@vehcileContractArchive')->name('vehcileContractArchive');
-        
+
         Route::get('assetsArchive', 'SpecialAssetsController@assetsArchive')->name('assetsArchive');
         Route::get('assetsCopyArchive', 'SpecialAssetsController@assetsCopyArchive')->name('assetsCopyArchive');
         Route::get('assetsJalArchive', 'SpecialAssetsController@assetsJalArchive')->name('assetsJalArchive');
@@ -458,7 +470,9 @@ Route::group([
         Route::get('engineeringValidation', 'BuildingTicketController@engineeringValidation')->name('engineeringValidation');
 
         Route::get('outspreadTasks', 'OutspreadTaskController@outspreadTasks')->name('outspreadTasks');
+        Route::get('trashTasks', 'OutspreadTaskController@trashTasks')->name('trashTasks');
         Route::get('quittance', 'OutspreadTaskController@quittance')->name('quittance');
+        Route::get('wasteComplaint', 'OutspreadTaskController@wasteComplaint')->name('wasteComplaint');
         Route::get('publicComplaint', 'OutspreadTaskController@publicComplaint')->name('publicComplaint');
         Route::get('citizenComplaint', 'OutspreadTaskController@citizenComplaint')->name('citizenComplaint');
         Route::get('innerQuittance', 'OutspreadTaskController@innerQuittance')->name('innerQuittance');
@@ -473,6 +487,7 @@ Route::group([
         Route::get('vehicleMaintenance', 'GeneralRequescontroller@vehicleMaintenance')->name('vehicleMaintenance');
         Route::get('refueling', 'GeneralRequescontroller@refueling')->name('refueling');
         Route::get('trackingArchive/{type}/{id}', 'GeneralRequescontroller@trackingArchive')->name('trackingArchive');
+        Route::get('ambulance', 'GeneralRequescontroller@ambulance')->name('ambulance');
 
         Route::get('elecSubscription', 'elecTicketController@elecSubscription')->name('elecSubscription');
         Route::get('elecMalfunction', 'elecTicketController@elecMalfunction')->name('elecMalfunction');
@@ -499,9 +514,9 @@ Route::group([
         Route::get('water', 'WaterController@index')->name('water');
         Route::post('store_water', 'WaterController@store_water')->name('store_water');
         Route::get('water_info_byUser', 'WaterController@water_info_byUser')->name('water_info_byUser');
-        
+
         Route::get('hospitalVisit', 'HospitalVisitController@index')->name('hospitalVisit');
-        
+
         Route::get('aged', 'AgedController@index')->name('aged');
         Route::get('aged/id/{id}', 'AgedController@index')->name('ageds');
         Route::post('store_aged', 'AgedController@store_aged')->name('store_aged');
@@ -509,8 +524,8 @@ Route::group([
         Route::get('aged_info', 'AgedController@aged_info')->name('aged_info');
         Route::get('aged_info_all', 'AgedController@aged_info_all')->name('aged_info_all');
         Route::post('aged_delete', 'AgedController@aged_delete')->name('aged_delete');
-        
-       
+
+
         Route::get('volunteer', 'VolunteerController@index')->name('volunteer');
         Route::post('store_volunteer', 'VolunteerController@store_volunteer')->name('store_volunteer');
         Route::get('volunteer_auto_complete', 'VolunteerController@volunteer_auto_complete')->name('volunteer_auto_complete');
@@ -536,14 +551,14 @@ Route::group([
         Route::get('dept_auto_complete', 'DepartmentController@dept_auto_complete')->name('dept_auto_complete');
         Route::get('dep_info', 'DepartmentController@dep_info')->name('dep_info');
         Route::get('dep_info_all', 'DepartmentController@dep_info_all')->name('dep_info_all');
-        
+
         Route::get('civil','Civil@index')->name('civil');
         Route::post('civilStore','Civil@store_citizen')->name('civilStore');
         Route::get('citizen_info_all','Civil@citizen_info_all')->name('citizen_info_all');
         Route::get('citizen_info','Civil@citizen_info')->name('citizen_info');
         Route::post('citizen_delete', 'Civil@citizen_delete')->name('citizen_delete');
         Route::get('citizen_auto_complete','Civil@citizen_auto_complete')->name('citizen_auto_complete');
-        
+
         Route::post('sendSMS', 'SubscriberController@sendSMS')->name('sendSMS');
         Route::get('subscribers', 'SubscriberController@index')->name('subscribers')->middleware('can:subscribers');
         Route::get('printElec/{subscriber_id}', 'SubscriberController@printElec')->name('printElec');
@@ -644,7 +659,7 @@ Route::group([
         Route::post('getConstantByID', 'ExtentionsController@getConstantByID')->name('getConstantByID');
         Route::post('SaveConstant', 'ExtentionsController@SaveConstant')->name('SaveConstant');
         Route::post('deleteConstant', 'ExtentionsController@deleteConstant')->name('deleteConstant');
-        
+
 /*****************/
         Route::get('search','SearchController@full_search')->name('search');
         Route::get('out_archieve','ArchieveController@out_archieve')->name('out_archieve')->middleware('can:out_archieve');
@@ -673,8 +688,8 @@ Route::group([
         Route::get('jobLic_stop/id/{id}','jobLicController@stopeindex')->name('jobLic_stop');
         Route::get('jobLic_add/id/{id}/renew/{renew}','jobLicController@index')->name('jobLic_add');
         Route::get('jobLic_info_all', 'jobLicController@jobLic_info_all')->name('jobLic_info_all');
-        Route::post('store_jobLic','jobLicController@store_jobLic')->name('store_jobLic'); 
-        Route::post('stop_jobLic','jobLicController@stop_jobLic')->name('stop_jobLic'); 
+        Route::post('store_jobLic','jobLicController@store_jobLic')->name('store_jobLic');
+        Route::post('stop_jobLic','jobLicController@stop_jobLic')->name('stop_jobLic');
         Route::get('jobLic_info', 'jobLicController@jobLic_info')->name('jobLic_info');
         Route::get('jobLic_info_byUser', 'jobLicController@jobLic_info_byUser')->name('jobLic_info_byUser');
         Route::get('jobLic_report','jobLicController@jobLicReport')->name('jobLicReport');
@@ -700,7 +715,7 @@ Route::group([
 
         Route::get('jobLic_report','ArchieveController@jobLicReport')->name('jobLicReport');
         Route::get('jobLic_reports','ArchieveController@jobLic_reports')->name('jobLic_reports');
-        
+
         Route::post('uploadAttach','ArchieveController@uploadAttach')->name('uploadAttach');
 
         // Route::get('licFile_archieve','ArchieveController@licFileArchive')->name('licFile_archieve')->middleware('can:licFile_archieve');
@@ -708,7 +723,7 @@ Route::group([
         Route::post('store_finance_archive','ArchieveController@store_finance_archive')->name('store_finance_archive');
         Route::get('financeArchive_info_all','ArchieveController@financeArchive_info_all')->name('financeArchive_info_all');
         Route::get('financeArchive_info','ArchieveController@financeArchive_info')->name('financeArchive_info');
-        
+
         Route::group(['prefix' => 'profile'], function () {
             Route::get('edit', 'ProfileController@editProfile')->name('edit.profile');
             Route::put('update', 'ProfileController@updateprofile')->name('update.profile');
@@ -755,7 +770,7 @@ Route::group([
         Route::get('job_Lic_info', 'ArchieveController@job_Lic_info')->name('job_Lic_info');
         Route::get('archieveJoblic_info_all', 'ArchieveController@archieveJoblic_info_all')->name('archieveJoblic_info_all');
         Route::get('jalArchieve_info_all', 'ArchieveController@jalArchieve_info_all')->name('jalArchieve_info_all');
-        
+
         Route::get('Linence_auto_complete','ArchieveController@Linence_auto_complete')
         ->name('Linence_auto_complete');
         Route::post('store_lince_archive','ArchieveController@store_lince_archive')
@@ -765,16 +780,16 @@ Route::group([
 
         Route::get('elec_info_all', 'ElecController@elec_info_all')->name('elec_info_all');
         Route::get('elec_info', 'ElecController@elec_info')->name('elec_info');
-        
+
         Route::get('water_info_all', 'WaterController@water_info_all')->name('water_info_all');
         Route::get('water_info', 'WaterController@water_info')->name('water_info');
-        
+
         Route::post('store_jobLic_archieve','ArchieveController@store_jobLic_archieve')
         ->name('store_jobLic_archieve');
-        
+
         Route::get('cert', 'certController@index')->name('cert');
         Route::get('sendOut', 'certController@sendOut')->name('sendOut');
-        
+
         Route::post('store_city', 'RegionsController@store_city')->name('store_city');
         Route::get('getCityById', 'RegionsController@getCityById')->name('getCityById');
         Route::get('getCity', 'RegionsController@getCity')->name('getCity');
@@ -793,14 +808,14 @@ Route::group([
             Route::get('/', 'UsersController@index')->name('admin.users.index');
             Route::get('/create', 'UsersController@create')->name('admin.users.create');
             Route::post('/store', 'UsersController@store')->name('admin.users.store');
-            
+
 
         });
 
     });
 
     Route::group(['namespace' => 'Dashboard', 'middleware' => 'guest:admin', 'prefix' => 'admin'], function () {
-        
+
         Route::get('login', 'LoginController@login')->name('admin.login');
         Route::post('login', 'LoginController@postLogin')->name('admin.post.login');
 

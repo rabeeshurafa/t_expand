@@ -97,7 +97,7 @@
         }
         .swal2-html-container{
             font-size: 18px !important;
-            
+
         }
     </style>
 
@@ -126,12 +126,12 @@
                                         </div>
                                         <div class="col-sm-12 col-md-3">
                                             <input type="radio" name="phase[]" checked="" id="radio-1" class="jui-radio-buttons" value="1" >
-                                           
+
                                             <label for="radio-1">1 فاز</label>
                                             <input type="radio" name="phase[]" id="radio-2" class="jui-radio-buttons" value="2" >
                                             <label for="radio-2">3 فاز</label>
                                          </div>
-                                         
+
                                         <div class="col-md-8">
                                             <div class="form-group">
                                                 <div class="input-group">
@@ -154,7 +154,7 @@
                                                         <input type="hidden" id="app_type"  name="app_type" value="1">
                                                         <input type="hidden" id="dept_id"  name="dept_id" value="{{$ticketInfo->dept_id}}">
 
-  
+
                                     @include('dashboard.includes.regionsTemplate')
 
                                     <div class="row mobRow">
@@ -225,7 +225,7 @@
                             <div class="row">
                                 <div class="col-md-4" style="padding-left: 0px;">
                                     <div class="form-group">
-                                
+
                                         <div class="input-group" style="width: 100% !important;">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="basic-addon1">
@@ -258,7 +258,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-1 " style="padding-right: 0px;" >
-                                    <a id="customer_location" href="https://www.google.com/maps/place/%D8%A8%D9%8A%D8%AA%D8%A7+%D8%A7%D9%84%D9%81%D9%88%D9%82%D8%A7%E2%80%AD/@32.1413383,35.2890394,14z/data=!3m1!4b1!4m5!3m4!1s0x151cde8e09aea509:0x5f1f34e632ceeef1!8m2!3d32.14134!4d35.286399" target="_blank">
+                                    <a id="customer_location" href="https://www.google.com/maps/place/%D9%82%D8%B7%D9%86%D8%A9%E2%80%AD/@31.826923,35.1102,15z/data=!4m5!3m4!1s0x1502d13f350757bf:0xfe87f6d80cc3de8f!8m2!3d31.826923!4d35.1102" target="_blank">
                                         <img src="https://db.expand.ps/images/google35.png" style="    margin-left: -5px;;width:32px;height:32px;border-radius: 5px;"></a>
                                 </div>
                             </div>
@@ -294,68 +294,68 @@ $(document).ready(function () {
         select: function( event, ui ) {
             $("#subscriber_id").val(ui.item.id)
             getFullData(ui.item.id)
-            
+
             subscriber_id=ui.item.id;
-            
+
             $.ajax({
 
             type: 'get', // the method (could be GET btw)
-            
+
             url: "license_info_byUser",
                 data: {
-            
+
                     subscriber_id: subscriber_id,
-            
+
                 },
                 success:function(response){
-            
+
                     template=""
-            
+
                     count = 0;
-            
+
                     $('#licNo').remove('');
-            
+
                     if(response.info.length>0)
-            
+
                     {
-            
+
                         template += '<select onchange="fillData($(this).val())" class="form-control" name="licNo" id="licNo">'
-            
+
                         template +='<option value="0">-- اختر --</option>'
-            
+
                         response.info.forEach(licence => {
-            
+
                             count++;
-            
+
                                template +='<option value="'+licence.id+'"> '+(licence.licNo??'بدون')+'</option>'
-            
-            
+
+
                         });
                         template +='</select>'
-            
+
                     }
-            
+
                     else {
-            
+
                         template += '<input type="text" id="licNo" name="licNo" class="form-control eng-sm  valid" value="" placeholder="" autocomplete="off">'
-            
+
                     }
-            
+
                 $('#licGroup').append(template);
-            
-            
-            
+
+
+
                 },
-            
+
             });
-            
+
             if( {{$ticketInfo->apps_btn}}==1)
                 getSubscriberTasks(ui.item.id)
 		}
 	});
-	
-    
-	
+
+
+
     $('#ticketFrm').submit(function(e) {
         $(".loader").removeClass('hide');
         $(".form-actions").addClass('hide');
@@ -374,7 +374,7 @@ $(document).ready(function () {
            processData: false,
            success: (response) => {
                $(".form-actions").removeClass('hide');
-            $('.wtbl').DataTable().ajax.reload();  
+            $('.wtbl').DataTable().ajax.reload();
             // console.log('response');
              if (response.success!=null) {
                 $(".loader").addClass('hide');
@@ -385,7 +385,7 @@ $(document).ready(function () {
 				showConfirmButton: false,
 				timer: 1500
 				})
-				
+
 				writeUserData('viewTicket/'+response.app_id+'/'+response.app_type)
                 if(print==true){
                 let url=`{{ route('admin.dashboard') }}/printTicket/${response.app_id}/${response.app_type}`
@@ -394,7 +394,7 @@ $(document).ready(function () {
 				}
 				setTimeout(function(){self.location='{{asset('/ar/admin')}}'},1500)
                this.reset();
-				
+
 //             if(print==true){
 //                 self.location=`{{ route('admin.dashboard') }}/printTicket/${response.app_id}/${response.app_type}`
 //                 print=false;
@@ -405,7 +405,7 @@ $(document).ready(function () {
              }else{
                  console.log(response.error);
                  if(response.error=='no_nationalID'){
-                     
+
                     $("#national_id").addClass('error');
                     Swal.fire({
     				position: 'top-center',
@@ -418,7 +418,7 @@ $(document).ready(function () {
     				return false;
                  }
                  if(response.error=='no_attatch'){
-                     
+
                      $(".attachName").addClass('error');
                      Swal.fire({
     				position: 'top-center',
@@ -502,9 +502,9 @@ $(document).ready(function () {
        });
   });
 });
-    
+
 function getFullData(id){
-    
+
         $.ajaxSetup({
 
             headers: {
@@ -537,7 +537,7 @@ function getFullData(id){
                     for(var i=0; i<len; i++){
                         // if(response.elec[i].counter==null)
                         //       continue;
-                       $row+= 
+                       $row+=
                         '<tr id="memRow1">'+
                         '<td style="color:#1E9FF2">'+(i+1)+'</td> '+
                         '<td>'+
@@ -558,9 +558,9 @@ function getFullData(id){
                         '</tr>';
                     }
                     $("#recList").append($row);
-                    
+
                 }
-                
+
                 if(response.elec.length!=0){
                     $("#saveBtn").removeClass("hide");
                     $("#saveBtnSend").removeClass("hide");
@@ -568,7 +568,7 @@ function getFullData(id){
                 }
                 else
                 {
-                    
+
                         $("#saveBtn").addClass("hide");
                         $("#saveBtnSend").addClass("hide");
                         $("#recList").html('');
@@ -580,7 +580,7 @@ function getFullData(id){
             				showConfirmButton: true,
             				})
                 }
-                
+
                 if(response.errorList.length==0 && response.elec.length!=0){
                     $(".btnArea").removeClass("hide");
                     //$(".errArea").addClass("hide");
@@ -603,7 +603,7 @@ function getFullData(id){
                           /* Read more about isConfirmed, isDenied below */
                           if (result.isConfirmed) {
                               $(".btnArea").removeClass("hide");
-                              
+
                               if(response.warning.length!=0){
                                 $(".btnArea").addClass("hide");
                                 warningText='  المواطن لديه اخطار';
@@ -618,7 +618,7 @@ function getFullData(id){
                                     warningText+=' يرجى مراجعة قسم ';
                                     warningText+=warningOpj.dept.name;
                                 }
-                                
+
                                 Swal.fire({
                                     title: 'لايمكن تقديم الطلب',
                                     text: warningText,
@@ -642,7 +642,7 @@ function getFullData(id){
                           }
                         })
                 }
-                
+
                 if(response.warning.length!=0 && response.elec.length!=0 && response.errorList.length==0){
                     $(".btnArea").addClass("hide");
                     warningText='  المواطن لديه اخطار';
@@ -657,7 +657,7 @@ function getFullData(id){
                         warningText+=' يرجى مراجعة قسم ';
                         warningText+=warningOpj.dept.name;
                     }
-                    
+
                     Swal.fire({
                         title: 'لايمكن تقديم الطلب',
                         text: warningText,
@@ -676,31 +676,31 @@ function getFullData(id){
                     })
                 }
                 getCert(response.id,response.archive.certCount);
-                @can('subscriberContractArchive')    
+                @can('subscriberContractArchive')
                 getContractArchive(response.id,response.archive.contractArchiveCount);
                 @endcan
-                
-                @can('subscriberLicArchive')    
+
+                @can('subscriberLicArchive')
                 getLicArchive(response.id,response.archive.licArchiveCount);
                 @endcan
-                
+
                 @can('subscriberOutArchive')
                 getOutArchive(response.id,response.archive.outArchiveCount);
                 @endcan
-                
+
                 @can('subscriberInArchive')
                 getInArchive(response.id,response.archive.inArchiveCount);
                 @endcan
-                
+
                 @can('subscriberOtherArchive')
                 getOtherArchive(response.id,response.archive.otherArchiveCount);
                 @endcan
-                
+
                 @can('subscriberCopyArchive')
                 getCopyArchive(response.id,response.archive.copyToCount);
                 @endcan
-                
-                @can('subscriberJalArchive') 
+
+                @can('subscriberJalArchive')
                 getJalArchive(response.id,response.archive.linkToCount);
                 @endcan
              }
@@ -722,7 +722,7 @@ function getFullData(id){
 
 
 function getSubscriberTasks(id){
-    
+
         let subscribe_id = id;
 
             $.ajax({
@@ -738,30 +738,30 @@ function getSubscriberTasks(id){
                 },
 
                 success: function(response) {
-                   
-                    if (response.status!=false) {  
-                        
+
+                    if (response.status!=false) {
+
                         drawtasks(response.tikets);
-                        
+
                     }else{
                         Swal.fire({
 
             				position: 'top-center',
-            
+
             				icon: 'error',
-            
+
             				title: 'لايوجد طلبات لهاذا المواطن',
-            
+
             				showConfirmButton: false,
-            
+
             				timer: 1500
-        
+
         				})
                     }
                 },
 
             });
-    
+
 }
 
         $(function() {
@@ -874,159 +874,159 @@ function getSubscriberTasks(id){
         });
 
         function drawtasks($tickets){
-            
+
             if ( $.fn.DataTable.isDataTable( '.tasktbl1' ) ) {
-        
+
                 $(".tasktbl1").dataTable().fnDestroy();
-        
+
                 $('#cMyTask1').empty();
-        
+
             }
             if ( $.fn.DataTable.isDataTable( '.tasktbl2' ) ) {
-        
+
                 $(".tasktbl2").dataTable().fnDestroy();
-        
+
                 $('#cMyTask2').empty();
-        
+
             }
             if ( $.fn.DataTable.isDataTable( '.tasktbl3' ) ) {
-        
+
                 $(".tasktbl3").dataTable().fnDestroy();
-        
+
                 $('#cMyTask3').empty();
-        
+
             }
             if ( $.fn.DataTable.isDataTable( '.tasktbl4' ) ) {
-        
+
                 $(".tasktbl4").dataTable().fnDestroy();
-        
+
                 $('#cMyTask4').empty();
-        
+
             }
-            
+
             engCount=0;
             waterCount=0;
             elecCount=0;
             otherCount=0;
-            
+
             for(i=0 ; i<$tickets.length ; i++){
                 taskRow='';
                 link= '/admin/viewTicket/'+$tickets[i]['trans']['ticket_id']+'/'+$tickets[i]['trans']['related'];
                 if($tickets[i]['0']['app_type']==1){
                     elecCount++;
                     taskRow+= '<tr style="text-align:center">'
-                
+
     					+'<td >'+elecCount+'</td>'
-    
+
     					+'<td>'
-                        +$tickets[i]['0']['nick_name']        
+                        +$tickets[i]['0']['nick_name']
     					+'</td>'
-    					
+
     					+'<td>'
     					+'<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
                             +'<span class="hideMob" >'+ $tickets[i]['config']['ticket_name'] +' ('+$tickets[i]['0']['app_no'] +')' +'</span>'
                         +'</a>'
     					+'</td>'
-    
+
     					+'<td>'
                         +$tickets[i]['0']['created_at'].substring(0,10) +'&nbsp;&nbsp;&nbsp;'+$tickets[i]['0']['created_at'].substring(11,16)
     					+'</td>'
-    
+
     					+'<td>'
                         +($tickets[i]['trans']['s_note'] ??'')
     					+'</td>'
-    
+
     		            +'</tr>'
     		        $('#cMyTask2').append(taskRow);
 		        }
                 if($tickets[i]['0']['app_type']==2){
                     waterCount++;
                     taskRow+= '<tr style="text-align:center">'
-                
+
     					+'<td >'+waterCount+'</td>'
-    
+
     					+'<td>'
-                        +$tickets[i]['0']['nick_name']        
+                        +$tickets[i]['0']['nick_name']
     					+'</td>'
-    					
+
     					+'<td>'
                         +'<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
                             +'<span class="hideMob" >'+ $tickets[i]['config']['ticket_name'] +' ('+$tickets[i]['0']['app_no'] +')' +'</span>'
-                        +'</a>'  
+                        +'</a>'
     					+'</td>'
-    
+
     					+'<td>'
                         +$tickets[i]['0']['created_at'].substring(0,10) +'&nbsp;&nbsp;&nbsp;'+$tickets[i]['0']['created_at'].substring(11,16)
     					+'</td>'
-    
+
     					+'<td>'
                         +($tickets[i]['trans']['s_note'] ??'')
     					+'</td>'
-    
+
     		            +'</tr>'
     		        $('#cMyTask3').append(taskRow);
 		        }
                 if($tickets[i]['0']['app_type']==3){
                     engCount++;
                     taskRow+= '<tr style="text-align:center">'
-                
+
     					+'<td >'+engCount+'</td>'
-    
+
     					+'<td>'
-                        +$tickets[i]['0']['nick_name']        
+                        +$tickets[i]['0']['nick_name']
     					+'</td>'
-    					
+
     					+'<td>'
                         +'<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
                             +'<span class="hideMob" >'+ $tickets[i]['config']['ticket_name'] +' ('+$tickets[i]['0']['app_no'] +')' +'</span>'
-                        +'</a>' 
+                        +'</a>'
     					+'</td>'
-    
+
     					+'<td>'
                         +$tickets[i]['0']['created_at'].substring(0,10) +'&nbsp;&nbsp;&nbsp;'+$tickets[i]['0']['created_at'].substring(11,16)
     					+'</td>'
-    
+
     					+'<td>'
                         +($tickets[i]['trans']['s_note'] ??'')
     					+'</td>'
-    
+
     		            +'</tr>'
     		        $('#cMyTask1').append(taskRow);
 		        }
                 if($tickets[i]['0']['app_type']==4 || $tickets[i]['0']['app_type']==5){
                     otherCount++;
                     taskRow+= '<tr style="text-align:center">'
-                
+
     					+'<td >'+otherCount+'</td>'
-    
+
     					+'<td>'
-                        +$tickets[i]['0']['nick_name']        
+                        +$tickets[i]['0']['nick_name']
     					+'</td>'
-    					
+
     					+'<td>'
                         +'<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
                             +'<span class="hideMob" >'+ $tickets[i]['config']['ticket_name'] +' ('+$tickets[i]['0']['app_no'] +')' +'</span>'
-                        +'</a>' 
+                        +'</a>'
     					+'</td>'
-    
+
     					+'<td>'
                         +$tickets[i]['0']['created_at'].substring(0,10) +'&nbsp;&nbsp;&nbsp;'+$tickets[i]['0']['created_at'].substring(11,16)
     					+'</td>'
-    
+
     					+'<td>'
                         +($tickets[i]['trans']['s_note'] ??'')
     					+'</td>'
-    
+
     		            +'</tr>'
     		        $('#cMyTask4').append(taskRow);
 		        }
             }
-            
+
             $('#ctabCnt1').html(engCount);
             $('#ctabCnt2').html(elecCount);
             $('#ctabCnt3').html(waterCount);
             $('#ctabCnt4').html(otherCount);
-            
+
             $('.tasktbl1').DataTable({
                 dom: 'Bfltip',
                 buttons: [{
@@ -1251,7 +1251,7 @@ function getSubscriberTasks(id){
                     }
                 }
             });
-            
+
         }
 </script>
 @stop

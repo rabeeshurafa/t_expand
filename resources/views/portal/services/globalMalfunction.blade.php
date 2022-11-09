@@ -130,7 +130,7 @@ $(document).ready(function () {
 		minLength: 1,
         select: function( event, ui ) {
             $("#subscriber_id").val(ui.item.id)
-            getFullData(ui.item.id)
+            // getFullData(ui.item.id)
 		}
 	});
    
@@ -144,6 +144,7 @@ $('#ticketFrm').submit(function(e) {
     $( "#MobileNo" ).removeClass( "error" );
     $( "#AreaID" ).removeClass( "error" );
     $( "#malDesc" ).removeClass( "error" );
+$( "#national_id" ).removeClass( "error" );
        let formData = new FormData(this);
        $.ajax({
           type:'POST',
@@ -233,7 +234,13 @@ $('#ticketFrm').submit(function(e) {
                     this.setCustomValidity('')
                 })
             }
-
+            if(response.responseJSON.errors.national_id){
+                $( "#national_id" ).addClass( "error" );
+                $( "#national_id" ).get(0).setCustomValidity('يرجى ادخال العطل  ');
+                $( "#national_id" ).on('input',function(){
+                    this.setCustomValidity('')
+                })
+            }
 			Swal.fire({
 				position: 'top-center',
 				icon: 'error',

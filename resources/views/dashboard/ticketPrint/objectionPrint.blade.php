@@ -89,23 +89,23 @@
         <div class="row" style="text-align:center;padding-top:100px">
             <div class="col-12" style="text-align:right">
                 <h1 class="ticket_name" style="text-align:right;font-weight: bold;display:inline;">
-                    رئيس مجلس خدمات المياه والصرف الصحي طوباس
+                   الســـادة فـــي دائرة المياه المحترميـــن
                 </h1>
             </div>
         </div>
         @endif
         @if($ticket->app_type == 1 && $ticket->related == 3)
-        {{--<div class="row" style="text-align:center;padding-top:100px">
+        <div class="row" style="text-align:center;padding-top:100px">
             <div class="col-12" style="text-align:right">
                 <h1 class="ticket_name" style="text-align:right;font-weight: bold;display:inline;">
                    حضرة المهندس ثائر جرادات حفظه الله
                 </h1>
             </div>
-        </div>--}}
+        </div>
         <div class="row" style="text-align:center;">
             <div class="col-12" style="text-align:right">
                 <h1 class="ticket_name" style="text-align:right;font-weight: bold;display:inline;">
-                   مدير عام شركة كهربا منطقة طوباس
+                   مدير عام شركة كهرباء القدس فرع رام الله والبيرة
                 </h1>
             </div>
         </div>
@@ -190,12 +190,12 @@
         <div class="row" style="text-align:left;padding-top:30px;">
             <div class="col-12" style="text-align:left">
                 <span>
-                    رئيس بلدية طمون
+                    رئيس بلدية قطنة
                 </span>
             </div>
             <div class="col-12" style="text-align:left">
                 <span>
-                   معاذ فهد بني عودة 
+                   ضياء الفقيه
                 </span>
             </div>
         </div>

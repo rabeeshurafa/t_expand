@@ -1,783 +1,889 @@
-<?php $fcmdomain=$_SERVER['SERVER_NAME']; 
+<?php $fcmdomain = $_SERVER['SERVER_NAME'];
 ?>
-<!DOCTYPE html>
+        <!DOCTYPE html>
 
 <html class="loading" lang="en" data-textdirection="{{ app() -> getLocale() === 'ar' ? 'rtl' : 'ltr'}}">
 
 <head>
 
-	
+    <script src="{{ asset('assets/js/core/libraries/jquery.min.js') }}"></script>
+    {{--<script src="{{ asset('assets/js/qrcode.min.js') }}"></script>--}}
+    <script type="text/javascript" src="//cdn.asprise.com/scannerjs/scanner.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<script src="{{ asset('assets/js/core/libraries/jquery.min.js') }}"></script>
-<script src="{{ asset('assets/js/qrcode.min.js') }}"></script>
-<script type="text/javascript" src="//cdn.asprise.com/scannerjs/scanner.js"></script>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description"
+          content="Modern admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities with bitcoin dashboard.">
 
-  <meta name="description" content="Modern admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities with bitcoin dashboard.">
+    <meta name="keywords"
+          content="admin template, modern admin template, dashboard template, flat admin template, responsive admin template, web app, crypto dashboard, bitcoin dashboard">
 
-  <meta name="keywords" content="admin template, modern admin template, dashboard template, flat admin template, responsive admin template, web app, crypto dashboard, bitcoin dashboard">
+    <meta name="author" content="PIXINVENT">
 
-  <meta name="author" content="PIXINVENT">
+    <title>{{$setting->name_ar}} - Expand</title>
 
-  <title>{{$setting->name_ar}} - Expand</title>
-
-  <!-- <link rel="apple-touch-icon" href="{{asset('assets/images/ico/apple-icon-120.png')}}">
+    <!-- <link rel="apple-touch-icon" href="{{asset('assets/images/ico/apple-icon-120.png')}}">
 
   <link rel="shortcut icon" type="image/x-icon" href="{{$setting->logo}}"> -->
 
-  <link rel="apple-touch-icon" href="{{asset('storage/favicon.ico')}}">
+    <link rel="apple-touch-icon" href="{{asset('storage/favicon.ico')}}">
 
-  <link rel="shortcut icon" type="image/x-icon" href="{{asset('storage/favicon.ico')}}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('storage/favicon.ico')}}">
 
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Quicksand:300,400,500,700"
+    <link
+            href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Quicksand:300,400,500,700"
 
-  rel="stylesheet">
+            rel="stylesheet">
 
-  <!--<link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css"rel="stylesheet">-->
+    <!--<link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css"rel="stylesheet">-->
 
-  <!-- BEGIN VENDOR CSS-->
+    <!-- BEGIN VENDOR CSS-->
 
-  
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.5.0/css/all.min.css"  />-->
 
-  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.5.0/css/all.min.css"  />-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.5.0/js/all.min.js"></script>-->
 
-  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.5.0/js/all.min.js"></script>-->
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/fonts/line-awesome/css/line-awesome.min.css')}}">
 
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/jquery-ui.css')}}">
 
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/fonts/font-awesome/css/font-awesome.min.css')}}">
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/fonts/line-awesome/css/line-awesome.min.css')}}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet"/>
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/jquery-ui.css')}}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/fonts/font-awesome/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/weather-icons/climacons.min.css')}}">
 
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/fonts/meteocons/style.css')}}">
 
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/charts/morris.css')}}">
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/weather-icons/climacons.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/charts/chartist.css')}}">
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/fonts/meteocons/style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/charts/chartist-plugin-tooltip.css')}}">
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/charts/morris.css')}}">
+    @if(app() -> getLocale() === 'ar')
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/charts/chartist.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css-rtl/vendors.css')}}">
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/css/charts/chartist-plugin-tooltip.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css-rtl/app.css')}}">
 
+        <!-- END MODERN CSS-->
 
+        <!-- BEGIN Page Level CSS-->
 
-@if(app() -> getLocale() === 'ar')
+        <link rel="stylesheet" type="text/css"
+              href="{{asset('assets/css-rtl/core/menu/menu-types/horizontal-menu.css')}}">
 
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css-rtl/core/colors/palette-gradient.css')}}">
 
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/fonts/simple-line-icons/style.css')}}">
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/css-rtl/vendors.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css-rtl/pages/timeline.css')}}">
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/css-rtl/app.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css-rtl/pages/dashboard-ecommerce.css')}}">
 
-  <!-- END MODERN CSS-->
+        <link rel="stylesheet" type="text/css"
+              href="https://template.expand.ps/app-assets/css-rtl/core/colors/palette-tooltip.css">
 
-  <!-- BEGIN Page Level CSS-->
+        <!-- END Page Level CSS-->
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/css-rtl/core/menu/menu-types/horizontal-menu.css')}}">
+        <!-- BEGIN Custom CSS-->
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/css-rtl/core/colors/palette-gradient.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style-rtl.css')}}">
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/fonts/simple-line-icons/style.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css-rtl/custom-rtl.css')}}">
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/css-rtl/pages/timeline.css')}}">
+        <!-- END Custom CSS-->
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/css-rtl/pages/dashboard-ecommerce.css')}}">
+    @elseif(app() -> getLocale() === 'en')
 
-  <link rel="stylesheet" type="text/css" href="https://template.expand.ps/app-assets/css-rtl/core/colors/palette-tooltip.css">
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors.css')}}">
 
-  <!-- END Page Level CSS-->
 
-  <!-- BEGIN Custom CSS-->
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style-rtl.css')}}">
+        <!-- END VENDOR CSS-->
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/css-rtl/custom-rtl.css')}}">
+        <!-- BEGIN MODERN CSS-->
 
-  <!-- END Custom CSS-->
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/app.css')}}">
 
+        <!-- END MODERN CSS-->
 
+        <!-- BEGIN Page Level CSS-->
 
-@elseif(app() -> getLocale() === 'en')
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/custom.css')}}">
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/core/menu/menu-types/horizontal-menu.css')}}">
 
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/core/colors/palette-gradient.css')}}">
 
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/fonts/simple-line-icons/style.css')}}">
 
-  <!-- END VENDOR CSS-->
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/core/colors/palette-gradient.css')}}">
 
-  <!-- BEGIN MODERN CSS-->
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/pages/timeline.css')}}">
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/app.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/pages/dashboard-ecommerce.css')}}">
 
-  <!-- END MODERN CSS-->
+        <link rel="stylesheet" type="text/css"
+              href="https://template.expand.ps/app-assets/global/plugins/select2/css/select2.min.css">
 
-  <!-- BEGIN Page Level CSS-->
+        <link rel="stylesheet" type="text/css"
+              href="https://template.expand.ps/app-assets/global/plugins/select2/css/select2-bootstrap.min.css">
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/custom.css')}}">
+        <link rel="stylesheet" type="text/css"
+              href="https://template.expand.ps/app-assets/vendors/css/forms/selects/select2.min.css">
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/core/menu/menu-types/horizontal-menu.css')}}">
+        <link rel="stylesheet" type="text/css"
+              href="https://template.expand.ps/app-assets/css-rtl/core/colors/palette-tooltip.css">
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/core/colors/palette-gradient.css')}}">
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/fonts/simple-line-icons/style.css')}}">
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/core/colors/palette-gradient.css')}}">
+        <!-- END Page Level CSS-->
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/pages/timeline.css')}}">
+        <!-- BEGIN Custom CSS-->
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/pages/dashboard-ecommerce.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
 
-  <link rel="stylesheet" type="text/css" href="https://template.expand.ps/app-assets/global/plugins/select2/css/select2.min.css">
+        <!-- END Custom CSS-->
 
-  <link rel="stylesheet" type="text/css" href="https://template.expand.ps/app-assets/global/plugins/select2/css/select2-bootstrap.min.css">
+    @endif
 
-  <link rel="stylesheet" type="text/css" href="https://template.expand.ps/app-assets/vendors/css/forms/selects/select2.min.css">
+    <style>
 
-  <link rel="stylesheet" type="text/css" href="https://template.expand.ps/app-assets/css-rtl/core/colors/palette-tooltip.css">
+        .progress {
+            position: relative;
+            width: 100%;
 
- 
+            height: 20px;
+            display: none;
+        }
 
-  <!-- END Page Level CSS-->
+        .bar {
+            background-color: #b5076f;
+            width: 0%;
+            height: 20px;
+        }
 
-  <!-- BEGIN Custom CSS-->
+        .percent {
+            position: absolute;
+            display: inline-block;
+            left: 50%;
+            color: #040608;
+        }
 
-  <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
+        .fa-external-link {
 
-  <!-- END Custom CSS-->
+            font-size: 24px;
 
-@endif
+        }
 
- 
+        html body .content {
 
+            padding: 15px;
 
+        }
 
-<style>
+        .tooltip {
 
-	.progress { position:relative; width:100%; 
+            /*width:800px !important;*/
 
-    height: 20px;  display:none;}
+        }
 
-	.bar { background-color: #b5076f; width:0%; height:20px; }
-
-	.percent { position:absolute; display:inline-block; left:50%; color: #040608;}
-
-	.fa-external-link{
-
-	    font-size: 24px;
-
-	}
-
-	html body .content{
-
-	    padding: 15px;
-
-	}
-
-	.tooltip{
-
-	    /*width:800px !important;*/
-
-	}
-
-</style>
+    </style>
 
 </head>
 
 <body class="horizontal-layout horizontal-menu horizontal-menu-padding 2-columns   menu-expanded"
 
-data-open="click" data-menu="horizontal-menu" data-col="2-columns">
+      data-open="click" data-menu="horizontal-menu" data-col="2-columns">
 
 <!-- fixed-top-->
 
 <!-- modals -->
 
 <style>
-    .pace{
-        display:none;
+    .pace {
+        display: none;
     }
-  .modal-header{
 
-      background-color: #0073AA;
+    .modal-header {
 
-  }
+        background-color: #0073AA;
 
-  .modal-title{
-
-      color:#ffffff;
-
-  }
-
-  .hide{
-
-      display:none;
-
-  }
-  .inputD
-    {
-        width:97%!important;
     }
-    .input-group{
+
+    .modal-title {
+
+        color: #ffffff;
+
+    }
+
+    .hide {
+
+        display: none;
+
+    }
+
+    .inputD {
+        width: 97% !important;
+    }
+
+    .input-group {
         width: 91% !important;
     }
-    .des-p-l22{
+
+    .des-p-l22 {
         padding-left: 22px;
     }
-    .hidedesc{
-        display:none;
+
+    .hidedesc {
+        display: none;
     }
-    .notseen{
-        background-color: #DCF8C6!important;
+
+    .notseen {
+        background-color: #DCF8C6 !important;
     }
-    #tag_pic{
-        display:none;
+
+    #tag_pic {
+        display: none;
     }
-    ol li::marker{
-        color:#1E9FF2
+
+    ol li::marker {
+        color: #1E9FF2
     }
-    .addressmob{
-        width:95%!important;
+
+    .addressmob {
+        width: 95% !important;
     }
-    .subscribermob{
-        width:95%!important;
+
+    .subscribermob {
+        width: 95% !important;
     }
-    .pl7mob{
-        width:100%;
+
+    .pl7mob {
+        width: 100%;
     }
-    .entermob{
-        max-width: 40%!important;
+
+    .entermob {
+        max-width: 40% !important;
     }
-    .partWidth{
-        width: 50%!important;
+
+    .partWidth {
+        width: 50% !important;
     }
-    .addressinputmob{
-        width:97%!important;
+
+    .addressinputmob {
+        width: 97% !important;
     }
+
     .piceDiv {
-            padding-left:10px;;
+        padding-left: 10px;;
+    }
+
+    .widthsub {
+        width: 96% !important;
+    }
+
+    .widthmail {
+        width: 93% !important;
+    }
+
+    .widthRegion {
+        width: 100% !important;
+    }
+
+    .formnoleft {
+        padding-left: 0 !important;
+    }
+
+    .hidedesc-inline {
+        display: none;
+    }
+
+    .w-96 {
+        width: 96% !important;
+    }
+
+    .waterRead {
+        display: none;
+    }
+
+    @media (max-width: 767.98px) {
+        #tag_pic {
+            display: inline-block;
         }
-    .widthsub{
-        width:96%!important;
-    }
-    .widthmail{
-        width:93%!important;
-    }
-    .widthRegion{
-        width:100%!important;
-    }
-    .formnoleft{
-        padding-left: 0!important;
-    }
-    .hidedesc-inline{
-          display:none;
-      }
-      .w-96{
-          width:96%!important;
-      }
-      .waterRead{
-        display:none;
-    }
-   @media (max-width: 767.98px){
-      #tag_pic{
-        display:inline-block;
-    }
-    .waterRead{
-        display:inline-block;
-    }
-      .hidedesc{
-        display:inline-block;
-    }
-    .piceDiv {
+
+        .waterRead {
+            display: inline-block;
+        }
+
+        .hidedesc {
+            display: inline-block;
+        }
+
+        .piceDiv {
             padding-left: 15px;
         }
-    .w-iconmob{
-        width:50%;
-    }
-    .partWidth{
-        width:100%!important;
-    }
-    
-    .rightSide{
-        height:300px!important;
-        max-height:330px!important;
-        min-height:310px!important;
-    }
-    .btnArea{
-        margin-top:25px!important;
-    }
-      .des-p-l22{
-        padding-left: 14px!important;
-    }
-    .dropdown-item{
-        font-size: 14pt!important;
-    }
-    .w-76-mob{
-        width:50%!important;
-    }
-    .dropmob{
-        display:inline;
-        margin-bottom:15px;
-        margin-top: 62px;
-        margin-right:20px;
-    }
-    .searchmob{
-        max-width:276px!important;
-        width:255px;
-        display:inline;
-        margin-right:3%!important;
-    }
-    .linkmailmob{
-        padding: 0.8rem 0.25rem!important;
-    }
-    .menumob1{
-        width:300px!important;
-        right: auto!important;
-    }
-    
-    .prependmob{
-        width:22%!important;
-    }
-    .prependmob1{
-        width:26%!important;
-    }
-    #cke_15{
-        display:none;
-    }
-    #cke_17{
-        display:none;
-    }
-    #cke_20{
-        display:none;
-    }
-    #cke_46{
-        display:none;
-    }
-    #cke_53{
-        display:none;
-    }
-    #cke_52{
-        display:none;
-    }
-    #cke_50{
-        display:inline;
-    }
-    #cke_49{
-        display:inline;
-    }
-    .email-app-options{
-        padding: 23px 0px 23px 0;
-    }
-    .messagemob{
-        margin-top: 20px;
-    }
-    #cke_28{
-        display:inline;
-    }
-    #cke_32{
-        display:none;
-    }
-    #cke_33{
-        display:none;
-    }
-    #cke_13{
-        display:none;
-    }
-    #cke_31{
-        display:none;
-    }
-    #cke_14{
-        display:none;
-    }
-    #cke_34{
-        display:none;
-    }
-    .docmob{
-        width:96%!important;
-    }
-    .menumob{
-        width:300px!important;
-        right: auto!important;
-        top:auto!important;
-    }
-    .posmob{
-        margin-right: 15px!important;
-    }
-    .infoAvataronmob{
-        width:100%!important;
-    }
-    .imagemob{
-        width:12%;
-    }
-    .Avataronmob{
-            padding-right: 40px!important;
-            width: 87%!important;
+
+        .w-iconmob {
+            width: 50%;
+        }
+
+        .partWidth {
+            width: 100% !important;
+        }
+
+        .rightSide {
+            height: 300px !important;
+            max-height: 330px !important;
+            min-height: 310px !important;
+        }
+
+        .btnArea {
+            margin-top: 25px !important;
+        }
+
+        .des-p-l22 {
+            padding-left: 14px !important;
+        }
+
+        .dropdown-item {
+            font-size: 14pt !important;
+        }
+
+        .w-76-mob {
+            width: 50% !important;
+        }
+
+        .dropmob {
+            display: inline;
+            margin-bottom: 15px;
+            margin-top: 62px;
+            margin-right: 20px;
+        }
+
+        .searchmob {
+            max-width: 276px !important;
+            width: 255px;
+            display: inline;
+            margin-right: 3% !important;
+        }
+
+        .linkmailmob {
+            padding: 0.8rem 0.25rem !important;
+        }
+
+        .menumob1 {
+            width: 300px !important;
+            right: auto !important;
+        }
+
+        .prependmob {
+            width: 22% !important;
+        }
+
+        .prependmob1 {
+            width: 26% !important;
+        }
+
+        #cke_15 {
+            display: none;
+        }
+
+        #cke_17 {
+            display: none;
+        }
+
+        #cke_20 {
+            display: none;
+        }
+
+        #cke_46 {
+            display: none;
+        }
+
+        #cke_53 {
+            display: none;
+        }
+
+        #cke_52 {
+            display: none;
+        }
+
+        #cke_50 {
+            display: inline;
+        }
+
+        #cke_49 {
+            display: inline;
+        }
+
+        .email-app-options {
+            padding: 23px 0px 23px 0;
+        }
+
+        .messagemob {
+            margin-top: 20px;
+        }
+
+        #cke_28 {
+            display: inline;
+        }
+
+        #cke_32 {
+            display: none;
+        }
+
+        #cke_33 {
+            display: none;
+        }
+
+        #cke_13 {
+            display: none;
+        }
+
+        #cke_31 {
+            display: none;
+        }
+
+        #cke_14 {
+            display: none;
+        }
+
+        #cke_34 {
+            display: none;
+        }
+
+        .docmob {
+            width: 96% !important;
+        }
+
+        .menumob {
+            width: 300px !important;
+            right: auto !important;
+            top: auto !important;
+        }
+
+        .posmob {
+            margin-right: 15px !important;
+        }
+
+        .infoAvataronmob {
+            width: 100% !important;
+        }
+
+        .imagemob {
+            width: 12%;
+        }
+
+        .Avataronmob {
+            padding-right: 40px !important;
+            width: 87% !important;
             margin-top: 10px;
-    }
-    .avatar-onlineonmob{
-        height:50px!important;
-    }
-    .pl15-mob{
-        padding-left:15px!important;
-    }
-    .mr-15mob{
-        margin-right: 15px;
-    }
-    .poselecmob{
-        width: 30%;
-    }
-    .poselecmob{
-        width: 30%;
-    }
-    .onmobatt{
-        width:25%!important;
-        display:inline;
-    }
-    .notimob{
-        width: 50vh;
-    }
-    .navmob{
-        height: 140px!important;
-    }
-    .navhmob{
+        }
+
+        .avatar-onlineonmob {
+            height: 50px !important;
+        }
+
+        .pl15-mob {
+            padding-left: 15px !important;
+        }
+
+        .mr-15mob {
+            margin-right: 15px;
+        }
+
+        .poselecmob {
+            width: 30%;
+        }
+
+        .poselecmob {
+            width: 30%;
+        }
+
+        .onmobatt {
+            width: 25% !important;
+            display: inline;
+        }
+
+        .notimob {
+            width: 50vh;
+        }
+
+        .navmob {
+            height: 140px !important;
+        }
+
+        .navhmob {
             margin-bottom: 40px;
-    }
-    .messagelist{
-        overflow: scroll;
-        max-width:350px;
-    }
-    .inmob{
-        width:9%!important;
-    }
-    .appmainmob{
-        margin-top: 72px;
-    }
-    .SubPage{
-        margin-top:0;
-    }
-    .contentonmob{
-        padding:.7rem!important;
-    }
-    .tablescroll{
-        overflow: scroll;
-        max-width:350px;
-        padding-right:0!important;
-    }
-    .w-100{
-        width:100px!important;
-    }
-    .fontMob{
-    font-size: 14pt;
-    padding-bottom:10px;
-      }
-      .paddzeromob{
-        padding-right:10px!important;
-        padding-left:17px!important;
+        }
 
-      }
-      .hidedesc-inline{
-          display:inline;
-      }
-      .infoAvatar{
-          padding-right:0px!important;
-      }
-      .hidemob{
-          display:none;
-      }
-      .olmob{
-          padding-right:10px!important;
-      }
-    .paddmob{
-        margin-bottom:10px!important;
-        margin-right:7px;
+        .messagelist {
+            overflow: scroll;
+            max-width: 350px;
+        }
+
+        .inmob {
+            width: 9% !important;
+        }
+
+        .appmainmob {
+            margin-top: 72px;
+        }
+
+        .SubPage {
+            margin-top: 0;
+        }
+
+        .contentonmob {
+            padding: .7rem !important;
+        }
+
+        .tablescroll {
+            overflow: scroll;
+            max-width: 350px;
+            padding-right: 0 !important;
+        }
+
+        .w-100 {
+            width: 100px !important;
+        }
+
+        .fontMob {
+            font-size: 14pt;
+            padding-bottom: 10px;
+        }
+
+        .paddzeromob {
+            padding-right: 10px !important;
+            padding-left: 17px !important;
+
+        }
+
+        .hidedesc-inline {
+            display: inline;
+        }
+
+        .infoAvatar {
+            padding-right: 0px !important;
+        }
+
+        .hidemob {
+            display: none;
+        }
+
+        .olmob {
+            padding-right: 10px !important;
+        }
+
+        .paddmob {
+            margin-bottom: 10px !important;
+            margin-right: 7px;
+        }
+
+        .paddformmob {
+            margin-bottom: 10px !important;
+            margin-right: 15px;
+        }
+
+        .select2-container {
+            width: 78% !important;
+        }
+
+        .entermob {
+            max-width: 100% !important;
+
+        }
+
+        .textmob {
+            height: 60px;
+        }
+
+        .w-80mob {
+            width: 82% !important;
+        }
+
+        .attmob {
+            width: 70% !important;
+        }
+
+        .attdocmob {
+            width: 10% !important;
+            padding-left: 30px;
+        }
+
+        .attdocmob1 {
+            width: 10% !important;
+        }
+
+        .feestextmob {
+            width: 70% !important;
+            padding-left: 3px;
+        }
+
+        .feesnummob {
+            width: 30% !important;
+            padding-right: 3px;
+        }
+
+        .feestotalmob {
+            width: 30% !important;
+            padding: 0;
+
+        }
+
+        .feestotalnummob {
+            width: 70% !important;
+            padding-right: 0;
+        }
+
+        .mailmobheader {
+            margin-right: 0 !important;
+            margin-left: 0 !important;
+            padding-right: 0 !important;
+            padding-left: 0 !important;
+        }
+
+        .empimgmob {
+            max-height: 52px !important;
+        }
+
+        .attdelmob {
+            width: 10% !important;
+        }
+
+        .app_status {
+            font-size: 10pt !important;
+        }
+
+        .onmobile {
+            padding-right: 0px !important;
+            padding-left: 0px !important;
+
+        }
+
+        .searchmailmob {
+            margin-top: 62px !important;
+        }
+
+        .color-mob {
+            color: #acb0b4
+        }
+
+        .leftSide {
+            padding-right: 20px !important;
+            padding-left: 20px !important;
+        }
+
+        .pl7mob {
+            padding-left: 7px;
+            width: 110%;
+        }
+
+        .status {
+            width: 94% !important;
+        }
+
+        .taginfomob {
+            width: 40% !important;
+
+        }
+
+        .exonmobile {
+            width: 98% !important;
+        }
+
+        .input-group {
+            width: 98% !important;
+        }
+
+        .w-91 {
+            width: 89% !important;
+        }
+
+        .checkCop {
+            margin-right: 10px;
+        }
+
+        .inputD {
+            width: 93% !important;
+        }
+
+        .colMob {
+            padding: 0 !important;
+        }
     }
-    .paddformmob{
-        margin-bottom:10px!important;
-        margin-right:15px;
-    }
-    .select2-container{
-        width:78%!important;
-    }
-    .entermob{
-        max-width:100%!important;
-        
-    }
-    .textmob{
-        height: 60px;
-    }
-    .w-80mob{
-        width:82%!important;
-    }
-    .attmob{
-        width:70%!important;
-    }
-    .attdocmob{
-        width:10%!important;
-        padding-left: 30px;
-    }
-    .attdocmob1{
-        width:10%!important;
-    }
-    .feestextmob{
-        width:70%!important;
-        padding-left:3px;
-    }
-    .feesnummob{
-        width:30%!important;
-        padding-right:3px;
-    }
-    .feestotalmob{
-        width:30%!important;
-        padding:0;
-        
-    }
-    .feestotalnummob{
-        width:70%!important;
-        padding-right:0;
-    }
-    .mailmobheader{
-        margin-right:0!important;
-        margin-left:0!important;
-        padding-right:0!important;
-        padding-left:0!important;
-    }
-    .empimgmob{
-        max-height:52px!important;
-    }
-    .attdelmob{
-        width:10%!important;
-    }
-    .app_status{
-        font-size:10pt!important;
-    }
-    .onmobile{
-        padding-right:0px!important;
-        padding-left:0px!important;
+
+    .lds-dual-ring {
+
+        display: inline-block;
+
+        width: 80px;
+
+        height: 80px;
 
     }
-    .searchmailmob{
-            margin-top: 62px!important;
+
+    .lds-dual-ring:after {
+
+        content: " ";
+
+        display: block;
+
+        width: 64px;
+
+        height: 64px;
+
+        margin: 8px;
+
+        border-radius: 50%;
+
+        border: 6px solid #fff;
+
+        border-color: #0084FF transparent #0084FF transparent;
+
+        animation: lds-dual-ring 1.2s linear infinite;
+
     }
-    .color-mob{
-        color: #acb0b4
+
+    @keyframes lds-dual-ring {
+
+        0% {
+
+            transform: rotate(0deg);
+
+        }
+
+        100% {
+
+            transform: rotate(360deg);
+
+        }
+
     }
-    .leftSide{
-            padding-right: 20px!important;
-            padding-left: 20px!important;
+
+    th {
+
+        background-color: #0073AA;
+
     }
-    .pl7mob{
-        padding-left: 7px;
-        width: 110%;
-    }
-    .status{
-            width: 94%!important;
-    }
-    .taginfomob{
-        width:40%!important;
-        
-    }
-    .exonmobile{
-        width:98%!important;
-    }
-    .input-group{
-        width:98%!important;
-    }
-    .w-91{
-        width:89%!important;
-    }
-    .checkCop{
-        margin-right: 10px;
-    }
-    .inputD
-    {
-        width:93%!important;
-    }
-    .colMob{
-        padding:0!important;
-    }
-  }
-
-  .lds-dual-ring {
-
-display: inline-block;
-
-width: 80px;
-
-height: 80px;
-
-}
-
-.lds-dual-ring:after {
-
-content: " ";
-
-display: block;
-
-width: 64px;
-
-height: 64px;
-
-margin: 8px;
-
-border-radius: 50%;
-
-border: 6px solid #fff;
-
-border-color: #0084FF transparent #0084FF transparent;
-
-animation: lds-dual-ring 1.2s linear infinite;
-
-}
-
-@keyframes lds-dual-ring {
-
-0% {
-
-  transform: rotate(0deg);
-
-}
-
-100% {
-
-  transform: rotate(360deg);
-
-}
-
-}
-
-th{
-
-  background-color:#0073AA; 
-
-}
 
 </style>
-
-
 
 <style>
 
-    .attach-text{
+    .attach-text {
 
-        color:#000000;
+        color: #000000;
 
-            font-size: 14px;
+        font-size: 14px;
 
     }
 
 </style>
-<script>realPath='{{route('admin.dashboard')}}/'</script>
-<div class="modal fade text-left" id="smsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+<script>realPath = '{{route('admin.dashboard')}}/'</script>
+<div class="modal fade text-left" id="smsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
+     aria-hidden="true">
 
-	<div class="modal-dialog entermob"  role="document">
+    <div class="modal-dialog entermob" role="document">
 
-		<div class="modal-content">
+        <div class="modal-content">
 
-			<div class="modal-header">
+            <div class="modal-header">
 
-				<h4 class="modal-title" id="myModalLabel1">إرسالة رسالة نصية قصيرة</h4>
+                <h4 class="modal-title" id="myModalLabel1">إرسالة رسالة نصية قصيرة</h4>
 
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 
-					<span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
 
-				</button>
+                </button>
 
-			</div>
+            </div>
 
-			<div class="modal-body">
+            <div class="modal-body">
 
-				<div class="form-body">
+                <div class="form-body">
 
-                    <form id="SMSFormData" >
+                    <form id="SMSFormData">
 
                         <table width="100%" class="detailsTB table engTbl">
 
-        						<tr>
+                            <tr>
 
-        							<td>
-                                            أدخل رقم الموبايل
-        							</td>
-        						</tr>
-        						<tr>
+                                <td>
+                                    أدخل رقم الموبايل
+                                </td>
+                            </tr>
+                            <tr>
 
-        							<td>
+                                <td>
 
-        							    <input type="text" name="smsNo" id="smsNo" class="form-control"  />
+                                    <input type="text" name="smsNo" id="smsNo" class="form-control"/>
 
-        							</td>
+                                </td>
 
-        						</tr>
+                            </tr>
 
-        						<tr>
+                            <tr>
 
-        							<td>
+                                <td>
 
-        							    أدخل نص الرسالة
+                                    أدخل نص الرسالة
 
-        							</td>
+                                </td>
 
-        						
+                            </tr>
 
-        						</tr>
+                            <tr>
 
-        						
-
-        						<tr>
-
-        							<td>
+                                <td>
                                         <textarea type="text" id="smsText" class="form-control"
-                                        value="" name="smsText" style="height: 60px;"></textarea>
+                                                  value="" name="smsText" style="height: 60px;"></textarea>
 
-        							</td>
+                                </td>
 
-        						</tr>
+                            </tr>
 
-        						
+                            <tr>
 
-        						<tr>
+                                <td colspan="4" style="text-align: center!important;">
 
-        							<td colspan="4" style="text-align: center!important;">
+                                    <button type="button" class="btn btn-primary text-center" id="" style=""
+                                            onclick="sendSMS()">
 
-        							    <button type="button" class="btn btn-primary text-center" id="" style="" onclick="sendSMS()">
+                                        إرسال
 
-        							    إرسال    
+                                    </button>
 
-        							    </button>
+                                </td>
 
-        							</td>
+                            </tr>
 
-        						</tr>
+                        </table>
 
-        					</table>
+                    </form>
 
-					</form>
+                </div>
 
-				</div>
+            </div>
 
-			</div>
+        </div>
 
-		</div>
-
-	</div>
+    </div>
 
 </div>
 
-
-
 <div class="loader hide " style="z-index: 10000;">
 
-    
-
-	<div class="lds-dual-ring"></div>
+    <div class="lds-dual-ring"></div>
 
 </div>
 
@@ -795,8 +901,6 @@ th{
 
  -->
 
-
-
 <!-- begin header -->
 
 @include('dashboard.includes.header')
@@ -811,15 +915,15 @@ th{
 
 @if ($type=='mailPage')
 
-@yield('content')
+    @yield('content')
 
 @else
 
-<div class="app-content content appmainmob">
+    <div class="app-content content appmainmob">
 
-    @if ($type=='intro')
+        @if ($type=='intro')
 
-  <div class="content-wrapper onmobile contentonmob homePage" style="
+            <div class="content-wrapper onmobile contentonmob homePage" style="
 
     display: block;
 
@@ -829,231 +933,244 @@ th{
 
 ">
 
-      @else 
+                @else
 
-  <div class="content-wrapper onmobile contentonmob" style="
+                    <div class="content-wrapper onmobile contentonmob" style="
 
     display: block;
 
 ">
 
-    @endif
+                        @endif
 
-@yield('content')
+                        @yield('content')
 
-  </div>
+                    </div>
 
-</div>
+            </div>
 
-@endif
+        @endif
 
-<!-- begin footer html -->
+        <!-- begin footer html -->
 
-@include('dashboard.includes.footer')
-
-
-
-<!-- end footer -->
-
-<!-- modals -->
-
-<div class="modal fade text-left" id="QuickAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
-
-aria-hidden="true">
-
-	<div class="modal-dialog modal-dialog2" role="document">
-
-	  <div class="modal-content">
-
-		<div class="modal-header modal-header2">
-
-		  <h4 class="modal-title" id="myModalLabel1" style="color: #ffffff;"><span id="ModalTitle"></span></h4>
-
-		  <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #ffffff;">
-
-			<span aria-hidden="true">&times;</span>
-
-		  </button>
-
-		</div>
-
-		<div class="modal-body">
-
-		  <div class="form-body">
-
-			<div class="form-group">
-
-				<div class="input-group" style="max-height: 200px; overflow: auto;">
-
-					<table style="width:100%" class="detailsTB table">
-
-						<tr>
-
-							<th scope="col">#</th>
-
-							<th scope="col">العنوان</th>
-
-							<th scope="col"></th>
-
-						</tr>
-
-						<tbody id="subTaskpop">
+        @include('dashboard.includes.footer')
 
 
 
-						</tbody>
+        <!-- end footer -->
 
-					</table>
+        <!-- modals -->
 
-				</div>
+        <div class="modal fade text-left" id="QuickAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
 
-			</div>
+             aria-hidden="true">
 
-			<div class="form-group" style="color:#EB844C">
+            <div class="modal-dialog modal-dialog2" role="document">
 
-				New <span id="ModalTitle1"></span>: 
+                <div class="modal-content">
 
-			</div>
+                    <div class="modal-header modal-header2">
 
-			<form method="post" id="store-modal" >
+                        <h4 class="modal-title" id="myModalLabel1" style="color: #ffffff;"><span id="ModalTitle"></span>
+                        </h4>
 
-                @csrf
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                style="color: #ffffff;">
 
-			<div class="form-group">
+                            <span aria-hidden="true">&times;</span>
 
+                        </button>
 
+                    </div>
 
-			  <input type="text" id="s_name_ar1" class="form-control" placeholder="" name="s_name_ar1">
+                    <div class="modal-body">
 
-			  <input type="hidden" id="s_name_en1" class="form-control" placeholder="" name="s_name_en1">
+                        <div class="form-body">
 
-			  <input type="hidden" id="fk_i_constant_id1" class="form-control" placeholder="Label (En)" name="fk_i_constant_id1">
+                            <div class="form-group">
 
-			  <input type="hidden" id="fk_i_constantdet_id1" class="form-control" placeholder="Label (En)" name="fk_i_constantdet_id1">
+                                <div class="input-group" style="max-height: 200px; overflow: auto;">
 
-			  <input type="hidden" id="pj_i_id" class="form-control" placeholder="Label (En)" name="pj_i_id">
+                                    <table style="width:100%" class="detailsTB table">
 
-			  <input type="hidden" id="contid" class="form-control" placeholder="Label (En)" name="contid">
+                                        <tr>
 
-			  <input type="hidden" id="ctrlToRefresh" class="form-control" placeholder="Label (En)" name="ctrlToRefresh">
+                                            <th scope="col">#</th>
 
-		  </div>
+                                            <th scope="col">العنوان</th>
 
-		  <div class="form-group" style="text-align:center">
+                                            <th scope="col"></th>
 
-			  <button type="submit" class="btn btn-info modalBtn" >حفظ</button>
+                                        </tr>
 
-			  </div>
+                                        <tbody id="subTaskpop">
 
-		</form>
+                                        </tbody>
 
-		  </div>
+                                    </table>
 
-		</div>
+                                </div>
 
-	  </div>
+                            </div>
 
-	</div>
+                            <div class="form-group" style="color:#EB844C">
 
-</div>
+                                New <span id="ModalTitle1"></span>:
 
-<script>
-var print = false; 
-function printFunction(){
-     print = true;
-     $('#ticketFrm').submit()
-    }
-function noti()
-{           
-    $.ajax({
-        type: 'get', // the method (could be GET btw)
-        url: "{{ route('get_noti') }}",
-        success:function(response){
-            if(response.copyTo)
-            {
-                var typeArray = { "outArchive": '{{trans('archive.out_archive')}}', "inArchive": '{{trans('archive.in_archive')}}',"projArchive": '{{trans('archive.proj_archive')}}',"munArchive": '{{trans('archive.mun_archive')}}',"empArchive": '{{trans('archive.emp_archive')}}',"depArchive": '{{trans('archive.dep_archive')}}',"assetsArchive": '{{trans('archive.assets_archive')}}',"citArchive": '{{trans('archive.cit_archive')}}',"licArchive": '{{trans('archive.lic_archive')}}',"licFileArchive": '{{trans('archive.licFile_archive')}}'}; 
-                var baseUrl = '{{ route('admin.dashboard') }}/';
-                $('.setAllAsRead').html(response.CopyToCount)
-                let cc="#F2F3F5"
-                for(let i=0;i<response.copyTo.length;i++)
-                {
-                    if(response.copyTo[i].archive.url=='contract_archieve')
-                        response.copyTo[i].archive.url='dep_archieve';
-                    if(response.copyTo[i].model_id!=null){
-                        var timestamp = response.copyTo[i].archive.created_at;
-                        var date = new Date(timestamp);
-                        
-                        date_str = 'بتاريخ :'+date.getDate()+
-                                  "/"+(date.getMonth()+1)+
-                                  "/"+date.getFullYear()+
-                                  " الساعة: "+
-                                  " "+date.getHours()+
-                                  ":"+date.getMinutes()+
-                                  ":"+date.getSeconds();
-                          var attach='';
-                        if(response.copyTo[i].archive.files.length>0){
-                            let row ='';
-                            
-                            var j=0;
-        
-                            for(j=0;j<response.copyTo[i].archive.files.length;j++){
-        
-                                shortCutName=response.copyTo[i].archive.files[j].real_name;
-        
-                                urlfile='{{ asset('') }}';
-        
-                                urlfile+=response.copyTo[i].archive.files[j].url;
-        
-                                if(response.copyTo[i].archive.files[j].extension=="jpg"||response.copyTo[i].archive.files[j].extension=="png"||response.copyTo[i].archive.files[j].extension=="jfif")
-        
-                                fileimage='{{ asset('assets/images/ico/image.png') }}';
-        
-                                else if(response.copyTo[i].archive.files[j].extension=="pdf")
-        
-                                fileimage='{{ asset('assets/images/ico/pdf.png') }}';
-                                else if(response.copyTo[i].archive.files[j].extension=="doc")
-                                fileimage='https://template.expand.ps/public/assets/images/ico/word.png';
-                                else if(response.copyTo[i].archive.files[j].extension=="excel"||response.copyTo[i].archive.files[j].extension=="xsc")
-        
-                                fileimage='{{ asset('assets/images/ico/excellogo.png') }}';
-        
-                                else
-        
-                                fileimage='{{ asset('assets/images/ico/file.png') }}';
-        
-                                    shortCutName=shortCutName.substring(0, 20);
-        
-                                    attach+='<div id="attach" class=" col-sm-3 col-md-6 onmobatt">' +
-        
-                                        '   <div class="attach" onmouseover="$(this).children().first().next().show()">'
-        
-                                        +'    '
-        
-                                        +'    <a class="attach-close1" href="'+urlfile+'" style="color: #74798D; float:left;" target="_blank"><span class="attach-text hidemob">'+shortCutName+'</span><img style="width: 20px;"src="'+fileimage+'"></a>'
-        
-                                        +'      <input type="hidden" id="formDataaaimgUploads[]" name="formDataaaimgUploads[]" value="'+shortCutName+'">'
-        
-                                        +'             <input type="hidden" id="formDataaaorgNameList[]" name="formDataaaorgNameList[]" value="'+shortCutName+'">'
-        
-                                        +'    </div>'
-        
-                                        +'  </div>' ;
-                            }
-        
-                            row += attach;
-                            // ${typeArray[response.copyTo[i].archive.type]}
+                            </div>
+
+                            <form method="post" id="store-modal">
+
+                                @csrf
+
+                                <div class="form-group">
+
+                                    <input type="text" id="s_name_ar1" class="form-control" placeholder=""
+                                           name="s_name_ar1">
+
+                                    <input type="hidden" id="s_name_en1" class="form-control" placeholder=""
+                                           name="s_name_en1">
+
+                                    <input type="hidden" id="fk_i_constant_id1" class="form-control"
+                                           placeholder="Label (En)" name="fk_i_constant_id1">
+
+                                    <input type="hidden" id="fk_i_constantdet_id1" class="form-control"
+                                           placeholder="Label (En)" name="fk_i_constantdet_id1">
+
+                                    <input type="hidden" id="pj_i_id" class="form-control" placeholder="Label (En)"
+                                           name="pj_i_id">
+
+                                    <input type="hidden" id="contid" class="form-control" placeholder="Label (En)"
+                                           name="contid">
+
+                                    <input type="hidden" id="ctrlToRefresh" class="form-control"
+                                           placeholder="Label (En)" name="ctrlToRefresh">
+
+                                </div>
+
+                                <div class="form-group" style="text-align:center">
+
+                                    <button type="submit" class="btn btn-info modalBtn">حفظ</button>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <script>
+          var print = false;
+
+          function printFunction() {
+            print = true;
+            $('#ticketFrm').submit()
+          }
+
+          function noti() {
+            $.ajax({
+              type: 'get', // the method (could be GET btw)
+              url: "{{ route('get_noti') }}",
+              success: function (response) {
+                if (response.copyTo) {
+                  var typeArray = {
+                    "outArchive": '{{trans('archive.out_archive')}}',
+                    "inArchive": '{{trans('archive.in_archive')}}',
+                    "projArchive": '{{trans('archive.proj_archive')}}',
+                    "munArchive": '{{trans('archive.mun_archive')}}',
+                    "empArchive": '{{trans('archive.emp_archive')}}',
+                    "depArchive": '{{trans('archive.dep_archive')}}',
+                    "assetsArchive": '{{trans('archive.assets_archive')}}',
+                    "citArchive": '{{trans('archive.cit_archive')}}',
+                    "licArchive": '{{trans('archive.lic_archive')}}',
+                    "licFileArchive": '{{trans('archive.licFile_archive')}}'
+                  };
+                  var baseUrl = '{{ route('admin.dashboard') }}/';
+                  $('.setAllAsRead').html(response.CopyToCount)
+                  let cc = "#F2F3F5"
+                  for (let i = 0; i < response.copyTo.length; i++) {
+                    if (response.copyTo[i].model_id != null) {
+                      var timestamp = response.copyTo[i].archive.created_at;
+                      var date = new Date(timestamp);
+
+                      date_str = 'بتاريخ :' + date.getDate() +
+                        "/" + (date.getMonth() + 1) +
+                        "/" + date.getFullYear() +
+                        " الساعة: " +
+                        " " + date.getHours() +
+                        ":" + date.getMinutes() +
+                        ":" + date.getSeconds();
+                      var attach = '';
+                      if (response.copyTo[i].archive.files.length > 0) {
+                        let row = '';
+
+                        var j = 0;
+
+                        for (j = 0; j < response.copyTo[i].archive.files.length; j++) {
+
+                          shortCutName = response.copyTo[i].archive.files[j].real_name;
+
+                          urlfile = '{{ asset('') }}';
+
+                          urlfile += response.copyTo[i].archive.files[j].url;
+
+                          if (response.copyTo[i].archive.files[j].extension == "jpg" || response.copyTo[i].archive.files[j].extension == "png" || response.copyTo[i].archive.files[j].extension == "jfif")
+
+                            fileimage = '{{ asset('assets/images/ico/image.png') }}';
+
+                          else if (response.copyTo[i].archive.files[j].extension == "pdf")
+
+                            fileimage = '{{ asset('assets/images/ico/pdf.png') }}';
+                          else if (response.copyTo[i].archive.files[j].extension == "doc")
+                            fileimage = 'https://template.expand.ps/public/assets/images/ico/word.png';
+                          else if (response.copyTo[i].archive.files[j].extension == "excel" || response.copyTo[i].archive.files[j].extension == "xsc")
+
+                            fileimage = '{{ asset('assets/images/ico/excellogo.png') }}';
+
+                          else
+
+                            fileimage = '{{ asset('assets/images/ico/file.png') }}';
+
+                          shortCutName = shortCutName.substring(0, 20);
+
+                          attach += '<div id="attach" class=" col-sm-3 col-md-6 onmobatt">' +
+
+                            '   <div class="attach" onmouseover="$(this).children().first().next().show()">'
+
+                            + '    '
+
+                            + '    <a class="attach-close1" href="' + urlfile + '" style="color: #74798D; float:left;" target="_blank"><span class="attach-text hidemob">' + shortCutName + '</span><img style="width: 20px;"src="' + fileimage + '"></a>'
+
+                            + '      <input type="hidden" id="formDataaaimgUploads[]" name="formDataaaimgUploads[]" value="' + shortCutName + '">'
+
+                            + '             <input type="hidden" id="formDataaaorgNameList[]" name="formDataaaorgNameList[]" value="' + shortCutName + '">'
+
+                            + '    </div>'
+
+                            + '  </div>';
                         }
-                        if(response.copyTo[i].archive.url=='contract_archieve'){
-                            response.copyTo[i].archive.url='dep_archieve'
-                        }
-                        var noti_template=`<div class="media" ${(response.copyTo[i].is_seen==0)?`style="background-color:${cc}" `:''}>
+
+                        row += attach;
+                        // ${typeArray[response.copyTo[i].archive.type]}
+                      }
+                      if (response.copyTo[i].archive.url == 'contract_archieve') {
+                        response.copyTo[i].archive.url = 'dep_archieve'
+                      }
+                      var noti_template = `<div class="media" ${(response.copyTo[i].is_seen == 0) ? `style="background-color:${cc}" ` : ''}>
                           <div class="media-body">
                           <div class="row" >
-                            <a style="margin-bottom: 15px;" class=" col-10" href="${baseUrl+response.copyTo[i].archive.url+'?id='+response.copyTo[i].archive.id}" onclick="seen_noti(${response.copyTo[i].id})">
+                            <a style="margin-bottom: 15px;" class=" col-10" href="${baseUrl + response.copyTo[i].archive.url + '?id=' + response.copyTo[i].archive.id}" onclick="seen_noti(${response.copyTo[i].id})">
                                 <h3 class="media-heading">${response.copyTo[i].archive.title}</h3>
                                 <p class="notification-text notimob font-small-5 text-muted"><span style="color: #0C84D1;">
-                                تمت اضافة ارشيف 
-                                ${(response.copyTo[i].archive.name&&response.copyTo[i].archive.name!="")?`على ${response.copyTo[i].archive.name}`:''}
+                                تمت اضافة ارشيف
+                                ${(response.copyTo[i].archive.name && response.copyTo[i].archive.name != "") ? `على ${response.copyTo[i].archive.name}` : ''}
                                 من قبل ${response.copyTo[i].archive.admin.nick_name}
                                 </span></p>
                                 <small>
@@ -1061,31 +1178,31 @@ function noti()
                                 </small>
                             </a>
                             <div class="col-2" style="text-align:left;cursor: pointer;" onclick="noti_delete(${response.copyTo[i].id})"><i style="color:#ffffff; padding:5px;" class="fa fa-times bg-red"></i></div>
-                               
+
                                 ${attach}
-                                
+
                         </div>
-                        
+
                           </div>
-                          
+
                         </div>`;
-                        $('.noti_list').append(noti_template);
-                    }else{
-                        var timestamp = response.copyTo[i].created_at;
-                        var date = new Date(timestamp);
-                        taskname=response.copyTo[i].ticket_config.ticket_name;
-                        if(response.copyTo[i].app_no==23){
-                            taskname=response.copyTo[i].taskName;
-                        }
-                        date_str = 'بتاريخ :'+date.getDate()+
-                                  "/"+(date.getMonth()+1)+
-                                  "/"+date.getFullYear()+
-                                  " الساعة: "+
-                                  " "+date.getHours()+
-                                  ":"+date.getMinutes()+
-                                  ":"+date.getSeconds();
-                                //   ${baseUrl+response.copyTo[i].archive.url+'?id='+response.copyTo[i].id}
-                        var noti_template=`<div class="media" ${(response.copyTo[i].is_seen==0)?`style="background-color:${cc}" `:''}>
+                      $('.noti_list').append(noti_template);
+                    } else {
+                      var timestamp = response.copyTo[i].created_at;
+                      var date = new Date(timestamp);
+                      taskname = response.copyTo[i].ticket_config.ticket_name;
+                      if (response.copyTo[i].app_no == 23) {
+                        taskname = response.copyTo[i].taskName;
+                      }
+                      date_str = 'بتاريخ :' + date.getDate() +
+                        "/" + (date.getMonth() + 1) +
+                        "/" + date.getFullYear() +
+                        " الساعة: " +
+                        " " + date.getHours() +
+                        ":" + date.getMinutes() +
+                        ":" + date.getSeconds();
+                      //   ${baseUrl+response.copyTo[i].archive.url+'?id='+response.copyTo[i].id}
+                      var noti_template = `<div class="media" ${(response.copyTo[i].is_seen == 0) ? `style="background-color:${cc}" ` : ''}>
                           <div class="media-body">
                           <div class="row" >
                             <a style="margin-bottom: 15px;" class=" col-10" href="{{route('admin.dashboard')}}/viewTicketPortal/${response.copyTo[i].id}" onclick="seen_noti(${response.copyTo[i].id})">
@@ -1099,170 +1216,171 @@ function noti()
                                 </small>
                             </a>
                             <div class="col-2" style="text-align:left;cursor: pointer;" onclick="noti_delete(${response.copyTo[i].id})"><i style="color:#ffffff; padding:5px;" class="fa fa-times bg-red"></i></div>
-                               
+
                         </div>
-                        
+
                           </div>
-                          
+
                         </div>`;
-                        $('.noti_list').append(noti_template);
-                        
+                      $('.noti_list').append(noti_template);
+
                     }
+                  }
                 }
-            }
-        },
-    });
-}
-noti();
-function noti_delete(id)
-{   if(confirm('هل انت متاكد من حذف الاشعار؟ لن يمكنك استرجاعه')){
-        $.ajax({
-        type: 'get', // the method (could be GET btw)
-        url: "noti_delete",
-        data: {
-        c_id: id,
-                },
-        success:function(response){
-                $('.noti_list').html('');
-                noti();
-                },
-                });
-            
-        return true;
-    }
-    return false;
-}
-function seen_noti(id)
-{           
-    $.ajax({
-    type: 'get', // the method (could be GET btw)
-    url: "noti_seen",
-    data: {
-
-                    c_id: id,
-
-            },
-    success:function(response){
-        console.log('s')
-            },
+              },
             });
-}
-function drawVac($id) {
+          }
 
-    let emp_id = $id;
-    $.ajax({
+          noti();
 
-        type: 'get',
+          function noti_delete(id) {
+            if (confirm('هل انت متاكد من حذف الاشعار؟ لن يمكنك استرجاعه')) {
+              $.ajax({
+                type: 'get', // the method (could be GET btw)
+                url: "noti_delete",
+                data: {
+                  c_id: id,
+                },
+                success: function (response) {
+                  $('.noti_list').html('');
+                  noti();
+                },
+              });
 
-        // the method (could be GET btw) 
-
-        url: 'getVacForEmployee/'+emp_id,
-        success: function(response) {
-           
-            if (response.success=='getData') {
-                $('#r_balance').html(response.infoVac.balance)
-                $('#r_spent').html(response.infoVac.balance_done)
-                $('#r_remain').html(response.infoVac.restB)
-                $('#u_balance').html(response.infoVac.emergency)
-                $('#u_spent').html(response.infoVac.emergency_done)
-                $('#u_remain').html(response.infoVac.restE)
-            }else{
-                
+              return true;
             }
-        },
+            return false;
+          }
 
-    });
+          function seen_noti(id) {
+            $.ajax({
+              type: 'get', // the method (could be GET btw)
+              url: "noti_seen",
+              data: {
 
-}
-$('#store-modal').submit(function(e) {
+                c_id: id,
 
-	$(".loader").removeClass('hide');
+              },
+              success: function (response) {
+                console.log('s')
+              },
+            });
+          }
 
-	contid=$("#contid").val();
+          function drawVac($id) {
 
-	if(contid == 33){
+            let emp_id = $id;
+            $.ajax({
 
-		fillIn = 'area_data';
+              type: 'get',
 
-	}else if(contid == 77){
+              // the method (could be GET btw)
 
-		fillIn = 'region_data';
+              url: 'getVacForEmployee/' + emp_id,
+              success: function (response) {
 
-	}else{
+                if (response.success == 'getData') {
+                  $('#r_balance').html(response.infoVac.balance)
+                  $('#r_spent').html(response.infoVac.balance_done)
+                  $('#r_remain').html(response.infoVac.restB)
+                  $('#u_balance').html(response.infoVac.emergency)
+                  $('#u_spent').html(response.infoVac.emergency_done)
+                  $('#u_remain').html(response.infoVac.restE)
+                } else {
 
-		fillIn=$("#ctrlToRefresh").val();
+                }
+              },
 
-	}
+            });
 
-       e.preventDefault();
+          }
 
-	   $( "#NationalID" ).removeClass( "error" );
+          $('#store-modal').submit(function (e) {
 
-       let formData = new FormData(this);
+            $(".loader").removeClass('hide');
 
-       $.ajax({
+            contid = $("#contid").val();
 
-          type:'POST',
+            if (contid == 33) {
 
-          url: "store_model",
+              fillIn = 'area_data';
 
-           data: formData,
+            } else if (contid == 77) {
 
-           contentType: false,
+              fillIn = 'region_data';
 
-           processData: false,
+            } else {
 
-           success: function (data) {
-
-			$(".loader").addClass('hide');
-
-				if (data) {
-
-						$("#" + fillIn).append(new Option(data.name, data.id));
-
-				}
-
-				$(".loader").addClass('hide');
-
-						//$(".form-actions").removeClass('hide');
-
-						$("#s_name_ar1").val('')
-
-						$("#QuickAdd").modal('hide');
-
-           },
-
-           error: function(response){
-
-			$(".loader").addClass('hide');
-
-            if(response.responseJSON.errors.s_name_ar1){
-
-                $( "#s_name_ar1" ).addClass( "error" );
+              fillIn = $("#ctrlToRefresh").val();
 
             }
 
-          
+            e.preventDefault();
 
-           }
+            $("#NationalID").removeClass("error");
 
-       });
+            let formData = new FormData(this);
 
-  });
+            $.ajax({
 
-  
+              type: 'POST',
 
-  </script>
+              url: "store_model",
 
-<div class="row hideMob" id="tag_id" style="display:none; margin-right: 10px; margin-left: 5px;"> 
+              data: formData,
 
-	<div class="col-md-12">
+              contentType: false,
 
-		<div class="form-group">
+              processData: false,
 
-			<div class="input-group" style="width:99% !important;">
+              success: function (data) {
 
-			    <div class="input-group-prepend">
+                $(".loader").addClass('hide');
+
+                if (data) {
+
+                  $("#" + fillIn).append(new Option(data.name, data.id));
+
+                }
+
+                $(".loader").addClass('hide');
+
+                //$(".form-actions").removeClass('hide');
+
+                $("#s_name_ar1").val('')
+
+                $("#QuickAdd").modal('hide');
+
+              },
+
+              error: function (response) {
+
+                $(".loader").addClass('hide');
+
+                if (response.responseJSON.errors.s_name_ar1) {
+
+                  $("#s_name_ar1").addClass("error");
+
+                }
+
+
+              }
+
+            });
+
+          });
+
+        </script>
+
+        <div class="row hideMob" id="tag_id" style="display:none; margin-right: 10px; margin-left: 5px;">
+
+            <div class="col-md-12">
+
+                <div class="form-group">
+
+                    <div class="input-group" style="width:99% !important;">
+
+                        <div class="input-group-prepend">
 
 					<span class="input-grojkup-text" id="basic-addon1">
 
@@ -1270,65 +1388,67 @@ $('#store-modal').submit(function(e) {
 
 					</span>
 
-				</div>
+                        </div>
 
-				<select id="tags" name="tags[]"  class="select2 form-control" multiple="multiple" data-toggle="select" style="width:100%;height: 35px;">
+                        <select id="tags" name="tags[]" class="select2 form-control" multiple="multiple"
+                                data-toggle="select" style="width:100%;height: 35px;">
 
-                    <?php $employees=array();
+                            <?php $employees = array();
 
-                    if(isset($employees) && !empty($employees) && count($employees) > 0){ ?>
+                            if (isset($employees) && !empty($employees) && count($employees) > 0){ ?>
 
-                        <?php foreach ($employees as $key => $value){ ?>
+                                <?php foreach ($employees as $key => $value){ ?>
 
                             <option value="<?php echo $value->pk_i_id; ?>"><?php echo $value->nickname; ?></option>
 
-                        <?php } ?>
+                            <?php } ?>
 
-                    <?php } ?>
+                            <?php } ?>
 
-                </select>
+                        </select>
 
-		    </div>
+                    </div>
 
-	    </div>
+                </div>
 
-    </div>
+            </div>
 
-</div>
+        </div>
 
-<span onclick="ShowConstantModal(1,'CurrencyID','title')" style="display:none">Test</span>
+        <span onclick="ShowConstantModal(1,'CurrencyID','title')" style="display:none">Test</span>
 
-@include('layouts.popup')
-@include('layouts.addresspopup')
-<div class="modal fade text-left" id="addLingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
+        @include('layouts.popup')
+        @include('layouts.addresspopup')
+        @include('layouts.renderFile')
+        <div class="modal fade text-left" id="addLingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
 
-	 aria-hidden="true">
+             aria-hidden="true">
 
-	<div class="modal-dialog" role="document">
+            <div class="modal-dialog" role="document">
 
-		<div class="modal-content">
+                <div class="modal-content">
 
-			<div class="modal-header">
+                    <div class="modal-header">
 
-				<h4 class="modal-title" id="myModalLabel1">إضافة رابط</h4>
+                        <h4 class="modal-title" id="myModalLabel1">إضافة رابط</h4>
 
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 
-					<span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true">&times;</span>
 
-				</button>
+                        </button>
 
-			</div>
+                    </div>
 
-			<div class="modal-body">
+                    <div class="modal-body">
 
-				<div class="form-body">
+                        <div class="form-body">
 
-					<div class="form-group">
+                            <div class="form-group">
 
-						<div class="input-group">
+                                <div class="input-group">
 
-							<div class="input-group-prepend">
+                                    <div class="input-group-prepend">
 
 					<span class="input-group-text" id="basic-addon1">
 
@@ -1336,21 +1456,23 @@ $('#store-modal').submit(function(e) {
 
 					</span>
 
-							</div>
+                                    </div>
 
-							<input type="text" id="URLTxt" class="form-control" placeholder="Label (Ar)" name="URLTxt">
+                                    <input type="text" id="URLTxt" class="form-control" placeholder="Label (Ar)"
+                                           name="URLTxt">
 
-							<input type="hidden" id="URLForm" class="form-control" placeholder="Label (Ar)" name="URLForm">
+                                    <input type="hidden" id="URLForm" class="form-control" placeholder="Label (Ar)"
+                                           name="URLForm">
 
-						</div>
+                                </div>
 
-					</div>
+                            </div>
 
-					<div class="form-group">
+                            <div class="form-group">
 
-						<div class="input-group">
+                                <div class="input-group">
 
-							<div class="input-group-prepend">
+                                    <div class="input-group-prepend">
 
 					<span class="input-group-text" id="basic-addon1">
 
@@ -1358,340 +1480,319 @@ $('#store-modal').submit(function(e) {
 
 					</span>
 
-							</div>
+                                    </div>
 
-							<input type="text" id="URLref" class="form-control" placeholder="Label (En)" name="URLref">
+                                    <input type="text" id="URLref" class="form-control" placeholder="Label (En)"
+                                           name="URLref">
 
-						</div>
+                                </div>
 
-					</div>
+                            </div>
 
-				</div>
+                        </div>
 
-			</div>
+                    </div>
 
-			<div class="modal-footer">
+                    <div class="modal-footer">
 
-				<button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">إغلاق</button>
+                        <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">إغلاق</button>
 
-				<button type="button" class="btn btn-outline-primary" onclick="addUrlToList('formData')">حفظ</button>
+                        <button type="button" class="btn btn-outline-primary" onclick="addUrlToList('formData')">حفظ
+                        </button>
 
-			</div>
+                    </div>
 
-		</div>
+                </div>
 
-	</div>
+            </div>
 
-</div>
+        </div>
 
+        <div class="modal fade text-left" id="getCompainByTiket" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel1"
 
+             aria-hidden="true">
 
+            <div class="modal-dialog" role="document">
 
+                <div class="modal-content">
 
-<div class="modal fade text-left" id="getCompainByTiket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
+                    <div class="modal-header">
 
-	 aria-hidden="true">
+                        <h4 class="modal-title" id="myModalLabel1">الموظفين </h4>
 
-	<div class="modal-dialog" role="document">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 
-		<div class="modal-content">
+                            <span aria-hidden="true">&times;</span>
 
-			<div class="modal-header">
+                        </button>
 
-				<h4 class="modal-title" id="myModalLabel1">الموظفين   </h4>
+                    </div>
 
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <div class="modal-body">
 
-					<span aria-hidden="true">&times;</span>
+                        <div class="form-body" id="compainList">
 
-				</button>
+                            <div class="form-group">
 
-			</div>
+                            </div>
 
-			<div class="modal-body">
+                        </div>
 
-				<div class="form-body" id="compainList">
+                    </div>
 
-					<div class="form-group">
+                    <div class="modal-footer">
 
+                        <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">إغلاق</button>
 
+                    </div>
 
-					</div>
+                </div>
 
-				</div>
+            </div>
 
-			</div>
+        </div>
 
-			<div class="modal-footer">
+        <script src="{{asset('assets/vendors/js/vendors.min.js')}}" type="text/javascript"></script>
 
-				<button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">إغلاق</button>
+        <!-- BEGIN VENDOR JS-->
 
-			</div>
+        <!-- BEGIN PAGE VENDOR JS-->
 
-		</div>
+        @yield('script')
 
-	</div>
+        <script type="text/javascript" src="{{asset('assets/vendors/js/ui/jquery.sticky.js')}}"></script>
 
-</div>
-
-<script src="{{asset('assets/vendors/js/vendors.min.js')}}" type="text/javascript"></script>
-
-  <!-- BEGIN VENDOR JS-->
-
-  <!-- BEGIN PAGE VENDOR JS-->
-
-  @yield('script')
-
-  <script type="text/javascript" src="{{asset('assets/vendors/js/ui/jquery.sticky.js')}}"></script>
-
-  <!--<script src="{{asset('assets/vendors/js/charts/chartist.min.js')}}" type="text/javascript"></script>
+        <!--<script src="{{asset('assets/vendors/js/charts/chartist.min.js')}}" type="text/javascript"></script>
 
   <script src="{{asset('assets/vendors/js/charts/chartist-plugin-tooltip.min.js')}}"
 
   type="text/javascript"></script>-->
 
-  <script src="{{asset('assets/vendors/js/charts/raphael-min.js')}}" type="text/javascript"></script>
+        <script src="{{asset('assets/vendors/js/charts/raphael-min.js')}}" type="text/javascript"></script>
 
-  <!-- <script src="{{asset('assets/vendors/js/charts/morris.min.js')}}" type="text/javascript"></script> -->
+        <!-- <script src="{{asset('assets/vendors/js/charts/morris.min.js')}}" type="text/javascript"></script> -->
 
-  <script src="{{asset('assets/vendors/js/timeline/horizontal-timeline.js')}}" type="text/javascript"></script>
+        <script src="{{asset('assets/vendors/js/timeline/horizontal-timeline.js')}}" type="text/javascript"></script>
 
-  <!-- END PAGE VENDOR JS-->
+        <!-- END PAGE VENDOR JS-->
 
-  <!-- BEGIN MODERN JS-->
+        <!-- BEGIN MODERN JS-->
 
-  <script src="{{asset('assets/js/scripts/ui/jquery.mask.js')}}" type="text/javascript"></script>
+        <script src="{{asset('assets/js/scripts/ui/jquery.mask.js')}}" type="text/javascript"></script>
 
-  <script src="{{asset('assets/js/scripts/ui/jquery-ui/jquery.colorbox-min.js')}}" type="text/javascript"></script>
+        <script src="{{asset('assets/js/scripts/ui/jquery-ui/jquery.colorbox-min.js')}}"
+                type="text/javascript"></script>
 
-  <script src="{{asset('assets/js/scripts/ui/jquery-ui/jquery-ui.js')}}" type="text/javascript"></script>
+        <script src="{{asset('assets/js/scripts/ui/jquery-ui/jquery-ui.js')}}" type="text/javascript"></script>
 
-  <script src="{{asset('assets/js/core/app-menu.js')}}" type="text/javascript"></script>
+        <script src="{{asset('assets/js/core/app-menu.js')}}" type="text/javascript"></script>
 
-  <script src="{{asset('assets/js/core/app.js')}}" type="text/javascript"></script>
+        <script src="{{asset('assets/js/core/app.js')}}" type="text/javascript"></script>
 
-  <script src="{{asset('assets/js/scripts/customizer.js')}}" type="text/javascript"></script>
+        <script src="{{asset('assets/js/scripts/customizer.js')}}" type="text/javascript"></script>
 
-  <script src="https://template.expand.ps/app-assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
+        <script src="https://template.expand.ps/app-assets/global/plugins/select2/js/select2.full.min.js"
+                type="text/javascript"></script>
 
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <!-- END MODERN JS-->
+        <!-- END MODERN JS-->
 
-  <!-- BEGIN PAGE LEVEL JS-->
+        <!-- BEGIN PAGE LEVEL JS-->
 
-  <!-- <script src="{{asset('assets/js/scripts/pages/dashboard-ecommerce.js')}}" type="text/javascript"></script> -->
+        <!-- <script src="{{asset('assets/js/scripts/pages/dashboard-ecommerce.js')}}" type="text/javascript"></script> -->
 
-  <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
+        <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
 
-  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.0/b-2.0.0/b-colvis-2.0.0/b-html5-2.0.0/b-print-2.0.0/fh-3.1.9/r-2.2.9/sp-1.4.0/datatables.min.js"></script>
+        <script type="text/javascript"
+                src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.0/b-2.0.0/b-colvis-2.0.0/b-html5-2.0.0/b-print-2.0.0/fh-3.1.9/r-2.2.9/sp-1.4.0/datatables.min.js"></script>
 
-    <script type="text/javascript" src="https://template.expand.ps/app-assets/vendors/js/ui/jquery.sticky.js"></script>
+        <script type="text/javascript"
+                src="https://template.expand.ps/app-assets/vendors/js/ui/jquery.sticky.js"></script>
 
-  <script src="https://template.expand.ps/app-assets/vendors/js/forms/select/select2.full.min.js" type="text/javascript"></script>
+        <script src="https://template.expand.ps/app-assets/vendors/js/forms/select/select2.full.min.js"
+                type="text/javascript"></script>
 
-  <script src="https://template.expand.ps/app-assets/js/scripts/tooltip/tooltip.js" type="text/javascript"></script>
+        <script src="https://template.expand.ps/app-assets/js/scripts/tooltip/tooltip.js"
+                type="text/javascript"></script>
 
-  <script src="https://template.expand.ps/app-assets/js/scripts/forms/select/form-select2.js" type="text/javascript"></script>
+        <script src="https://template.expand.ps/app-assets/js/scripts/forms/select/form-select2.js"
+                type="text/javascript"></script>
 
-<script>
+        <script>
 
+          // the selection for menu search
 
 
-// the selection for menu search
+          $(function () {
 
+            $(".full_search").autocomplete({
 
+              source: "{{route('search')}}",
 
-$( function() {
+              minLength: 1,
 
-    $( ".full_search" ).autocomplete({
 
-		source:"{{route('search')}}",
+              select: function (event, ui) {
 
-		minLength: 1,
+                var id = ui.item.id;
+                if (ui.item.url == 'contract_archieve')
+                  ui.item.url = 'dep_archieve';
 
-		
+                var url = '{{ route('admin.dashboard') }}/' + ui.item.url;
 
+                var fullUrl = url + '?id' + '=' + id;
 
+                $(location).attr('href', fullUrl)
 
+              }
 
+            });
 
-		
+          });
 
-        select: function( event, ui ) {
 
-			var id = ui.item.id;
-            if(ui.item.url=='contract_archieve')
-                ui.item.url='dep_archieve';
-                
-			var url = '{{ route('admin.dashboard') }}/'+ui.item.url;
+          $(function () {
 
-			var fullUrl = url+'?id'+'='+id;
+            $(".home_search").autocomplete({
 
-		    $(location).attr('href', fullUrl)
+              source: 'search',
 
-		}
+              minLength: 1,
 
-	});
 
-});
+              select: function (event, ui) {
 
+                var id = ui.item.id;
+                if (ui.item.url == 'contract_archieve')
+                  ui.item.url = 'dep_archieve';
+                var url = ui.item.url;
 
+                var fullUrl = 'admin/' + url + '?id' + '=' + id;
 
+                $(location).attr('href', fullUrl)
 
+              }
 
-$( function() {
+            });
 
-    $( ".home_search" ).autocomplete({
+          });
 
-		source:'search',
 
-		minLength: 1,
+          function QuickAdd(contid, ctrl, title) {
 
+            return;
 
-
-        select: function( event, ui ) {
-
-			var id = ui.item.id;
-            if(ui.item.url=='contract_archieve')
-                ui.item.url='dep_archieve';
-			var url = ui.item.url;
-
-			var fullUrl ='admin/'+url+'?id'+'='+id;
-
-		    $(location).attr('href', fullUrl)
-
-		}
-
-	});
-
-});
-
-
-
-  function QuickAdd(contid,ctrl,title){
-
-return;
-
-$(".loader").removeClass('hide');
+            $(".loader").removeClass('hide');
 
 //$(".form-actions").addClass('hide');
 
 
+            DrawTable(contid)
 
-DrawTable(contid)
+            $("#fk_i_constant_id1").val(contid);
 
-$("#fk_i_constant_id1").val(contid);
+            $("#ctrlToRefresh").val(ctrl);
 
-$("#ctrlToRefresh").val(ctrl);
+            $("#contid").val(contid);
 
-$("#contid").val(contid);
+            $("#ModalTitle").html(title);
 
-$("#ModalTitle").html(title);
+            $("#ModalTitle1").html(title);
 
-$("#ModalTitle1").html(title);
-
-$("#QuickAdd").modal('show');
-
+            $("#QuickAdd").modal('show');
 
 
-$(".loader").addClass('hide');
+            $(".loader").addClass('hide');
 
-}
+          }
 
-function doUploadPic(){
+          function doUploadPic() {
 
-	$.ajaxSetup({
+            $.ajaxSetup({
 
-            headers: {
+              headers: {
 
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 
-            }
+              }
 
-        });
+            });
 
-        $(".loader").removeClass('hide');
+            $(".loader").removeClass('hide');
 
-        $(".form-actions").addClass('hide');
+            $(".form-actions").addClass('hide');
 
-        var formData = new FormData($("#setting_form")[0]);
+            var formData = new FormData($("#setting_form")[0]);
 
-        $.ajax({
+            $.ajax({
 
 
+              url: 'uploadPic',
 
-            url: 'uploadPic',
+              type: 'POST',
 
-            type: 'POST',
+              data: formData,
 
-            data: formData,
+              dataType: "json",
 
-            dataType:"json",
+              async: true,
 
-            async: true,
+              success: function (data) {
 
-            success: function (data) {
+                if (data) {
+                  console.log(data);
+                  $(".alert-danger").addClass("hide");
 
-                if(data){
-                    console.log(data);
+                  $(".alert-success").removeClass('hide');
+
+                  //$("#userProfileImg").attr('src', window.location.origin+'/'+data.url);
+
+
+                  if (data.Input == 'imgPic') {
+                    $("#userProfileImg").attr('src', "{{ asset('') }}" + data.file.url);
+
+                    $("#userimgpath").val(data.file.url);
+
+                    $("#file_id").val(data.file.id);
+
+                    $("#userimgpath").trigger('change')
+                  } else if (data.Input == 'header_img') {
+
+                    $("#userHeaderImg").attr('src', "{{ asset('') }}" + data.file.url);
+
+                    $("#header_img").val(data.file.url);
+
+                    $("#file_id").val(data.file.id);
+
+                    $("#header_img").trigger('change')
+                  } else if (data.Input == 'footer_img') {
+
+                    $("#userFooterImg").attr('src', "{{ asset('') }}" + data.file.url);
+
+                    $("#footer_img").val(data.file.url);
+
+                    $("#file_id").val(data.file.id);
+
+                    $("#footer_img").trigger('change')
+                  }
+
+                  setTimeout(function () {
+
                     $(".alert-danger").addClass("hide");
-
-                    $(".alert-success").removeClass('hide');
-
-                    //$("#userProfileImg").attr('src', window.location.origin+'/'+data.url);
-
-
-                    if(data.Input=='imgPic')
-					{
-					    $("#userProfileImg").attr('src', "{{ asset('') }}"+data.file.url);
-
-                        $("#userimgpath").val(data.file.url);
-    
-                        $("#file_id").val(data.file.id);
-    
-                        $("#userimgpath").trigger('change')
-					}
-                    else if(data.Input=='header_img')
-                    {
-                        
-                        $("#userHeaderImg").attr('src', "{{ asset('') }}"+data.file.url);
-
-                        $("#header_img").val(data.file.url);
-    
-                        $("#file_id").val(data.file.id);
-    
-                        $("#header_img").trigger('change')
-                    }
-                    else if(data.Input=='footer_img')
-                    {
-                        
-                        $("#userFooterImg").attr('src', "{{ asset('') }}"+data.file.url);
-
-                        $("#footer_img").val(data.file.url);
-    
-                        $("#file_id").val(data.file.id);
-    
-                        $("#footer_img").trigger('change')
-                    }
-
-                    setTimeout(function(){
-
-                        $(".alert-danger").addClass("hide");
-
-                        $(".alert-success").addClass("hide");
-
-                    },2000)
-
-                }
-
-                else {
 
                     $(".alert-success").addClass("hide");
 
-                    $(".alert-danger").removeClass('hide');
+                  }, 2000)
 
-                    $("#errMsg").text(data.status.msg)
+                } else {
+
+                  $(".alert-success").addClass("hide");
+
+                  $(".alert-danger").removeClass('hide');
+
+                  $("#errMsg").text(data.status.msg)
 
                 }
 
@@ -1699,9 +1800,9 @@ function doUploadPic(){
 
                 $(".form-actions").removeClass('hide');
 
-            },
+              },
 
-            error:function(){
+              error: function () {
 
                 $(".alert-success").addClass("hide");
 
@@ -1713,129 +1814,88 @@ function doUploadPic(){
 
                 $(".form-actions").removeClass('hide');
 
-            },
+              },
 
-            cache: false,
+              cache: false,
 
-            contentType: false,
+              contentType: false,
 
-            processData: false
+              processData: false
 
-        });
+            });
 
-    }
+          }
 
-function doUploadAttach(formDataStr)
+          function doUploadAttach(formDataStr) {
 
-    {
+            $.ajaxSetup({
 
-        $.ajaxSetup({
-
-            headers: {
+              headers: {
 
                 'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
 
-            }
+              }
 
-        });
+            });
 
-        $(".loader").removeClass('hide');
+            $(".loader").removeClass('hide');
 
-        $(".form-actions").addClass('hide');
+            $(".form-actions").addClass('hide');
 
-        var formData = new FormData($("#"+formDataStr)[0]);
+            var formData = new FormData($("#" + formDataStr)[0]);
 
-        $.ajax({
+            $.ajax({
 
-            url: 'uploadAttach',
+              url: 'uploadAttach',
 
-            type: 'POST',
+              type: 'POST',
 
-            data: formData,
+              data: formData,
 
-            dataType:"json",
+              dataType: "json",
 
-            async: true,
+              async: true,
 
-            success: function (data) {
+              success: function (data) {
 
-                row='';
+                row = '';
 
                 console.log(data.all_files);
 
-                if(data.all_files){
+                if (data.all_files) {
 
-                    var j=0;
+                  var j = 0;
 
-                    for(j=0;j<data.all_files.length;j++){
+                  for (j = 0; j < data.all_files.length; j++) {
+                    row += attacheView(data.all_files[j], formDataStr);
+                  }
+                  $(".form-control-file").val('');
 
-                shortCutName=data.all_files[j].real_name;
+                  $(".alert-danger").addClass("hide");
 
-                shortCutID=data.all_files[j].id;
+                  $(".alert-success").removeClass('hide');
 
-                        urlfile='{{ asset('') }}';
+                  $("." + formDataStr + "FilesArea").append(row)
 
-                        // console.log(urlfile);
+                  $(".loader").addClass('hide');
 
-                        if(data.all_files[j].type==1){
-                            urlfile+=data.all_files[j].url;
-                        }else{
-                            urlfile=data.all_files[j].url;
-                        }
-                        // console.log(urlfile);
+                  //document.getElementById(""+formDataStr+"upload-file[]").value="";
 
-                            shortCutName=shortCutName.substring(0, 40)
+                  $(".group1").colorbox({rel: 'group1'});
 
-                            row+='<div id="attach" class=" col-lg-6 ">' +
+                  setTimeout(function () {
 
-                                '   <div class="attach" onmouseover="$(this).children().first().next().show()">'
-                                
-                                +'    <a class="attach-close1" href="'+urlfile+'" style="color: #74798D;" target="_blank">'
-                                
-                                +'    <span class="attach-text">'+shortCutName+'</span> </a>'
-
-                                +'    <a class="attach-close1" style="color: #74798D; float:left;" onclick="$(this).parent().parent().remove()">×</a>'
-
-                                +'      <input type="hidden" id="'+formDataStr+'imgUploads[]" name="'+formDataStr+'imgUploads[]" value="'+shortCutName+'">'
-
-                                +'             <input type="hidden" id="'+formDataStr+'orgNameList[]" name="'+formDataStr+'orgNameList[]" value="'+shortCutName+'">'
-
-								+'             <input type="hidden" id="'+formDataStr+'orgIdList[]" name="'+formDataStr+'orgIdList[]" value="'+shortCutID+'">'
-
-							    +'    </div>'
-
-                                +'  </div>'
-
-                    }
-                    $(".form-control-file").val('');
-                    
                     $(".alert-danger").addClass("hide");
-
-                    $(".alert-success").removeClass('hide');
-
-        $("."+formDataStr+"FilesArea").append(row)
-
-                    $(".loader").addClass('hide');
-
-                    //document.getElementById(""+formDataStr+"upload-file[]").value="";
-
-                    $(".group1").colorbox({rel:'group1'});
-
-                    setTimeout(function(){
-
-                        $(".alert-danger").addClass("hide");
-
-                        $(".alert-success").addClass("hide");
-
-                    },2000)
-
-                }
-
-                else {
 
                     $(".alert-success").addClass("hide");
 
-                    $(".alert-danger").removeClass('hide');
+                  }, 2000)
+
+                } else {
+
+                  $(".alert-success").addClass("hide");
+
+                  $(".alert-danger").removeClass('hide');
 
                 }
 
@@ -1843,9 +1903,9 @@ function doUploadAttach(formDataStr)
 
                 $(".form-actions").removeClass('hide');
 
-            },
+              },
 
-            error:function(){
+              error: function () {
 
                 $(".alert-success").addClass("hide");
 
@@ -1855,498 +1915,479 @@ function doUploadAttach(formDataStr)
 
                 $(".form-actions").removeClass('hide');
 
-            },
+              },
 
-            cache: false,
+              cache: false,
 
-            contentType: false,
+              contentType: false,
 
-            processData: false
+              processData: false
 
-        });
+            });
 
-    }
+          }
 
-function DrawTable(id){
+          function DrawTable(id) {
 
-	var formData = {
+            var formData = {
 
-		'pk_i_id':id,
+              'pk_i_id': id,
 
-		_token: '{{csrf_token()}}',
+              _token: '{{csrf_token()}}',
 
-	};
+            };
 
 
+            $.ajax({
 
-	$.ajax({
+              url: 'getConstantChildren',
 
-		url:'getConstantChildren',
+              type: 'POST',
 
-		type: 'POST',
+              data: formData,
 
-		data: formData,
+              dataType: "json",
 
-		dataType:"json",
+              async: true,
 
-		async: true,
+              success: function (data) {
 
-		success: function (data) {
+                i = 1;
 
-			i=1;
+                row = '';
 
-			row='';
+                for (j = 0; j < data['data'].length; j++) {
 
-			for(j=0; j<data['data'].length;j++) {
+                  row += '<tr>'
 
-				row += '<tr>'
+                    + '<td width="20px">'
 
-					+ '<td width="20px">'
+                    + i
 
-					+ i
+                    + '</td>'
 
-					+ '</td>'
+                    + '<td>'
 
-					+ '<td>'
+                    + data['data'][j].name
 
-					+ data['data'][j].name
+                    + '</td>'
 
-					+ '</td>'
+                    + '<td width="40px">'
 
-					+ '<td width="40px">'
+                    + '<i class="fa fa-edit" id="trash" aria-hidden="true" style="color:#1E9FF2;padding-top:10px;position: relative;left: 3%;cursor: pointer;" onclick="editConstant(' + data['data'][j].id + ',\'' + data['data'][j].name + '\',\'' + data['pj_i_id'] + '\')"></i>'
 
-					+ '<i class="fa fa-edit" id="trash" aria-hidden="true" style="color:#1E9FF2;padding-top:10px;position: relative;left: 3%;cursor: pointer;" onclick="editConstant('+data['data'][j].id+',\''+data['data'][j].name+'\',\''+data['pj_i_id']+'\')"></i>'
+                    + '<i class="fa fa-trash" id="trash" aria-hidden="true" style="padding-top:10px;position: relative;left: 3%;cursor: pointer;" onclick="deleteConstant(' + data['data'][j].id + ')"></i>'
 
-					+ '<i class="fa fa-trash" id="trash" aria-hidden="true" style="padding-top:10px;position: relative;left: 3%;cursor: pointer;" onclick="deleteConstant('+data['data'][j].id+')"></i>'
+                    + '</td>'
 
-					+ '</td>'
+                    + '</tr>'
 
-					+ '</tr>'
+                  i++
 
-				i++
+                }
 
-			}
 
+                $("#subTaskpop").html(row);
 
+              },
 
-			$("#subTaskpop").html(row);
+              error: function () {
 
-		},
+                $(".alert-success").addClass("hide");
 
-		error:function(){
+                // $(".alert-danger").removeClass('hide');
 
-			$(".alert-success").addClass("hide");
+                $("#errMsg").text(data.status.msg)
 
-			// $(".alert-danger").removeClass('hide');
+                $(".loader").addClass('hide');
 
-			$("#errMsg").text(data.status.msg)
+                //$(".form-actions").removeClass('hide');
 
-			$(".loader").addClass('hide');
+              },
 
-			//$(".form-actions").removeClass('hide');
+              /*cache: false,
 
-		},
+               contentType: false,
 
-		/*cache: false,
+               processData: false*/
 
-		 contentType: false,
+            });
 
-		 processData: false*/
+          }
 
-	});
+          function editConstant(id, title, pj_i_id) {
 
-}
+            console.log(id, title, pj_i_id);
 
-function editConstant(id,title,pj_i_id){
+            $("#s_name_ar1").val(title);
 
-	console.log(id,title,pj_i_id);
+            $("#pj_i_id").val(pj_i_id);
 
-	$("#s_name_ar1").val(title);
+            $("#fk_i_constantdet_id1").val(id);
 
-	$("#pj_i_id").val(pj_i_id);
 
-	$("#fk_i_constantdet_id1").val(id);
+            $(".modalBtn").text('update')
 
+          }
 
+          function deleteConstant(id) {
 
-	$(".modalBtn").text('update')
+            //deleteSubConstant
 
-}
+            fillIn = $("#ctrlToRefresh").val();
 
-function deleteConstant(id){
+            if (!confirm('Are you sure you want to delete this record?'))
 
-	//deleteSubConstant
+              return
 
-	fillIn=$("#ctrlToRefresh").val();
+            var formData = {
 
-	if(!confirm('Are you sure you want to delete this record?'))
+              'pk_i_id': id,
 
-		return
+              'fk_i_constant_id': $("#fk_i_constant_id1").val(),
 
-	var formData = {
+              _token: '{{csrf_token()}}',
 
-		'pk_i_id': id,
 
-		'fk_i_constant_id': $("#fk_i_constant_id1").val(),
+            };
 
-		_token: '{{csrf_token()}}',
+            console.log(formData);
 
+            $.ajax({
 
+              url: 'deleteSubConstant',
 
-	};
+              type: 'POST',
 
-	console.log(formData);
+              data: formData,
 
-	$.ajax({
+              dataType: "json",
 
-		url:  'deleteSubConstant',
+              async: true,
 
-		type: 'POST',
+              success: function (data) {
 
-		data: formData,
+                location.reload();
 
-		dataType: "json",
+                $("#" + fillIn).html(new Option(" Select ", ''));
 
-		async: true,
+                if (data.constList.length > 0) {
 
-		success: function (data) {
+                  for (i = 0; i < data.constList.length; i++)
 
-			location.reload();
+                    $("#" + fillIn).append(new Option(data.constList[i].s_name_ar, data.constList[i].pk_i_id));
 
-			$("#" + fillIn).html(new Option(" Select ", ''));
+                } else {
 
-			if (data.constList.length > 0) {
+                  //$("#"+fillIn).append(new Option(data.constList[0].s_name_ar, data.currNode[0].pk_i_id));
 
-				for (i = 0; i < data.constList.length; i++)
+                }
 
-					$("#" + fillIn).append(new Option(data.constList[i].s_name_ar, data.constList[i].pk_i_id));
 
-			}
+                $(".loader").addClass('hide');
 
-			else {
 
-				//$("#"+fillIn).append(new Option(data.constList[0].s_name_ar, data.currNode[0].pk_i_id));
+                //$("#QuickAdd").modal('hide');
 
-			}
+                DrawTable($("#fk_i_constant_id1").val())
 
+                $("#fk_i_constantdet_id1").val('0')
 
+              },
 
-			$(".loader").addClass('hide');
+              error: function () {
 
+                $(".alert-success").addClass("hide");
 
+                $(".alert-danger").removeClass('hide');
 
-			//$("#QuickAdd").modal('hide');
+                // $("#errMsg").text(data.status.msg)
 
-			DrawTable($("#fk_i_constant_id1").val())
+                $(".loader").addClass('hide');
 
-			$("#fk_i_constantdet_id1").val('0')
+              },
 
-		},
+              /*cache: false,
 
-		error: function () {
+               contentType: false,
 
-			$(".alert-success").addClass("hide");
+               processData: false*/
 
-			$(".alert-danger").removeClass('hide');
+            });
 
-			// $("#errMsg").text(data.status.msg)
+          }
 
-			$(".loader").addClass('hide');
+          $(document).ready(function () {
 
-		},
 
-		/*cache: false,
+            $(".select2").select2();
 
-		 contentType: false,
 
-		 processData: false*/
+            //$(".sticky-wrapper").css("display", "none");
 
-	});
+            $("#nav_hover").click(function () {
 
-}	
 
-  $(document).ready(function() {
+              /* if ( $('#nav_expanded_nav').css('display') == 'none' || $('#nav_expanded_nav').css("visibility") == "hidden"){
 
-      
+                        // $("#nav_expanded_nav").css("display", "block");
 
-	$(".select2").select2();
+                         //$("#nav_expanded_nav").css("visibility", "visible");
 
-    
+                         //$(".sticky-wrapper").css("display", "block");
 
-  //$(".sticky-wrapper").css("display", "none");
+                         //$(".sticky-wrapper").css("height", "70px");
 
-  $("#nav_hover").click(function() {
 
 
+               }else{
 
-   /* if ( $('#nav_expanded_nav').css('display') == 'none' || $('#nav_expanded_nav').css("visibility") == "hidden"){
+                       //  $("#nav_expanded_nav").css("display", "none");
 
-             // $("#nav_expanded_nav").css("display", "block");
+                         //$("#nav_expanded_nav").css("visibility", "hidden");
 
-              //$("#nav_expanded_nav").css("visibility", "visible");
+                         //$(".sticky-wrapper").css("display", "none");
 
-              //$(".sticky-wrapper").css("display", "block");
+               } */
 
-              //$(".sticky-wrapper").css("height", "70px");
 
+            });
 
 
-    }else{
+            leftSide = $(".leftSide").height()
 
-            //  $("#nav_expanded_nav").css("display", "none");
+            rightSide = $(".rightSide").height()
 
-              //$("#nav_expanded_nav").css("visibility", "hidden");
 
-              //$(".sticky-wrapper").css("display", "none");
+            setTimeout(function () {
 
-    } */
+              if (screen.width > 600) {
 
-     
+                if (leftSide > rightSide)
 
-  });
+                  $(".rightSide").attr("style", "min-height:" + ($(".leftSide").height() + "px"))
 
+                else
 
+                  $(".leftSide").attr("style", "min-height:" + ($(".rightSide").height() + "px"))
 
 
-leftSide=$(".leftSide").height()
+                $(".selectize-input .item").html('')
 
-		rightSide=$(".rightSide").height()
+              }
 
 
+            }, 1000)
 
-		setTimeout(function() {
+            $(".select2").attr('style', 'width:90%');
 
-		    if(screen.width>600){
-
-			if (leftSide > rightSide)
-
-				$(".rightSide").attr("style", "min-height:" + ($(".leftSide").height() + "px"))
-
-			else
-
-				$(".leftSide").attr("style", "min-height:" + ($(".rightSide").height() + "px"))
-
-			
-
-			$(".selectize-input .item").html('')
-
-		    }
-
-			
-
-		},1000)
-
-		$(".select2").attr('style','width:90%');
-
-		$("#emp_to_close_json").next().attr('style','width:70%');
-		$("#emp_to_close_json").prev().attr('style','width:30%');
-		$("#emp_to_revoke_json").next().attr('style','width:70%');
-		$("#emp_to_revoke_json").prev().attr('style','width:30%');
-		$("#emp_to_update_json").next().attr('style','width:70%');
-		$("#emp_to_update_json").prev().attr('style','width:30%');
+            $("#emp_to_close_json").next().attr('style', 'width:70%');
+            $("#emp_to_close_json").prev().attr('style', 'width:30%');
+            $("#emp_to_revoke_json").next().attr('style', 'width:70%');
+            $("#emp_to_revoke_json").prev().attr('style', 'width:30%');
+            $("#emp_to_update_json").next().attr('style', 'width:70%');
+            $("#emp_to_update_json").prev().attr('style', 'width:30%');
 // 		$("#allowed_emp").next().attr('style','width:58% !important');
 // 		$("#allowed_emp").prev().attr('style','width:40% !important');
-		$("#emp_to_reopen_ticket").next().attr('style','width:70%');
-		$("#emp_to_reopen_ticket").prev().attr('style','width:30%');
-		$("#emp_to_report_ticket").next().attr('style','width:70%');
-		$("#emp_to_report_ticket").prev().attr('style','width:30%');
-		$("#emp_to_tag_ticket").next().attr('style','width:70%');
-		$("#emp_to_tag_ticket").prev().attr('style','width:30%');
-        $("#emp_to_access_portal").next().attr('style','width:60%');
-		$("#emp_to_access_portal").prev().attr('style','width:40%');
-		
+            $("#emp_to_reopen_ticket").next().attr('style', 'width:70%');
+            $("#emp_to_reopen_ticket").prev().attr('style', 'width:30%');
+            $("#emp_to_report_ticket").next().attr('style', 'width:70%');
+            $("#emp_to_report_ticket").prev().attr('style', 'width:30%');
+            $("#emp_to_tag_ticket").next().attr('style', 'width:70%');
+            $("#emp_to_tag_ticket").prev().attr('style', 'width:30%');
+            $("#emp_to_access_portal").next().attr('style', 'width:60%');
+            $("#emp_to_access_portal").prev().attr('style', 'width:40%');
 
-});
 
-		
+          });
 
-</script>
-  <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        </script>
+        <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-<script>
-        userProile=0;
-        $(document).ready(function(){
-            userProile=$("#Assigned2ID").val();
-        })
-    function writeUserData(redirecURL) {
-        
-        userProile=$("#Assigned2ID").val();
-        // console.log(userProile+'   '+ typeof(userProile));
-        let tags=$('#tags').val()
-        tags.unshift(userProile)
-        senderName='<?php echo Auth()->user()->nick_name; ?>'
-        tags.map((userId)=>{ 
-            firebase.firestore().collection("Users").doc(userId).collection('notifications').add({
-            data: 'قام '+senderName+' بإرسال طلب  '+ 
-            $(".leftSide .card-title").children().first().next().text(),
-            url: realPath+redirecURL,
-            domain:'<?php echo $fcmdomain?>',
-            type:"added"
-        });
-        })
-        
-        return true;
-    }
+        <script>
+          userProile = 0;
+          $(document).ready(function () {
+            userProile = $("#Assigned2ID").val();
+          })
 
-    function writeUserForward(redirecURL) {
-        
-            userProile=''+$(".frm2 #Assigned2ID").val()+'';
-        senderName='<?php echo Auth()->user()->nick_name; ?>'
-        
-        console.log(userProile,senderName,redirecURL)
-        firebase.firestore().collection("Users").doc(userProile).collection('notifications').add({
-            data: 'قام '+senderName+' بتحويل طلب '+ 
-            $(".leftSide .card-title").children().first().next().text(),
-            url: realPath+redirecURL,
-            domain:'<?php echo $fcmdomain?>',
-            type:"added"
-        });
-    }
-    
-    function writeRespondApp(redirecURL,userProile,str) {
-        str='';
-        console.log(redirecURL,userProile)
+          function writeUserData(redirecURL) {
+
+            userProile = $("#Assigned2ID").val();
+            // console.log(userProile+'   '+ typeof(userProile));
+            let tags = $('#tags').val()
+            tags.unshift(userProile)
+            senderName = '<?php echo Auth()->user()->nick_name; ?>'
+            tags.map((userId) => {
+              firebase.firestore().collection("Users").doc(userId).collection('notifications').add({
+                data: 'قام ' + senderName + ' بإرسال طلب  ' +
+                  $(".leftSide .card-title").children().first().next().text(),
+                url: realPath + redirecURL,
+                domain: '<?php echo $fcmdomain ?>',
+                type: "added"
+              });
+            })
+
+            return true;
+          }
+
+          function writeUserForward(redirecURL) {
+
+            userProile = '' + $(".frm2 #Assigned2ID").val() + '';
+            senderName = '<?php echo Auth()->user()->nick_name; ?>'
+
+            console.log(userProile, senderName, redirecURL)
+            firebase.firestore().collection("Users").doc(userProile).collection('notifications').add({
+              data: 'قام ' + senderName + ' بتحويل طلب ' +
+                $(".leftSide .card-title").children().first().next().text(),
+              url: realPath + redirecURL,
+              domain: '<?php echo $fcmdomain ?>',
+              type: "added"
+            });
+          }
+
+          function writeRespondApp(redirecURL, userProile, str) {
+            str = '';
+            console.log(redirecURL, userProile)
             //userProile=$("#Assigned2ID").val();
-        senderName='<?php echo Auth()->user()->nick_name; ?>'
-        firebase.firestore().collection("Users").doc(userProile).collection('notifications').add({
-            data: 'قام '+senderName+' '+str +
-            $(".leftSide .card-title").children().first().next().text(),
-            url: realPath+redirecURL,
-            domain:'<?php echo $fcmdomain?>',
-            type:"added"
-        });
-    }
-    
-    const firebaseConfig = {
-        // apiKey: "AIzaSyAvvlz9UceU_DOIf83MKg7QtgqqiLwiDrI",
-        // authDomain: "expand.ps",
-        // databaseURL: "https://users.firebaseio.com",
-        // projectId: "expand-bcbbc",
-        // storageBucket: "expand-bcbbc.appspot.com",
-        /*messagingSenderId: "",
-        appId: ""*/
-          apiKey: "AIzaSyBCoSmxbAHFwzaikWRu98cw8rEr3Tt7lC8",
-          authDomain: "expand-7d71c.firebaseapp.com",
-          projectId: "expand-7d71c",
-          storageBucket: "expand-7d71c.appspot.com",
-          messagingSenderId: "906710062876",
-          appId: "1:906710062876:web:2f4a40467d69b3cfd18cd9",
-          measurementId: "G-9G3JCQ6MPK"
-    };
+            senderName = '<?php echo Auth()->user()->nick_name; ?>'
+            firebase.firestore().collection("Users").doc(userProile).collection('notifications').add({
+              data: 'قام ' + senderName + ' ' + str +
+                $(".leftSide .card-title").children().first().next().text(),
+              url: realPath + redirecURL,
+              domain: '<?php echo $fcmdomain ?>',
+              type: "added"
+            });
+          }
+
+          const firebaseConfig = {
+            // apiKey: "AIzaSyAvvlz9UceU_DOIf83MKg7QtgqqiLwiDrI",
+            // authDomain: "expand.ps",
+            // databaseURL: "https://users.firebaseio.com",
+            // projectId: "expand-bcbbc",
+            // storageBucket: "expand-bcbbc.appspot.com",
+            /*messagingSenderId: "",
+            appId: ""*/
+            apiKey: "AIzaSyBCoSmxbAHFwzaikWRu98cw8rEr3Tt7lC8",
+            authDomain: "expand-7d71c.firebaseapp.com",
+            projectId: "expand-7d71c",
+            storageBucket: "expand-7d71c.appspot.com",
+            messagingSenderId: "906710062876",
+            appId: "1:906710062876:web:2f4a40467d69b3cfd18cd9",
+            measurementId: "G-9G3JCQ6MPK"
+          };
 
 
-    var user = "<?php echo Auth()->user()->id; ?>";
-    firebase.initializeApp(firebaseConfig);
-    firebase.firestore().collection("Users").doc(user).collection('notifications').onSnapshot(function (snapshot) {
-        snapshot.docChanges().forEach(function (change) {
-            if (change.type === "added") {
-                if(change.doc.data().domain=='<?php echo $fcmdomain?>'){
-                    firebase.firestore().collection("Users").doc(user).collection('notifications').doc(change.doc.id).delete();
-                        /*loadNoti();
-                        loadOutApp();*/
-                        $('.myTaskTable101').DataTable().ajax.reload(); 
-                        
-                        $('.myTaskTable101').DataTable().on('init.dt', function() {
-                            $(".odd").each(function(){
-                                $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
-                            });
-                            $(".even").each(function(){
-                                $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
-                            });
-                          })
-                        $('.wtbl201').DataTable().ajax.reload();
-                        $('.wtbl401').DataTable().ajax.reload();
-                        $('.wtbl301').DataTable().ajax.reload();
-                        // watingTaskTable.DataTable().ajax.reload(); 
-                        // watingTaskTable.on('init.dt', function() {
-                        //     $(".odd").each(function(){
-                        //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
-                        //     });
-                        //     $(".even").each(function(){
-                        //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
-                        //     });
-                        //     $(".nottes").each(function(){
-                        //         $(this).html($(this).text());
-                        //     });
-                        //   })
-                        // sentTaskTable.DataTable().ajax.reload(); 
-                        // sentTaskTable.on('init.dt', function() {
-                        //     $(".odd").each(function(){
-                        //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
-                        //     });
-                        //     $(".even").each(function(){
-                        //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
-                        //     });
-                        //     $(".nottes").each(function(){
-                        //         $(this).html($(this).text());
-                        //     });
-                        //   })
-                        
-                        // tagedTaskTable.DataTable().ajax.reload(); 
-                        // tagedTaskTable.on('init.dt', function() {
-                        //     $(".odd").each(function(){
-                        //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
-                        //     });
-                        //     $(".even").each(function(){
-                        //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
-                        //     });
-                        //     $(".nottes").each(function(){
-                        //         $(this).html($(this).text());
-                        //     });
-                        // })
-                    Notification.requestPermission().then(function (permission) {
-                      // If the user accepts, let's create a notification
-                      if (permission === "granted") {
-                        var notification = new Notification(change.doc.data().data);
-                        notification.onclick = function(event) {
-                          event.preventDefault(); // prevent the browser from focusing the Notification's tab
-                          window.open(change.doc.data().url, '_blank');
-                        }
-                       // notification.onclick = function(){self.loction=change.doc.data().url};
-                      }
+          var user = "<?php echo Auth()->user()->id; ?>";
+          firebase.initializeApp(firebaseConfig);
+          firebase.firestore().collection("Users").doc(user).collection('notifications').onSnapshot(function (snapshot) {
+            snapshot.docChanges().forEach(function (change) {
+              if (change.type === "added") {
+                if (change.doc.data().domain == '<?php echo $fcmdomain ?>') {
+                  firebase.firestore().collection("Users").doc(user).collection('notifications').doc(change.doc.id).delete();
+                  /*loadNoti();
+                  loadOutApp();*/
+                  $('.myTaskTable101').DataTable().ajax.reload();
+
+                  $('.myTaskTable101').DataTable().on('init.dt', function () {
+                    $(".odd").each(function () {
+                      $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
                     });
+                    $(".even").each(function () {
+                      $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
+                    });
+                  })
+                  $('.wtbl201').DataTable().ajax.reload();
+                  $('.wtbl401').DataTable().ajax.reload();
+                  $('.wtbl301').DataTable().ajax.reload();
+                  // watingTaskTable.DataTable().ajax.reload();
+                  // watingTaskTable.on('init.dt', function() {
+                  //     $(".odd").each(function(){
+                  //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
+                  //     });
+                  //     $(".even").each(function(){
+                  //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
+                  //     });
+                  //     $(".nottes").each(function(){
+                  //         $(this).html($(this).text());
+                  //     });
+                  //   })
+                  // sentTaskTable.DataTable().ajax.reload();
+                  // sentTaskTable.on('init.dt', function() {
+                  //     $(".odd").each(function(){
+                  //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
+                  //     });
+                  //     $(".even").each(function(){
+                  //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
+                  //     });
+                  //     $(".nottes").each(function(){
+                  //         $(this).html($(this).text());
+                  //     });
+                  //   })
+
+                  // tagedTaskTable.DataTable().ajax.reload();
+                  // tagedTaskTable.on('init.dt', function() {
+                  //     $(".odd").each(function(){
+                  //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
+                  //     });
+                  //     $(".even").each(function(){
+                  //         $(this).children().first().next().next().next().next().next().children().first().children().first().next().html($(this).children().first().next().next().next().next().next().children().first().children().first().next().text());
+                  //     });
+                  //     $(".nottes").each(function(){
+                  //         $(this).html($(this).text());
+                  //     });
+                  // })
+                  Notification.requestPermission().then(function (permission) {
+                    // If the user accepts, let's create a notification
+                    if (permission === "granted") {
+                      var notification = new Notification(change.doc.data().data);
+                      notification.onclick = function (event) {
+                        event.preventDefault(); // prevent the browser from focusing the Notification's tab
+                        window.open(change.doc.data().url, '_blank');
+                      }
+                      // notification.onclick = function(){self.loction=change.doc.data().url};
+                    }
+                  });
                 }
+              }
+            });
+
+          });
+
+
+          function notifyMe() {
+            // Let's check if the browser supports notifications
+            if (!("Notification" in window)) {
+              alert("This browser does not support desktop notification");
             }
-        });
 
-    });
-    
-    
-    function notifyMe() {
-  // Let's check if the browser supports notifications
-  if (!("Notification" in window)) {
-    alert("This browser does not support desktop notification");
-  }
+            // Let's check whether notification permissions have already been granted
+            else if (Notification.permission === "granted") {
+              // If it's okay let's create a notification
+              //var notification = new Notification("Hi there!");
+            }
 
-  // Let's check whether notification permissions have already been granted
-  else if (Notification.permission === "granted") {
-    // If it's okay let's create a notification
-    //var notification = new Notification("Hi there!");
-  }
+            // Otherwise, we need to ask the user for permission
+            else if (Notification.permission !== "denied") {
+              Notification.requestPermission().then(function (permission) {
+                // If the user accepts, let's create a notification
+                if (permission === "granted") {
+                  /*var notification = new Notification("Hi there!");
+                  notification.onclick = function(){self.loction='https://expand.ps'};*/
+                }
+              });
+            }
 
-  // Otherwise, we need to ask the user for permission
-  else if (Notification.permission !== "denied") {
-    Notification.requestPermission().then(function (permission) {
-      // If the user accepts, let's create a notification
-      if (permission === "granted") {
-        /*var notification = new Notification("Hi there!");
-        notification.onclick = function(){self.loction='https://expand.ps'};*/
-      }
-    });
-  }
+            // At last, if the user has denied notifications, and you
+            // want to be respectful there is no need to bother them any more.
+          }
 
-  // At last, if the user has denied notifications, and you 
-  // want to be respectful there is no need to bother them any more.
-}
+          notifyMe();
+        </script>
 
-notifyMe();
-</script>
-
-
-  <!-- END PAGE LEVEL JS-->
+        <!-- END PAGE LEVEL JS-->
 
 </body>
 

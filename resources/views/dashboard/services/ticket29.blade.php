@@ -110,7 +110,14 @@
                                     @include('dashboard.includes.subscriber')
                                     <input type="hidden" id="app_type"  name="app_type" value="1">
                                     <input type="hidden" id="dept_id"  name="dept_id" value="{{$ticketInfo->dept_id}}">
-                                    @include('dashboard.includes.regionsTemplate')
+                                    <input type="hidden" id="portal_id"  name="portal_id" 
+                                        @if(isset($ticket)) 
+                                            value="{{$ticket->id}}"
+                                        @else 
+                                            value="0"
+                                        @endif
+                                    >
+                                        @include('dashboard.includes.regionsTemplate')
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -120,7 +127,8 @@
                                                          {{"قدرة المشروع (كيلو وات)"}}
                                                         </span>
                                                     </div>
-                                                    <input type="text" id="kwatt" class="form-control"  placeholder="" name="kwatt" style="height: 35px;">
+                                                    <input type="text" id="kwatt" class="form-control" @if(isset($ticket)) 
+                                                        value="{{$ticket->kwatt}}" @endif placeholder="" name="kwatt" style="height: 35px;">
                                                 </div>
                                             </div>
                                         </div>
@@ -132,7 +140,8 @@
                                                          {{"مكان التركيب"}}
                                                         </span>
                                                     </div>
-                                                    <input type="text" id="placement" class="form-control" placeholder="" name="placement" style="height: 35px;">
+                                                    <input type="text" id="placement" @if(isset($ticket)) 
+                                                        value="{{$ticket->placement}}" @endif class="form-control" placeholder="" name="placement" style="height: 35px;">
                                                 </div>
                                             </div>
                                         </div> 
@@ -148,7 +157,8 @@
                                                             {{ 'رقم الرخصة' }}
                                                         </span>
                                                     </div>
-                                                    <input type="text" id="licNo" name="licNo" class="form-control eng-sm " value="" placeholder="" autocomplete="off">
+                                                    <input type="text" id="licNo" @if(isset($ticket)) 
+                                                        value="{{$ticket->licNo}}" @endif  name="licNo" class="form-control eng-sm " value="" placeholder="" autocomplete="off">
                                                 </div>
                                             </div>
                                         </div>
@@ -199,7 +209,9 @@
 <script>
 
 $(document).ready(function () {
-
+    @if(isset($ticket))
+    getFullData({{$ticket->customer_id}})
+    @endif
     $( "#subscriber_name" ).autocomplete({
 		source:'subscribe_auto_complete',
 		minLength: 1,
@@ -279,7 +291,7 @@ $(document).ready(function () {
        let formData = new FormData(this);
        $.ajax({
           type:'POST',
-          url: "saveTicket15",
+          url: "{{route('saveTicket15')}}",
            data: formData,
            contentType: false,
            processData: false,
@@ -432,7 +444,7 @@ function getFullData(id){
     formData={'id':id}
        $.ajax({
           type:'POST',
-          url: "appCustomer",
+          url: "{{route('appCustomer')}}",
            data: formData,
            /*contentType: false,
            processData: false,*/
@@ -500,7 +512,7 @@ function getFullData(id){
                 if(response.errorList.length==0 && response.elec.length!=0){
                     $(".btnArea").removeClass("hide");
                     //$(".errArea").addClass("hide");
-                }else{
+                }else if(response.errorList.length!=0 && response.elec.length!=0){
                     $(".btnArea").addClass("hide");
                         //$(".errArea").removeClass("hide");
                         err='<ul>'

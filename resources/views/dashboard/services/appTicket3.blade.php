@@ -129,7 +129,7 @@
                                                         {{"رقم الرخصة"}}
                                                         </span>
                                                     </div>
-                                                    <input type="text" id="LicenceNo" name="LicenceNo" class="form-control eng-sm  valid" value="@if(isset($ticket)){{($ticket->licNo??'')}}@endif" placeholder="" autocomplete="off">
+                                                    <input type="text" id="LicenceNo" name="LicenceNo" class="form-control eng-sm  valid" value="@if(isset($ticket)){{($ticket->LicenceNo??'')}}@endif" placeholder="" autocomplete="off">
                                                 </div>
                                             </div>
                                         </div>
@@ -143,12 +143,13 @@
                                                  </div>
                                                 <div class="form-check-inline form-control">
                                                   <label class="form-check-label">
-                                                    <input type="checkbox" class="form-check-input" value="1" name="regionbuild" id="regionbuild1">خارج الحدود
+                                                    <input type="checkbox" class="form-check-input" @if(isset($ticket)){{$ticket->regionBuild ==1 ? 'checked' : ''}} @endif value="1" name="regionbuild" id="regionbuild1">
+                                                    خارج الحدود
                                                   </label>
                                                 </div>
                                                 <div class="form-check-inline form-control">
                                                   <label class="form-check-label">
-                                                    <input type="checkbox" checked class="form-check-input" value="2" name="regionbuild" id="regionbuild2">داخل الحدود 
+                                                    <input type="checkbox" @if(isset($ticket)){{$ticket->regionBuild == 2 ? 'checked' : ''}} @else checked  @endif class="form-check-input" value="2" name="regionbuild" id="regionbuild2">داخل الحدود 
                                                   </label>
                                                 </div>
                                             </div>
@@ -160,7 +161,7 @@
                                                              رقم الحوض                                                           
                                                           </span>
                                                         </div>                              
-                                                        <input type="text" id="hodNo" name="hodNo"  value='' class="form-control" placeholder="  " aria-describedby="basic-addon1">
+                                                        <input type="text" id="hodNo" name="hodNo"  value="@if(isset($ticket)){{($ticket->hodNo??'')}}@endif" class="form-control" placeholder="  " aria-describedby="basic-addon1">
                                                     </div>
                                                 </div>
                                             </div>
@@ -171,7 +172,7 @@
                                                             رقم القطعة
                                                       </span>
                                                     </div>
-                                                    <input type="text" id="pieceNo" name="pieceNo" value="" class="form-control " placeholder="  " aria-describedby="basic-addon1">
+                                                    <input type="text" id="pieceNo" name="pieceNo" value="@if(isset($ticket)){{($ticket->pieceNo??'')}}@endif" class="form-control " placeholder="  " aria-describedby="basic-addon1">
                                                 </div>
                                             </div>
                                     </div>
@@ -184,17 +185,17 @@
                                              </div>
                                             <div class="form-check-inline form-control">
                                               <label class="form-check-label">
-                                                <input type="checkbox" checked id="typebuild1" name="typebuild"  value="1" class="form-check-input" >بناء مقترح
+                                                <input type="checkbox" @if(isset($ticket)){{$ticket->typebuild == 1 ? 'checked' : ''}} @else checked  @endif id="typebuild1"  name="typebuild"  value="1" class="form-check-input" >بناء مقترح
                                               </label>
                                             </div>
                                             <div class="form-check-inline form-control">
                                               <label class="form-check-label">
-                                                <input type="checkbox" id="typebuild2" name="typebuild" value="2" class="form-check-input" >بناء قائم  
+                                                <input type="checkbox" @if(isset($ticket)){{$ticket->typebuild == 2 ? 'checked' : ''}} @endif id="typebuild2" name="typebuild" value="2" class="form-check-input" >بناء قائم  
                                               </label>
                                             </div>
                                             <div class="form-check-inline form-control">
                                               <label class="form-check-label">
-                                                <input type="checkbox" id="typebuild3" name="typebuild" value="3" class="form-check-input">فوق بناء قائم 
+                                                <input type="checkbox" @if(isset($ticket)){{$ticket->typebuild == 3 ? 'checked' : ''}} @endif id="typebuild3" name="typebuild" value="3" class="form-check-input">فوق بناء قائم 
                                               </label>
                                             </div>
                                         </div>
@@ -215,17 +216,21 @@
                                             </thead
                                             <tbody>
                                                 <tr>
-                                                        <td><input checked name="typestate" id= "typestate1"  type="checkbox" class="form-check-input" value="1"></td>
-                                                        <td><input name="typestate" id= "typestate2" type="checkbox" class="form-check-input" value="2"></td>
-                                                        <td><input name="typestate" id= "typestate3" type="checkbox" class="form-check-input" value="3"></td>
+                                                        <td><input name="typestate" @if(isset($ticket)){{$ticket->typestate ==1 ? 'checked' : ''}}@else checked  @endif id= "typestate1"  type="checkbox" class="form-check-input" value="1"></td>
+                                                        <td><input name="typestate" @if(isset($ticket)){{$ticket->typestate ==2 ? 'checked' : ''}}  @endif id= "typestate2" type="checkbox" class="form-check-input" value="2"></td>
+                                                        <td><input name="typestate" @if(isset($ticket)){{$ticket->typestate ==3 ? 'checked' : ''}}  @endif id= "typestate3" type="checkbox" class="form-check-input" value="3"></td>
                                                     <div class="form">
-                                                        <td><input checked name="typebuilding" id="typebuilding1" type="checkbox" class="form-check-input" value="1"></td>
-                                                        <td><input name="typebuilding" id="typebuilding2" type="checkbox"   class="form-check-input" value="2"></td>
-                                                        <td><input name="typebuilding" id="typebuilding3" type="checkbox"   class="form-check-input" value="3"></td>
-                                                        <td><input name="typebuilding" id="typebuilding4" type="checkbox"   class="form-check-input" value="4"></td>
+                                                        <td><input @if(isset($ticket)) {{$ticket->typebuilding ==1 ? 'checked' : ''}}@else checked  @endif name="typebuilding" id="typebuilding1" type="checkbox" class="form-check-input" value="1"></td>
+                                                        <td><input @if(isset($ticket)) {{$ticket->typebuilding ==2 ? 'checked' : ''}}  @endif name="typebuilding" id="typebuilding2" type="checkbox"   class="form-check-input" value="2"></td>
+                                                        <td><input @if(isset($ticket)) {{$ticket->typebuilding ==3 ? 'checked' : ''}}  @endif name="typebuilding" id="typebuilding3" type="checkbox"   class="form-check-input" value="3"></td>
+                                                        <td><input @if(isset($ticket)) {{$ticket->typebuilding ==4 ? 'checked' : ''}}  @endif name="typebuilding" id="typebuilding4" type="checkbox"   class="form-check-input" value="4"></td>
                                                         <!--<input type="hidden" id="typebuilding" value="تجارية" name="typebuilding">-->
-                                                        <td style="max-width:50px;background-color:#fff;"><input type="text" name="typebuildingother" id="typebuildingother" class="form-control" placeholder=" اخرى  "></td>
-                                                        <td style="max-width:300px"><input type="text" class="form-control" value="" name="typebuildingnote" id="typebuildingnote" placeholder=" ملاحظات "></td>
+                                                        <td style="max-width:50px;background-color:#fff;">
+                                                            <input type="text" @if(isset($ticket))value="{{$ticket->typebuildingother}}"@endif name="typebuildingother" id="typebuildingother" class="form-control" placeholder=" اخرى  ">
+                                                        </td>
+                                                        <td style="max-width:300px">
+                                                            <input type="text" @if(isset($ticket))value="{{$ticket->typebuildingnote}}"@endif class="form-control" value="" name="typebuildingnote" id="typebuildingnote" placeholder=" ملاحظات ">
+                                                        </td>
                                                     </div>
                                                 </tr>
                                             </tbody>
@@ -236,16 +241,16 @@
                                             <div class="input-group">
                                                 <label class="form-label" style="color: #ff9149; font-weight:bold">مشتملات العقار </label>
                                                 <div class="col-sm-12 col-md-10">
-                                                    <input onchange="if($(this).prop('checked'))$('.rent2').hide()" type="radio" name="typeship" value="1" checked id="typeship1" class="jui-radio-buttons"  >
+                                                    <input onchange="if($(this).prop('checked'))$('.rent2').hide()" type="radio" name="typeship" value="1" @if(isset($ticket)) {{$ticket->typeship ==1 ? 'checked' : ''}}@else checked  @endif id="typeship1" class="jui-radio-buttons"  >
                                                     <label for="radio-3">العقار منفصل </label>
-                                                    <input onchange="if($(this).prop('checked'))$('.rent2').show()" type="radio" name="typeship" value="2" id="typeship2" class="jui-radio-buttons" >
+                                                    <input onchange="if($(this).prop('checked'))$('.rent2').show()" type="radio" name="typeship" value="2" @if(isset($ticket)) {{$ticket->typeship ==2 ? 'checked' : ''}}@endif id="typeship2" class="jui-radio-buttons" >
                                                     <label for="radio-4">العقار ضمن عمارة </label>
     
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row rent2 hide">
+                                    <div class="row rent2 @if(isset($ticket)) {{$ticket->typeship ==2 ? '' : 'hide'}}@else hide @endif ">
                                         <table class="table table-bordered mb-3 st" style="text-align:center">
                                             <thead>
                                                 <th> الرقم </th>
@@ -263,39 +268,39 @@
                                                     
                                                         <td> 1. </td>
                                                         <td> قائم </td>
-                                                        <td><input name="appart[]" id="appart1" type="checkbox" class="form-check-input" value="1"></td>
-                                                        <td><input name="typeStore[]" id="typeStore1" type="checkbox" class="form-check-input" value="1"></td>
-                                                        <td><input name="office[]" id="office1" type="checkbox" class="form-check-input" value="1"></td>
-                                                        <td><input name="floor[]" id="floor1" type="checkbox" class="form-check-input" value="1"></td>
-                                                        <td><input name="stairs[]" id="stairs1" type="checkbox" class="form-check-input" value="1"></td>
-                                                        <td><input name="elev[]" id="elev1" type="checkbox" class="form-check-input" value="1"></td>
-                                                        <td style="max-width:60px"><input type="text" name="notes1" class="form-control" placeholder=" ملاحظات "></td>
+                                                        <td><input name="appart[]"      @if(isset($ticket)) {{$ticket->detailData->appart ? in_array(1, $ticket->detailData->appart) ? 'checked' : '' : ''}}@endif          id="appart1" type="checkbox" class="form-check-input" value="1"></td>
+                                                        <td><input name="typeStore[]"   @if(isset($ticket)) {{$ticket->detailData->typeStore ? in_array(1, $ticket->detailData->typeStore) ? 'checked' : '' : ''}}@endif    id="typeStore1" type="checkbox" class="form-check-input" value="1"></td>
+                                                        <td><input name="office[]"      @if(isset($ticket)) {{$ticket->detailData->office ? in_array(1, $ticket->detailData->office) ? 'checked' : '' : ''}}@endif          id="office1" type="checkbox" class="form-check-input" value="1"></td>
+                                                        <td><input name="floor[]"       @if(isset($ticket)) {{$ticket->detailData->floor ? in_array(1, $ticket->detailData->floor) ? 'checked' : '' : ''}}@endif            id="floor1" type="checkbox" class="form-check-input" value="1"></td>
+                                                        <td><input name="stairs[]"      @if(isset($ticket)) {{$ticket->detailData->stairs ? in_array(1, $ticket->detailData->stairs) ? 'checked' : '' : ''}}@endif          id="stairs1" type="checkbox" class="form-check-input" value="1"></td>
+                                                        <td><input name="elev[]"        @if(isset($ticket)) {{$ticket->detailData->elev ? in_array(1, $ticket->detailData->elev) ? 'checked' : '' : ''}}@endif              id="elev1" type="checkbox" class="form-check-input" value="1"></td>
+                                                        <td style="max-width:60px"><input type="text" name="notes1" class="form-control" @if(isset($ticket)) value="{{$ticket->detailData->notes1}}"@endif placeholder=" ملاحظات "></td>
                                                     
                                                 </tr>
                                                 <tr>
                                                     
                                                         <td> 2. </td>
                                                         <td> مرخص غير قائم </td>
-                                                        <td><input name="appart[]" id="appart2" type="checkbox" class="form-check-input" value="2"></td>
-                                                        <td><input name="typeStore[]" id="typeStore2" type="checkbox" class="form-check-input" value="2"></td>
-                                                        <td><input name="office[]" id="office2" type="checkbox" class="form-check-input" value="2"></td>
-                                                        <td><input name="floor[]" id="floor2" type="checkbox" class="form-check-input" value="2"></td>
-                                                        <td><input name="stairs[]" id="stairs2" type="checkbox" class="form-check-input" value="2"></td>
-                                                        <td><input name="elev[]" id="elev2" type="checkbox" class="form-check-input" value="2"></td>
-                                                        <td style="max-width:300px"><input type="text" name="notes2" class="form-control" placeholder=" ملاحظات "></td>
+                                                        <td><input name="appart[]"    @if(isset($ticket)) {{$ticket->detailData->appart ? in_array(2, $ticket->detailData->appart) ? 'checked' : '' : ''}}@endif        id="appart2" type="checkbox" class="form-check-input" value="2"></td>
+                                                        <td><input name="typeStore[]" @if(isset($ticket)) {{$ticket->detailData->typeStore ? in_array(2, $ticket->detailData->typeStore) ? 'checked' : '' : ''}}@endif  id="typeStore2" type="checkbox" class="form-check-input" value="2"></td>
+                                                        <td><input name="office[]"    @if(isset($ticket)) {{$ticket->detailData->office ? in_array(2, $ticket->detailData->office) ? 'checked' : '' : ''}}@endif        id="office2" type="checkbox" class="form-check-input" value="2"></td>
+                                                        <td><input name="floor[]"     @if(isset($ticket)) {{$ticket->detailData->floor ? in_array(2, $ticket->detailData->floor) ? 'checked' : '' : ''}}@endif          id="floor2" type="checkbox" class="form-check-input" value="2"></td>
+                                                        <td><input name="stairs[]"    @if(isset($ticket)) {{$ticket->detailData->stairs ? in_array(2, $ticket->detailData->stairs) ? 'checked' : '' : ''}}@endif        id="stairs2" type="checkbox" class="form-check-input" value="2"></td>
+                                                        <td><input name="elev[]"      @if(isset($ticket)) {{$ticket->detailData->elev ? in_array(2, $ticket->detailData->elev) ? 'checked' : '' : ''}}@endif            id="elev2" type="checkbox" class="form-check-input" value="2"></td>
+                                                        <td style="max-width:300px"><input type="text" name="notes2" class="form-control" @if(isset($ticket)) value="{{$ticket->detailData->notes2}}"@endif placeholder=" ملاحظات "></td>
                                                     
                                                 </tr>
                                                 <tr>
                                                     
                                                         <td> 3. </td>
                                                         <td> مستقبلي (غير مرخص) </td>
-                                                        <td><input name="appart[]" id="appart3" type="checkbox" class="form-check-input" value="3"></td>
-                                                        <td><input name="typeStore[]" id="typeStore3" type="checkbox" class="form-check-input" value="3"></td>
-                                                        <td><input name="office[]" id="office3" type="checkbox" class="form-check-input" value="3"></td>
-                                                        <td><input name="floor[]" id="floor3" type="checkbox" class="form-check-input" value="3"></td>
-                                                        <td><input name="stairs[]" id="stairs3" type="checkbox" class="form-check-input" value="3"></td>
-                                                        <td><input name="elev[]" id="elev3" type="checkbox" class="form-check-input" value="3"></td>
-                                                        <td style="max-width:300px"><input type="text" name="notes3" class="form-control" placeholder=" ملاحظات "></td>
+                                                        <td><input name="appart[]"    @if(isset($ticket)) {{$ticket->detailData->appart ? in_array(3, $ticket->detailData->appart) ? 'checked' : '' : ''}}@endif        id="appart3" type="checkbox" class="form-check-input" value="3"></td>
+                                                        <td><input name="typeStore[]" @if(isset($ticket)) {{$ticket->detailData->typeStore ? in_array(3, $ticket->detailData->typeStore) ? 'checked' : '' : ''}}@endif  id="typeStore3" type="checkbox" class="form-check-input" value="3"></td>
+                                                        <td><input name="office[]"    @if(isset($ticket)) {{$ticket->detailData->office ? in_array(3, $ticket->detailData->office) ? 'checked' : '' : ''}}@endif        id="office3" type="checkbox" class="form-check-input" value="3"></td>
+                                                        <td><input name="floor[]"     @if(isset($ticket)) {{$ticket->detailData->floor ? in_array(3, $ticket->detailData->floor) ? 'checked' : '' : ''}}@endif          id="floor3" type="checkbox" class="form-check-input" value="3"></td>
+                                                        <td><input name="stairs[]"    @if(isset($ticket)) {{$ticket->detailData->stairs ? in_array(3, $ticket->detailData->stairs) ? 'checked' : '' : ''}}@endif        id="stairs3" type="checkbox" class="form-check-input" value="3"></td>
+                                                        <td><input name="elev[]"      @if(isset($ticket)) {{$ticket->detailData->elev ? in_array(3, $ticket->detailData->elev) ? 'checked' : '' : ''}}@endif            id="elev3" type="checkbox" class="form-check-input" value="3"></td>
+                                                        <td style="max-width:300px"><input type="text" name="notes3" class="form-control" @if(isset($ticket)) value="{{$ticket->detailData->notes3}}"@endif placeholder=" ملاحظات "></td>
                                                     
                                                 </tr>
                                                 <tr style="display:none">
@@ -326,14 +331,14 @@
                                                         <label for="radio-3">{{ 'ملك' }} </label>
                                                         <input
                                                             onchange="if($(this).prop('checked'))$('.attach-required').hide()"
-                                                            type="radio" name="Ownership[]" checked="" id="radio-3"
-                                                            class="jui-radio-buttons" value="1"
+                                                            type="radio" name="Ownership[]" id="radio-3"
+                                                            class="jui-radio-buttons" value="1" @if(isset($ticket)) {{ $ticket->ownership_type==1?"checked":"" }} @else checked  @endif
                                                             onclick="$('.ownertypes').hide();$('.owner').show();">
                                                         <label for="radio-4">{{ 'إيجار' }} </label>
                                                         <input
                                                             onchange="if($(this).prop('checked'))$('.attach-required').show()"
                                                             type="radio" name="Ownership[]" id="radio-4"
-                                                            class="jui-radio-buttons" value="2"
+                                                            class="jui-radio-buttons" value="2"  @if(isset($ticket)) {{ $ticket->ownership_type==2?"checked":"" }} @endif
                                                             onclick="$('.ownertypes').hide();$('.rent').show();">
                                                     </div>
                                                 </div>
@@ -343,7 +348,7 @@
 
                                     <div class="row">
 
-                                        <div class="col-md-7 ownertypes rent" style="display: none;">
+                                        <div class="col-md-7 ownertypes rent" @if(isset($ticket)) {{ $ticket->ownership_type==2?'':'style="display: none;"' }}@else style="display: none;" @endif >
                                             <div class="form-group">
                                                 <div class="input-group" style="width:99% !important;">
                                                     <div class="input-group-prepend">
@@ -352,10 +357,10 @@
                                                         </span>
                                                     </div>
                                                     <input type="text" id="OwnerName"
-                                                        class="form-control ac10 ui-autocomplete-input"
+                                                        class="form-control ac10 ui-autocomplete-input" @if(isset($ticket))value="{{$ticket->owner_name}}" @endif
                                                         placeholder="اسم المالك" name="OwnerName" style="height: 35px;"
                                                         autocomplete="off">
-                                                    <input type="hidden" id="SubscriberID1" name="SubscriberID1">
+                                                    <input type="hidden" id="SubscriberID1" name="SubscriberID1" @if(isset($ticket))value="{{$ticket->owner_id}}" @endif>
                                                 </div>
                                             </div>
                                         </div>
@@ -491,7 +496,7 @@ $(document).ready(function () {
 
 
     $( "#subscriber_name" ).autocomplete({
-		source:'subscribe_auto_complete',
+		source:"{{route('subscribe_auto_complete')}}",
 		minLength: 1,
         select: function( event, ui ) {
             $("#subscriber_id").val(ui.item.id)
@@ -502,7 +507,7 @@ $(document).ready(function () {
 		}
 	});
     $( ".ac10" ).autocomplete({
-		source:'subscribe_auto_complete',
+		source:"{{route('subscribe_auto_complete')}}",
 		minLength: 1,
         select: function( event, ui ) {
             $("#SubscriberID1").val(ui.item.id)
@@ -522,7 +527,7 @@ $(document).ready(function () {
        let formData = new FormData(this);
        $.ajax({
           type:'POST',
-          url: "saveTicket3",
+          url: "{{route('saveTicket3')}}",
            data: formData,
            contentType: false,
            processData: false,
@@ -665,7 +670,7 @@ function getFullData(id){
     formData={'id':id}
        $.ajax({
           type:'POST',
-          url: "appCustomer",
+          url: "{{route('appCustomer')}}",
            data: formData,
            /*contentType: false,
            processData: false,*/
@@ -742,7 +747,6 @@ function getFullData(id){
                           }
                         })
                 }
-                
                 if(response.warning.length!=0 && response.errorList.length==0){
                     $(".btnArea").addClass("hide");
                     warningText='  المواطن لديه اخطار';
@@ -755,7 +759,7 @@ function getFullData(id){
                         warningText+=' بسبب ';
                         warningText+=warningOpj.warning_reason;
                         warningText+=' يرجى مراجعة قسم ';
-                        warningText+=(warningOpj.dept!=null?warningOpj.dept.name:'');
+                        warningText+=warningOpj.dept.name;
                     }
                     
                     Swal.fire({
@@ -897,7 +901,7 @@ function getSubscriberTasks(id){
 
                 type: 'get',
 
-                url: "subscriber_tasks",
+                url: "{{route('subscriber_tasks')}}",
 
                 data: {
 

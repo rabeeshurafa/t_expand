@@ -91,7 +91,7 @@
         
     </style>
     <?php
-        $archiveNames=array(
+    $archiveNames=array(
             'out_archieve'=>'صادر',
             'in_archieve'=>'وارد',
             'mun_archieve'=>'المؤسسة',
@@ -105,7 +105,8 @@
             'finance_archive'=>'قسم المالية',
             'trade_archive'=>'المعاملات',
             'agenda_archieve'=>'الجلسات',
-            );
+            'jal_archieve'=>'الجلسات',
+    );
         $ticketInfo->ticket_name.=' '.$archiveNames[$archive['info']->url];
     ?>
     <link rel="stylesheet" type="text/css"
@@ -135,6 +136,8 @@
                                         @include('dashboard.trackingArchive.component.financeArchive')
                                     @elseif($archive['info']->url == 'agenda_archieve')
                                         @include('dashboard.trackingArchive.component.agendaArchive')
+                                    @elseif($archive['info']->url == 'jal_archieve')
+                                        @include('dashboard.trackingArchive.component.jalArchive')
                                     @else
                                         @include('dashboard.trackingArchive.component.munArchive')
                                     @endif
