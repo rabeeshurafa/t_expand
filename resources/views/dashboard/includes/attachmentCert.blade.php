@@ -1,13 +1,15 @@
 <div class="row">
-    <div class="col-md attachs-section"  style="margin-left: 25px; margin-right: 25px;">
-        <img src="https://db.expand.ps/images/upload.png"  onclick="trigerAttach();" width="40" height="40">
-        <span  onclick="trigerAttach();" class="attach-header">{{ 'المرفقات' }}
+    <div class="col-md attachs-section" style="margin-left: 25px; margin-right: 25px;">
+        <img src="https://db.expand.ps/images/upload.png" onclick="trigerAttach();" width="40" height="40">
+        <span onclick="trigerAttach();" class="attach-header">{{ 'المرفقات' }}
             <span id="attach-required" class="attach-required" style="display: none;">*</span>
 
         </span>
-        <img src="https://t.palexpand.ps/assets/images/ico/scanner.png"  style="cursor:pointer;    float: left;" onclick="scanToJpg();">
+        <img src="https://t.palexpand.ps/assets/images/ico/scanner.png" style="cursor:pointer;    float: left;"
+             onclick="scanToJpg();">
 
-        <img src="https://t.palexpand.ps/assets/images/ico/scannerpdf.png"  style="cursor:pointer;    float: left;" onclick="scanTopdf();">
+        <img src="https://t.palexpand.ps/assets/images/ico/scannerpdf.png" style="cursor:pointer;    float: left;"
+             onclick="scanTopdf();">
     </div>
 </div>
 <div class="row attachs-body" style="margin-left: 25px; margin-right: 25px;">
@@ -17,15 +19,16 @@
             <li style="font-size: 17px !important;color:#000000">
                 <div class="row">
                     <div class="col-sm-6">
-                        <input type="text" id="attachName[]" name="attachName[]" class="form-control attachName" placeholder="أخل اسم المرفق"  value="">
+                        <input type="text" id="attachName[]" name="attachName[]" class="form-control attachName"
+                               placeholder="أخل اسم المرفق" value="">
                     </div>
                     <div class="col-sm-5 attach_row_1">
-                        
+
                     </div>
                     <div>
                         <img src="{{ asset('assets/images/ico/upload.png') }}" width="40"
-                            height="40" style="cursor:pointer"
-                            onclick="$('#currFile').val(($('#currFile').val()==null || $('#currFile').val()=='' ? 1 : $('#currFile').val()));$('#attachfile').trigger('click');">
+                             height="40" style="cursor:pointer"
+                             onclick="$('#currFile').val(($('#currFile').val()==null || $('#currFile').val()=='' ? 1 : $('#currFile').val()));$('#attachfile').trigger('click');">
                     </div>
                 </div>
             </li>
@@ -35,21 +38,20 @@
     </div>
 </div>
 
-
 <script>
-attach_index=2;
-function setAttach_index(newvalue){
-    console.log(newvalue);
-    attach_index=newvalue;
-}
+
+    function setAttach_index(newvalue) {
+        attach_index = newvalue;
+    }
+
     function scanToJpg() {
         scanner.scan(displayImagesOnPage,
             {
-                "output_settings" :
+                "output_settings":
                     [
                         {
-                            "type" : "return-base64",
-                            "format" : "png"
+                            "type": "return-base64",
+                            "format": "png"
                         }
                     ]
             }
@@ -58,56 +60,56 @@ function setAttach_index(newvalue){
 
     /** Processes the scan result */
     function displayImagesOnPage(successful, mesg, response) {
-        if(!successful) { // On error
+        if (!successful) { // On error
             console.error('Failed: ' + mesg);
             return;
         }
 
-        if(successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
+        if (successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
             console.info('User canceled');
             return;
         }
         var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
-        for(var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
+        for (var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
             var scannedImage = scannedImages[i];
             uploadScannedfile(scannedImage);
             // processScannedImage(scannedImage);
         }
     }
-    
+
     function scanTopdf() {
         scanner.scan(displayPdfOnPage,
             {
-                "output_settings" :
+                "output_settings":
                     [
                         {
-                            "type" : "return-base64",
-                            "format" : "pdf",
+                            "type": "return-base64",
+                            "format": "pdf",
                         }
                     ]
             }
         );
     }
-    
+
     function displayPdfOnPage(successful, mesg, response) {
-        
-        if(!successful) { // On error
+
+        if (!successful) { // On error
             console.error('Failed: ' + mesg);
             return;
         }
 
-        if(successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
+        if (successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
             console.info('User canceled');
             return;
         }
         var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
-        for(var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
+        for (var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
             var scannedImage = scannedImages[i];
             uploadScannedfile(scannedImage);
         }
     }
-    
-    function uploadScannedfile(scannedImage){
+
+    function uploadScannedfile(scannedImage) {
         $(".loader").removeClass('hide');
         $(".form-actions").addClass('hide');
         $.ajaxSetup({
@@ -116,137 +118,78 @@ function setAttach_index(newvalue){
                 'ContentType': 'application/json'
             }
         });
-        
+
         $.ajax({
-                type:'post',
-                url:'{{route('saveScanedFile')}}',
-                data: {
-                    scannedData: scannedImage.src,
-                    type: scannedImage.mimeType,
-                    
-                },
-                dataType:"json",
-                async: true,
-                success: (response) => {
-                    $(".form-actions").removeClass('hide');
-                    $(".loader").addClass('hide');
-                        shortCutName=response.file.real_name;
-                        
-                        shortCutID=response.file.id;
-                        
-                        urlfile='{{ asset('') }}';
-                        
-                        if(response.file.type==2){
-                            urlfile=response.file.url;
-                        }else{
-                            urlfile+=response.file.url;
-                        }
-                        console.log(attach_index);
-                        shortCutName=shortCutName.substring(0, 40)
-                        if(response.file.extension=="jpg"||response.file.extension=="png")
-                            fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/image.png';
-                            else if(response.file.extension=="pdf")
-                            fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/pdf.png';
-                            else if(response.file.extension=="doc")
-                            fileimage='https://template.expand.ps/public/assets/images/ico/word.png';
-                            else if(response.file.extension=="excel"||response.file.extension=="xsc")
-                            fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/excellogo.png';
-                            else
-                            fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/file.png';
-                            var row = '<li style="font-size: 17px !important;color:#000000">' +
-                                '<div class="row">' +
-                                '<div class="col-sm-6 attmob">' +
-                                '<input type="text" id="attachName[]" name="attachName[]" class="form-control attachName">' +
-                                '</div>' +
-                                '<div class="attdocmob col-sm-5 attach_row_'+attach_index+'">' +
-                                '<div id="attach" class=" col-sm-12 ">'+
-                                '<div class="attach">' +                                       
-                                '<a class="attach-close1" href="'+urlfile+'" style="color: #74798D; float:left;" target="_blank">'+
-                                '<span class="attach-text hidemob">'+shortCutName+'</span>' +
-                                '<img style="width: 20px;"src="'+fileimage+'">'+
-                                '</a>'+
-                                '<input type="hidden" id="attach_ids[]" name="attach_ids[]" value="'+response.file.id+'">'+
-                                '<input type="hidden" id="notArchived[]" name="notArchived[]" value="'+response.file.id+'">'+
-                                '</div>'+
-                                '</div>'+
-                                '</div>'+
-                                '<div class="attdelmob">' +
-                                '<img src="{{ asset('assets/images/ico/upload.png') }}" width="40" height="40" style="cursor:pointer" onclick="$(\'#currFile\').val('+attach_index+');$(\'#attachfile\').trigger(\'click\'); return false">' +
-                                '</div>' +
-                                '<div class="attdelmob">' +
-                                '<i class="fa fa-trash" id="plusElement1" style="padding-top:10px;position: relative;left: 3%;cursor: pointer;  color:#1E9FF2;font-size: 15pt; " onclick="$(this).parent().parent().parent().remove()"></i>'+
-                                '</div>' +
-                                ' </div>' +
-                               
-                                ' </li>'
-                                attach_index++
-                            $(".addAttatch").append(row)
-                            
-        //                     row='<div id="attach" class=" col-lg-6 ">' +
-        //                         '   <div class="attach" onmouseover="$(this).children().first().next().show()">'
-        //                         +'    <a class="attach-close1" href="'+urlfile+'" style="color: #74798D;" target="_blank">'
-        //                         +'    <span class="attach-text">'+shortCutName+'</span> </a>'
-        //                         +'    <a class="attach-close1" style="color: #74798D; float:left;" onclick="$(this).parent().parent().remove()">×</a>'
-        //                         +'      <input type="hidden" id="formDataaaimgUploads[]" name="formDataaaimgUploads[]" value="'+shortCutName+'">'
-        //                         +'             <input type="hidden" id="formDataaaorgNameList[]" name="formDataaaorgNameList[]" value="'+shortCutName+'">'
-								// +'             <input type="hidden" id="formDataaaorgIdList[]" name="formDataaaorgIdList[]" value="'+shortCutID+'">'
-							 //   +'    </div>'
-        //                         +'  </div>'
-        //                 $(".formDataaaFilesArea").append(row)
-                },
+            type: 'post',
+            url: '{{route('saveScanedFile')}}',
+            data: {
+                scannedData: scannedImage.src,
+                type: scannedImage.mimeType,
 
-                error: function(response){
-                    $(".form-actions").removeClass('hide');
-                    $(".loader").addClass('hide');
-                    
-                    Swal.fire({
-                        position: 'top-center',
-                        icon: 'error',
-                        title: '{{trans('admin.error_save')}}',
-                        showConfirmButton: false,
-                        timer: 1500
-                        })
-                }
+            },
+            dataType: "json",
+            async: true,
+            success: (response) => {
+                $(".form-actions").removeClass('hide');
+                $(".loader").addClass('hide');
 
-            });
-            return true;
+                ticketScannedAttache(response.file, attach_index, true)
+                attach_index++
+                $(".addAttatch").append(row)
+            },
+
+            error: function (response) {
+                $(".form-actions").removeClass('hide');
+                $(".loader").addClass('hide');
+
+                Swal.fire({
+                    position: 'top-center',
+                    icon: 'error',
+                    title: '{{trans('admin.error_save')}}',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+
+        });
+        return true;
     }
 
-function trigerAttach(){
-            $( ".attachs-body" ).toggleClass( "hide" );
-            resize();
-        }
+    function trigerAttach() {
+        $(".attachs-body").toggleClass("hide");
+        resize();
+    }
 
+    attach_index = 2;
 
     function addNewAttatch() {
 
-        if($(".attachName").last().val().length>0){
+        if ($(".attachName").last().val().length > 0) {
             var row = '<li style="font-size: 17px !important;color:#000000">' +
                 '<div class="row">' +
                 '<div class="col-sm-6">' +
                 '<input type="text"  id="attachName[]" name="attachName[]" class="form-control attachName">' +
                 '</div>' +
-                '<div class="col-sm-5 attach_row_'+attach_index+'">' +
+                '<div class="col-sm-5 attach_row_' + attach_index + '">' +
                 //'<input type="text" name="feesValue2" class="form-control" disabled="disabled">' +
                 '</div>' +
                 '<div>' +
-                '<img src="{{ asset('assets/images/ico/upload.png') }}" width="40" height="40" style="cursor:pointer" onclick="$(\'#currFile\').val('+attach_index+');$(\'#attachfile\').trigger(\'click\'); addNewAttatch(); return false">' +
-                
+                '<img src="{{ asset('assets/images/ico/upload.png') }}" width="40" height="40" style="cursor:pointer" onclick="$(\'#currFile\').val(' + attach_index + ');$(\'#attachfile\').trigger(\'click\'); addNewAttatch(); return false">' +
+
                 '</div>' +
                 '<div>' +
-                '<i class="fa fa-trash" id="plusElement1" style="padding-top:10px;position: relative;left: 3%;cursor: pointer;  color:#1E9FF2;font-size: 15pt; " onclick="$(this).parent().parent().parent().remove()"></i>'+
+                '<i class="fa fa-trash" id="plusElement1" style="padding-top:10px;position: relative;left: 3%;cursor: pointer;  color:#1E9FF2;font-size: 15pt; " onclick="$(this).parent().parent().parent().remove()"></i>' +
                 '</div>' +
                 ' </div>' +
-               
+
                 ' </li>'
-                attach_index++
+            attach_index++
             $(".addAttatch").append(row)
         }
-}
-    
-function startUpload(formDataStr)
-    {
-        id=$("#currFile").val()
+    }
+
+    function startUpload(formDataStr) {
+        id = $("#currFile").val()
         // $('#feesText'+id).val($('#attachfile').val().split('\\').pop())
         $.ajaxSetup({
             headers: {
@@ -255,76 +198,42 @@ function startUpload(formDataStr)
         });
         $(".loader").removeClass('hide');
         $(".form-actions").addClass('hide');
-        var formData = new FormData($("#"+formDataStr)[0]);
+        var formData = new FormData($("#" + formDataStr)[0]);
         $.ajax({
             url: 'uploadTicketAttach',
             type: 'POST',
             data: formData,
-            dataType:"json",
+            dataType: "json",
             async: true,
             success: function (data) {
-                row='';
+                row = '';
                 console.log(data.all_files);
-                if(data.all_files){
+                if (data.all_files) {
                     addNewAttatch()
-                    var j=0;
-                    $actionBtn='';
-                    for(j=0;j<data.all_files.length;j++){
-                        $(".attach_row_"+id).html('')
-                        file=data.all_files[j]
-                        shortCutName=data.all_files[j].real_name;
-                        shortCutID=data.all_files[j].id;
-                        urlfile='{{asset("")}}/';
-                        urlfile+=data.all_files[j].url;
-                         shortCutName=file.real_name;
-                                shortCutName=shortCutName.substring(0, 20);
-                                urlfile='{{asset("")}}/';
-                                if(file.type==2){
-                                    urlfile=file.url; 
-                                }else{
-                                    urlfile+=file.url; 
-                                }
-                                if(file.extension=="jpg"||file.extension=="png")
-                                fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/image.png';
-                                else if(file.extension=="pdf")
-                                fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/pdf.png';
-                                else if(file.extension=="doc")
-                                fileimage='https://template.expand.ps/public/assets/images/ico/word.png';
-                                else if(file.extension=="excel"||file.extension=="xsc")
-                                fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/excellogo.png';
-                                else
-                                fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/file.png';
-                                $actionBtn += '<div id="attach" class=" col-sm-12 ">'
-                                    +'<div class="attach">'                                        
-                                      +' <a class="attach-close1" href="'+urlfile+'" style="color: #74798D; float:left;" target="_blank">'
-                                        +'  <span class="attach-text">'+shortCutName+'</span>'
-                                        +'    <img style="width: 20px;"src="'+fileimage+'">'
-                                        +'</a>'
-                                        +'<input type="hidden" id="attach_ids[]" name="attach_ids[]" value="'+file.id+'">'
-                                    +'</div>'
-                                    +'</div>'; 
-                            $actionBtn += '</div>';
-                            shortCutName=shortCutName.substring(0, 40)
+                    $actionBtn = '';
+                    for (j = 0; j < data.all_files.length; j++) {
+                        $(".attach_row_" + id).html('')
+                        $actionBtn +=ticketNormalAttache(data.all_files[j])
+                        $actionBtn += '</div>';
                     }
                     $(".alert-danger").addClass("hide");
                     $(".alert-success").removeClass('hide');
-                    $(".attach_row_"+id).append($actionBtn)
+                    $(".attach_row_" + id).append($actionBtn)
                     $(".loader").addClass('hide');
                     $("#attachfile").val('');
-                    $(".group1").colorbox({rel:'group1'});
-                    setTimeout(function(){
+                    $(".group1").colorbox({rel: 'group1'});
+                    setTimeout(function () {
                         $(".alert-danger").addClass("hide");
                         $(".alert-success").addClass("hide");
-                    },2000)
-                }
-                else {
+                    }, 2000)
+                } else {
                     $(".alert-success").addClass("hide");
                     $(".alert-danger").removeClass('hide');
                 }
                 $(".loader").addClass('hide');
                 $(".form-actions").removeClass('hide');
             },
-            error:function(){
+            error: function () {
                 $(".alert-success").addClass("hide");
                 $(".alert-danger").removeClass('hide');
                 $(".loader").addClass('hide');

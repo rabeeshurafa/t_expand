@@ -59,7 +59,7 @@
 </style>
 
     <hr style="border: 2px solid #000000" />
-    <img src="{{$setting->header_img}}" width="100%" style="max-width:100%">
+    <img src="{{asset('assets/header.png')}}" width="100%" style="max-width:100%">
     <div style="min-height: 1080px;direction: rtl;width: 100%;">
         
             <h2 style="text-align:center;">مشروع تسوية الأراضي</h2>

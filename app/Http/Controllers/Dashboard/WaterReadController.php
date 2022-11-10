@@ -95,7 +95,7 @@ class WaterReadController extends Controller
     function sendSMS($mobile,$msg){
         //{"url":"http:\/\/hotsms.ps\/","sendSMS":1,"page":"sendbulksms.php","username":"Zababdeh M","password":"5873071","sender":"Zababdeh M"}
         $username=urlencode('Expand.ps');
-        $password=urlencode('7688278');
+        $password=urlencode('9836960');
         $sender  =urlencode('Expand.ps');
         $match=array();
         $message1=urlencode($msg);
@@ -103,7 +103,7 @@ class WaterReadController extends Controller
         return $result;
     }
     
-    function addSmsLog($app_ticket=0,$sender,$txt,$s_mobile,$reciver_name,$app_id,$app_type){
+    function addSmsLog($app_ticket,$sender,$txt,$s_mobile,$reciver_name,$app_id,$app_type){
         $setting=Setting::find(13);
         $str1 = $s_mobile;
         $pattern = "/\d{10}/";
@@ -123,7 +123,7 @@ class WaterReadController extends Controller
         $smslog->reciver_name=$reciver_name;
         $smslog->app_id=$app_id;
         $smslog->app_type=$app_type;
-        $smslog->app_ticket=$app_ticket;
+        $smslog->app_ticket=$app_ticket??0;
         // $smslog->status=SmsManager::sendSms($mob,$txt."-".$setting->name_ar);
         $smslog->status=$this->sendSMS($mob,$txt."-".$setting->name_ar);
         $smslog->save();

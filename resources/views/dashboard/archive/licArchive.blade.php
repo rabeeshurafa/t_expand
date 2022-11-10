@@ -2,54 +2,57 @@
 
 @section('search')
 
-<li class="dropdown dropdown-language nav-item hideMob">
+    <li class="dropdown dropdown-language nav-item hideMob">
 
-            <input id="searchContent" name="searchContent" class="form-control SubPagea round full_search" placeholder="بحث" style="text-align: center;width: 350px; margin-top: 15px !important;">
+        <input id="searchContent" name="searchContent" class="form-control SubPagea round full_search" placeholder="بحث"
+               style="text-align: center;width: 350px; margin-top: 15px !important;">
 
-          </li>
+    </li>
 
 @endsection
 
 @section('content')
 
-<div class="content-body">
+    <div class="content-body">
         <section id="hidden-label-form-layouts">
             <form method="post" id="formDataaa" enctype="multipart/form-data">
 
-            @csrf
+                @csrf
 
-            <div class="row">
+                <div class="row">
 
-                <div class="col-xl-7 col-lg-6">
+                    <div class="col-xl-7 col-lg-6">
 
-                    <div class="card rSide">
+                        <div class="card rSide">
 
-                        <div class="card-header">
+                            <div class="card-header">
 
-                            <h4 class="card-title"><img src="{{asset('assets/images/archive_ico.png')}}" style="height: 32px"/>
+                                <h4 class="card-title"><img src="{{asset('assets/images/archive_ico.png')}}"
+                                                            style="height: 32px"/>
 
-                                {{ trans('archive.building_permit_archive') }}
+                                    {{ trans('archive.building_permit_archive') }}
 
-                            </h4>
-                            <div class="heading-elements1 onOffArea form-group mt-1" style="height: 20px; margin: 0px !important" title="الاعدادات">
-                                <img src="{{ asset('assets/images/ico/share.png') }}" height="27px"
-                                    onclick="ShowConfigModal('formData')" style="cursor:pointer">
-                                    
-                                <div class="form-group">
-                                    <a onclick="ShowConfigModal('formData')" style="color:#000000">
-                                    </a>
+                                </h4>
+                                <div class="heading-elements1 onOffArea form-group mt-1"
+                                     style="height: 20px; margin: 0px !important" title="الاعدادات">
+                                    <img src="{{ asset('assets/images/ico/share.png') }}" height="27px"
+                                         onclick="ShowConfigModal('formData')" style="cursor:pointer">
+
+                                    <div class="form-group">
+                                        <a onclick="ShowConfigModal('formData')" style="color:#000000">
+                                        </a>
+                                    </div>
                                 </div>
+
                             </div>
 
-                        </div>
+                            <div class="card-body">
 
-                        <div class="card-body">
-
-                            <div class="form-body">
+                                <div class="form-body">
 
                                     <div class="row">
 
-                                        <div class="col-lg-6 col-md-12 pr-0 pr-s-12"  >
+                                        <div class="col-lg-6 col-md-12 pr-0 pr-s-12">
 
                                             <div class="form-group">
 
@@ -65,17 +68,20 @@
 
                                                     </div>
 
-                                                    <input type="text" id="customerName" class="form-control cust" name="customerName">
+                                                    <input type="text" id="customerName" class="form-control cust"
+                                                           name="customerName">
 
                                                     <input type="hidden" id="customerid" name="customerid" value="0">
 
                                                     <input type="hidden" id="archieveid" name="archieveid" value="0">
 
-                                                    <input type="hidden" id="customername" name="customername" value="0">
+                                                    <input type="hidden" id="customername" name="customername"
+                                                           value="0">
 
                                                     <input type="hidden" id="url" name="url" value="<?php echo $url ?>">
 
-                                                    <input type="hidden" id="customerType" name="customerType" value="0">
+                                                    <input type="hidden" id="customerType" name="customerType"
+                                                           value="0">
 
                                                     <input type="hidden" id="msgType" name="msgType" value="">
 
@@ -91,9 +97,7 @@
 
                                         </div>
 
-                                        
-
-                                        <div class="col-lg-3 col-md-12 pr-0 pr-s-12" style="padding-right: 0px" >
+                                        <div class="col-lg-3 col-md-12 pr-0 pr-s-12" style="padding-right: 0px">
 
                                             <div class="form-group">
 
@@ -109,8 +113,9 @@
 
                                                     </div>
 
-                                                        <input type="text" id="fileNo" name="fileNo" class="form-control eng-sm  valid" value="" placeholder="" autocomplete="off">
-                                                    
+                                                    <input type="text" id="fileNo" name="fileNo"
+                                                           class="form-control eng-sm  valid" value="" placeholder=""
+                                                           autocomplete="off">
 
                                                 </div>
 
@@ -118,7 +123,7 @@
 
                                         </div>
 
-                                        <div class="col-lg-3 col-md-12 pr-0 pr-s-12"  >
+                                        <div class="col-lg-3 col-md-12 pr-0 pr-s-12">
 
                                             <div class="form-group">
 
@@ -134,8 +139,9 @@
 
                                                     </div>
 
-                                                        <input type="text" id="license_date" name="license_date" class="form-control eng-sm  valid" value="" placeholder="" autocomplete="off">
-                                                    
+                                                    <input type="text" id="license_date" name="license_date"
+                                                           class="form-control eng-sm  valid" value="" placeholder=""
+                                                           autocomplete="off">
 
                                                 </div>
 
@@ -171,7 +177,7 @@
 
                                     <div class="row">
 
-                                        <div class="col-lg-3 col-md-12 pr-0 pr-s-12" style="min-width: 21%" >
+                                        <div class="col-lg-3 col-md-12 pr-0 pr-s-12" style="min-width: 21%">
 
                                             <div class="form-group">
 
@@ -195,7 +201,7 @@
 
                                         </div>
 
-                                        <div class="col-lg-3 col-md-12 pr-0 pr-s-12"  style="min-width: 20%" >
+                                        <div class="col-lg-3 col-md-12 pr-0 pr-s-12" style="min-width: 20%">
 
                                             <div class="form-group">
 
@@ -211,7 +217,8 @@
 
                                                     </div>
 
-                                                    <input type="text" id="licnfile" class="form-control " name="licnfile">
+                                                    <input type="text" id="licnfile" class="form-control "
+                                                           name="licnfile">
 
                                                 </div>
 
@@ -219,11 +226,12 @@
 
                                         </div>
 
-                                        <div class="col-lg-2 col-md-12 pr-0 pr-s-12" style="padding-right: 0px" >
+                                        <div class="col-lg-2 col-md-12 pr-0 pr-s-12" style="padding-right: 0px">
 
                                             <div class="form-group">
 
-                                                <div class="input-group w-s-87" id="licGroup" style="width: 100% !important">
+                                                <div class="input-group w-s-87" id="licGroup"
+                                                     style="width: 100% !important">
 
                                                     <div class="input-group-prepend">
 
@@ -235,8 +243,9 @@
 
                                                     </div>
 
-                                                        <input type="text" id="licNo" name="licNo" class="form-control eng-sm  valid" value="" placeholder="" autocomplete="off">
-                                                    
+                                                    <input type="text" id="licNo" name="licNo"
+                                                           class="form-control eng-sm  valid" value="" placeholder=""
+                                                           autocomplete="off">
 
                                                 </div>
 
@@ -244,7 +253,7 @@
 
                                         </div>
 
-                                        <div class="col-lg-4 col-md-12 pr-0 pr-s-12"  style="min-width: 20%" >
+                                        <div class="col-lg-4 col-md-12 pr-0 pr-s-12" style="min-width: 20%">
 
                                             <div class="form-group">
 
@@ -260,7 +269,8 @@
 
                                                     </div>
 
-                                                    <input type="text" id="use_desc" class="form-control " name="use_desc">
+                                                    <input type="text" id="use_desc" class="form-control "
+                                                           name="use_desc">
 
                                                 </div>
 
@@ -268,9 +278,7 @@
 
                                         </div>
 
-                                      
-
-                                        <div class="col-lg-3 col-md-12 pr-0 pr-s-12" style="display:none;" >
+                                        <div class="col-lg-3 col-md-12 pr-0 pr-s-12" style="display:none;">
 
                                             <div class="form-group">
 
@@ -302,26 +310,25 @@
 
                                         </div>
 
-                                        
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-10 col-md-12 "  >
-                                        <div class="form-group paddmob">
-                                            <div class="input-group" style="width: 93% !important;">
-                                                <div class="input-group-prepend">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-10 col-md-12 ">
+                                            <div class="form-group paddmob">
+                                                <div class="input-group" style="width: 93% !important;">
+                                                    <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1">
                                                         ملاحظات
                                                     </span>
+                                                    </div>
+                                                    <input type="text" id="notes" class="form-control" name="notes"
+                                                           style="width: 30%;">
                                                 </div>
-                                                <input type="text" id="notes" class="form-control" name="notes" style="width: 30%;">
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                        <div class="row">
+                                    <div class="row">
 
-                                        <div class="col-lg-10 col-md-12 pr-0 pr-s-12"  >
+                                        <div class="col-lg-10 col-md-12 pr-0 pr-s-12">
 
                                             <div class="form-group">
 
@@ -337,17 +344,20 @@
 
                                                     </div>
 
-                                                    <select class="form-control AttahType" name="AttahType" id="AttahType">
+                                                    <select class="form-control AttahType" name="AttahType"
+                                                            id="AttahType">
 
-                                                            @foreach($attachment_type as $attachment)
+                                                        @foreach($attachment_type as $attachment)
 
                                                             <option value="{{$attachment->id}}"> {{$attachment->name}}   </option>
 
-                                                            @endforeach
+                                                        @endforeach
 
                                                     </select>
 
-                                                    <div class="input-group-append" onclick="ShowConstantModal(18,'AttahType','نوع المرفق')" style="cursor:pointer">
+                                                    <div class="input-group-append"
+                                                         onclick="ShowConstantModal(18,'AttahType','نوع المرفق')"
+                                                         style="cursor:pointer">
 
                                                         <span class="input-group-text input-group-text2">
 
@@ -356,9 +366,6 @@
                                                         </span>
 
                                                     </div>
-
-
-                                                    </select>
 
                                                     {{--<div class="input-group-append" onclick="ShowConstantModal(22,'AttahType','نوع المرفق')" style="cursor:pointer">
 
@@ -375,7 +382,7 @@
 
                                         </div>
 
-                                        <div class="col-lg-2 col-md-12 pr-0 pr-s-12" style="padding-right: 0px;" >
+                                        <div class="col-lg-2 col-md-12 pr-0 pr-s-12" style="padding-right: 0px;">
 
                                             <div class="form-group">
 
@@ -383,17 +390,25 @@
 
                                                     <div class="input-group-prepend">
 
-                                                        <img src="{{asset('assets/images/ico/upload.png')}}" width="40" height="40" style="cursor:pointer" onclick="document.getElementById('formDataaaupload-file[]').click(); return false">
-                                                        <img src="https://t.palexpand.ps/assets/images/ico/scanner.png"  style="cursor:pointer;    float: left;" onclick="scanToJpg();">
+                                                        <img src="{{asset('assets/images/ico/upload.png')}}" width="40"
+                                                             height="40" style="cursor:pointer"
+                                                             onclick="document.getElementById('formDataaaupload-file[]').click(); return false">
+                                                        <img src="https://t.palexpand.ps/assets/images/ico/scanner.png"
+                                                             style="cursor:pointer;    float: left;"
+                                                             onclick="scanToJpg();">
 
-                                                        <img src="https://t.palexpand.ps/assets/images/ico/scannerpdf.png"  style="cursor:pointer;    float: left;" onclick="scanTopdf();">
+                                                        <img src="https://t.palexpand.ps/assets/images/ico/scannerpdf.png"
+                                                             style="cursor:pointer;    float: left;"
+                                                             onclick="scanTopdf();">
                                                     </div>
 
                                                     <input type="hidden" name="fromname" value="formDataaa">
 
-                                                    <input type="file" class="form-control-file" id="formDataaaupload-file[]" name="formDataaaUploadFile[]" onchange="doUploadAttach1('formDataaa')" 
+                                                    <input type="file" class="form-control-file"
+                                                           id="formDataaaupload-file[]" name="formDataaaUploadFile[]"
+                                                           onchange="doUploadAttach1('formDataaa')"
 
-                                                    style="display: none" >
+                                                           style="display: none">
 
                                                 </div>
 
@@ -405,45 +420,42 @@
 
                                     <div style="text-align: center;">
 
-                                        
+                                        <button type="submit" class="btn btn-primary" id="saveBtn" style="">
 
-                                    <button type="submit" class="btn btn-primary" id="saveBtn" style="">
+                                            {{ trans('admin.save') }}
 
-                                        {{ trans('admin.save') }}   
-
-                                    </button>
-
-                                        
-
-                                        
+                                        </button>
 
                                     </div>
 
                                 </div>
 
+                            </div>
+
                         </div>
 
                     </div>
 
-                </div>
+                    <div class="col-xl-5 col-lg-6">
 
-                <div class="col-xl-5 col-lg-6">
+                        <div class="card lSide" style="min-height:302.2px;">
 
-                    <div class="card lSide" style="min-height:302.2px;">
+                            <div class="card-header">
 
-                        <div class="card-header">
+                                <h4 class="card-title"><img src="{{asset('assets/images/archive_ico.png')}}"
+                                                            style="height: 32px"/>
 
-                            <h4 class="card-title"><img src="{{asset('assets/images/archive_ico.png')}}" style="height: 32px" />
+                                    {{ trans('archive.license_attachments') }}
 
-                                {{ trans('archive.license_attachments') }}  
+                                </h4>
 
-                            </h4>
+                            </div>
 
-                        </div>
+                            <div class="card-body" id="attachList">
 
-                        <div class="card-body" id="attachList">
+                                <div class="row formDataaaFilesArea" style="margin-left: 0px;">
 
-                            <div class="row formDataaaFilesArea" style="margin-left: 0px;">
+                                </div>
 
                             </div>
 
@@ -453,66 +465,63 @@
 
                 </div>
 
-            </div>
-
-
             </form>
         </section>
-</div>
+    </div>
 
-@include('dashboard.archive.arc_config')
-@include('dashboard.component.fetch_table')
+    @include('dashboard.archive.arc_config')
+    @include('dashboard.component.fetch_table')
 
 
 
-<script>
+    <script>
 
-function scanToJpg() {
+      function scanToJpg() {
         scanner.scan(displayImagesOnPage,
-            {
-                "output_settings" :
-                    [
-                        {
-                            "type" : "return-base64",
-                            "format" : "png"
-                        }
-                    ]
-            }
+          {
+            "output_settings":
+              [
+                {
+                  "type": "return-base64",
+                  "format": "png"
+                }
+              ]
+          }
         );
-    }
+      }
 
-    /** Processes the scan result */
-    function displayImagesOnPage(successful, mesg, response) {
-        if(!successful) { // On error
-            console.error('Failed: ' + mesg);
-            return;
+      /** Processes the scan result */
+      function displayImagesOnPage(successful, mesg, response) {
+        if (!successful) { // On error
+          console.error('Failed: ' + mesg);
+          return;
         }
 
-        if(successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
-            console.info('User canceled');
-            return;
+        if (successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
+          console.info('User canceled');
+          return;
         }
         var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
-        for(var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
-            var scannedImage = scannedImages[i];
-            uploadScannedfile(scannedImage);
-            // processScannedImage(scannedImage);
+        for (var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
+          var scannedImage = scannedImages[i];
+          uploadScannedfile(scannedImage);
+          // processScannedImage(scannedImage);
         }
-    }
+      }
 
-    /** Images scanned so far. */
-    var imagesScanned = [];
+      /** Images scanned so far. */
+      var imagesScanned = [];
 
-    /** Processes a ScannedImage */
-    function processScannedImage(scannedImage) {
+      /** Processes a ScannedImage */
+      function processScannedImage(scannedImage) {
         imagesScanned.push(scannedImage);
         // console.log(imagesScanned[0].getBase64NoPrefix())
         // console.log(imagesScanned[0])
         var image = new Image();
 
-        image.src =scannedImage.src;
-        var imagediv=
-        `<div >
+        image.src = scannedImage.src;
+        var imagediv =
+          `<div >
             <a target="_blank" href="${scannedImage.src}" data-original-title="" title="">
                 <img src="${image.src}" width="70" height="100" >
             </a>
@@ -521,50 +530,50 @@ function scanToJpg() {
         </div>`
         ;
         $('.formDataaaFilesArea').append(imagediv);
-    }
-    
-    function scanTopdf() {
+      }
+
+      function scanTopdf() {
         scanner.scan(displayPdfOnPage,
-            {
-                "output_settings" :
-                    [
-                        {
-                            "type" : "return-base64",
-                            "format" : "pdf",
-                        }
-                    ]
-            }
+          {
+            "output_settings":
+              [
+                {
+                  "type": "return-base64",
+                  "format": "pdf",
+                }
+              ]
+          }
         );
-    }
-    
-    function displayPdfOnPage(successful, mesg, response) {
-        
-        if(!successful) { // On error
-            console.error('Failed: ' + mesg);
-            return;
+      }
+
+      function displayPdfOnPage(successful, mesg, response) {
+
+        if (!successful) { // On error
+          console.error('Failed: ' + mesg);
+          return;
         }
 
-        if(successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
-            console.info('User canceled');
-            return;
+        if (successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
+          console.info('User canceled');
+          return;
         }
         var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
-        for(var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
-            var scannedImage = scannedImages[i];
-            uploadScannedfile(scannedImage);
-            // processScannedPdf(scannedImage);
+        for (var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
+          var scannedImage = scannedImages[i];
+          uploadScannedfile(scannedImage);
+          // processScannedPdf(scannedImage);
         }
-    }
-    
-    function processScannedPdf(scannedImage) {
+      }
+
+      function processScannedPdf(scannedImage) {
         imagesScanned.push(scannedImage);
         // console.log(imagesScanned[0].getBase64NoPrefix())
         // console.log(imagesScanned)
         var image = new Image();
-        
-        image.src =scannedImage.src;
-        var imagediv=
-        `<div >
+
+        image.src = scannedImage.src;
+        var imagediv =
+          `<div >
             <a target="_blank" href="${scannedImage.src}" data-original-title="" title="">
                 <img src="https://t.palexpand.ps/assets/images/ico/pdf.png" width="70" height="100" >
             </a>
@@ -573,257 +582,178 @@ function scanToJpg() {
         </div>`
         ;
         $('.formDataaaFilesArea').append(imagediv);
-    }
-    
-    function uploadScannedfile(scannedImage){
+      }
+
+      function uploadScannedfile(scannedImage) {
         $(".loader").removeClass('hide');
-        $('#saveBtn').css('display','none');
-        $('#editBtn').css('display','none');
+        $('#saveBtn').css('display', 'none');
+        $('#editBtn').css('display', 'none');
         $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
-                'ContentType': 'application/json'
-            }
+          headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
+            'ContentType': 'application/json'
+          }
         });
-        
+
         $.ajax({
-                type:'post',
-                url:'{{route('saveScanedFile')}}',
-                data: {
-                    scannedData: scannedImage.src,
-                    type: scannedImage.mimeType,
-                    
-                },
-                dataType:"json",
-                async: true,
-                success: (response) => {
-                    $('#saveBtn').css('display','inline-block');
-                    $('#editBtn').css('display','none');
-                    $(".loader").addClass('hide');
-                    $( ".archive_type" ).removeClass( "error" );
-                        shortCutName=response.file.real_name;
-        
-                        shortCutID=response.file.id;
+          type: 'post',
+          url: '{{route('saveScanedFile')}}',
+          data: {
+            scannedData: scannedImage.src,
+            type: scannedImage.mimeType,
 
-                        urlfile='{{ asset('') }}';
+          },
+          dataType: "json",
+          async: true,
+          success: (response) => {
+            $('#saveBtn').css('display', 'inline-block');
+            $('#editBtn').css('display', 'none');
+            $(".loader").addClass('hide');
+            $(".archive_type").removeClass("error");
+            row=attacheWithAttachName(response.file, $("#AttahType option:selected").text())
+            $(".formDataaaFilesArea").append(row)
+          },
 
-                        if(response.file.type==1){
-                            urlfile+=response.file.url;
-                        }else{
-                            urlfile=response.file.url;
-                        }
+          error: function (response) {
+            $('#saveBtn').css('display', 'inline-block');
+            $('#editBtn').css('display', 'none');
+            $(".loader").addClass('hide');
 
-                            shortCutName=shortCutName.substring(0, 40)
-                            
-                            row='<div class="col-sm-12"><div class="form-group">'
+            Swal.fire({
+              position: 'top-center',
+              icon: 'error',
+              title: '{{trans('admin.error_save')}}',
+              showConfirmButton: false,
+              timer: 1500
+            })
 
-                                +'  <div class="input-group w-s-87">'
+            // $(".formDataaaFilesArea").html('');
 
-                                +'      <div class="input-group-prepend">  			'
+            if (response.responseJSON.errors.customerName) {
 
-                                +'          <span class="input-group-text" id="basic-addon1">'
+              $("#customerName").addClass("error");
 
-                                +'              {{ trans('archive.attachment_type') }}			'
+            }
 
-                                +'          </span>          '
+          }
 
-                                +'      </div>          '
-
-                                +'      <input type="text" id="attachName[]" class="form-control" name="attachName[]" value="'+$("#AttahType option:selected").text()+'">     ' 
-
-                                +'      <input type="hidden" id="attachFile[]" name="attachFile[]" value="'+response.file.id+'">        '    
-
-                                +'      <a href="'+urlfile+'" target="_blank">     '           
-
-                                +'          <span class="input-group-text input-group-text2">       '             
-
-                                +'              <i class="fa fa-download"></i>       '         
-
-                                +'          </span>            '
-
-                                +'      </a>            '
-
-                                +'      <a onclick="$(this).parent().parent().remove()">       '         
-
-                                +'          <span class="input-group-text input-group-text2">          '          
-
-                                +'              <i class="fa fa-trash"></i>    '            
-
-                                +'          </span> '           
-
-                                +'      </a>'        
-
-                                +'  </div>'       
-
-                                +'</div></div>'
-                            
-        //                     row='<div id="attach" class=" col-lg-6 ">' +
-        //                         '   <div class="attach" onmouseover="$(this).children().first().next().show()">'
-        //                         +'    <a class="attach-close1" href="'+urlfile+'" style="color: #74798D;" target="_blank">'
-        //                         +'    <span class="attach-text">'+shortCutName+'</span> </a>'
-        //                         +'    <a class="attach-close1" style="color: #74798D; float:left;" onclick="$(this).parent().parent().remove()">×</a>'
-        //                         +'      <input type="hidden" id="formDataaaimgUploads[]" name="formDataaaimgUploads[]" value="'+shortCutName+'">'
-        //                         +'             <input type="hidden" id="formDataaaorgNameList[]" name="formDataaaorgNameList[]" value="'+shortCutName+'">'
-								// +'             <input type="hidden" id="formDataaaorgIdList[]" name="formDataaaorgIdList[]" value="'+shortCutID+'">'
-							 //   +'    </div>'
-        //                         +'  </div>'
-                        $(".formDataaaFilesArea").append(row)
-                },
-
-                error: function(response){
-                    $('#saveBtn').css('display','inline-block');
-                    $('#editBtn').css('display','none');
-                    $(".loader").addClass('hide');
-                    
-                    Swal.fire({
-                        position: 'top-center',
-                        icon: 'error',
-                        title: '{{trans('admin.error_save')}}',
-                        showConfirmButton: false,
-                        timer: 1500
-                        })
-
-                        // $(".formDataaaFilesArea").html('');
-
-                    if(response.responseJSON.errors.customerName){
-
-                        $( "#customerName" ).addClass( "error" );
-
-                    }
-
-                }
-
-            });
-            return true;
-    }
+        });
+        return true;
+      }
 
 
-
-
-
-$.ajaxSetup({
+      $.ajaxSetup({
 
         headers: {
 
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 
         }
 
-    });
+      });
 
 
+      $('#formDataaa').submit(function (e) {
 
-   $('#formDataaa').submit(function(e) {
+        e.preventDefault();
 
-       e.preventDefault();
+        if (parseInt($("#customerid").val()) <= 0) {
 
-       if(parseInt($("#customerid").val())<= 0)
+          alert("الرجاء اختيار مواطن");
 
-       {
+        } else {
+          $('#saveBtn').css('display', 'none');
+          // $('#editBtn').css('display','none');
+          $(".loader").removeClass('hide');
 
-           alert("الرجاء اختيار مواطن");
+          let formData = new FormData(this);
 
-       }
+          $.ajax({
 
-       else{
-        $('#saveBtn').css('display','none');
-                    // $('#editBtn').css('display','none');
-       $(".loader").removeClass('hide');
+            type: 'POST',
 
-       let formData = new FormData(this);
+            url: "store_lince_archive",
 
-       $.ajax({
+            data: formData,
 
-          type:'POST',
+            contentType: false,
 
-          url: "store_lince_archive",
+            processData: false,
 
-           data: formData,
+            success: (response) => {
+              $('#saveBtn').css('display', 'inline-block');
+              // $('#editBtn').css('display','none');
+              $('#customerid').val('');
+              $('#customername').val('');
+              $('#customername').val('');
+              $('#customerType').val('');
+              $('#ArchiveID').val('');
+              $('#pk_i_id').val('');
 
-           contentType: false,
+              $(".loader").addClass('hide');
 
-           processData: false,
+              Swal.fire({
 
-           success: (response) => {
-               $('#saveBtn').css('display','inline-block');
-                    // $('#editBtn').css('display','none');
-            $('#customerid').val('');
-            $('#customername').val('');
-            $('#customername').val('');
-            $('#customerType').val('');
-            $('#ArchiveID').val('');
-            $('#pk_i_id').val('');
-            
-            $(".loader").addClass('hide');
+                position: 'top-center',
 
-            Swal.fire({
+                icon: 'success',
 
-				position: 'top-center',
+                title: '{{trans('admin.data_added')}}',
 
-				icon: 'success',
+                showConfirmButton: false,
 
-				title: '{{trans('admin.data_added')}}',
+                timer: 1500
 
-				showConfirmButton: false,
+              })
 
-				timer: 1500
+              $(".formDataaaFilesArea").html('');
 
-				})
+              this.reset();
 
-                $(".formDataaaFilesArea").html('');
+              $('.wtbl').DataTable().ajax.reload();
 
-               this.reset();
+            },
 
-               $('.wtbl').DataTable().ajax.reload();  
+            error: function (response) {
+              $('#saveBtn').css('display', 'inline-block');
+              // $('#editBtn').css('display','none');
+              // $('#pk_i_id').val('');
+              // $('#ArchiveID').val('');
+              $(".loader").addClass('hide');
 
-           },
+              Swal.fire({
 
-           error: function(response){
-               $('#saveBtn').css('display','inline-block');
-                    // $('#editBtn').css('display','none');
-            // $('#pk_i_id').val('');
-            // $('#ArchiveID').val('');
-            $(".loader").addClass('hide');
+                position: 'top-center',
 
-            Swal.fire({
+                icon: 'error',
 
-				position: 'top-center',
+                title: '{{trans('admin.error_save')}}',
 
-				icon: 'error',
+                showConfirmButton: false,
 
-				title: '{{trans('admin.error_save')}}',
+                timer: 1500
 
-				showConfirmButton: false,
+              })
 
-				timer: 1500
+            }
 
-				})
+          });
 
-           }
+        }
 
-       });
-
-       }
-
-  });
+      });
 
 
+      $(function () {
+
+        $(".cust").autocomplete({
+
+          source: 'Linence_auto_complete',
+
+          minLength: 1,
 
 
-
-
-
-$( function() {
-
-    $( ".cust" ).autocomplete({
-
-		source: 'Linence_auto_complete',
-
-		minLength: 1,
-
-		
-
-        select: function( event, ui ) {
+          select: function (event, ui) {
 
             console.log(ui.item.model);
 
@@ -839,287 +769,198 @@ $( function() {
 
             $('#licnfile').val(ui.item.licnfile);
 
-                let subscriber_id = ui.item.id;
-
-                $.ajax({
-
-                type: 'get', // the method (could be GET btw)
-
-                url: "license_info_byUser",
-
-            
-
-                    data: {
-
-                        subscriber_id: subscriber_id,
-
-                    },
-
-                    success:function(response){
-
-                        template=""
-
-                        count = 0;
-
-                        $('#fileNo').remove('');
-
-                        if(response.info.length>0)
-
-                        {
-
-                            template += '<select onchange="fillData($(this).val())" class="form-control" name="fileNo" id="fileNo">'
-
-                            template +='<option value="0">-- اختر --</option>'
-
-                            response.info.forEach(licence => {
-
-                                count++;
-
-                                   template +='<option value="'+licence.fileNo+'"> '+(licence.fileNo??'بدون')+'</option>'
-
-
-                            });
-
-                                                    template +='</select>'
-
-
-
-                        }
-
-                        else {
-
-                            template += '<input type="text" id="fileNo" name="fileNo" class="form-control eng-sm  valid" value="" placeholder="" autocomplete="off">'
-
-                        }
-
-                    $('#licGroup').append(template);
-
-            
-
-                    },
-
-                });
-
-            
-
-           }
-
-	    });
-
-    });
-
-    function update($id){
-
-        let archive_id = $id;
-
-    $('#saveBtn').text("تعديل");
-
-        $(".formDataaaFilesArea").html('');
+            let subscriber_id = ui.item.id;
 
             $.ajax({
 
-            type: 'get', // the method (could be GET btw)
+              type: 'get', // the method (could be GET btw)
 
-            url: "{{ route('archieveLic_info') }}",
+              url: "license_info_byUser",
 
-            data: {
 
-                archive_id: archive_id,
+              data: {
 
-            },
+                subscriber_id: subscriber_id,
 
-            success:function(response){
+              },
 
-                    console.log(response.info)
+              success: function (response) {
 
+                template = ""
+
+                count = 0;
+
+                $('#fileNo').remove('');
+
+                if (response.info.length > 0) {
+
+                  template += '<select onchange="fillData($(this).val())" class="form-control" name="fileNo" id="fileNo">'
+
+                  template += '<option value="0">-- اختر --</option>'
+
+                  response.info.forEach(licence => {
+
+                    count++;
+
+                    template += '<option value="' + licence.fileNo + '"> ' + (licence.fileNo ?? 'بدون') + '</option>'
+
+
+                  });
+
+                  template += '</select>'
+
+
+                } else {
+
+                  template += '<input type="text" id="fileNo" name="fileNo" class="form-control eng-sm  valid" value="" placeholder="" autocomplete="off">'
+
+                }
+
+                $('#licGroup').append(template);
+
+
+              },
+
+            });
+
+
+          }
+
+        });
+
+      });
+
+      function update($id) {
+
+        let archive_id = $id;
+
+        $('#saveBtn').text("تعديل");
+
+        $(".formDataaaFilesArea").html('');
+
+        $.ajax({
+
+          type: 'get', // the method (could be GET btw)
+
+          url: "{{ route('archieveLic_info') }}",
+
+          data: {
+
+            archive_id: archive_id,
+
+          },
+
+          success: function (response) {
             $('#customerName').val(response.info.name);
-
             $('#ArchiveID').val(response.info.id);
-
             $('#customerid').val(response.info.model_id);
-
             $('#customername').val(response.info.name);
-
             //$('#customerName').val(response.info.name);
-
             $('#pk_i_id').val(response.info.license_id);
-
             $('#customerType').val(response.info.model_name);
             $('#notes').val(response.info.notes);
             $('#licNo').val(response.info.licNo);
             $('#fileNo').val(response.info.fileNo);
             $('#use_desc').val(response.info.use_desc);
             $('#license_date').val(response.info.license_date);
-
             $('#licn').val(response.info.licn);
-
             $('#licnfile').val(response.info.licnfile);
-
             $('#license_type').val(response.info.license_type);
 
-            row='';
+            row = '';
 
-                if(response.files){
+            if (response.files) {
+              for (j = 0; j < response.files.length; j++) {
+                row += attacheWithAttachName(response.files[j], response.files[j].real_name)
+              }
 
-                    var j=0;
+              $(".formDataaaFilesArea").html(row)
 
-                    for(j=0;j<response.files.length;j++){
-
-                        shortCutName=response.files[j].real_name;
-
-                        shortCutID=response.files[j].id;
-
-                        urlfile='{{ asset('') }}';
-
-                        if(response.files[j].type==1){
-                            urlfile+=response.files[j].url;
-                        }else{
-                            urlfile=response.files[j].url;
-                        }
-
-                        formDataStr="formDataaa";
-
-                                
-
-                            row+='<div class="col-sm-12"><div class="form-group">'
-
-                                +'  <div class="input-group w-s-87">'
-
-                                +'      <div class="input-group-prepend">  			'
-
-                                +'          <span class="input-group-text" id="basic-addon1">'
-
-                                +'              {{ trans('archive.attachment_type') }}			'
-
-                                +'          </span>          '
-
-                                +'      </div>          '
-
-                                +'      <input type="text" id="attachName[]" class="form-control" name="attachName[]" value="'+response.files[j].real_name+'">     ' 
-
-                                +'      <input type="hidden" id="attachFile[]" name="attachFile[]" value="'+response.files[j].id+'">        '    
-
-                                +'      <a href="'+urlfile+'" target="_blank">     '           
-
-                                +'          <span class="input-group-text input-group-text2">       '             
-
-                                +'              <i class="fa fa-download"></i>       '         
-
-                                +'          </span>            '
-
-                                +'      </a>            '
-
-                                +'      <a onclick="$(this).parent().parent().remove()">       '         
-
-                                +'          <span class="input-group-text input-group-text2">          '          
-
-                                +'              <i class="fa fa-trash"></i>    '            
-
-                                +'          </span> '           
-
-                                +'      </a>'        
-
-                                +'  </div>'       
-
-                                +'</div></div>'
-
-                    }
-
-                    $(".formDataaaFilesArea").html(row)
-
-                }
+            }
 
             window.scrollTo(0, 0);
 
-            },
+          },
 
         });
 
-    }
+      }
 
-    function fillData($id)
+      function fillData($id) {
 
-    {
+        let license_id = $id;
 
-    let license_id = $id;
+        console.log(license_id);
 
-    console.log(license_id);
+        $.ajax({
 
-    $.ajax({
+          type: 'get', // the method (could be GET btw)
 
-    type: 'get', // the method (could be GET btw)
-
-    url: "license_byFileNo",
+          url: "license_byFileNo",
 
 
-
-        data: {
+          data: {
 
             license_id: license_id,
 
-        },
+          },
 
-        success:function(response){
+          success: function (response) {
 
             $("#licn").val('');
-            
-            
+
 
             $("#licnfile").val('');
             $("#license_date").val('');
             $("#licNo").val('');
             $("#use_desc").val('');
-            
-            if(response.info.hod_tapo_No!=null && response.info.hod_tapo_No!=''){
-                $("#licn").val((response.info.hod_tapo_No));
-            }else{
-                $("#licn").val((response.info.hodNo??''));
+
+            if (response.info.hod_tapo_No != null && response.info.hod_tapo_No != '') {
+              $("#licn").val((response.info.hod_tapo_No));
+            } else {
+              $("#licn").val((response.info.hodNo ?? ''));
             }
-        
-            if(response.info.peiceNoTabo!=null && response.info.peiceNoTabo!=''){
-                $("#licnfile").val(response.info.peiceNoTabo);
-            }else{
-                $("#licnfile").val((response.info.peiceNo??''));
+
+            if (response.info.peiceNoTabo != null && response.info.peiceNoTabo != '') {
+              $("#licnfile").val(response.info.peiceNoTabo);
+            } else {
+              $("#licnfile").val((response.info.peiceNo ?? ''));
             }
-            
-        // $("#licn").val((response.info.hodNo??''));
-        $("#pk_i_id").val((response.info.id??''));
-        // $("#licnfile").val((response.info.peiceNo??''));
 
-        let date=(response.info.license_date)
+            // $("#licn").val((response.info.hodNo??''));
+            $("#pk_i_id").val((response.info.id ?? ''));
+            // $("#licnfile").val((response.info.peiceNo??''));
 
-        dates=""
+            let date = (response.info.license_date)
 
-        if(date){
+            dates = ""
 
-            dates=date.split("-");
+            if (date) {
 
-            dates = dates[2]+'/'+dates[1]+'/'+dates[0];
-        }
+              dates = date.split("-");
 
-        $("#license_date").val(dates);
-        $("#licNo").val((response.info.licNo??''));
-        $("#use_desc").val((response.info.use_desc!=null?response.info.use_desc.name:''));
+              dates = dates[2] + '/' + dates[1] + '/' + dates[0];
+            }
 
-        },
+            $("#license_date").val(dates);
+            $("#licNo").val((response.info.licNo ?? ''));
+            $("#use_desc").val((response.info.use_desc != null ? response.info.use_desc.name : ''));
 
-    });
+          },
 
-    }
+        });
 
-    
+      }
 
-function doUploadAttach1(formDataStr)
-
-    {
+      function doUploadAttach1(formDataStr) {
 
         $.ajaxSetup({
 
-            headers: {
+          headers: {
 
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 
-            }
+          }
 
         });
 
@@ -1127,180 +968,86 @@ function doUploadAttach1(formDataStr)
 
         $(".form-actions").addClass('hide');
 
-        var formData = new FormData($("#"+formDataStr)[0]);
+        var formData = new FormData($("#" + formDataStr)[0]);
 
         $.ajax({
+          url: 'uploadAttach',
+          type: 'POST',
+          data: formData,
+          dataType: "json",
+          async: true,
 
-            url: 'uploadAttach',
+          success: function (data) {
 
-            type: 'POST',
+            row = '';
 
-            data: formData,
-
-            dataType:"json",
-
-            async: true,
-
-            success: function (data) {
-
-                row='';
-
-                console.log(data.all_files);
-
-                if(data.all_files){
-
-                    var j=0;
-
-                    for(j=0;j<data.all_files.length;j++){
-
-                shortCutName=data.all_files[j].real_name;
-
-                shortCutID=data.all_files[j].id;
-
-                        urlfile='{{asset('')}}';
-
-                        console.log(urlfile);
-
-                        urlfile+=data.all_files[j].url;
-
-                        console.log(urlfile);
-
-                            shortCutName=shortCutName.substring(0, 40)
-
-                            row+='<div class="col-sm-12"><div class="form-group">'
-
-                                +'  <div class="input-group w-s-87">'
-
-                                +'      <div class="input-group-prepend">  			'
-
-                                +'          <span class="input-group-text" id="basic-addon1">'
-
-                                +'              {{ trans('archive.attachment_type') }}			'
-
-                                +'          </span>          '
-
-                                +'      </div>          '
-
-                                +'      <input type="text" id="attachName[]" class="form-control" name="attachName[]" value="'+$("#AttahType option:selected").text()+'">     ' 
-
-                                +'      <input type="hidden" id="attachFile[]" name="attachFile[]" value="'+data.all_files[j].id+'">        '    
-
-                                +'      <a href="'+urlfile+'" target="_blank">     '           
-
-                                +'          <span class="input-group-text input-group-text2">       '             
-
-                                +'              <i class="fa fa-download"></i>       '         
-
-                                +'          </span>            '
-
-                                +'      </a>            '
-
-                                +'      <a onclick="$(this).parent().parent().remove()">       '         
-
-                                +'          <span class="input-group-text input-group-text2">          '          
-
-                                +'              <i class="fa fa-trash"></i>    '            
-
-                                +'          </span> '           
-
-                                +'      </a>'        
-
-                                +'  </div>'       
-
-                                +'</div></div>'
-
-                    }
-
-                    $(".alert-danger").addClass("hide");
-
-                    $(".alert-success").removeClass('hide');
-
-        $("."+formDataStr+"FilesArea").append(row)
-
-                    $(".loader").addClass('hide');
-                    $(".form-control-file").val('');
-
-                    //document.getElementById(""+formDataStr+"upload-file[]").value="";
-
-                    $(".group1").colorbox({rel:'group1'});
-
-                    setTimeout(function(){
-
-                        $(".alert-danger").addClass("hide");
-
-                        $(".alert-success").addClass("hide");
-
-                    },2000)
-
-                }
-
-                else {
-
-                    $(".alert-success").addClass("hide");
-
-                    $(".alert-danger").removeClass('hide');
-
-                }
-
-                $(".loader").addClass('hide');
-
-                $(".form-actions").removeClass('hide');
-
-            },
-
-            error:function(){
-
+            if (data.all_files) {
+              for (j = 0; j < data.all_files.length; j++) {
+                row=attacheWithAttachName(data.all_files[j], $("#AttahType option:selected").text())
+              }
+              $(".alert-danger").addClass("hide");
+              $(".alert-success").removeClass('hide');
+              $("." + formDataStr + "FilesArea").append(row)
+              $(".loader").addClass('hide');
+              $(".form-control-file").val('');
+              //document.getElementById(""+formDataStr+"upload-file[]").value="";
+              $(".group1").colorbox({rel: 'group1'});
+              setTimeout(function () {
+                $(".alert-danger").addClass("hide");
                 $(".alert-success").addClass("hide");
+              }, 2000)
+            } else {
+              $(".alert-success").addClass("hide");
+              $(".alert-danger").removeClass('hide');
+            }
+            $(".loader").addClass('hide');
+            $(".form-actions").removeClass('hide');
+          },
 
-                $(".alert-danger").removeClass('hide');
-
-                $(".loader").addClass('hide');
-
-                $(".form-actions").removeClass('hide');
-
-            },
-
-            cache: false,
-
-            contentType: false,
-
-            processData: false
-
+          error: function () {
+            $(".alert-success").addClass("hide");
+            $(".alert-danger").removeClass('hide');
+            $(".loader").addClass('hide');
+            $(".form-actions").removeClass('hide');
+          },
+          cache: false,
+          contentType: false,
+          processData: false
         });
 
-    }
-    
-    function delete_archive($id) {
-    if(confirm('هل انت متاكد من حذف الارشيف؟ لن يمكنك استرجاعه فيما بعد')){
-    let archive_id = $id;
-    var _token = '{{ csrf_token() }}';
-    $.ajax({
+      }
 
-        type: 'post',
+      function delete_archive($id) {
+        if (confirm('هل انت متاكد من حذف الارشيف؟ لن يمكنك استرجاعه فيما بعد')) {
+          let archive_id = $id;
+          var _token = '{{ csrf_token() }}';
+          $.ajax({
 
-        // the method (could be GET btw)
+            type: 'post',
 
-        url: "licArchive_delete",
+            // the method (could be GET btw)
 
-        data: {
+            url: "licArchive_delete",
 
-            archive_id: archive_id,
-            _token: _token,
-        },
+            data: {
 
-        success: function(response) {
+              archive_id: archive_id,
+              _token: _token,
+            },
 
-            $(".loader").addClass('hide');
+            success: function (response) {
 
-            $('.wtbl').DataTable().ajax.reload();
+              $(".loader").addClass('hide');
 
-            // setTimeout(function(){
+              $('.wtbl').DataTable().ajax.reload();
 
-            //     $(".alert-success").addClass("hide");
+              // setTimeout(function(){
 
-            // },2000)
+              //     $(".alert-success").addClass("hide");
 
-            Swal.fire({
+              // },2000)
+
+              Swal.fire({
 
                 position: 'top-center',
 
@@ -1312,17 +1059,17 @@ function doUploadAttach1(formDataStr)
 
                 timer: 1500
 
-            })
+              })
 
-            // $("#ajaxform")[0].reset();
+              // $("#ajaxform")[0].reset();
 
-        },
+            },
 
-        error: function(response) {
+            error: function (response) {
 
-            $(".loader").addClass('hide');
+              $(".loader").addClass('hide');
 
-            Swal.fire({
+              Swal.fire({
 
                 position: 'top-center',
 
@@ -1334,34 +1081,32 @@ function doUploadAttach1(formDataStr)
 
                 timer: 1500
 
-            })
+              })
 
-            $("#formDataNameAR").on('keyup', function(e) {
+              $("#formDataNameAR").on('keyup', function (e) {
 
                 if ($(this).val().length > 0) {
 
-                    $("#formDataNameAR").removeClass("error");
+                  $("#formDataNameAR").removeClass("error");
 
                 }
 
-            });
+              });
 
-            if (response.responseJSON.errors.formDataNameAR) {
+              if (response.responseJSON.errors.formDataNameAR) {
 
                 $("#formDataNameAR").addClass("error");
 
+              }
+
             }
 
+          });
+          return true;
         }
+        return false;
+      }
 
-    });
-    return true;
-    }
-    return false;
-}
-
-
-</script>
-
+    </script>
 
 @endsection

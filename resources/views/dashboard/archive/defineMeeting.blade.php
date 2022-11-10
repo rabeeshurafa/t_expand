@@ -71,7 +71,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="form-group hide">
+                    <div class="form-group">
                         <div class="input-group w-s-87">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1" style="width: 85px;">
@@ -82,7 +82,7 @@
                             <input type="hidden" id="managerID" class="form-control" placeholder="" name="managerID">
                         </div>
                     </div>
-                    <div class="form-group hide">
+                    <div class="form-group">
                         <div class="input-group w-s-87">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1" style="width: 85px;">

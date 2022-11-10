@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Managers\AttatchmentManager;
 use Illuminate\Http\Request;
 use App\Models\Menu;
 use App\Models\TicketConfig;
@@ -161,7 +162,7 @@ class WaterTicketController extends Controller
 
     }
 
-    function upload_image($file, $prefix)
+    /*function upload_image($file, $prefix)
     {
 
         // if ($file) {
@@ -189,7 +190,7 @@ class WaterTicketController extends Controller
                 'path' => Storage::cloud()->url($filePath)
         ];
 
-    }
+    }*/
 
     function saveFilesArchieve(Request $request, $taskname, $tasklink, $attachid)
     {
@@ -393,12 +394,16 @@ class WaterTicketController extends Controller
         $name = $request->attachfileName ? $request->attachfileName : 'attachfile';
         if ($request->hasFile($name)) {
             $file = $request->file($name);
-            $url = $this->upload_image($file, 'quipent_');
+            $url = AttatchmentManager::upload_image($file, 'quipent_');
             if ($url) {
-                $uploaded_files['files'] = File::create([
-                        'url' => $url['path'], 'real_name' => $url['name'], 'extension' => $url['extension'],
-                        'type' => '2',
-                ]);
+                $file = new File();
+                $file->url = $url['path'];
+                $file->real_name = $url['name'];
+                $file->extension = $url['extension'];
+                $file->file_links = $url['fileLinks'];
+                $file->type = 2;
+                $file->save();
+                $uploaded_files['files'] = $file;
             }
             $data[] = $uploaded_files;
 
@@ -476,18 +481,18 @@ class WaterTicketController extends Controller
     {
 //        dd($request->all());
         $ticketConfig = TicketConfig::find($request->id);
-        $debtConfigs=[];
+        $debtConfigs = [];
         for ($i = 0; $i < sizeof($request->debtIndex); $i++) {
-            $debtConfigTemp=[];
-            $debtConfigTemp['debtIndex']=$request->debtIndex[$i];
-            $debtConfigTemp['isDebtMandatory']=$request->isDebtMandatory[$i];
-            $debtConfigTemp['moneyResponsibleEmp']=$request[('moneyResponsibleEmp'.($i+1))]??array();
-            $debtConfigTemp['payedResponsibleEmp']=$request[('payedResponsibleEmp'.($i+1))]??array();
+            $debtConfigTemp = [];
+            $debtConfigTemp['debtIndex'] = $request->debtIndex[$i];
+            $debtConfigTemp['isDebtMandatory'] = $request->isDebtMandatory[$i];
+            $debtConfigTemp['moneyResponsibleEmp'] = $request[('moneyResponsibleEmp'.($i + 1))] ?? array();
+            $debtConfigTemp['payedResponsibleEmp'] = $request[('payedResponsibleEmp'.($i + 1))] ?? array();
             $debtConfigs[] = $debtConfigTemp;
         }
-        $ticketConfig->debt_settings=$debtConfigs;
+        $ticketConfig->debt_settings = $debtConfigs;
         $ticketConfig2 = TicketConfig::find($request->id);
-        $res=$ticketConfig->save();
+        $res = $ticketConfig->save();
         if ($res) {
 
             return response()->json(['success' => 'تمت العملية بنجاح']);

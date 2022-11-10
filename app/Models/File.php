@@ -15,8 +15,8 @@ class File extends Model
     public function fileLinks(): Attribute
     {
         return new Attribute(
-            get: fn($value) => json_decode($value),
-            set: fn($value) => json_encode($value),
+                get: fn($value) => json_decode($value),
+                set: fn($value) => json_encode($value),
         );
     }
     public function copy_to()

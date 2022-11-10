@@ -105,7 +105,16 @@ class TaboController extends Controller
         return view('dashboard.tabo.tabo4', compact('type','tabo','setting'));
 
     }
-    
+    function upload_image($file, $prefix){
+        if($file){
+            $files = $file;
+            $imageName = $prefix.rand(3,999).'-'.time().'.'.$files->extension();
+            $image = "storage/".$imageName;
+            $files->move(public_path('storage'), $imageName);
+            $getValue = $image;
+            return $getValue;
+        }
+    }
     public function uploadFile(Request $request){
         // dd($request->all());
 
@@ -115,7 +124,7 @@ class TaboController extends Controller
             $taboExcelData->hod_name =$request->hod_name;
             $taboExcelData->hod_no =$request->hod_no;
             $taboExcelData->created_by = Auth()->user()->id;
-            $url = upload_image($file, 'image_');
+            $url = $this->upload_image($file, 'image_');
             if ($url) 
             {
                 $uploaded_files = File::create([
@@ -148,7 +157,7 @@ class TaboController extends Controller
             $taboExcelData->hod_name =$request->hod_name;
             $taboExcelData->hod_no =$request->hod_no;
             $taboExcelData->created_by = Auth()->user()->id;
-            $url = upload_image($file, 'image_');
+            $url = $this->upload_image($file, 'image_');
             if ($url) 
             {
                 $uploaded_files = File::create([

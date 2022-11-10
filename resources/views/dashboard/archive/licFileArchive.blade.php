@@ -2,54 +2,56 @@
 
 @section('search')
 
-<li class="dropdown dropdown-language nav-item hideMob">
+    <li class="dropdown dropdown-language nav-item hideMob">
 
-            <input id="searchContent" name="searchContent" class="form-control SubPagea round full_search" placeholder="بحث" style="text-align: center;width: 350px; margin-top: 15px !important;">
+        <input id="searchContent" name="searchContent" class="form-control SubPagea round full_search" placeholder="بحث"
+               style="text-align: center;width: 350px; margin-top: 15px !important;">
 
-          </li>
+    </li>
 
 @endsection
 
 @section('content')
 
-<div class="content-body">
+    <div class="content-body">
 
         <section id="hidden-label-form-layouts">
 
             <form method="post" id="formDataaa" enctype="multipart/form-data">
 
-            @csrf
+                @csrf
 
-            <div class="row">
+                <div class="row">
 
-                <div class="col-xl-6 col-lg-6">
+                    <div class="col-xl-6 col-lg-6">
 
-                    <div class="card rSide">
+                        <div class="card rSide">
 
-                        <div class="card-header">
+                            <div class="card-header">
 
-                            <h4 class="card-title"><img src="{{asset('assets/images/ico/report32.png')}}" />
-                                 {{trans('archive.finance_achive')}}
-                            </h4>
-                            <div class="heading-elements1 onOffArea form-group mt-1" style="height: 20px; margin: 0px !important" title="الاعدادات">
-                                <img src="{{ asset('assets/images/ico/share.png') }}" height="27px"
-                                    onclick="ShowConfigModal('formData')" style="cursor:pointer">
-                                    
-                                <div class="form-group">
-                                    <a onclick="ShowConfigModal('formData')" style="color:#000000">
-                                    </a>
+                                <h4 class="card-title"><img src="{{asset('assets/images/ico/report32.png')}}"/>
+                                    {{trans('archive.finance_achive')}}
+                                </h4>
+                                <div class="heading-elements1 onOffArea form-group mt-1"
+                                     style="height: 20px; margin: 0px !important" title="الاعدادات">
+                                    <img src="{{ asset('assets/images/ico/share.png') }}" height="27px"
+                                         onclick="ShowConfigModal('formData')" style="cursor:pointer">
+
+                                    <div class="form-group">
+                                        <a onclick="ShowConfigModal('formData')" style="color:#000000">
+                                        </a>
+                                    </div>
                                 </div>
+
                             </div>
 
-                        </div>
+                            <div class="card-body">
 
-                        <div class="card-body">
-
-                            <div class="form-body">
+                                <div class="form-body">
 
                                     <div class="row">
 
-                                        <div class="col-lg-8 col-md-12 pr-0 pr-s-12"  >
+                                        <div class="col-lg-8 col-md-12 pr-0 pr-s-12">
 
                                             <div class="form-group">
 
@@ -64,13 +66,17 @@
 
                                                     </div>
 
-                                                    <input type="text" id="supplierName" class="form-control cust" name="supplierName">
-                                                    
-                                                    <input type="hidden" id="suppliername" name="suppliername" value="0">
+                                                    <input type="text" id="supplierName" class="form-control cust"
+                                                           name="supplierName">
 
-                                                    <input type="hidden" id="supplierType" name="supplierType" value="0">
+                                                    <input type="hidden" id="suppliername" name="suppliername"
+                                                           value="0">
 
-                                                    <input type="hidden" id="msgType" name="msgType" value="<?php echo $type ?>">
+                                                    <input type="hidden" id="supplierType" name="supplierType"
+                                                           value="0">
+
+                                                    <input type="hidden" id="msgType" name="msgType"
+                                                           value="<?php echo $type ?>">
 
                                                     <input type="hidden" id="url" name="url" value="<?php echo $url ?>">
 
@@ -86,9 +92,7 @@
 
                                         </div>
 
-                                        
-
-                                        <div class="col-lg-4 col-md-12 pr-0 pr-s-12"  >
+                                        <div class="col-lg-4 col-md-12 pr-0 pr-s-12">
 
                                             <div class="form-group">
 
@@ -101,9 +105,12 @@
                                                         </span>
 
                                                     </div>
-                                                        <!--<input type="text" id="date" name="date" class="form-control eng-sm  valid" value="" placeholder="" autocomplete="off">-->
-                                                        <input type="text" id="date" name="date" data-mask="00/00/0000" maxlength="10" class="form-control eng-sm  valid" value="<?php echo date('d/m/Y')?>" placeholder="" autocomplete="off">
-                                                    </div>
+                                                    <!--<input type="text" id="date" name="date" class="form-control eng-sm  valid" value="" placeholder="" autocomplete="off">-->
+                                                    <input type="text" id="date" name="date" data-mask="00/00/0000"
+                                                           maxlength="10" class="form-control eng-sm  valid"
+                                                           value="<?php echo date('d/m/Y')?>" placeholder=""
+                                                           autocomplete="off">
+                                                </div>
                                             </div>
 
                                         </div>
@@ -112,7 +119,7 @@
 
                                     <div class="row">
 
-                                        <div class="col-lg-4 col-md-12 pr-0 pr-s-12"  >
+                                        <div class="col-lg-4 col-md-12 pr-0 pr-s-12">
 
                                             <div class="form-group">
 
@@ -126,21 +133,22 @@
 
                                                     </div>
 
-                                                    <select class="form-control financeType" name="financeType" id="financeType">
-                                                        
+                                                    <select class="form-control financeType" name="financeType"
+                                                            id="financeType">
+
                                                         <option value="">{{trans('admin.select')}}</option>
 
                                                         @foreach($license_type as $license)
 
-                                                        <option value="{{$license->id}}"> {{$license->name}}   </option>
+                                                            <option value="{{$license->id}}"> {{$license->name}}   </option>
 
                                                         @endforeach
 
                                                     </select>
 
-                                                
-
-                                                    <div class="input-group-append"onclick="ShowConstantModal(105,'financeType','نوع المعاملة')" style="cursor:pointer;max-width: 15px;
+                                                    <div class="input-group-append"
+                                                         onclick="ShowConstantModal(105,'financeType','نوع المعاملة')"
+                                                         style="cursor:pointer;max-width: 15px;
 
                                                     margin-left: 0px !important;
 
@@ -166,8 +174,7 @@
 
                                         </div>
 
-
-                                        <div class="col-lg-8 col-md-12 pr-0 pr-s-12" style="min-width: 21%" >
+                                        <div class="col-lg-8 col-md-12 pr-0 pr-s-12" style="min-width: 21%">
 
                                             <div class="form-group">
 
@@ -191,11 +198,11 @@
 
                                         </div>
 
-                                </div>
+                                    </div>
 
-                                        <div class="row">
+                                    <div class="row">
 
-                                        <div class="col-lg-10 col-md-12 pr-0 pr-s-12"  >
+                                        <div class="col-lg-10 col-md-12 pr-0 pr-s-12">
 
                                             <div class="form-group">
 
@@ -211,15 +218,16 @@
 
                                                     </div>
 
-                                                    <select class="form-control AttahType" name="AttahType" id="AttahType">
-                                                        
+                                                    <select class="form-control AttahType" name="AttahType"
+                                                            id="AttahType">
+
                                                         <option value="">{{trans('admin.select')}}</option>
 
                                                         @if($attachment_type)
 
                                                             @foreach($attachment_type as $attachment)
 
-                                                            <option value="{{$attachment->id}}"> {{$attachment->name}}   </option>
+                                                                <option value="{{$attachment->id}}"> {{$attachment->name}}   </option>
 
                                                             @endforeach
 
@@ -227,7 +235,9 @@
 
                                                     </select>
 
-                                                    <div class="input-group-append" onclick="ShowConstantModal(106,'AttahType','نوع المرفق')" style="cursor:pointer">
+                                                    <div class="input-group-append"
+                                                         onclick="ShowConstantModal(106,'AttahType','نوع المرفق')"
+                                                         style="cursor:pointer">
 
                                                         <span class="input-group-text input-group-text2">
 
@@ -243,7 +253,7 @@
 
                                         </div>
 
-                                        <div class="col-lg-2 col-md-12 pr-0 pr-s-12"  style="padding-right: 0px;">
+                                        <div class="col-lg-2 col-md-12 pr-0 pr-s-12" style="padding-right: 0px;">
 
                                             <div class="form-group">
 
@@ -251,17 +261,25 @@
 
                                                     <div class="input-group-prepend">
 
-                                                        <img src="{{asset('assets/images/ico/upload.png')}}" width="40" height="40" style="cursor:pointer;float: left;" onclick="document.getElementById('formDataaaupload-file[]').click(); return false">
-                                                        <img src="https://t.palexpand.ps/assets/images/ico/scanner.png"  style="cursor:pointer;    float: left;" onclick="scanToJpg();">
+                                                        <img src="{{asset('assets/images/ico/upload.png')}}" width="40"
+                                                             height="40" style="cursor:pointer;float: left;"
+                                                             onclick="document.getElementById('formDataaaupload-file[]').click(); return false">
+                                                        <img src="https://t.palexpand.ps/assets/images/ico/scanner.png"
+                                                             style="cursor:pointer;    float: left;"
+                                                             onclick="scanToJpg();">
 
-                                                        <img src="https://t.palexpand.ps/assets/images/ico/scannerpdf.png"  style="cursor:pointer;    float: left;" onclick="scanTopdf();">
+                                                        <img src="https://t.palexpand.ps/assets/images/ico/scannerpdf.png"
+                                                             style="cursor:pointer;    float: left;"
+                                                             onclick="scanTopdf();">
                                                     </div>
 
                                                     <input type="hidden" name="fromname" value="formDataaa">
 
-                                                    <input type="file" class="form-control-file" id="formDataaaupload-file[]" name="formDataaaUploadFile[]" onchange="doUploadAttach1('formDataaa')" 
+                                                    <input type="file" class="form-control-file"
+                                                           id="formDataaaupload-file[]" name="formDataaaUploadFile[]"
+                                                           onchange="doUploadAttach1('formDataaa')"
 
-                                                    style="display: none" >
+                                                           style="display: none">
 
                                                 </div>
 
@@ -273,49 +291,48 @@
 
                                     <div style="text-align: center;">
 
-                                        
+                                        <button type="submit" class="btn btn-primary" id="saveBtn" style="">
 
-                                    <button type="submit" class="btn btn-primary" id="saveBtn" style="">
+                                            {{ trans('admin.save') }}
 
-                                        {{ trans('admin.save') }}   
-
-                                    </button>
-
-                                    @can('trackingArchive')
-                                        <input type="hidden" id="track" name="track" value="0">
-                                        <button onclick="$('#track').val(1);save();" type="button" class="btn btn-primary save" id="saveBtn" style="" >
-                                            حفظ ومتابعة
                                         </button>
-                                    @endcan
 
-                                        
+                                        @can('trackingArchive')
+                                            <input type="hidden" id="track" name="track" value="0">
+                                            <button onclick="$('#track').val(1);save();" type="button"
+                                                    class="btn btn-primary save" id="saveBtn" style="">
+                                                حفظ ومتابعة
+                                            </button>
+                                        @endcan
 
                                     </div>
 
                                 </div>
 
+                            </div>
+
                         </div>
 
                     </div>
 
-                </div>
+                    <div class="col-xl-6 col-lg-6">
 
-                <div class="col-xl-6 col-lg-6">
+                        <div class="card lSide" style="min-height:302.2px;">
 
-                    <div class="card lSide" style="min-height:302.2px;">
+                            <div class="card-header">
 
-                        <div class="card-header">
+                                <h4 class="card-title"><img src="{{asset('assets/images/ico/report32.png')}}"/>
 
-                            <h4 class="card-title"><img src="{{asset('assets/images/ico/report32.png')}}" />
-                            
-                              {{ trans('archive.attach') }}   
-                            </h4>
+                                    {{ trans('archive.attach') }}
+                                </h4>
 
-                        </div>
+                            </div>
 
-                        <div class="card-body" id="attachList">
+                            <div class="card-body" id="attachList">
 
-                            <div class="row formDataaaFilesArea" style="margin-left: 0px;">
+                                <div class="row formDataaaFilesArea" style="margin-left: 0px;">
+
+                                </div>
 
                             </div>
 
@@ -324,69 +341,62 @@
                     </div>
 
                 </div>
-
-            </div>
-
+            </form>
         </section>
-
-    </form>
-
-</div>
-@include('dashboard.archive.arc_config')
-@include('dashboard.component.fetch_table')
+    </div>
+    @include('dashboard.archive.arc_config')
+    @include('dashboard.component.fetch_table')
 
 
 
-<script>
+    <script>
 
-
-
-function scanToJpg() {
+      function scanToJpg() {
         scanner.scan(displayImagesOnPage,
-            {
-                "output_settings" :
-                    [
-                        {
-                            "type" : "return-base64",
-                            "format" : "png"
-                        }
-                    ]
-            }
+          {
+            "output_settings":
+              [
+                {
+                  "type": "return-base64",
+                  "format": "png"
+                }
+              ]
+          }
         );
-    }
+      }
 
-    /** Processes the scan result */
-    function displayImagesOnPage(successful, mesg, response) {
-        if(!successful) { // On error
-            console.error('Failed: ' + mesg);
-            return;
+      /** Processes the scan result */
+      function displayImagesOnPage(successful, mesg, response) {
+        if (!successful) { // On error
+          console.error('Failed: ' + mesg);
+          return;
         }
 
-        if(successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
-            console.info('User canceled');
-            return;
+        if (successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
+          console.info('User canceled');
+          return;
         }
         var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
-        for(var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
-            var scannedImage = scannedImages[i];
-            uploadScannedfile(scannedImage);
-            // processScannedImage(scannedImage);
+        for (var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
+          var scannedImage = scannedImages[i];
+          uploadScannedfile(scannedImage);
+          // processScannedImage(scannedImage);
         }
-    }
+      }
 
-    /** Images scanned so far. */
-    var imagesScanned = [];
+      /** Images scanned so far. */
+      var imagesScanned = [];
 
-    /** Processes a ScannedImage */
-    function processScannedImage(scannedImage) {
+      /** Processes a ScannedImage */
+      function processScannedImage(scannedImage) {
         imagesScanned.push(scannedImage);
         // console.log(imagesScanned[0].getBase64NoPrefix())
         // console.log(imagesScanned[0])
         var image = new Image();
 
-        image.src =scannedImage.src;
-        var imagediv=
-        `<div >
+        image.src = scannedImage.src;
+        var imagediv =
+          `<div >
             <a target="_blank" href="${scannedImage.src}" data-original-title="" title="">
                 <img src="${image.src}" width="70" height="100" >
             </a>
@@ -395,50 +405,50 @@ function scanToJpg() {
         </div>`
         ;
         $('.formDataaaFilesArea').append(imagediv);
-    }
-    
-    function scanTopdf() {
+      }
+
+      function scanTopdf() {
         scanner.scan(displayPdfOnPage,
-            {
-                "output_settings" :
-                    [
-                        {
-                            "type" : "return-base64",
-                            "format" : "pdf",
-                        }
-                    ]
-            }
+          {
+            "output_settings":
+              [
+                {
+                  "type": "return-base64",
+                  "format": "pdf",
+                }
+              ]
+          }
         );
-    }
-    
-    function displayPdfOnPage(successful, mesg, response) {
-        
-        if(!successful) { // On error
-            console.error('Failed: ' + mesg);
-            return;
+      }
+
+      function displayPdfOnPage(successful, mesg, response) {
+
+        if (!successful) { // On error
+          console.error('Failed: ' + mesg);
+          return;
         }
 
-        if(successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
-            console.info('User canceled');
-            return;
+        if (successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
+          console.info('User canceled');
+          return;
         }
         var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
-        for(var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
-            var scannedImage = scannedImages[i];
-            uploadScannedfile(scannedImage);
-            // processScannedPdf(scannedImage);
+        for (var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
+          var scannedImage = scannedImages[i];
+          uploadScannedfile(scannedImage);
+          // processScannedPdf(scannedImage);
         }
-    }
-    
-    function processScannedPdf(scannedImage) {
+      }
+
+      function processScannedPdf(scannedImage) {
         imagesScanned.push(scannedImage);
         // console.log(imagesScanned[0].getBase64NoPrefix())
         // console.log(imagesScanned)
         var image = new Image();
-        
-        image.src =scannedImage.src;
-        var imagediv=
-        `<div >
+
+        image.src = scannedImage.src;
+        var imagediv =
+          `<div >
             <a target="_blank" href="${scannedImage.src}" data-original-title="" title="">
                 <img src="https://t.palexpand.ps/assets/images/ico/pdf.png" width="70" height="100" >
             </a>
@@ -447,388 +457,307 @@ function scanToJpg() {
         </div>`
         ;
         $('.formDataaaFilesArea').append(imagediv);
-    }
-    
-    function uploadScannedfile(scannedImage){
+      }
+
+      function uploadScannedfile(scannedImage) {
         $(".loader").removeClass('hide');
-        $('#saveBtn').css('display','none');
-        $('#editBtn').css('display','none');
+        $('#saveBtn').css('display', 'none');
+        $('#editBtn').css('display', 'none');
         $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
-                'ContentType': 'application/json'
-            }
+          headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
+            'ContentType': 'application/json'
+          }
         });
-        
+
         $.ajax({
-                type:'post',
-                url:'{{route('saveScanedFile')}}',
-                data: {
-                    scannedData: scannedImage.src,
-                    type: scannedImage.mimeType,
-                    
-                },
-                dataType:"json",
-                async: true,
-                success: (response) => {
-                    $('#saveBtn').css('display','inline-block');
-                    $('#editBtn').css('display','none');
-                    $(".loader").addClass('hide');
-                    $( ".archive_type" ).removeClass( "error" );
-                        shortCutName=response.file.real_name;
-        
-                        shortCutID=response.file.id;
+          type: 'post',
+          url: '{{route('saveScanedFile')}}',
+          data: {
+            scannedData: scannedImage.src,
+            type: scannedImage.mimeType,
 
-                        urlfile='{{ asset('') }}';
-                        if(response.file.type==1){
-                            urlfile+=response.file.url;
-                        }else{
-                            urlfile=response.file.url;
-                        }
-                            shortCutName=shortCutName.substring(0, 40)
-                            
-                            row='<div class="col-sm-12"><div class="form-group">'
+          },
+          dataType: "json",
+          async: true,
+          success: (response) => {
+            $('#saveBtn').css('display', 'inline-block');
+            $('#editBtn').css('display', 'none');
+            $(".loader").addClass('hide');
+            $(".archive_type").removeClass("error");
+            row=attacheWithAttachName(response.file, $("#AttahType option:selected").text())
+            $(".formDataaaFilesArea").append(row)
+          },
 
-                                +'  <div class="input-group w-s-87">'
+          error: function (response) {
+            $('#saveBtn').css('display', 'inline-block');
+            $('#editBtn').css('display', 'none');
+            $(".loader").addClass('hide');
 
-                                +'      <div class="input-group-prepend">  			'
+            Swal.fire({
+              position: 'top-center',
+              icon: 'error',
+              title: '{{trans('admin.error_save')}}',
+              showConfirmButton: false,
+              timer: 1500
+            })
 
-                                +'          <span class="input-group-text" id="basic-addon1">'
+            // $(".formDataaaFilesArea").html('');
 
-                                +'              {{ trans('archive.attachment_type') }}			'
+            if (response.responseJSON.errors.customerName) {
 
-                                +'          </span>          '
+              $("#customerName").addClass("error");
 
-                                +'      </div>          '
+            }
 
-                                +'      <input type="text" id="attachName[]" class="form-control" name="attachName[]" value="'+$("#AttahType option:selected").text()+'">     ' 
+          }
 
-                                +'      <input type="hidden" id="attachFile[]" name="attachFile[]" value="'+response.file.id+'">        '    
-
-                                +'      <a href="'+urlfile+'" target="_blank">     '           
-
-                                +'          <span class="input-group-text input-group-text2">       '             
-
-                                +'              <i class="fa fa-download"></i>       '         
-
-                                +'          </span>            '
-
-                                +'      </a>            '
-
-                                +'      <a onclick="$(this).parent().parent().remove()">       '         
-
-                                +'          <span class="input-group-text input-group-text2">          '          
-
-                                +'              <i class="fa fa-trash"></i>    '            
-
-                                +'          </span> '           
-
-                                +'      </a>'        
-
-                                +'  </div>'       
-
-                                +'</div></div>'
-                            
-        //                     row='<div id="attach" class=" col-lg-6 ">' +
-        //                         '   <div class="attach" onmouseover="$(this).children().first().next().show()">'
-        //                         +'    <a class="attach-close1" href="'+urlfile+'" style="color: #74798D;" target="_blank">'
-        //                         +'    <span class="attach-text">'+shortCutName+'</span> </a>'
-        //                         +'    <a class="attach-close1" style="color: #74798D; float:left;" onclick="$(this).parent().parent().remove()">×</a>'
-        //                         +'      <input type="hidden" id="formDataaaimgUploads[]" name="formDataaaimgUploads[]" value="'+shortCutName+'">'
-        //                         +'             <input type="hidden" id="formDataaaorgNameList[]" name="formDataaaorgNameList[]" value="'+shortCutName+'">'
-								// +'             <input type="hidden" id="formDataaaorgIdList[]" name="formDataaaorgIdList[]" value="'+shortCutID+'">'
-							 //   +'    </div>'
-        //                         +'  </div>'
-                        $(".formDataaaFilesArea").append(row)
-                },
-
-                error: function(response){
-                    $('#saveBtn').css('display','inline-block');
-                    $('#editBtn').css('display','none');
-                    $(".loader").addClass('hide');
-                    
-                    Swal.fire({
-                        position: 'top-center',
-                        icon: 'error',
-                        title: '{{trans('admin.error_save')}}',
-                        showConfirmButton: false,
-                        timer: 1500
-                        })
-
-                        // $(".formDataaaFilesArea").html('');
-
-                    if(response.responseJSON.errors.customerName){
-
-                        $( "#customerName" ).addClass( "error" );
-
-                    }
-
-                }
-
-            });
-            return true;
-    }
+        });
+        return true;
+      }
 
 
-
-$.ajaxSetup({
+      $.ajaxSetup({
 
         headers: {
 
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 
         }
 
-    });
+      });
 
-function save(){
-       if(parseInt($("#customerid").val())<= 0)
+      function save() {
+        if (parseInt($("#customerid").val()) <= 0) {
 
-       {
+          alert("الرجاء اختيار مورد");
 
-           alert("الرجاء اختيار مورد");
+        } else {
 
-       }
+          $(".loader").removeClass('hide');
 
-       else{
+          form = $('#formDataaa')[0]
+          let formData = new FormData(form);
 
-       $(".loader").removeClass('hide');
+          $.ajax({
 
-       form=$('#formDataaa')[0]
-        let formData = new FormData(form);
+            type: 'POST',
 
-       $.ajax({
+            url: "store_finance_archive",
 
-          type:'POST',
+            data: formData,
 
-          url: "store_finance_archive",
+            contentType: false,
 
-           data: formData,
+            processData: false,
 
-           contentType: false,
+            success: (response) => {
 
-           processData: false,
+              $(".loader").addClass('hide');
 
-           success: (response) => {
+              $('#supplierid').val('');
 
-            $(".loader").addClass('hide');
-            
-            $('#supplierid').val('');
+              $('#ArchiveID').val('');
 
-            $('#ArchiveID').val('');
+              $('#supplierName').val('');
 
-            $('#supplierName').val('');
+              $('#suppliername').val('');
 
-            $('#suppliername').val('');
+              $('#supplierType').val('');
 
-            $('#supplierType').val('');
+              Swal.fire({
 
-            Swal.fire({
+                position: 'top-center',
 
-				position: 'top-center',
+                icon: 'success',
 
-				icon: 'success',
+                title: '{{trans('admin.data_added')}}',
 
-				title: '{{trans('admin.data_added')}}',
+                showConfirmButton: false,
 
-				showConfirmButton: false,
+                timer: 1500
 
-				timer: 1500
+              })
 
-				})
+              $(".formDataaaFilesArea").html('');
+              if ($('#track').val() == 1) {
+                let url = `{{ route('admin.dashboard') }}/trackingArchive/${$('#url').val()}/${response.id}`
+                window.open(url, '_blank');
+                $('#track').val(0);
+              }
+              this.reset();
 
-                $(".formDataaaFilesArea").html('');
-                if($('#track').val()==1){
-                    let url=`{{ route('admin.dashboard') }}/trackingArchive/${$('#url').val()}/${response.id}`
-                    window.open(url, '_blank');
-                    $('#track').val(0);
-                }
-                this.reset();
+              $('.wtbl').DataTable().ajax.reload();
 
-               $('.wtbl').DataTable().ajax.reload();  
+            },
 
-           },
+            error: function (response) {
 
-           error: function(response){
+              $(".loader").addClass('hide');
 
-            $(".loader").addClass('hide');
+              Swal.fire({
 
-            Swal.fire({
+                position: 'top-center',
 
-				position: 'top-center',
+                icon: 'error',
 
-				icon: 'error',
+                title: '{{trans('admin.error_save')}}',
 
-				title: '{{trans('admin.error_save')}}',
+                showConfirmButton: false,
 
-				showConfirmButton: false,
+                timer: 1500
 
-				timer: 1500
+              })
 
-				})
+            }
 
-           }
+          });
 
-       });
+        }
 
-       }
+      }
 
-}
 
+      $('#formDataaa').submit(function (e) {
 
-   $('#formDataaa').submit(function(e) {
+        e.preventDefault();
 
-       e.preventDefault();
+        if (parseInt($("#customerid").val()) <= 0) {
 
-       if(parseInt($("#customerid").val())<= 0)
+          alert("الرجاء اختيار مورد");
 
-       {
+        } else {
 
-           alert("الرجاء اختيار مورد");
+          $(".loader").removeClass('hide');
 
-       }
+          let formData = new FormData(this);
 
-       else{
+          $.ajax({
 
-       $(".loader").removeClass('hide');
+            type: 'POST',
 
-       let formData = new FormData(this);
+            url: "store_finance_archive",
 
-       $.ajax({
+            data: formData,
 
-          type:'POST',
+            contentType: false,
 
-          url: "store_finance_archive",
+            processData: false,
 
-           data: formData,
+            success: (response) => {
 
-           contentType: false,
+              $(".loader").addClass('hide');
 
-           processData: false,
+              $('#supplierid').val('');
 
-           success: (response) => {
+              $('#ArchiveID').val('');
 
-            $(".loader").addClass('hide');
-            
-            $('#supplierid').val('');
+              $('#supplierName').val('');
 
-            $('#ArchiveID').val('');
+              $('#suppliername').val('');
 
-            $('#supplierName').val('');
+              $('#supplierType').val('');
 
-            $('#suppliername').val('');
+              Swal.fire({
 
-            $('#supplierType').val('');
+                position: 'top-center',
 
-            Swal.fire({
+                icon: 'success',
 
-				position: 'top-center',
+                title: '{{trans('admin.data_added')}}',
 
-				icon: 'success',
+                showConfirmButton: false,
 
-				title: '{{trans('admin.data_added')}}',
+                timer: 1500
 
-				showConfirmButton: false,
+              })
 
-				timer: 1500
+              $(".formDataaaFilesArea").html('');
 
-				})
+              this.reset();
 
-                $(".formDataaaFilesArea").html('');
+              $('.wtbl').DataTable().ajax.reload();
 
-               this.reset();
+            },
 
-               $('.wtbl').DataTable().ajax.reload();  
+            error: function (response) {
 
-           },
+              $(".loader").addClass('hide');
 
-           error: function(response){
+              Swal.fire({
 
-            $(".loader").addClass('hide');
+                position: 'top-center',
 
-            Swal.fire({
+                icon: 'error',
 
-				position: 'top-center',
+                title: '{{trans('admin.error_save')}}',
 
-				icon: 'error',
+                showConfirmButton: false,
 
-				title: '{{trans('admin.error_save')}}',
+                timer: 1500
 
-				showConfirmButton: false,
+              })
 
-				timer: 1500
+            }
 
-				})
+          });
 
-           }
+        }
 
-       });
+      });
 
-       }
 
-  });
+      $(function () {
 
+        $(".cust").autocomplete({
 
+          source: 'supplier_auto_complete',
 
+          minLength: 1,
 
 
-
-
-$( function() {
-
-    $( ".cust" ).autocomplete({
-
-		source: 'supplier_auto_complete',
-
-		minLength: 1,
-
-		
-
-        select: function( event, ui ) {
+          select: function (event, ui) {
 
             // console.log(ui.item.model);
 
             $('#supplierid').val(ui.item.id);
 
             $('#suppliername').val(ui.item.name);
-            
+
             $('#supplierName').val(ui.item.name);
 
             $('#supplierType').val(ui.item.model);
-            
+
             // $('#date').val(ui.item.date);
 
-           }
+          }
 
-	    });
+        });
 
-    });
+      });
 
-    function update($id){
+      function update($id) {
 
         let archive_id = $id;
 
-    $('#saveBtn').text("تعديل");
+        $('#saveBtn').text("تعديل");
 
         $(".formDataaaFilesArea").html('');
 
-            $.ajax({
+        $.ajax({
 
-            type: 'get', // the method (could be GET btw)
+          type: 'get', // the method (could be GET btw)
 
-            url: "{{ route('financeArchive_info') }}",
+          url: "{{ route('financeArchive_info') }}",
 
-            data: {
+          data: {
 
-                archive_id: archive_id,
+            archive_id: archive_id,
 
-            },
+          },
 
-            success:function(response){
+          success: function (response) {
 
-                    console.log(response.info)
-                    
-                    
             $('#supplierid').val(response.info.model_id);
 
             $('#ArchiveID').val(response.info.id);
@@ -842,151 +771,85 @@ $( function() {
             $('#notes').val(response.info.title);
 
             $('#financeType').val(response.info.type_id);
-            
-            let date=(response.info.date)
 
-            dates=""
+            let date = (response.info.date)
 
-            if(date){
+            dates = ""
 
-            dates=date.split("-");
+            if (date) {
 
-            dates = dates[2]+'/'+dates[1]+'/'+dates[0];}
-            
+              dates = date.split("-");
+
+              dates = dates[2] + '/' + dates[1] + '/' + dates[0];
+            }
+
             $('#date').val(dates);
-            
-
-            row='';
-
-                if(response.files){
-
-                    var j=0;
-
-                    for(j=0;j<response.files.length;j++){
-
-                        shortCutName=response.files[j].real_name;
-
-                        shortCutID=response.files[j].id;
-
-                        urlfile='{{ asset('') }}';
-                        if(response.files[j].type==1){
-                            urlfile+=response.files[j].url;
-                        }else{
-                            urlfile=response.files[j].url;
-                        }
 
 
-                        formDataStr="formDataaa";
+            row = '';
 
-                                
+            if (response.files) {
+              for (j = 0; j < response.files.length; j++) {
+                row += attacheWithAttachName(response.files[j], response.files[j].real_name)
+              }
 
-                            row+='<div class="col-sm-12"><div class="form-group">'
+              $(".formDataaaFilesArea").html(row)
 
-                                +'  <div class="input-group w-s-87">'
-
-                                +'      <div class="input-group-prepend">  			'
-
-                                +'          <span class="input-group-text" id="basic-addon1">'
-
-                                +'              {{ trans('archive.attachment_type') }}			'
-
-                                +'          </span>          '
-
-                                +'      </div>          '
-
-                                +'      <input type="text" id="attachName[]" class="form-control" name="attachName[]" value="'+response.files[j].real_name+'">     ' 
-
-                                +'      <input type="hidden" id="attachFile[]" name="attachFile[]" value="'+response.files[j].id+'">        '    
-
-                                +'      <a href="'+urlfile+'" target="_blank">     '           
-
-                                +'          <span class="input-group-text input-group-text2">       '             
-
-                                +'              <i class="fa fa-download"></i>       '         
-
-                                +'          </span>            '
-
-                                +'      </a>            '
-
-                                +'      <a onclick="$(this).parent().parent().remove()">       '         
-
-                                +'          <span class="input-group-text input-group-text2">          '          
-
-                                +'              <i class="fa fa-trash"></i>    '            
-
-                                +'          </span> '           
-
-                                +'      </a>'        
-
-                                +'  </div>'       
-
-                                +'</div></div>'
-
-                    }
-
-                    $(".formDataaaFilesArea").html(row)
-
-                }
+            }
 
             window.scrollTo(0, 0);
 
-            },
+          },
 
         });
 
-    }
+      }
 
-    function fillData($id)
+      function fillData($id) {
 
-    {
+        let license_id = $id;
 
-    let license_id = $id;
+        console.log(license_id);
 
-    console.log(license_id);
+        $.ajax({
 
-    $.ajax({
+          type: 'get', // the method (could be GET btw)
 
-    type: 'get', // the method (could be GET btw)
-
-    url: "license_info",
+          url: "license_info",
 
 
-
-        data: {
+          data: {
 
             license_id: license_id,
 
-        },
+          },
 
-        success:function(response){
+          success: function (response) {
 
             $("#licn").val('');
 
             $("#licnfile").val('');
 
             $("#licn").val(response.info.hodNo);
-    
+
             $("#licnfile").val(response.info.peiceNo);
 
-        },
+          },
 
-    });
+        });
 
-    }
+      }
 
-    
 
-    function doUploadAttach1(formDataStr)
-
-    {
+      function doUploadAttach1(formDataStr) {
 
         $.ajaxSetup({
 
-            headers: {
+          headers: {
 
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 
-            }
+          }
 
         });
 
@@ -994,242 +857,176 @@ $( function() {
 
         $(".form-actions").addClass('hide');
 
-        var formData = new FormData($("#"+formDataStr)[0]);
+        var formData = new FormData($("#" + formDataStr)[0]);
 
         $.ajax({
 
-            url: 'uploadAttach',
+          url: 'uploadAttach',
 
-            type: 'POST',
+          type: 'POST',
 
-            data: formData,
+          data: formData,
 
-            dataType:"json",
+          dataType: "json",
 
-            async: true,
+          async: true,
 
-            success: function (data) {
+          success: function (data) {
+            row = '';
+            if (data.all_files) {
+              for (j = 0; j < data.all_files.length; j++) {
+                row += attacheWithAttachName(response.files[j], response.files[j].real_name)
+              }
 
-                row='';
+              $(".alert-danger").addClass("hide");
 
-                console.log(data.all_files);
+              $(".alert-success").removeClass('hide');
 
-                if(data.all_files){
+              $("." + formDataStr + "FilesArea").append(row)
 
-                    var j=0;
+              $(".loader").addClass('hide');
+              $('.form-control-file').val('')
+              //document.getElementById(""+formDataStr+"upload-file[]").value="";
 
-                    for(j=0;j<data.all_files.length;j++){
+              $(".group1").colorbox({rel: 'group1'});
 
-                shortCutName=data.all_files[j].real_name;
+              setTimeout(function () {
 
-                shortCutID=data.all_files[j].id;
-
-                        urlfile='{{asset('')}}';
-
-                        console.log(urlfile);
-
-                        urlfile+=data.all_files[j].url;
-
-                        console.log(urlfile);
-
-                            shortCutName=shortCutName.substring(0, 40)
-
-                            row+='<div class="col-sm-12"><div class="form-group">'
-
-                                +'  <div class="input-group w-s-87">'
-
-                                +'      <div class="input-group-prepend">  			'
-
-                                +'          <span class="input-group-text" id="basic-addon1">'
-
-                                +'              {{ trans('archive.attachment_type') }}			'
-
-                                +'          </span>          '
-
-                                +'      </div>          '
-
-                                +'      <input type="text" id="attachName[]" class="form-control" name="attachName[]" value="'+$("#AttahType option:selected").text()+'">     ' 
-
-                                +'      <input type="hidden" id="attachFile[]" name="attachFile[]" value="'+data.all_files[j].id+'">        '    
-
-                                +'      <a href="'+urlfile+'" target="_blank">     '           
-
-                                +'          <span class="input-group-text input-group-text2">       '             
-
-                                +'              <i class="fa fa-download"></i>       '         
-
-                                +'          </span>            '
-
-                                +'      </a>            '
-
-                                +'      <a onclick="$(this).parent().parent().remove()">       '         
-
-                                +'          <span class="input-group-text input-group-text2">          '          
-
-                                +'              <i class="fa fa-trash"></i>    '            
-
-                                +'          </span> '           
-
-                                +'      </a>'        
-
-                                +'  </div>'       
-
-                                +'</div></div>'
-
-                    }
-
-                    $(".alert-danger").addClass("hide");
-
-                    $(".alert-success").removeClass('hide');
-
-                    $("."+formDataStr+"FilesArea").append(row)
-
-                    $(".loader").addClass('hide');
-                    $('.form-control-file').val('')
-                    //document.getElementById(""+formDataStr+"upload-file[]").value="";
-
-                    $(".group1").colorbox({rel:'group1'});
-
-                    setTimeout(function(){
-
-                        $(".alert-danger").addClass("hide");
-
-                        $(".alert-success").addClass("hide");
-
-                    },2000)
-
-                }
-
-                else {
-
-                    $(".alert-success").addClass("hide");
-
-                    $(".alert-danger").removeClass('hide');
-
-                }
-
-                $(".loader").addClass('hide');
-
-                $(".form-actions").removeClass('hide');
-
-            },
-
-            error:function(){
+                $(".alert-danger").addClass("hide");
 
                 $(".alert-success").addClass("hide");
 
-                $(".alert-danger").removeClass('hide');
+              }, 2000)
 
-                $(".loader").addClass('hide');
+            } else {
 
-                $(".form-actions").removeClass('hide');
+              $(".alert-success").addClass("hide");
 
-            },
+              $(".alert-danger").removeClass('hide');
 
-            cache: false,
-
-            contentType: false,
-
-            processData: false
-
-        });
-
-    }
-    
-    function delete_archive($id) {
-        if(confirm('هل انت متاكد من حذف الارشيف؟ لن يمكنك استرجاعه فيما بعد')){
-        let archive_id = $id;
-        var _token = '{{ csrf_token() }}';
-        $.ajax({
-    
-            type: 'post',
-    
-            // the method (could be GET btw)
-    
-            url: "archive_delete",
-    
-            data: {
-    
-                archive_id: archive_id,
-                _token: _token,
-            },
-    
-            success: function(response) {
-    
-                $(".loader").addClass('hide');
-    
-                $('.wtbl').DataTable().ajax.reload();
-    
-                // setTimeout(function(){
-    
-                //     $(".alert-success").addClass("hide");
-    
-                // },2000)
-    
-                Swal.fire({
-    
-                    position: 'top-center',
-    
-                    icon: 'success',
-    
-                    title: 'تم حذف البيانات بنجاح',
-    
-                    showConfirmButton: false,
-    
-                    timer: 1500
-    
-                })
-    
-                // $("#ajaxform")[0].reset();
-    
-            },
-    
-            error: function(response) {
-    
-                $(".loader").addClass('hide');
-    
-                Swal.fire({
-    
-                    position: 'top-center',
-    
-                    icon: 'error',
-    
-                    title: '{{ trans('admin.error_save') }}',
-    
-                    showConfirmButton: false,
-    
-                    timer: 1500
-    
-                })
-    
-                $("#formDataNameAR").on('keyup', function(e) {
-    
-                    if ($(this).val().length > 0) {
-    
-                        $("#formDataNameAR").removeClass("error");
-    
-                    }
-    
-                });
-    
-                if (response.responseJSON.errors.formDataNameAR) {
-    
-                    $("#formDataNameAR").addClass("error");
-    
-                }
-    
             }
-    
+
+            $(".loader").addClass('hide');
+
+            $(".form-actions").removeClass('hide');
+
+          },
+
+          error: function () {
+
+            $(".alert-success").addClass("hide");
+
+            $(".alert-danger").removeClass('hide');
+
+            $(".loader").addClass('hide');
+
+            $(".form-actions").removeClass('hide');
+
+          },
+
+          cache: false,
+
+          contentType: false,
+
+          processData: false
+
         });
-        return true;
+
+      }
+
+      function delete_archive($id) {
+        if (confirm('هل انت متاكد من حذف الارشيف؟ لن يمكنك استرجاعه فيما بعد')) {
+          let archive_id = $id;
+          var _token = '{{ csrf_token() }}';
+          $.ajax({
+
+            type: 'post',
+
+            // the method (could be GET btw)
+
+            url: "archive_delete",
+
+            data: {
+
+              archive_id: archive_id,
+              _token: _token,
+            },
+
+            success: function (response) {
+
+              $(".loader").addClass('hide');
+
+              $('.wtbl').DataTable().ajax.reload();
+
+              // setTimeout(function(){
+
+              //     $(".alert-success").addClass("hide");
+
+              // },2000)
+
+              Swal.fire({
+
+                position: 'top-center',
+
+                icon: 'success',
+
+                title: 'تم حذف البيانات بنجاح',
+
+                showConfirmButton: false,
+
+                timer: 1500
+
+              })
+
+              // $("#ajaxform")[0].reset();
+
+            },
+
+            error: function (response) {
+
+              $(".loader").addClass('hide');
+
+              Swal.fire({
+
+                position: 'top-center',
+
+                icon: 'error',
+
+                title: '{{ trans('admin.error_save') }}',
+
+                showConfirmButton: false,
+
+                timer: 1500
+
+              })
+
+              $("#formDataNameAR").on('keyup', function (e) {
+
+                if ($(this).val().length > 0) {
+
+                  $("#formDataNameAR").removeClass("error");
+
+                }
+
+              });
+
+              if (response.responseJSON.errors.formDataNameAR) {
+
+                $("#formDataNameAR").addClass("error");
+
+              }
+
+            }
+
+          });
+          return true;
         }
         return false;
-    }
+      }
 
+    </script>
 
-</script>
+    @section('script')
 
-@section('script')
-
-@endsection
+    @endsection
 @endsection

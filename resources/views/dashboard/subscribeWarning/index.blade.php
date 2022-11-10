@@ -580,10 +580,8 @@
                         shortCutName=response.file.real_name;
                         
                         shortCutID=response.file.id;
-                        
-                        urlfile='{{ asset('') }}';
-                        
-                        urlfile+=response.file.url;
+
+                        urlfile=getFileUrl(response.file)
                         
                         shortCutName=shortCutName.substring(0, 40)
                         if(response.file.extension=="jpg"||response.file.extension=="png")
@@ -778,10 +776,7 @@ function startUpload1(formDataStr)
                         file=data.all_files[j]
                         shortCutName=data.all_files[j].real_name;
                         shortCutID=data.all_files[j].id;
-                        urlfile='https://t.expand.ps/expand_repov1/public/';
-                        console.log(urlfile);
-                        urlfile+=data.all_files[j].url;
-                        console.log(urlfile);
+                        urlfile=getFileUrl(data.all_files[j])
                          shortCutName=file.real_name;
                                 shortCutName=shortCutName.substring(0, 20);
                                 urlfile='https://t.expand.ps/expand_repov1/public/';
@@ -906,8 +901,7 @@ function startUpload1(formDataStr)
                 if(response.info.file_ids!=null){
                     for(c=0;c<response.info.Files.length;c++){
                         attach=response.info.Files[c];
-                        // console.log('hiiiiiiiiii');
-                        url='{{asset("")}}/'+attach.Files[0].url;
+                        url=getFileUrl(attach.Files[0])
                         attachments+='<li style="font-size: 17px !important;color:#000000">'
                             +'<div class="row">'
                             +    '<div class="col-sm-6" >'
