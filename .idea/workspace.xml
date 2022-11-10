@@ -5,75 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a16e4324-61f7-4759-b5ed-4280ce8af87e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/TaboArchiveController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/TaboArchive.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_10_03_101106_update_agenda_topics_attributes_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_11_07_134435_add_print_input_to_agenda_details.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_11_07_134557_add_print_input_to_agenda_topics.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_11_08_122139_add_forward_topic__ids_to_agenda_topics.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_11_10_084505_add_notes_to_archives_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/js/datatabel.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/js/qrcode.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/printMeeting.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/taboArchive.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Console/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/AgendaArchieveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/AgendaArchieveController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ArchieveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ArchieveController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/TaboController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/TaboController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/WaterReadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/WaterReadController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/WaterTicketController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/WaterTicketController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Managers/AttatchmentManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Managers/AttatchmentManager.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/ArchiveLicense.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/ArchiveLicense.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/File.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/File.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/backup.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/backup.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/filesystems.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/agenda.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/agenda.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/arc_config.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/arc_config.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/assetsArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/assetsArchive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/defineMeeting.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/defineMeeting.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/lawArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/lawArchive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/licArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/licArchive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/licFileArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/licFileArchive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/outArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/outArchive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/printDes.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/printDes.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/rptArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/rptArchive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/tradeArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/tradeArchive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/assets_archive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/assets_archive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/dept_archive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/dept_archive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/employee_archive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/employee_archive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/fetch_table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/fetch_table.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/inner_employee_archive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/inner_employee_archive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/orgnization_archive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/orgnization_archive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/project_archive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/project_archive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/specialAssets_archive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/specialAssets_archive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/subscribe_archive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/subscribe_archive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/vehicle_archive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/vehicle_archive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/includes/attach_ticket.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/attach_ticket.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/includes/attachment.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/attachment.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/includes/attachment1.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/attachment1.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/includes/attachmentCert.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/attachmentCert.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/reports/dailyReport.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/reports/dailyReport.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/reports/deletedArchiveReport.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/reports/deletedArchiveReport.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/reports/tasksArchiveReport.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/reports/tasksArchiveReport.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/subscribeWarning/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/subscribeWarning/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/tabo/tabo1.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/tabo/tabo1.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/tabo/tabo2.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/tabo/tabo2.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/tabo/tabo3.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/tabo/tabo3.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/tabo/tabo4.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/tabo/tabo4.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/tabo/tabo_excel.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/tabo/tabo_excel.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/trackingArchive/component/agendaArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/trackingArchive/component/agendaArchive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/trackingArchive/component/financeArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/trackingArchive/component/financeArchive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/trackingArchive/component/jalArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/trackingArchive/component/jalArchive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/trackingArchive/component/munArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/trackingArchive/component/munArchive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/trackingArchive/component/outArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/trackingArchive/component/outArchive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/trackingArchive/component/tradeArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/trackingArchive/component/tradeArchive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/waterRead/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/waterRead/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/waterRead/readReport.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/waterRead/readReport.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/front/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/front/home.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/renderFile.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/renderFile.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/includes/mailPage.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/includes/mailPage.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -271,7 +205,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/laragon/www/t_expand/app/Http/Requests",
+    "last_opened_file_path": "C:/laragon/www/t_expand/app/Models",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -282,11 +216,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\laragon\www\t_expand\app\Models" />
       <recent name="C:\laragon\www\t_expand\app\Http\Requests" />
       <recent name="C:\laragon\www\t_expand\app\Http\Controllers\Dashboard" />
       <recent name="C:\laragon\www\t_expand\resources\views\dashboard" />
       <recent name="C:\laragon\www\t_expand\resources\views\dashboard\includes" />
-      <recent name="C:\laragon\www\t_expand\resources\views\layouts" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\laragon\www\t_expand\resources\views\layouts" />
@@ -339,7 +273,7 @@
       <workItem from="1667986902138" duration="886000" />
       <workItem from="1667995433674" duration="1144000" />
       <workItem from="1668009787777" duration="10408000" />
-      <workItem from="1668060495297" duration="14176000" />
+      <workItem from="1668060495297" duration="15705000" />
     </task>
     <servers />
   </component>
