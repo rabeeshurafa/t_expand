@@ -414,7 +414,7 @@ class SubscriberController extends Controller
     public function getUserTicket(Request $request){
         $ticketFiltter='where 1 ';
         $ticketFiltter.=' and customer_id='.$request['subscribe_id'];
-        $json_ticketFiltter=' or json_contains(`beneficiaries_id`,"\"'.$request['subscribe_id'].'\"","$")=1 ';
+        $json_ticketFiltter=''/*' or json_contains(`beneficiaries_id`,"\"'.$request['subscribe_id'].'\"","$")=1 '*/;
         $activeRec= $this->masterQuery(" where app_trans.id = a.active_trans ",$ticketFiltter,$json_ticketFiltter);
         $res=DB::select("SELECT app_trans.*,admins.nick_name,admins.image FROM `app_trans` join admins on app_trans.sender_id=admins.id WHERE  EXISTS ($activeRec) order by id desc");
         $arr=array();
@@ -800,29 +800,16 @@ class SubscriberController extends Controller
         ->where('model_name','App\\Models\\User')->with('License')->select('archive_licenses.*', 't_constant.name as license_type_name')
 
         ->leftJoin('t_constant', 't_constant.id', 'archive_licenses.license_id')->get();
-
-        foreach($ArchiveLic as $row){
-
-            $attach=json_decode($row->json_feild);
-
-            foreach($attach as $key=>$value){
-
-                foreach((array) $value as $key=>$val){
-
-                    $temp=array();
-
-                    $temp['real_name']=$key;
-
-                    $temp['url']=$val;
-
-                }
-
-                //dd($temp);
-
-                $row->files[]=$temp;
-
+        foreach ($ArchiveLic as $row) {
+            $attach = json_decode($row->json_feild);
+            $files = array();
+            foreach ($attach as $id) {
+                $temp=(array) $id;
+                $file = File::find($id->id);
+                $file->real_name= array_search ($file->url, $temp);
+                $files[] = $file;
             }
-
+            $row->files = $files;
         }
 
         return DataTables::of($ArchiveLic)
@@ -840,19 +827,34 @@ class SubscriberController extends Controller
             ->where('model_name', 'App\\Models\\User')->with('Admin')->with('Type')->get();
 
         foreach ($Archive as $row) {
-
             $attach = json_decode($row->json_feild);
+            $attachIds = json_decode($row->attach_ids) ?? array();
+            $rawFiles=File::whereIn('id',$attachIds)->get();
+            $count = sizeof($attachIds);
+            $i = 0;
             $files = array();
             foreach ($attach as $key => $value) {
+                // dd($value);
 
-                foreach ((array)$value as $key => $val) {
+                foreach ((array) $value as $key => $val) {
                     $temp = array();
+                    if ($i < $count) {
+                        $temp['id'] = $attachIds[$i];
+                        $temp['file_links'] = $rawFiles[$i]->file_links;
+                        $i++;
+                    } else {
+                        $temp['id'] = 0;
+                        $temp['file_links'] = [];
+                    }
                     $temp['real_name'] = $key;
                     $temp['url'] = $val;
 
+
                 }
-                //dd($temp);
                 array_push($files, $temp);
+
+                // dd($temp);
+
 
             }
             $row['arch_files'] = $files;

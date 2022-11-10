@@ -1985,7 +1985,7 @@ class ArchieveController extends Controller
         foreach ($archive as $row) {
             $attach = json_decode($row->json_feild);
             $attachIds = json_decode($row->attach_ids) ?? array();
-            $files=File::whereIn($attachIds);
+            $rawFiles=File::whereIn('id',$attachIds)->get();
             $count = sizeof($attachIds);
             $i = 0;
             $files = array();
@@ -1996,7 +1996,7 @@ class ArchieveController extends Controller
                     $temp = array();
                     if ($i < $count) {
                         $temp['id'] = $attachIds[$i];
-                        $temp['file_links'] = $files[$i]->file_links;
+                        $temp['file_links'] = $rawFiles[$i]->file_links;
                         $i++;
                     } else {
                         $temp['id'] = 0;
@@ -2028,7 +2028,7 @@ class ArchieveController extends Controller
         foreach ($archive['info'] as $row) {
             $attach = json_decode($row->json_feild);
             $attachIds = json_decode($row->attach_ids) ?? array();
-            $files=File::whereIn($attachIds);
+            $rawFiles=File::whereIn('id',$attachIds)->get();
             $count = sizeof($attachIds);
             $i = 0;
             foreach ($attach as $key => $value) {
@@ -2036,7 +2036,7 @@ class ArchieveController extends Controller
                     $temp = array();
                     if ($i < $count) {
                         $temp['id'] = $attachIds[$i];
-                        $temp['file_links'] = $files[$i]->file_links;
+                        $temp['file_links'] = $rawFiles[$i]->file_links;
                         $i++;
                     } else {
                         $temp['id'] = 0;
