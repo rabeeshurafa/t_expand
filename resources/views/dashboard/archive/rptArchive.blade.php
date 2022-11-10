@@ -540,7 +540,7 @@ function calcDuration(str){
                         // if(elem.files[j].type==1){
                         //     urlfile+=elem.files[j].url;
                         // }else{
-                            urlfile=elem.files[j].url;
+                        urlfile=getFileUrl(elem.files[j])
                         // }
                         if(elem.files[j].extension=="jpg"||elem.files[j].extension=="png")
 
@@ -630,13 +630,7 @@ function calcDuration(str){
 
                         shortCutName=elem.files[j].real_name;
 
-                        urlfile='{{ asset('') }}';
-
-                        if(elem.files[j].type==1){
-                            urlfile+=elem.files[j].url;
-                        }else{
-                            urlfile=elem.files[j].url;
-                        }
+                        urlfile=getFileUrl(elem.files[j])
 
                         if(elem.files[j].extension=="jpg"||elem.files[j].extension=="png")
 

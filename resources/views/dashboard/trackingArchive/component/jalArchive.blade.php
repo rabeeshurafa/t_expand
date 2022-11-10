@@ -105,11 +105,27 @@ if (isset($helpers)) {
     <div class="row col-md-12">
         @foreach($archive['files'] as $file)
                 <?php
-                $urlFile = asset('');
-                if ($file->type != 2) {
-                    $urlFile .= $file->url;
-                } else {
-                    $urlFile = $file->url;
+                $urlFile='';
+                if(is_object($file['file_links'])){
+                    if (isset($file['file_links']->ftp)) {
+                        $urlFile = $file['file_links']->ftp;
+                    } else if (isset($file['file_links']->s3)) {
+                        $urlFile = $file['file_links']->s3;
+                    } else if (isset($file['file_links']->dropbox)) {
+                        $urlFile = $file['file_links']->dropbox;
+                    } else {
+                        $urlFile = asset('') . $file['url'];
+                    }
+                }else{
+                    if (isset($file['file_links']['ftp'])) {
+                        $urlFile = $file['file_links']['ftp'];
+                    } else if (isset($file['file_links']['s3'])) {
+                        $urlFile = $file['file_links']['s3'];
+                    } else if (isset($file['file_links']['dropbox'])) {
+                        $urlFile = $file['file_links']['dropbox'];
+                    } else {
+                        $urlFile = asset('') . $file['url'];
+                    }
                 }
                 ?>
             <div id="attach" class=" col-md-4">

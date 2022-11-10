@@ -27,15 +27,15 @@ return [
                  * Directories used by the backup process will automatically be excluded.
                  */
                 'exclude' => [
-//                    base_path('app'),
-//                    base_path('bootstrap'),
-//                    base_path('config'),
-//                    base_path('database'),
-//                    base_path('resources'),
-//                    base_path('routes'),
-//                    base_path('storage'),
-//                    base_path('vendor'),
-//                    base_path('node_modules'),
+                    base_path('app'),
+                    base_path('bootstrap'),
+                    base_path('config'),
+                    base_path('database'),
+                    base_path('resources'),
+                    base_path('routes'),
+                    base_path('storage'),
+                    base_path('vendor'),
+                    base_path('node_modules'),
                 ],
 
                 /*
@@ -123,7 +123,7 @@ return [
              * The disk names on which the backups will be stored.
              */
             'disks' => [
-                'local',
+                'ftp',
             ],
         ],
 
@@ -173,10 +173,10 @@ return [
         'notifiable' => \Spatie\Backup\Notifications\Notifiable::class,
 
         'mail' => [
-            'to' => 'bahaanasser56@gmail.com',
+            'to' => 'info@palexpand.com',
 
             'from' => [
-                'address' => env('MAIL_FROM_ADDRESS', 'bahaa@palexpand.ps'),
+                'address' => env('MAIL_FROM_ADDRESS', 'backup@palexpand.com'),
                 'name' => env('MAIL_FROM_NAME', 'Example'),
             ],
         ],

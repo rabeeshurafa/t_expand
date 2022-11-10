@@ -281,7 +281,7 @@ function viewSubscription(){
 function calcInNIS(){
     var newVal=$('#current_read').val();
     var oldVal=$('#prev_read').val();
-    var total=0;
+    var total=5;
     
     var spent=newVal-oldVal;
     if(spent<=10)

@@ -604,7 +604,7 @@
                         usage_cost=data.usage_cost;
                         subsNo=data.w_subscription.subscription_no;
                         
-                        $actionBtn = '<a onclick="update('+id+",'"+userName+"',"+phone+','+prev_read+','+current_read+','+consumption+','+usage_cost+','+subsNo+')" class="btn btn-info" style="margin-left: 5px;"><i style="color:#ffffff" class="fa fa-edit"></i> </a>';
+                        $actionBtn = '<a onclick="update('+id+",'"+userName+"',"+phone+','+prev_read+','+current_read+','+consumption+','+usage_cost+",'"+subsNo+"')"+'"'+' class="btn btn-info" style="margin-left: 5px;"><i style="color:#ffffff" class="fa fa-edit"></i> </a>';
                         return $actionBtn;
                     },
                     name:'name',
@@ -854,7 +854,7 @@
     function calcInNIS(){
         var newVal=$('#current_read').val();
         var oldVal=$('#prev_read').val();
-        var total=0;
+        var total=5;
         
         var spent=newVal-oldVal;
         if(spent<=10)

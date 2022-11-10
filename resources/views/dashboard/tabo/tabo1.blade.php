@@ -62,7 +62,7 @@
     }
     
 </style>
-    <img src="{{$setting->header_img}}" width="100%" style="max-width:100%">
+    <img src="{{asset('assets/header.png')}}" width="100%" style="max-width:100%">
     <hr style="border: 2px solid #000000" />
     
     <div style="min-height: 1080px;direction: rtl;width: 100%;">

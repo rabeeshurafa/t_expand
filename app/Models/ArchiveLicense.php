@@ -46,10 +46,10 @@ class ArchiveLicense extends Model
 
  
 
-    public function files() {
-
-        return $this->archiveFiles()->where('model_name','App\Models\ArchiveLicense');
-
-    }
+//    public function files() {
+//
+//        return $this->archiveFiles()->where('model_name','App\Models\ArchiveLicense');
+//
+//    }
 
 }

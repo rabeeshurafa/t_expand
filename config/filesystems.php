@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DRIVER', 'local'),
+        'default' => env('FILESYSTEM_DRIVER', 'local'),
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'cloud' => env('FILESYSTEM_CLOUD', 's3'),
+        'cloud' => env('FILESYSTEM_CLOUD', 's3'),
 
     /*
     |--------------------------------------------------------------------------
@@ -41,78 +41,78 @@ return [
     |
     */
 
-    'disks' => [
+        'disks' => [
 
-        'local' => [
-            'driver' => 'local',
-            'root' => storage_path('app'),
-        ],
+                'local' => [
+                        'driver' => 'local',
+                        'root' => storage_path('app'),
+                ],
 
-        'public' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL') . '/storage',
-            'visibility' => 'public',
-        ],
+                'public' => [
+                        'driver' => 'local',
+                        'root' => storage_path('app/public'),
+                        'url' => env('APP_URL').'/storage',
+                        'visibility' => 'public',
+                ],
 
-        'brands' => [
-            'driver' => 'local',
-            'root' => public_path('assets/images/brands'),
-            'url' => env('APP_URL') . '/storage',
-            'visibility' => 'public',
-        ],
+                'brands' => [
+                        'driver' => 'local',
+                        'root' => public_path('assets/images/brands'),
+                        'url' => env('APP_URL').'/storage',
+                        'visibility' => 'public',
+                ],
 
-        'products' => [
-            'driver' => 'local',
-            'root' => public_path('assets/images/products'),
-            'url' => env('APP_URL') . '/storage',
-            'visibility' => 'public',
-        ],
-        'sliders' => [
-            'driver' => 'local',
-            'root' => public_path('assets/images/sliders'),
-            'url' => env('APP_URL') . '/storage',
-            'visibility' => 'public',
-        ],
+                'products' => [
+                        'driver' => 'local',
+                        'root' => public_path('assets/images/products'),
+                        'url' => env('APP_URL').'/storage',
+                        'visibility' => 'public',
+                ],
+                'sliders' => [
+                        'driver' => 'local',
+                        'root' => public_path('assets/images/sliders'),
+                        'url' => env('APP_URL').'/storage',
+                        'visibility' => 'public',
+                ],
 
-        's3' => [
-            'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION'),
-            'bucket' => env('AWS_BUCKET'),
-            'url' => env('AWS_URL'),
-            'endpoint' => env('AWS_ENDPOINT'),
-            'visibility' => 'public',
-        ],
+                's3' => [
+                        'driver' => 's3',
+                        'key' => env('AWS_ACCESS_KEY_ID'),
+                        'secret' => env('AWS_SECRET_ACCESS_KEY'),
+                        'region' => env('AWS_DEFAULT_REGION'),
+                        'bucket' => env('AWS_BUCKET'),
+                        'url' => env('AWS_URL'),
+                        'endpoint' => env('AWS_ENDPOINT'),
+                        'visibility' => 'public',
+                ],
 
-        'dropbox' => [
-            'driver' => 'dropbox',
-            'App folder name' => 'expandbropbox',
-            'App key' => '8f7l1qrwph13rql',
-            'appKey' => '8f7l1qrwph13rql',
-            'App secret' => 'a2hp0e30uhq76si',
-            'appSecret' => 'a2hp0e30uhq76si',
-            'client_id'=>  "8f7l1qrwph13rql",
-            'client_secret'=>  "a2hp0e30uhq76si"
-        ],
+                'dropbox' => [
+                        'driver' => 'dropbox',
+                        'App folder name' => 'expandbropbox',
+                        'App key' => '8f7l1qrwph13rql',
+                        'appKey' => '8f7l1qrwph13rql',
+                        'App secret' => 'a2hp0e30uhq76si',
+                        'appSecret' => 'a2hp0e30uhq76si',
+                        'client_id' => "8f7l1qrwph13rql",
+                        'client_secret' => "a2hp0e30uhq76si"
+                ],
 
-        'ftp' => [
-            'driver' => 'ftp',
-            'host' => env('FTP_HOST', 'u319352.your-storagebox.de'),
-            'username' => env('FTP_USERNAME', 'u319352'),
-            'password' => env('FTP_PASSWORD', 'QiuJ591eBDbFE5hR'),
-            'url' => env('FTP_URL'),
-            'visibility' => 'public',
-            // Optional FTP Settings...
-            // 'port' => env('FTP_PORT', 21),
-            // 'root' => env('FTP_ROOT'),
-            // 'passive' => true,
-            // 'ssl' => true,
-            // 'timeout' => 30,
-        ],
+                'ftp' => [
+                        'driver' => 'ftp',
+                        'host' => env('FTP_HOST', 'u319352.your-storagebox.de'),
+                        'username' => env('FTP_USERNAME', 'u319352'),
+                        'password' => env('FTP_PASSWORD', 'QiuJ591eBDbFE5hR'),
+                        'url' => env('FTP_URL'),
+                        'visibility' => 'public',
+                    // Optional FTP Settings...
+                    // 'port' => env('FTP_PORT', 21),
+                    // 'root' => env('FTP_ROOT'),
+                    // 'passive' => true,
+                    // 'ssl' => true,
+                    // 'timeout' => 30,
+                ],
 
-    ],
+        ],
 
     /*
     |--------------------------------------------------------------------------
@@ -125,8 +125,8 @@ return [
     |
     */
 
-    'links' => [
-        public_path('storage') => storage_path('app/public'),
-    ],
+        'links' => [
+                public_path('storage') => storage_path('app/public'),
+        ],
 
 ];

@@ -199,10 +199,10 @@
                                 <div class="form-actions" style="border-top:0px;">
                                     <div class="text-right">
                                         <button type="button" onclick="upload();" class="btn btn-primary" name="addBtn">
-                                            حفظ 
+                                            حفظ
                                             <i class="ft-thumbs-up position-right"></i></button>
                                         <button type="reset" onclick="$('#excelId').val(0);" class="btn btn-warning">
-                                            اعادة تعيين 
+                                            اعادة تعيين
                                         <i class="ft-refresh-cw position-right"></i></button>
                                     </div>
                                 </div>
@@ -240,7 +240,7 @@
                                             </td>
                                             <td>
                                                 <i class="fa fa-attach"></i>
-                                                حذف 
+                                                حذف
                                             </td>
                                         </tr>
                                     </tbody>
@@ -255,7 +255,7 @@
                                                 {{$taboExcel->hod_name}} ({{$taboExcel->hod_no}})
                                             </td>
                                             <td>
-                                                <a href="{{ asset('') }}{{$taboExcel->excel_path}}" target="_blank">
+                                                <a href="{{asset('')}}{{$taboExcel->excel_path}}" target="_blank">
                                                     <i class="fa fa-download"></i>
                                                 </a>
                                             </td>
@@ -267,15 +267,15 @@
                                             </td>
                                             @else
                                             <td>
-                                                <a href="{{ asset('') }}{{$taboExcel->excel_path2}}" title="تحميل الملف">
+                                                <a href="{{asset('')}}{{$taboExcel->excel_path2}}" title="تحميل الملف">
                                                     <i class="fa fa-check"></i>
                                                 </a>
-                                                
+
                                             </td>
                                             @endif
                                             <td>
                                                 <a  onclick="delete_Excel({{$taboExcel->id}})" style="margin-right:17px;">
-                                                    <i class="fa fa-trash" style="color: #1E9FF2;"></i> 
+                                                    <i class="fa fa-trash" style="color: #1E9FF2;"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -307,11 +307,11 @@
 
     function upload(){
         if($('#excelId').val()==0)
-            doUploadExcel(); 
-        else 
+            doUploadExcel();
+        else
             doUploadFinalExcel();
     }
-    
+
     function doUploadExcel(){
 
 	    $.ajaxSetup({
@@ -352,14 +352,14 @@
 
                     //$("#userProfileImg").attr('src', window.location.origin+'/'+data.url);
 
-				    $("#userProfileImg").attr('src', "{{ asset('') }}"+data.file.url);
+				    $("#userProfileImg").attr('src', "{{asset('')}}"+data.file.url);
 
                     $("#userimgpath").val(data.file.url);
 
                     $("#file_id").val(data.file.id);
 
                     $("#userimgpath").trigger('change')
-					
+
                     Swal.fire({
 
                         position: 'top-center',
@@ -373,8 +373,8 @@
                         timer: 1500
 
                     })
-                    
-                    
+
+
 
                 }
 
@@ -417,7 +417,7 @@
         });
 
     }
-    
+
     function doUploadFinalExcel(){
 
 	    $.ajaxSetup({
@@ -449,10 +449,10 @@
             async: true,
 
             success: function (data) {
-                
+
                 if(data){
                     // console.log(data);
-                    
+
                     updateExcelTable();
                     $(".alert-danger").addClass("hide");
 
@@ -460,14 +460,14 @@
 
                     //$("#userProfileImg").attr('src', window.location.origin+'/'+data.url);
 
-				    $("#userProfileImg").attr('src', "{{ asset('') }}"+data.file.url);
+				    $("#userProfileImg").attr('src', "{{asset('')}}"+data.file.url);
 
                     $("#userimgpath").val(data.file.url);
 
                     $("#file_id").val(data.file.id);
 
                     $("#userimgpath").trigger('change')
-					
+
                     Swal.fire({
 
                         position: 'top-center',
@@ -481,8 +481,8 @@
                         timer: 1500
 
                     })
-                    
-                    
+
+
 
                 }
 
@@ -525,17 +525,17 @@
         });
 
     }
-    
+
     function updateExcelTable(){
         $(".loader").removeClass('hide');
-    
+
         $.ajax({
-    
+
         type: 'get', // the method (could be GET btw)
-    
+
         url: '{{route("getExcelInfo_all")}}',
-    
-    
+
+
             success:function(response){
                 $(".loader").addClass('hide');
                 Swal.fire({
@@ -562,7 +562,7 @@
                                 ${response[i].hod_name} (${response[i].hod_no})
                             </td>
                             <td>
-                                <a href="{{ asset('') }}${response[i].excel_path}" target="_blank">
+                                <a href="{{asset('')}}${response[i].excel_path}" target="_blank">
                                     <i class="fa fa-download"></i>
                                 </a>
                             </td>`;
@@ -572,48 +572,48 @@
                                         <i class="fa fa-upload" style="color: #1E9FF2;"></i>
                                     </a>
                                 </td>`;
-                                
+
                             }else{
                                 rows+=`<td>
-                                    <a href="{{ asset('') }}${response[i].excel_path2}" title="تحميل الملف">
+                                    <a href="{{asset('')}}${response[i].excel_path2}" title="تحميل الملف">
                                         <i class="fa fa-check"></i>
                                     </a>
-                                    
+
                                 </td>`;
                             }
                             rows+=`<td>
                                 <a  onclick="delete_Excel(${response[i].id})" style="margin-right:17px;">
-                                    <i class="fa fa-trash" style="color: #1E9FF2;"></i> 
+                                    <i class="fa fa-trash" style="color: #1E9FF2;"></i>
                                 </a>
                             </td>
                         </tr>`;
-                        
+
                 }
                 $('#excel').append(rows);
                 $('#excelId').val(0);
                 $("#setting_form")[0].reset();
             },
-    
+
         });
-    
+
     }
-    
+
     function update($id){
         $(".loader").removeClass('hide');
         let id = $id;
-    
+
         $.ajax({
-    
+
         type: 'get', // the method (could be GET btw)
-    
+
         url: '{{route("getExcelInfo")}}',
-    
+
             data: {
-    
+
                 id: id,
-    
+
             },
-    
+
             success:function(response){
                 $(".loader").addClass('hide');
                 $('#hod_name').val(response.hod_name);
@@ -621,11 +621,11 @@
                 $('#excelId').val(response.id);
                 window.scrollTo(0, 0);
             },
-    
+
         });
-    
+
     }
-    
+
     function delete_Excel($id) {
             if(confirm('هل انت متاكد من حذف الحوض؟ لن يمكنك استرجاعه فيما بعد')){
             $(".loader").removeClass('hide');
@@ -638,7 +638,7 @@
                 // the method (could be GET btw)
 
                 url: "deleteExcel",
-                
+
                 data: {
 
                     id: id,
@@ -674,7 +674,7 @@
                                         ${response[i].hod_name} (${response[i].hod_no})
                                     </td>
                                     <td>
-                                        <a href="{{ asset('') }}${response[i].excel_path}" target="_blank">
+                                        <a href="{{asset('')}}${response[i].excel_path}" target="_blank">
                                             <i class="fa fa-download"></i>
                                         </a>
                                     </td>`;
@@ -684,22 +684,22 @@
                                                 <i class="fa fa-upload" style="color: #1E9FF2;"></i>
                                             </a>
                                         </td>`;
-                                        
+
                                     }else{
                                         rows+=`<td>
-                                            <a href="{{ asset('') }}${response[i].excel_path2}" title="تحميل الملف">
+                                            <a href="{{asset('')}}${response[i].excel_path2}" title="تحميل الملف">
                                                 <i class="fa fa-check"></i>
                                             </a>
-                                            
+
                                         </td>`;
                                     }
                                     rows+=`<td>
                                         <a  onclick="delete_Excel(${response[i].id})" style="margin-right:17px;">
-                                            <i class="fa fa-trash" style="color: #1E9FF2;"></i> 
+                                            <i class="fa fa-trash" style="color: #1E9FF2;"></i>
                                         </a>
                                     </td>
                                 </tr>`;
-                                
+
                         }
                         $('#excel').append(rows);
                     // $("#ajaxform")[0].reset();
@@ -722,7 +722,7 @@
 
                         timer: 1500
 
-                    }) 
+                    })
 
                     $("#formDataNameAR").on('keyup', function(e) {
 

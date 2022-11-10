@@ -522,6 +522,35 @@ $archiveNames=array(
                                                 $arr=json_decode($ticket->fees_json);
                                                 $arr=is_array($ticket->Files)?$ticket->Files:array(); ?>
                                                 @foreach($arr as $file)
+                                                        <?php
+                                                        $url='';
+                                                        if(is_object($file->Files[0]->file_links)){
+                                                            if(isset($file->Files[0])) {
+                                                                if (isset($file->Files[0]->file_links->ftp)) {
+                                                                    $url = $file->Files[0]->file_links->ftp;
+                                                                } else if (isset($file->Files[0]->file_links->s3)) {
+                                                                    $url = $file->Files[0]->file_links->s3;
+                                                                } else if (isset($file->Files[0]->file_links->dropbox)) {
+                                                                    $url = $file->Files[0]->file_links->dropbox;
+                                                                } else {
+                                                                    $url = asset('') . $file->Files[0]->url;
+                                                                }
+                                                            }
+                                                        }else{
+                                                            if(isset($file->Files[0])) {
+                                                                if (isset($file->Files[0]->file_links['ftp'])) {
+                                                                    $url = $file->Files[0]->file_links['ftp'];
+                                                                } else if (isset($file->Files[0]->file_links['s3'])) {
+                                                                    $url = $file->Files[0]->file_links['s3'];
+                                                                } else if (isset($file->Files[0]->file_links['dropbox'])) {
+                                                                    $url = $file->Files[0]->file_links['dropbox'];
+                                                                } else {
+                                                                    $url = asset('') . $file->Files[0]->url;
+                                                                }
+                                                            }
+                                                        }
+
+                                                        ?>
                                                 <li style="font-size: 17px !important;color:#000000">
                                                     <div class="row">
                                                         <div class="col-sm-5 attmob" >
@@ -530,7 +559,7 @@ $archiveNames=array(
                                                         <div class="attdocmob col-sm-5 attach_row_{{$i}}" >
                                                             <div id="attach" class=" col-sm-12 ">
                                                                 <div class="attach"> 
-                                                                    <a class="attach-close1" href="{{($file->Files[0]->type!=2?asset($file->Files[0]->url):$file->Files[0]->url)}}" style="color: #74798D; float:left;" 
+                                                                    <a class="attach-close1" href="{{($url)}}" style="color: #74798D; float:left;"
                                                                     target="_blank">  
                                                                         <span class="attach-text hidemob">{{ substr($file->Files[0]->real_name,0,15)}}</span>    
                                                                         @if($file->Files[0]->extension=="jpg"||$file->Files[0]->extension=="png")
@@ -741,11 +770,39 @@ $archiveNames=array(
                                         <?php $arr=is_array($rowTicket->Files)?$rowTicket->Files:array();?>
                                         @foreach($arr as $file)
                                         @if(sizeof($file->Files)>0)
-                                        
+                                                    <?php
+                                                    $url1='';
+                                                    if(is_object($file->Files[0]->file_links)){
+                                                        if(isset($file->Files[0])) {
+                                                            if (isset($file->Files[0]->file_links->ftp)) {
+                                                                $url1 = $file->Files[0]->file_links->ftp;
+                                                            } else if (isset($file->Files[0]->file_links->s3)) {
+                                                                $url1 = $file->Files[0]->file_links->s3;
+                                                            } else if (isset($file->Files[0]->file_links->dropbox)) {
+                                                                $url1 = $file->Files[0]->file_links->dropbox;
+                                                            } else {
+                                                                $url1 = asset('') . $file->Files[0]->url;
+                                                            }
+                                                        }
+                                                    }else{
+                                                        if(isset($file->Files[0])) {
+                                                            if (isset($file->Files[0]->file_links['ftp'])) {
+                                                                $url1 = $file->Files[0]->file_links['ftp'];
+                                                            } else if (isset($file->Files[0]->file_links['s3'])) {
+                                                                $url1 = $file->Files[0]->file_links['s3'];
+                                                            } else if (isset($file->Files[0]->file_links['dropbox'])) {
+                                                                $url1 = $file->Files[0]->file_links['dropbox'];
+                                                            } else {
+                                                                $url1 = asset('') . $file->Files[0]->url;
+                                                            }
+                                                        }
+                                                    }
+
+                                                    ?>
                                         <div class="col-sm-4 attach_row11_{{$i}}">
                                             <div id="attach" class=" col-sm-12 ">
                                                 <div class="attach"> 
-                                                    <a class="attach-close1" href="{{asset($file->Files[0]->url)}}" style="color: #74798D; float:left;" 
+                                                    <a class="attach-close1" href="{{$url1}}" style="color: #74798D; float:left;"
                                                     target="_blank">  
                                                         <span class="attach-text">{{ substr($file->attachName,0,40)}}</span>    
                                                         @if($file->Files[0]->extension=="jpg"||$file->Files[0]->extension=="png")

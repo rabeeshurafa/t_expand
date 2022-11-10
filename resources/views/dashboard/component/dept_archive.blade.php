@@ -530,12 +530,7 @@
                                     data.files.forEach(file => {
                                         shortCutName=file.real_name;
                                         shortCutName=shortCutName.substring(0, 20);
-                                        urlfile='{{ asset('') }}';
-                                        if(file.type !=2){
-                                            urlfile+=file.url; 
-                                        }else{
-                                            urlfile=file.url; 
-                                        }
+                                        urlfile=getFileUrl(file)
                                         if(file.extension=="jpg"||file.extension=="png")
                                         fileimage='{{ asset('assets/images/ico/image.png') }}';
                                         else if(file.extension=="pdf")
@@ -732,12 +727,7 @@
                                     data.files.forEach(file => {
                                         shortCutName=file.real_name;
                                         shortCutName=shortCutName.substring(0, 20);
-                                        urlfile='{{ asset('') }}';
-                                        if(file.type !=2){
-                                            urlfile+=file.url; 
-                                        }else{
-                                            urlfile=file.url; 
-                                        }
+                                        urlfile=getFileUrl(file)
                                         if(file.extension=="jpg"||file.extension=="png")
                                         fileimage='{{ asset('assets/images/ico/image.png') }}';
                                         else if(file.extension=="pdf")
@@ -947,12 +937,7 @@
                                     data.files.forEach(file => {
                                         shortCutName=file.real_name;
                                         shortCutName=shortCutName.substring(0, 20);
-                                        urlfile='{{ asset('') }}';
-                                        if(file.type !=2){
-                                            urlfile+=file.url; 
-                                        }else{
-                                            urlfile=file.url; 
-                                        }
+                                        urlfile=getFileUrl(file)
                                         if(file.extension=="jpg"||file.extension=="png")
                                         fileimage='{{ asset('assets/images/ico/image.png') }}';
                                         else if(file.extension=="pdf")
@@ -1202,12 +1187,7 @@
                                     data.archive.files.forEach(file => {
                                         shortCutName=file.real_name;
                                         shortCutName=shortCutName.substring(0, 20);
-                                        urlfile='{{ asset('') }}';
-                                        if(file.type !=2){
-                                            urlfile+=file.url; 
-                                        }else{
-                                            urlfile=file.url; 
-                                        }
+                                        urlfile=getFileUrl(file)
                                         if(file.extension=="jpg"||file.extension=="png")
                                         fileimage='{{ asset('assets/images/ico/image.png') }}';
                                         else if(file.extension=="pdf")
@@ -1396,12 +1376,7 @@
                                     data.files.forEach(file => {
                                         shortCutName=file.real_name;
                                         shortCutName=shortCutName.substring(0, 20);
-                                        urlfile='{{ asset('') }}';
-                                        if(file.type !=2){
-                                            urlfile+=file.url; 
-                                        }else{
-                                            urlfile=file.url; 
-                                        }
+                                        urlfile=getFileUrl(file)
                                         if(file.extension=="jpg"||file.extension=="png")
                                         fileimage='{{ asset('assets/images/ico/image.png') }}';
                                         else if(file.extension=="pdf")
@@ -1599,12 +1574,7 @@
                                     data.files.forEach(file => {
                                         shortCutName=file.real_name;
                                         shortCutName=shortCutName.substring(0, 20);
-                                        urlfile='{{ asset('') }}';
-                                        if(file.type !=2){
-                                            urlfile+=file.url; 
-                                        }else{
-                                            urlfile=file.url; 
-                                        }
+                                        urlfile=getFileUrl(file)
                                         if(file.extension=="jpg"||file.extension=="png")
                                         fileimage='{{ asset('assets/images/ico/image.png') }}';
                                         else if(file.extension=="pdf")
@@ -1787,12 +1757,7 @@
                                     data.files.forEach(file => {
                                         shortCutName=file.real_name;
                                         shortCutName=shortCutName.substring(0, 20);
-                                        urlfile='{{ asset('') }}';
-                                        if(file.type !=2){
-                                            urlfile+=file.url; 
-                                        }else{
-                                            urlfile=file.url; 
-                                        }
+                                        urlfile=getFileUrl(file)
                                         if(file.extension=="jpg"||file.extension=="png")
                                         fileimage='{{ asset('assets/images/ico/image.png') }}';
                                         else if(file.extension=="pdf")

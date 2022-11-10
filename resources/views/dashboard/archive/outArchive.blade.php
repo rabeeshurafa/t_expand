@@ -146,8 +146,7 @@
 
                                                                 @foreach($archive_type as $archive)
 
-                                                                    <option
-                                                                        value="{{$archive->id}}"> {{$archive->name}}   </option>
+                                                                    <option value="{{$archive->id}}"> {{$archive->name}}   </option>
 
                                                                 @endforeach
 
@@ -176,8 +175,7 @@
 
                                                                 @foreach($archive_type as $archive)
 
-                                                                    <option
-                                                                        value="{{$archive->id}}"> {{$archive->name}}   </option>
+                                                                    <option value="{{$archive->id}}"> {{$archive->name}}   </option>
 
                                                                 @endforeach
 
@@ -206,8 +204,7 @@
 
                                                                 @foreach($archive_type as $archive)
 
-                                                                    <option
-                                                                        value="{{$archive->id}}"> {{$archive->name}}   </option>
+                                                                    <option value="{{$archive->id}}"> {{$archive->name}}   </option>
 
                                                                 @endforeach
 
@@ -236,8 +233,7 @@
 
                                                                 @foreach($archive_type as $archive)
 
-                                                                    <option
-                                                                        value="{{$archive->id}}"> {{$archive->name}}   </option>
+                                                                    <option value="{{$archive->id}}"> {{$archive->name}}   </option>
 
                                                                 @endforeach
 
@@ -266,8 +262,7 @@
 
                                                                 @foreach($archive_type as $archive)
 
-                                                                    <option
-                                                                        value="{{$archive->id}}"> {{$archive->name}}   </option>
+                                                                    <option value="{{$archive->id}}"> {{$archive->name}}   </option>
 
                                                                 @endforeach
 
@@ -344,7 +339,7 @@
                                                                     {{trans('archive.date')}}
                                                                 @endif
 
-
+                                                                
 
                                                             </span>
 
@@ -456,7 +451,7 @@
 
                                                                 @endif
 
-
+                                                                
 
                                                             </span>
 
@@ -659,855 +654,833 @@
     @include('dashboard.archive.arc_config')
     @include('dashboard.component.fetch_table')
 
+
     <script>
-        // $( document ).ready(function() {
-        //     if($('#url').val()=="out_archieve"){
-        //         $('#msgid').val("م م ع /")
-        //     }
-        // });
+      // $( document ).ready(function() {
+      //     if($('#url').val()=="out_archieve"){
+      //         $('#msgid').val("م م ع /")
+      //     }
+      // });
 
-        function scanToJpg() {
-            scanner.scan(displayImagesOnPage,
+      function scanToJpg() {
+        scanner.scan(displayImagesOnPage,
+          {
+            "output_settings":
+              [
                 {
-                    "output_settings":
-                        [
-                            {
-                                "type": "return-base64",
-                                "format": "png"
-                            }
-                        ]
+                  "type": "return-base64",
+                  "format": "png"
                 }
-            );
+              ]
+          }
+        );
+      }
+
+      /** Processes the scan result */
+      function displayImagesOnPage(successful, mesg, response) {
+        if (!successful) { // On error
+          console.error('Failed: ' + mesg);
+          return;
         }
 
-        /** Processes the scan result */
-        function displayImagesOnPage(successful, mesg, response) {
-            if (!successful) { // On error
-                console.error('Failed: ' + mesg);
-                return;
-            }
-
-            if (successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
-                console.info('User canceled');
-                return;
-            }
-            var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
-            for (var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
-                var scannedImage = scannedImages[i];
-                uploadScannedfile(scannedImage);
-                // processScannedImage(scannedImage);
-            }
+        if (successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
+          console.info('User canceled');
+          return;
         }
+        var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
+        for (var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
+          var scannedImage = scannedImages[i];
+          uploadScannedfile(scannedImage);
+          // processScannedImage(scannedImage);
+        }
+      }
 
-        /** Images scanned so far. */
-        var imagesScanned = [];
+      /** Images scanned so far. */
+      var imagesScanned = [];
 
-        /** Processes a ScannedImage */
-        function processScannedImage(scannedImage) {
-            imagesScanned.push(scannedImage);
-            // console.log(imagesScanned[0].getBase64NoPrefix())
-            // console.log(imagesScanned[0])
-            var image = new Image();
+      /** Processes a ScannedImage */
+      function processScannedImage(scannedImage) {
+        imagesScanned.push(scannedImage);
+        // console.log(imagesScanned[0].getBase64NoPrefix())
+        // console.log(imagesScanned[0])
+        var image = new Image();
 
-            image.src = scannedImage.src;
-            var imagediv =
-                `<div >
+        image.src = scannedImage.src;
+        var imagediv =
+          `<div >
             <a target="_blank" href="${scannedImage.src}" data-original-title="" title="">
                 <img src="${image.src}" width="70" height="100" >
             </a>
             <input type="hidden" id="scannerfile[]" name="scannerfile[]" value="${scannedImage.src}">
             <a class="attach-close1" style="color: #74798D; float:left;font-size: 27px !important;" onclick="$(this).parent().remove()">×</a>
         </div>`
-            ;
-            $('.formDataaaFilesArea').append(imagediv);
-        }
+        ;
+        $('.formDataaaFilesArea').append(imagediv);
+      }
 
-        function scanTopdf() {
-            scanner.scan(displayPdfOnPage,
+      function scanTopdf() {
+        scanner.scan(displayPdfOnPage,
+          {
+            "output_settings":
+              [
                 {
-                    "output_settings":
-                        [
-                            {
-                                "type": "return-base64",
-                                "format": "pdf",
-                            }
-                        ]
+                  "type": "return-base64",
+                  "format": "pdf",
                 }
-            );
+              ]
+          }
+        );
+      }
+
+      function displayPdfOnPage(successful, mesg, response) {
+
+        if (!successful) { // On error
+          console.error('Failed: ' + mesg);
+          return;
         }
 
-        function displayPdfOnPage(successful, mesg, response) {
-
-            if (!successful) { // On error
-                console.error('Failed: ' + mesg);
-                return;
-            }
-
-            if (successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
-                console.info('User canceled');
-                return;
-            }
-            var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
-            for (var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
-                var scannedImage = scannedImages[i];
-                uploadScannedfile(scannedImage);
-                // processScannedPdf(scannedImage);
-            }
+        if (successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
+          console.info('User canceled');
+          return;
         }
+        var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
+        for (var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
+          var scannedImage = scannedImages[i];
+          uploadScannedfile(scannedImage);
+          // processScannedPdf(scannedImage);
+        }
+      }
 
-        function processScannedPdf(scannedImage) {
-            imagesScanned.push(scannedImage);
-            // console.log(imagesScanned[0].getBase64NoPrefix())
-            // console.log(imagesScanned)
-            var image = new Image();
+      function processScannedPdf(scannedImage) {
+        imagesScanned.push(scannedImage);
+        // console.log(imagesScanned[0].getBase64NoPrefix())
+        // console.log(imagesScanned)
+        var image = new Image();
 
-            image.src = scannedImage.src;
-            var imagediv =
-                `<div >
+        image.src = scannedImage.src;
+        var imagediv =
+          `<div >
             <a target="_blank" href="${scannedImage.src}" data-original-title="" title="">
                 <img src="https://t.palexpand.ps/assets/images/ico/pdf.png" width="70" height="100" >
             </a>
             <input type="hidden" id="scannerPdf" name="scannerPdf[]" value="${scannedImage.src}">
             <a class="attach-close1" style="color: #74798D; float:left;font-size: 27px !important;" onclick="$(this).parent().remove()">×</a>
         </div>`
-            ;
-            $('.formDataaaFilesArea').append(imagediv);
-        }
+        ;
+        $('.formDataaaFilesArea').append(imagediv);
+      }
 
-        function uploadScannedfile(scannedImage) {
-            $(".loader").removeClass('hide');
-            $('#saveBtn').css('display', 'none');
+      function uploadScannedfile(scannedImage) {
+        $(".loader").removeClass('hide');
+        $('#saveBtn').css('display', 'none');
+        $('#editBtn').css('display', 'none');
+        $.ajaxSetup({
+          headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
+            'ContentType': 'application/json'
+          }
+        });
+
+        $.ajax({
+          type: 'post',
+          url: '{{route('saveScanedFile')}}',
+          data: {
+            scannedData: scannedImage.src,
+            type: scannedImage.mimeType,
+
+          },
+          dataType: "json",
+          async: true,
+          success: (response) => {
+            $('#saveBtn').css('display', 'inline-block');
             $('#editBtn').css('display', 'none');
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
-                    'ContentType': 'application/json'
-                }
-            });
+            $(".loader").addClass('hide');
+            $(".archive_type").removeClass("error");
+            row = attacheView(response.file, 'formDataaa');
+            $(".formDataaaFilesArea").append(row)
+          },
 
-            $.ajax({
-                type: 'post',
-                url: '{{route('saveScanedFile')}}',
-                data: {
-                    scannedData: scannedImage.src,
-                    type: scannedImage.mimeType,
+          error: function (response) {
+            $('#saveBtn').css('display', 'inline-block');
+            $('#editBtn').css('display', 'none');
+            $(".loader").addClass('hide');
 
-                },
-                dataType: "json",
-                async: true,
-                success: (response) => {
-                    $('#saveBtn').css('display', 'inline-block');
-                    $('#editBtn').css('display', 'none');
-                    $(".loader").addClass('hide');
-                    $(".archive_type").removeClass("error");
-                    shortCutName = response.file.real_name;
+            Swal.fire({
+              position: 'top-center',
+              icon: 'error',
+              title: '{{trans('admin.error_save')}}',
+              showConfirmButton: false,
+              timer: 1500
+            })
 
-                    shortCutID = response.file.id;
+            // $(".formDataaaFilesArea").html('');
 
-                    urlfile = '{{ asset('') }}';
-                    if (response.file.type == 1) {
-                        urlfile += response.file.url;
-                    } else {
-                        urlfile = response.file.url;
-                    }
-                    shortCutName = shortCutName.substring(0, 40)
+            if (response.responseJSON.errors.customerName) {
 
-                    row = '<div id="attach" class=" col-lg-6 ">' +
-                        '   <div class="attach" onmouseover="$(this).children().first().next().show()">'
-                        + '    <a class="attach-close1" href="' + urlfile + '" style="color: #74798D;" target="_blank">'
-                        + '    <span class="attach-text">' + shortCutName + '</span> </a>'
-                        + '    <a class="attach-close1" style="color: #74798D; float:left;" onclick="$(this).parent().parent().remove()">×</a>'
-                        + '      <input type="hidden" id="formDataaaimgUploads[]" name="formDataaaimgUploads[]" value="' + shortCutName + '">'
-                        + '             <input type="hidden" id="formDataaaorgNameList[]" name="formDataaaorgNameList[]" value="' + shortCutName + '">'
-                        + '             <input type="hidden" id="formDataaaorgIdList[]" name="formDataaaorgIdList[]" value="' + shortCutID + '">'
-                        + '    </div>'
-                        + '  </div>'
-                    $(".formDataaaFilesArea").append(row)
-                },
+              $("#customerName").addClass("error");
 
-                error: function (response) {
-                    $('#saveBtn').css('display', 'inline-block');
-                    $('#editBtn').css('display', 'none');
-                    $(".loader").addClass('hide');
+            }
 
-                    Swal.fire({
-                        position: 'top-center',
-                        icon: 'error',
-                        title: '{{trans('admin.error_save')}}',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
+          }
 
-                    // $(".formDataaaFilesArea").html('');
+        });
+        return true;
+      }
 
-                    if (response.responseJSON.errors.customerName) {
-
-                        $("#customerName").addClass("error");
-
-                    }
-
-                }
-
-            });
-            return true;
-        }
-
-        function ShowConfigModal(bindTo) {
+      function ShowConfigModal(bindTo) {
 
 // $("#CitizenName").html($("#formDataNameAR").val())
 
-            $("#AppModal").modal('show')
+        $("#AppModal").modal('show')
+
+      }
+
+      $("#customerName").keyup(function () {
+        if ($("#customerName").val() == '') {
+          // console.log('hiiiiiiiii11');
+          $('#customerid').val(0);
+        }
+      });
+      // $("#customerName").change(function () {
+      // // console.log('hiiiiiiiii');
+      //     $('#customerid').val(0);
+
+      // });
+      $('input[name="copyToText[]"]').on("keyup", function () {
+        if ($(this).val() == '') {
+
+          $(this).next().val(0);
+        }
+
+      })
+      // $('input[name="copyToText[]"]').keyup(function () {
+      // if($(this).val()=='')
+      // {
+      //     // console.log('hiiiiiiiii11');
+
+      //     $(this).next().val(0);
+      // }
+      // });
+      // $("#copyToText").change(function () {
+      // console.log('hiiiiiiiii');
+      //     $('input[name="copyToID[]"]').val(0);
+
+      // });
+      $.ajaxSetup({
+
+        headers: {
+
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 
         }
 
-        $("#customerName").keyup(function () {
-            if ($("#customerName").val() == '') {
-                // console.log('hiiiiiiiii11');
-                $('#customerid').val(0);
-            }
-        });
-        // $("#customerName").change(function () {
-        // // console.log('hiiiiiiiii');
-        //     $('#customerid').val(0);
+      });
 
-        // });
-        $('input[name="copyToText[]"]').on("keyup", function () {
-            if ($(this).val() == '') {
+      function save() {
+        // $(".loader").removeClass('hide');
+        if ($('#archive_type').val() == 0) {
+          $(".archive_type").addClass("error");
+          return false;
+        }
+        if ((!$('#customerid').val() || $('#customerid').val() == 0) && $("#customerName").val() != '') {
+          alert('الرجاء اختيار جهة معرفة مسبقاً');
+          return false;
+        }
 
-                $(this).next().val(0);
-            }
+        var copyA = $('input[name="copyToText[]"]');
+        for (let i = 0; i < copyA.length; i++) {
+          // console.log('in')
+          // console.log(copyA[i].nextElementSibling.value)
+          // console.log(copyA[i].nextElementSibling.value=='0')
+          // console.log(copyA[i].value.length>0);
+          if (copyA[i].nextElementSibling.value == '0' && (copyA[i].value.length > 0)) {
+            alert('الرجاء اختيار جهة نسخة إلى معرفة مسبقاً');
+            copyA[i].style.backgroundColor = "#ff4961";
+            return false;
 
-        })
-        // $('input[name="copyToText[]"]').keyup(function () {
-        // if($(this).val()=='')
-        // {
-        //     // console.log('hiiiiiiiii11');
+          }
+        }
 
-        //     $(this).next().val(0);
-        // }
-        // });
-        // $("#copyToText").change(function () {
-        // console.log('hiiiiiiiii');
-        //     $('input[name="copyToID[]"]').val(0);
+        for (let i = 0; i < copyA.length; i++) {
+          copyA[i].style.backgroundColor = "#FFF";
+        }
+        var flag = true;
+        var date = $("#msgDate").val();
+        if (date.length > 0 && date.length == 10) {
+          flag = true;
+        } else {
+          flag = false;
+        }
+        if (flag == false) {
+          alert('الرجاء ادخال تاريخ ارشيف صحيح');
+          return false;
+        }
 
-        // });
-        $.ajaxSetup({
+        if (document.getElementById('formDataaaorgIdList[]') == null && document.getElementById('scannerPdf[]') == null && document.getElementById('scannerfile[]') == null) {
+          if (confirm('لايوجد مرفقات هل تريد الاستمرار؟')) {
+          } else {
+            return false;
+          }
+        }
+        $(".loader").removeClass('hide');
+        $('#saveBtn').css('display', 'none');
+        $('#editBtn').css('display', 'none');
+        form = $('#formDataaa')[0]
+        let formData = new FormData(form);
 
-            headers: {
+        $("#customerName").removeClass("error");
 
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        $.ajax({
 
-            }
+          type: 'POST',
 
-        });
+          url: "store_archive",
 
-        function save() {
-            // $(".loader").removeClass('hide');
-            if ($('#archive_type').val() == 0) {
-                $(".archive_type").addClass("error");
-                return false;
-            }
-            if ((!$('#customerid').val() || $('#customerid').val() == 0) && $("#customerName").val() != '') {
-                alert('الرجاء اختيار جهة معرفة مسبقاً');
-                return false;
-            }
+          data: formData,
 
-            var copyA = $('input[name="copyToText[]"]');
-            for (let i = 0; i < copyA.length; i++) {
-                // console.log('in')
-                // console.log(copyA[i].nextElementSibling.value)
-                // console.log(copyA[i].nextElementSibling.value=='0')
-                // console.log(copyA[i].value.length>0);
-                if (copyA[i].nextElementSibling.value == '0' && (copyA[i].value.length > 0)) {
-                    alert('الرجاء اختيار جهة نسخة إلى معرفة مسبقاً');
-                    copyA[i].style.backgroundColor = "#ff4961";
-                    return false;
+          contentType: false,
 
-                }
-            }
+          processData: false,
 
-            for (let i = 0; i < copyA.length; i++) {
-                copyA[i].style.backgroundColor = "#FFF";
-            }
-            var flag = true;
-            var date = $("#msgDate").val();
-            if (date.length > 0 && date.length == 10) {
-                flag = true;
-            } else {
-                flag = false;
-            }
-            if (flag == false) {
-                alert('الرجاء ادخال تاريخ ارشيف صحيح');
-                return false;
-            }
-
-            if (document.getElementById('formDataaaorgIdList[]') == null && document.getElementById('scannerPdf[]') == null && document.getElementById('scannerfile[]') == null) {
-                if (confirm('لايوجد مرفقات هل تريد الاستمرار؟')) {
-                } else {
-                    return false;
-                }
-            }
-            $(".loader").removeClass('hide');
-            $('#saveBtn').css('display', 'none');
+          success: (response) => {
+            $('#saveBtn').css('display', 'inline-block');
             $('#editBtn').css('display', 'none');
-            form = $('#formDataaa')[0]
-            let formData = new FormData(form);
+            $(".loader").addClass('hide');
+            $(".archive_type").removeClass("error");
+            Swal.fire({
 
-            $("#customerName").removeClass("error");
+              position: 'top-center',
 
-            $.ajax({
+              icon: 'success',
 
-                type: 'POST',
+              title: '{{trans('admin.data_added')}}',
 
-                url: "store_archive",
+              showConfirmButton: false,
 
-                data: formData,
-
-                contentType: false,
-
-                processData: false,
-
-                success: (response) => {
-                    $('#saveBtn').css('display', 'inline-block');
-                    $('#editBtn').css('display', 'none');
-                    $(".loader").addClass('hide');
-                    $(".archive_type").removeClass("error");
-                    Swal.fire({
-
-                        position: 'top-center',
-
-                        icon: 'success',
-
-                        title: '{{trans('admin.data_added')}}',
-
-                        showConfirmButton: false,
-
-                        timer: 1500
-
-                    })
-                    $('input[name="copyToID[]"]').val('');
-                    $('input[name="copyToCustomer[]"]').val('');
-                    $('input[name="copyToType[]"]').val('');
-                    $('#customerid').val('');
-                    $('#customername').val('');
-                    $('#pk_i_id').val('');
-                    $('#ArchiveID').val('');
-                    $('#customerType').val('');
-                    form.reset();
-                    if ($('#print').val() == 1) {
-                        let url = `{{ route('admin.dashboard') }}/printArchive/archive/${response.id}}`
-                        window.open(url, '_blank');
-                        $('#print').val(0);
-                    }
-                    if ($('#track').val() == 1) {
-                        let url = `{{ route('admin.dashboard') }}/trackingArchive/${$('#url').val()}/${response.id}`
-                        window.open(url, '_blank');
-                        $('#track').val(0);
-                    }
-                    $('.wtbl').DataTable().ajax.reload();
-
-                    $(".formDataaaFilesArea").html('');
-
-                },
-
-                error: function (response) {
-                    $('#saveBtn').css('display', 'inline-block');
-                    $('#editBtn').css('display', 'none');
-                    $(".loader").addClass('hide');
-                    $(".archive_type").removeClass("error");
-                    $("#customerName").on('keyup', function (e) {
-
-                        if ($(this).val().length > 0) {
-
-                            $("#customerName").removeClass("error");
-
-                        }
-
-                    });
-
-
-                    // if(response.responseJSON.errors.archive_type){
-
-                    //     $( "#archive_type" ).addClass( "error" );
-
-                    // }
-
-
-                    // if(response.responseJSON.errors.customerid){
-
-                    //     $( ".archive_type" ).addClass( "error" );
-
-                    // }
-
-                    Swal.fire({
-
-                        position: 'top-center',
-
-                        icon: 'error',
-
-                        title: '{{trans('admin.error_save')}}',
-
-                        showConfirmButton: false,
-
-                        timer: 1500
-
-                    })
-
-                    // $(".formDataaaFilesArea").html('');
-
-                    if (response.responseJSON.errors.customerName) {
-
-                        $("#customerName").addClass("error");
-
-                    }
-
-                }
-
-            });
-            return true;
-
-
-        };
-
-        $(function () {
-
-
-            $(".cust_auto").autocomplete({
-
-                source: 'archive_auto_complete',
-
-                minLength: 1,
-
-
-                select: function (event, ui) {
-
-
-                    var currentIndex = $("input[name^=copyToID]").length - 1;
-
-                    // $('input[name="copyToText[]"]').eq(currentIndex).css('background-color','#FFF!important');
-                    // $(this).removeAttribute('style');
-                    $('input[name="copyToText[]"]').eq(currentIndex).removeAttr('style');
-                    $('input[name="copyToID[]"]').eq(currentIndex).val(ui.item.id);
-
-                    $('input[name="copyToCustomer[]"]').eq(currentIndex).val(ui.item.name);
-
-                    $('input[name="copyToType[]"]').eq(currentIndex).val(ui.item.model);
-
-                }
-
-            });
-
-        });
-
-
-        $(function () {
-
-            $(".cust").on("keyup", function () {
-
-                $("#customername").val($(this).val())
+              timer: 1500
 
             })
+            $('input[name="copyToID[]"]').val('');
+            $('input[name="copyToCustomer[]"]').val('');
+            $('input[name="copyToType[]"]').val('');
+            $('#customerid').val('');
+            $('#customername').val('');
+            $('#pk_i_id').val('');
+            $('#ArchiveID').val('');
+            $('#customerType').val('');
+            form.reset();
+            if ($('#print').val() == 1) {
+              let url = `{{ route('admin.dashboard') }}/printArchive/archive/${response.id}}`
+              window.open(url, '_blank');
+              $('#print').val(0);
+            }
+            if ($('#track').val() == 1) {
+              let url = `{{ route('admin.dashboard') }}/trackingArchive/${$('#url').val()}/${response.id}`
+              window.open(url, '_blank');
+              $('#track').val(0);
+            }
+            $('.wtbl').DataTable().ajax.reload();
 
-            $(".cust").autocomplete({
-
-                @if($type=='projArchive')
-                source: 'project_auto_complete',
-
-                @elseif($type=='empArchive')
-                source: 'emp_auto_complete',
-
-                @elseif($type=='citArchive')
-                source: 'subscribe_auto_complete',
-
-                @else
-                source: 'archive_auto_complete',
-
-                @endif
-
-                minLength: 1,
-
-
-                select: function (event, ui) {
-
-                    console.log(ui.item);
-
-                    $('#customerid').val(ui.item.id);
-
-                    $('#customerName').val(ui.item.name);
-
-                    $('#customername').val(ui.item.name);
-
-                    $('#customerType').val(ui.item.model);
-
-                    $('#msgid').val(ui.item.zepe_code);
-
-                }
-
-            });
-
-        });
-
-
-
-        function update($id) {
-
-            let archive_id = $id;
-
-            $('#saveBtn').css('display', 'none');
-            $('#editBtn').css('display', 'inline-block');
             $(".formDataaaFilesArea").html('');
 
-            $.ajax({
+          },
 
-                type: 'get', // the method (could be GET btw)
+          error: function (response) {
+            $('#saveBtn').css('display', 'inline-block');
+            $('#editBtn').css('display', 'none');
+            $(".loader").addClass('hide');
+            $(".archive_type").removeClass("error");
+            $("#customerName").on('keyup', function (e) {
 
-                url: "{{ route('archieve_info') }}",
+              if ($(this).val().length > 0) {
 
-                data: {
+                $("#customerName").removeClass("error");
 
-                    archive_id: archive_id,
-
-                },
-
-                success: function (response) {
-
-                    $('#customerid').val(response.info.model_id);
-
-                    $('#ArchiveID').val(response.info.id);
-
-                    $('#customerName').val(response.info.name);
-
-                    $('#customername').val(response.info.name);
-
-                    $('#customerType').val(response.info.model_name);
-
-                    $('#msgTitle').val(response.info.title);
-
-                    $('#archive_type').val(response.info.type_id);
-                    $('#notes').val(response.info.notes);
-
-                    let date = (response.info.date)
-
-                    dates = ""
-
-                    if (date) {
-
-                        dates = date.split("-");
-
-                        dates = dates[2] + '/' + dates[1] + '/' + dates[0];
-                    }
-
-                    $("#msgDate").val(dates);
-
-                    $('#msgid').val(response.info.serisal);
-
-                    row = '';
-
-                    if (response.files) {
-
-                        var j = 0;
-                        formDataStr = "formDataaa";
-                        for (j = 0; j < response.files.length; j++) {
-                            row += attacheView(response.files[j], formDataStr);
-                        }
-
-                        $(".formDataaaFilesArea").html(row)
-
-                    }
-
-
-                    row = '';
-
-                    if (response.CopyTo) {
-
-                        var j = 0;
-
-                        for (j = 0; j < response.CopyTo.length; j++) {
-
-                            if (j == 0) {
-
-                                $('.name').val(response.CopyTo[j].name);
-
-                                $('.copyToID').val(response.CopyTo[j].model_id);
-
-                                $('.copyToCustomer').val(response.CopyTo[j].name);
-
-                                $('.copyToType').val(response.CopyTo[j].model_name);
-
-                            } else {
-
-                                addRec()
-
-                                $('input[name="copyToText[]"]').eq(j).val(response.CopyTo[j].name);
-                                // $('input[name="copyToText[]"]').eq(j).css('background-color','#FFF!important');
-                                $('input[name="copyToText[]"]').eq(j).removeAttr('style');
-                                $('input[name="copyToID[]"]').eq(j).val(response.CopyTo[j].model_id);
-
-                                $('input[name="copyToCustomer[]"]').eq(j).val(response.CopyTo[j].name);
-
-                                $('input[name="copyToType[]"]').eq(j).val(response.CopyTo[j].model_name);
-
-                            }
-
-                        }
-
-                        if (response.CopyTo.length > 0)
-
-                            $('.copyto').css('display', 'block');
-
-                    }
-
-                    window.scrollTo(0, 0);
-
-                },
+              }
 
             });
 
-        }
 
-        function CopyRec(id) {
+            // if(response.responseJSON.errors.archive_type){
 
+            //     $( "#archive_type" ).addClass( "error" );
 
-            var formData = {'id': id};
+            // }
 
-            $.ajax({
 
-                url: 'c_archive/GetMunArchByID',
+            // if(response.responseJSON.errors.customerid){
 
-                type: 'POST',
+            //     $( ".archive_type" ).addClass( "error" );
 
-                data: formData,
+            // }
 
-                dataType: "json",
+            Swal.fire({
 
-                async: true,
+              position: 'top-center',
 
-                success: function (data) {
+              icon: 'error',
 
-                    if (data.inCharge.length > 0) {
+              title: '{{trans('admin.error_save')}}',
 
+              showConfirmButton: false,
 
-                        for (i = 0; i < data.inCharge.length; i++) {
-
-                            attach = '';
-
-                            for (j = 0; j < data.inCharge[i].attach.length; j++)
-
-                                attach += '<div id="attach' + data.inCharge[i].attach[j].ID + '" class=" col-lg-12 ">'
-
-                                    + '  <div class="attach">'
-
-                                    + '<span class="attach-text">' + data.inCharge[i].attach[j].AttachName + '</span><a onclick="delAttach(' + data.inCharge[i].attach[j].ID + ')"><i class="fa fa-trash"></i></a>'
-
-                                    + '<a class="attach-close1" href="' + realPath + 'uploads/' + data.inCharge[i].attach[j].AttachServerName + '" style="color: #74798D; float:left;" target="_blank">'
-
-                                    + '  <i class="fa fa-eye"> </i>'
-
-                                    + '</a><input type="hidden" value="' + data.inCharge[i].attach[j].pk_i_id + '" name="attach[]" >'
-
-                                    + '</div>'
-
-                                    + '</div>';
-
-                            $(".formDataaaFilesArea").html(attach)
-
-                            $("#pk_i_id").val(data.inCharge[i].pk_i_id)
-
-                            d = new Date(data.inCharge[i].arch_date);
-
-                            $("#msgDate").val(d.getDate() + '/' + ((d.getMonth() + 1) < 10 ? '0' + (d.getMonth() + 1) : (d.getMonth() + 1)) + '/' + d.getFullYear())
-
-                            $("#customerName").val(data.inCharge[i].receiver_name)
-
-                            $("#msgTitle").val(data.inCharge[i].arch_title)
-
-                            $("#msgid").val(data.inCharge[i].arch_no)
-
-
-                        }
-
-                    } else
-
-                        alert('لا يوجد بيانات')
-
-                },
-
-                error: function () {
-
-                },
-
-            });
-
-        }
-
-        function addRec() {
-
-            $('.copyto').append('<div class="form-group paddmob">'
-
-                + '    <div class="input-group w-91">'
-
-                + '        <div class="input-group-prepend">'
-
-                + '			<span class="input-group-text" id="basic-addon1">'
-
-                + '				 {{trans('archive.copy_to')}}'
-
-                + '			</span>'
-
-                + '        </div>'
-
-                + '        <input type="text" id="copyToText[]" class="form-control cust_auto ui-autocomplete-input" name="copyToText[]" autocomplete="off">'
-
-                + '        <input type="hidden" id="copyToID[]" name="copyToID[]" value="0">'
-
-                + '        <input type="hidden" id="copyToCustomer[]" name="copyToCustomer[]" value="0">'
-
-                + '        <input type="hidden" id="copyToType[]" name="copyToType[]" value="0">'
-
-                + '        <div class="input-group-append" onclick="$(this).parent().parent().remove()" style="cursor:pointer">'
-
-                + '            <span class="input-group-text input-group-text2">'
-
-                + '                <i class="fa fa-trash"></i>'
-
-                + '            </span>'
-
-                + '        </div>'
-
-                + '    </div>'
-
-                + '</div>')
-
-            $(".cust_auto").autocomplete({
-
-                source: 'archive_auto_complete',
-
-                minLength: 1,
-
-
-                select: function (event, ui) {
-
-
-                    // var currentIndex=$("input[name^=copyToID]").length -1;
-
-                    $(this).removeAttr('style');
-
-                    $(this).next().val(ui.item.id);
-
-                    $(this).next().next().val(ui.item.name);
-
-                    $(this).next().next().next().val(ui.item.model);
-
-                    // $('input[name="copyToID[]"]').eq(currentIndex).val(ui.item.id);
-
-                    // $('input[name="copyToCustomer[]"]').eq(currentIndex).val(ui.item.name);
-
-                    // $('input[name="copyToType[]"]').eq(currentIndex).val(ui.item.model);
-
-                }
-
-            });
-            $('input[name="copyToText[]"]').on("keyup", function () {
-                if ($(this).val() == '') {
-
-                    $(this).next().val(0);
-                }
+              timer: 1500
 
             })
 
+            // $(".formDataaaFilesArea").html('');
 
-        }
+            if (response.responseJSON.errors.customerName) {
 
-        function delete_archive($id) {
-            if (confirm('هل انت متاكد من حذف الارشيف؟ لن يمكنك استرجاعه فيما بعد')) {
-                let archive_id = $id;
-                var _token = '{{ csrf_token() }}';
-                $.ajax({
+              $("#customerName").addClass("error");
 
-                    type: 'post',
-
-                    // the method (could be GET btw)
-
-                    url: "archive_delete",
-
-                    data: {
-
-                        archive_id: archive_id,
-                        _token: _token,
-                    },
-
-                    success: function (response) {
-
-                        $(".loader").addClass('hide');
-
-                        $('.wtbl').DataTable().ajax.reload();
-
-                        // setTimeout(function(){
-
-                        //     $(".alert-success").addClass("hide");
-
-                        // },2000)
-
-                        Swal.fire({
-
-                            position: 'top-center',
-
-                            icon: 'success',
-
-                            title: 'تم حذف البيانات بنجاح',
-
-                            showConfirmButton: false,
-
-                            timer: 1500
-
-                        })
-
-                        // $("#ajaxform")[0].reset();
-
-                    },
-
-                    error: function (response) {
-
-                        $(".loader").addClass('hide');
-
-                        Swal.fire({
-
-                            position: 'top-center',
-
-                            icon: 'error',
-
-                            title: '{{ trans('admin.error_save') }}',
-
-                            showConfirmButton: false,
-
-                            timer: 1500
-
-                        })
-
-                        $("#formDataNameAR").on('keyup', function (e) {
-
-                            if ($(this).val().length > 0) {
-
-                                $("#formDataNameAR").removeClass("error");
-
-                            }
-
-                        });
-
-                        if (response.responseJSON.errors.formDataNameAR) {
-
-                            $("#formDataNameAR").addClass("error");
-
-                        }
-
-                    }
-
-                });
-                return true;
             }
-            return false;
+
+          }
+
+        });
+        return true;
+
+
+      };
+
+      $(function () {
+
+
+        $(".cust_auto").autocomplete({
+
+          source: 'archive_auto_complete',
+
+          minLength: 1,
+
+
+          select: function (event, ui) {
+
+
+            var currentIndex = $("input[name^=copyToID]").length - 1;
+
+            // $('input[name="copyToText[]"]').eq(currentIndex).css('background-color','#FFF!important');
+            // $(this).removeAttribute('style');
+            $('input[name="copyToText[]"]').eq(currentIndex).removeAttr('style');
+            $('input[name="copyToID[]"]').eq(currentIndex).val(ui.item.id);
+
+            $('input[name="copyToCustomer[]"]').eq(currentIndex).val(ui.item.name);
+
+            $('input[name="copyToType[]"]').eq(currentIndex).val(ui.item.model);
+
+          }
+
+        });
+
+      });
+
+
+      $(function () {
+
+        $(".cust").on("keyup", function () {
+
+          $("#customername").val($(this).val())
+
+        })
+
+        $(".cust").autocomplete({
+
+            @if($type=='projArchive')
+            source: 'project_auto_complete',
+
+            @elseif($type=='empArchive')
+            source: 'emp_auto_complete',
+
+            @elseif($type=='citArchive')
+            source: 'subscribe_auto_complete',
+
+            @else
+            source: 'archive_auto_complete',
+
+            @endif
+
+            minLength: 1,
+
+
+          select: function (event, ui) {
+
+            console.log(ui.item);
+
+            $('#customerid').val(ui.item.id);
+
+            $('#customerName').val(ui.item.name);
+
+            $('#customername').val(ui.item.name);
+
+            $('#customerType').val(ui.item.model);
+
+            $('#msgid').val(ui.item.zepe_code);
+
+          }
+
+        });
+
+      });
+
+      function update($id) {
+
+        let archive_id = $id;
+
+        $('#saveBtn').css('display', 'none');
+        $('#editBtn').css('display', 'inline-block');
+        $(".formDataaaFilesArea").html('');
+
+        $.ajax({
+
+          type: 'get', // the method (could be GET btw)
+
+          url: "{{ route('archieve_info') }}",
+
+          data: {
+
+            archive_id: archive_id,
+
+          },
+
+          success: function (response) {
+
+            $('#customerid').val(response.info.model_id);
+
+            $('#ArchiveID').val(response.info.id);
+
+            $('#customerName').val(response.info.name);
+
+            $('#customername').val(response.info.name);
+
+            $('#customerType').val(response.info.model_name);
+
+            $('#msgTitle').val(response.info.title);
+
+            $('#archive_type').val(response.info.type_id);
+            $('#notes').val(response.info.notes);
+
+            let date = (response.info.date)
+
+            dates = ""
+
+            if (date) {
+
+              dates = date.split("-");
+
+              dates = dates[2] + '/' + dates[1] + '/' + dates[0];
+            }
+
+            $("#msgDate").val(dates);
+
+            $('#msgid').val(response.info.serisal);
+
+            row = '';
+
+            if (response.files) {
+              for (j = 0; j < response.files.length; j++) {
+                row += attacheView(response.files[j], "formDataaa");
+              }
+
+              $(".formDataaaFilesArea").html(row)
+
+            }
+
+
+            row = '';
+
+            if (response.CopyTo) {
+
+              var j = 0;
+
+              for (j = 0; j < response.CopyTo.length; j++) {
+
+                if (j == 0) {
+
+                  $('.name').val(response.CopyTo[j].name);
+
+                  $('.copyToID').val(response.CopyTo[j].model_id);
+
+                  $('.copyToCustomer').val(response.CopyTo[j].name);
+
+                  $('.copyToType').val(response.CopyTo[j].model_name);
+
+                } else {
+
+                  addRec()
+
+                  $('input[name="copyToText[]"]').eq(j).val(response.CopyTo[j].name);
+                  // $('input[name="copyToText[]"]').eq(j).css('background-color','#FFF!important');
+                  $('input[name="copyToText[]"]').eq(j).removeAttr('style');
+                  $('input[name="copyToID[]"]').eq(j).val(response.CopyTo[j].model_id);
+
+                  $('input[name="copyToCustomer[]"]').eq(j).val(response.CopyTo[j].name);
+
+                  $('input[name="copyToType[]"]').eq(j).val(response.CopyTo[j].model_name);
+
+                }
+
+              }
+
+              if (response.CopyTo.length > 0)
+
+                $('.copyto').css('display', 'block');
+
+            }
+
+            window.scrollTo(0, 0);
+
+          },
+
+        });
+
+      }
+
+      function CopyRec(id) {
+
+
+        var formData = {'id': id};
+
+        $.ajax({
+
+          url: 'c_archive/GetMunArchByID',
+
+          type: 'POST',
+
+          data: formData,
+
+          dataType: "json",
+
+          async: true,
+
+          success: function (data) {
+
+            if (data.inCharge.length > 0) {
+
+
+              for (i = 0; i < data.inCharge.length; i++) {
+
+                attach = '';
+
+                for (j = 0; j < data.inCharge[i].attach.length; j++)
+
+                  attach += '<div id="attach' + data.inCharge[i].attach[j].ID + '" class=" col-lg-12 ">'
+
+                    + '  <div class="attach">'
+
+                    + '<span class="attach-text">' + data.inCharge[i].attach[j].AttachName + '</span><a onclick="delAttach(' + data.inCharge[i].attach[j].ID + ')"><i class="fa fa-trash"></i></a>'
+
+                    + '<a class="attach-close1" href="' + realPath + 'uploads/' + data.inCharge[i].attach[j].AttachServerName + '" style="color: #74798D; float:left;" target="_blank">'
+
+                    + '  <i class="fa fa-eye"> </i>'
+
+                    + '</a><input type="hidden" value="' + data.inCharge[i].attach[j].pk_i_id + '" name="attach[]" >'
+
+                    + '</div>'
+
+                    + '</div>';
+
+                $(".formDataaaFilesArea").html(attach)
+
+                $("#pk_i_id").val(data.inCharge[i].pk_i_id)
+
+                d = new Date(data.inCharge[i].arch_date);
+
+                $("#msgDate").val(d.getDate() + '/' + ((d.getMonth() + 1) < 10 ? '0' + (d.getMonth() + 1) : (d.getMonth() + 1)) + '/' + d.getFullYear())
+
+                $("#customerName").val(data.inCharge[i].receiver_name)
+
+                $("#msgTitle").val(data.inCharge[i].arch_title)
+
+                $("#msgid").val(data.inCharge[i].arch_no)
+
+
+              }
+
+            } else
+
+              alert('لا يوجد بيانات')
+
+          },
+
+          error: function () {
+
+          },
+
+        });
+
+      }
+
+      function addRec() {
+
+        $('.copyto').append('<div class="form-group paddmob">'
+
+          + '    <div class="input-group w-91">'
+
+          + '        <div class="input-group-prepend">'
+
+          + '			<span class="input-group-text" id="basic-addon1">'
+
+          + '				 {{trans('archive.copy_to')}}'
+
+          + '			</span>'
+
+          + '        </div>'
+
+          + '        <input type="text" id="copyToText[]" class="form-control cust_auto ui-autocomplete-input" name="copyToText[]" autocomplete="off">'
+
+          + '        <input type="hidden" id="copyToID[]" name="copyToID[]" value="0">'
+
+          + '        <input type="hidden" id="copyToCustomer[]" name="copyToCustomer[]" value="0">'
+
+          + '        <input type="hidden" id="copyToType[]" name="copyToType[]" value="0">'
+
+          + '        <div class="input-group-append" onclick="$(this).parent().parent().remove()" style="cursor:pointer">'
+
+          + '            <span class="input-group-text input-group-text2">'
+
+          + '                <i class="fa fa-trash"></i>'
+
+          + '            </span>'
+
+          + '        </div>'
+
+          + '    </div>'
+
+          + '</div>')
+
+        $(".cust_auto").autocomplete({
+
+          source: 'archive_auto_complete',
+
+          minLength: 1,
+
+
+          select: function (event, ui) {
+
+
+            // var currentIndex=$("input[name^=copyToID]").length -1;
+
+            $(this).removeAttr('style');
+
+            $(this).next().val(ui.item.id);
+
+            $(this).next().next().val(ui.item.name);
+
+            $(this).next().next().next().val(ui.item.model);
+
+            // $('input[name="copyToID[]"]').eq(currentIndex).val(ui.item.id);
+
+            // $('input[name="copyToCustomer[]"]').eq(currentIndex).val(ui.item.name);
+
+            // $('input[name="copyToType[]"]').eq(currentIndex).val(ui.item.model);
+
+          }
+
+        });
+        $('input[name="copyToText[]"]').on("keyup", function () {
+          if ($(this).val() == '') {
+
+            $(this).next().val(0);
+          }
+
+        })
+
+
+      }
+
+      function delete_archive($id) {
+        if (confirm('هل انت متاكد من حذف الارشيف؟ لن يمكنك استرجاعه فيما بعد')) {
+          let archive_id = $id;
+          var _token = '{{ csrf_token() }}';
+          $.ajax({
+
+            type: 'post',
+
+            // the method (could be GET btw)
+
+            url: "archive_delete",
+
+            data: {
+
+              archive_id: archive_id,
+              _token: _token,
+            },
+
+            success: function (response) {
+
+              $(".loader").addClass('hide');
+
+              $('.wtbl').DataTable().ajax.reload();
+
+              // setTimeout(function(){
+
+              //     $(".alert-success").addClass("hide");
+
+              // },2000)
+
+              Swal.fire({
+
+                position: 'top-center',
+
+                icon: 'success',
+
+                title: 'تم حذف البيانات بنجاح',
+
+                showConfirmButton: false,
+
+                timer: 1500
+
+              })
+
+              // $("#ajaxform")[0].reset();
+
+            },
+
+            error: function (response) {
+
+              $(".loader").addClass('hide');
+
+              Swal.fire({
+
+                position: 'top-center',
+
+                icon: 'error',
+
+                title: '{{ trans('admin.error_save') }}',
+
+                showConfirmButton: false,
+
+                timer: 1500
+
+              })
+
+              $("#formDataNameAR").on('keyup', function (e) {
+
+                if ($(this).val().length > 0) {
+
+                  $("#formDataNameAR").removeClass("error");
+
+                }
+
+              });
+
+              if (response.responseJSON.errors.formDataNameAR) {
+
+                $("#formDataNameAR").addClass("error");
+
+              }
+
+            }
+
+          });
+          return true;
         }
+        return false;
+      }
 
     </script>
+    @section('script')
+
+    @endsection
 
 @endsection

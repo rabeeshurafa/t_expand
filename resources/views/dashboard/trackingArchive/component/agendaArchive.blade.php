@@ -62,14 +62,30 @@ $title=null;
         </div>
         <div class="row">
             @foreach($archive['files'] as $file)
-                <?php
-                    $urlFile = asset('');
-                    if(!str_contains($file['url'], "http")){
-                        $urlFile.=$file['url'];
+                    <?php
+                    $urlFile='';
+                    if(is_object($file['file_links'])){
+                        if (isset($file['file_links']->ftp)) {
+                            $urlFile = $file['file_links']->ftp;
+                        } else if (isset($file['file_links']->s3)) {
+                            $urlFile = $file['file_links']->s3;
+                        } else if (isset($file['file_links']->dropbox)) {
+                            $urlFile = $file['file_links']->dropbox;
+                        } else {
+                            $urlFile = asset('') . $file['url'];
+                        }
                     }else{
-                        $urlFile=$file['url'];
+                        if (isset($file['file_links']['ftp'])) {
+                            $urlFile = $file['file_links']['ftp'];
+                        } else if (isset($file['file_links']['s3'])) {
+                            $urlFile = $file['file_links']['s3'];
+                        } else if (isset($file['file_links']['dropbox'])) {
+                            $urlFile = $file['file_links']['dropbox'];
+                        } else {
+                            $urlFile = asset('') . $file['url'];
+                        }
                     }
-                ?>
+                    ?>
                 <div id="attach" class=" col-md-4">
                     <div class="attach" onmouseover="$(this).children().first().next().show()">
                         <a class="attach-close1" href="{{$urlFile}}" style="color: #74798D;float: left;" target="_blank">
