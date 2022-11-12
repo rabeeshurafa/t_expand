@@ -781,8 +781,8 @@
                 window.open(url, '_blank');
                 $('#track').val(0);
               }
-              $('.kt_ecommerce_products_table').DataTable().ajax.reload();
-
+              // $('.kt_ecommerce_products_table').DataTable().ajax.reload();
+              $('.wtbl').DataTable().ajax.reload();
             },
 
             error: function (response) {
@@ -837,7 +837,7 @@
             processData: false,
 
             success: (response) => {
-
+              $('.wtbl').DataTable().ajax.reload();
               $(".loader").addClass('hide');
 
               $('#supplierid').val('');
@@ -868,7 +868,7 @@
 
               this.reset();
 
-              $('.kt_ecommerce_products_table').DataTable().ajax.reload();
+              // $('.kt_ecommerce_products_table').DataTable().ajax.reload();
 
             },
 
@@ -1198,8 +1198,8 @@
 
               $(".loader").addClass('hide');
 
-              $('.kt_ecommerce_products_table').DataTable().ajax.reload();
-
+              // $('.kt_ecommerce_products_table').DataTable().ajax.reload();
+              $('.wtbl').DataTable().ajax.reload();
               // setTimeout(function(){
 
               //     $(".alert-success").addClass("hide");
