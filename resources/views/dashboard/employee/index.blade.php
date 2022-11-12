@@ -650,6 +650,7 @@
 
     function resetFunction(){
         $('#msgStatic').html('(0)');
+        $('#employee_id').val('');
         $('#userProfileImg').attr('src','{{ asset('assets/images/ico/user.png') }}')
         $("#my_multi_select3").multiSelect("destroy").children().removeAttr('selected')
         $("#my_multi_select3").multiSelect({
@@ -1047,7 +1048,7 @@ $.ajax({
                 
                 $('.wtbl').DataTable().ajax.reload();
                 $('#allowed_emp').val('');
-            
+                $('#employee_id').val('');
                 $('.select2-selection__rendered').html('');
                 
                 if (response) {

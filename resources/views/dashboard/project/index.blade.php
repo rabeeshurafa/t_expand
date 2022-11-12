@@ -423,7 +423,7 @@
                     @endcan
                     <button id="saveBtn" class="btn btn-primary save-data">{{trans('admin.save')}} <i class="ft-thumbs-up position-right"></i></button>
 
-                    <button type="reset" onclick="$('#userList').html('');" class="btn btn-warning"> {{trans('assets.reset')}} <i class="ft-refresh-cw position-right reset-data"></i></button>
+                    <button type="reset" onclick="$('#project_id').val('');$('#userList').html('');" class="btn btn-warning"> {{trans('assets.reset')}} <i class="ft-refresh-cw position-right reset-data"></i></button>
                 </div>
           </div>
 

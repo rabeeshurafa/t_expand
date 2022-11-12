@@ -903,7 +903,7 @@
                                     @endcan
                                     <button id="saveBtn" class="btn btn-primary save-data">{{trans('admin.save')}} <i class="ft-thumbs-up position-right"></i></button>
 
-                                    <button type="reset" onclick="redirectURL('linkIcon1-tab1')" class="btn btn-warning  reset-data"> {{trans('assets.reset')}} <i class="ft-refresh-cw position-right"></i></button>
+                                    <button type="reset" onclick="$('#orgnization_id').val('');redirectURL('linkIcon1-tab1')" class="btn btn-warning  reset-data"> {{trans('assets.reset')}} <i class="ft-refresh-cw position-right"></i></button>
 
                                 </div>
 
@@ -1595,7 +1595,7 @@ function update($id)
 				})
 
 
-
+          $('#orgnization_id').val('');
             $("#ajaxform")[0].reset();
 
 

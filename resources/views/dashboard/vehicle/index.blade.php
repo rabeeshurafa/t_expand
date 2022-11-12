@@ -787,7 +787,7 @@
                         @endcan
                         <button id="saveBtn" class="btn btn-primary save-data">{{trans('assets.save')}}<i class="ft-thumbs-up position-right"></i></button>
                         
-                        <button type="reset" class="btn btn-warning reset-data"> {{trans('assets.reset')}} <i class="ft-refresh-cw position-right"></i></button>
+                        <button type="reset" onclick="$('#vehicle_id').val('');" class="btn btn-warning reset-data"> {{trans('assets.reset')}} <i class="ft-refresh-cw position-right"></i></button>
 
                         </div>
 
@@ -1154,7 +1154,7 @@ $('#setting_form').submit(function(e) {
 				timer: 1500
 
 				})
-
+               $('#vehicle_id').val('');
                this.reset();
 
                $('#userProfileImg').attr('src', 'https://db.expand.ps/images/car.png');

@@ -901,7 +901,7 @@
                                             @endcan
                                             <button type="submit" class="btn btn-primary save-data" id="saveBtn">{{trans('admin.save')}} <i class="ft-thumbs-up position-right"></i></button>
 
-											<button type="reset" onclick="$('#employees_data').html('');" class="btn btn-warning reset-data"> {{trans('assets.reset')}} <i class="ft-refresh-cw position-right"></i></button>
+											<button type="reset" onclick="$('#department_id').val('');$('#employees_data').html('');" class="btn btn-warning reset-data"> {{trans('assets.reset')}} <i class="ft-refresh-cw position-right"></i></button>
 
 
 
@@ -1263,7 +1263,7 @@ $(".save-data").click(function(event){
                 $(".alert-success").addClass("hide");
 
             },2000)
-
+			$('#department_id').val('');
             $("#ajaxform")[0].reset();
 
 
