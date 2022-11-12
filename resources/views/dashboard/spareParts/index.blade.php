@@ -396,7 +396,7 @@
                                         <button type="submit" class="btn btn-primary" id="saveBtn" style="">
                                             {{ trans('admin.save') }}
                                             <i class="ft-thumbs-up position-right"></i></button>
-                                        <a href="" type="reset" class="btn btn-warning">{{ trans('assets.reset') }}
+                                        <a onclick="$('#sparePartID').val('');" type="reset" class="btn btn-warning">{{ trans('assets.reset') }}
                                             <i class="ft-refresh-cw position-right"></i>
                                         </a>
                                     </div>
@@ -446,6 +446,7 @@
                             showConfirmButton: false,
                             timer: 1500
                         })
+                      $('#sparePartID').val('');
                         this.reset();
                     }
                     $('#userProfileImg').attr('src', 'https://db.expand.ps/images/elecCounter.png');

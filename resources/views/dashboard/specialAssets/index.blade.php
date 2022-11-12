@@ -1769,7 +1769,7 @@
                         @endcan
                         <button id="saveBtn" class="btn btn-primary save-data">{{trans('admin.save')}} <i class="ft-thumbs-up position-right"></i></button>
                         
-                        <button type="reset" onclick="redirectURL('activeIcon1-tab1')" class="btn btn-warning reset-data"> {{trans('assets.reset')}} <i class="ft-refresh-cw position-right"></i></button>
+                        <button type="reset" onclick="$('#special_id').val('');redirectURL('activeIcon1-tab1')" class="btn btn-warning reset-data"> {{trans('assets.reset')}} <i class="ft-refresh-cw position-right"></i></button>
 
                     </div>
 
@@ -2304,7 +2304,7 @@ $.ajaxSetup({
                 $('#userProfileImg').attr('src', window.location.origin+'/assets/images/ico/park.png');
 
 
-
+               $('#special_id').val('');
                this.reset();
 
              }

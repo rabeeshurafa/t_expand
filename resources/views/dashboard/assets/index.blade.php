@@ -920,7 +920,7 @@
                                     @endcan
                                     <button  type="submit" id="saveBtn" class="btn btn-primary">{{trans('assets.save')}} <i class="ft-thumbs-up position-right"></i></button>
 
-                                    <button type="reset" onclick="redirectURL('linkIcon1-tab1')" class="btn btn-warning reset-data"> {{trans('assets.reset')}} <i class="ft-refresh-cw position-right"></i></button>
+                                    <button type="reset" onclick="$('#equpiment_id').val('');redirectURL('linkIcon1-tab1')" class="btn btn-warning reset-data"> {{trans('assets.reset')}} <i class="ft-refresh-cw position-right"></i></button>
 
                                 </div>
 
@@ -1165,7 +1165,7 @@ $('.reset-data').click(function(event){
                 })
 
                 $('#userProfileImg').attr('src', 'https://db.expand.ps/images/equipment.jpg');
-
+              $('#equpiment_id').val('');
                 this.reset();
 
             }
