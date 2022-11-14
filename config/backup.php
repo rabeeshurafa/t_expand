@@ -124,6 +124,7 @@ return [
              */
             'disks' => [
                 'ftp',
+                'dropbox',
             ],
         ],
 
