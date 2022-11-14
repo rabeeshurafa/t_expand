@@ -854,6 +854,8 @@ Route::group([
         });
         Route::post('agendaAttach', 'AgendaArchieveController@agendaAttach')->name('agendaAttach');
         Route::get('agendaforwording', 'AgendaArchieveController@agendaArchiveForwording')->name('agendaforwording');
+        Route::post('savePrintMeeting', 'AgendaArchieveController@savePrintMeeting')->name('savePrintMeeting');
+        Route::post('savePrintDes', 'AgendaArchieveController@savePrintDes')->name('savePrintDes');
         Route::get('searchEmpByName', 'AgendaArchieveController@searchEmpByName')
                 ->name('searchEmpByName');
         Route::get('searchSubscriberByName', 'AgendaArchieveController@searchSubscriberByName')

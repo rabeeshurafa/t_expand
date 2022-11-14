@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a16e4324-61f7-4759-b5ed-4280ce8af87e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/assets/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/assets/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/department/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/department/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/orginzation/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/orginzation/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/project/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/project/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/spareParts/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/spareParts/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/specialAssets/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/specialAssets/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/vehicle/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/vehicle/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/agenda.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/agenda.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -282,6 +278,7 @@
       <workItem from="1668237331777" duration="116000" />
       <workItem from="1668241127058" duration="286000" />
       <workItem from="1668249718116" duration="292000" />
+      <workItem from="1668356081355" duration="21000" />
     </task>
     <servers />
   </component>
