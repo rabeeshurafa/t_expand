@@ -6,8 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="a16e4324-61f7-4759-b5ed-4280ce8af87e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/agenda.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/agenda.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/AppOp.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/AppOp.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/SubscriberController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/SubscriberController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/TaboArchiveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/TaboArchiveController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/ArchiveRole.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/ArchiveRole.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/jobLic.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/jobLic.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -279,6 +282,8 @@
       <workItem from="1668241127058" duration="286000" />
       <workItem from="1668249718116" duration="292000" />
       <workItem from="1668356081355" duration="21000" />
+      <workItem from="1668413984972" duration="41000" />
+      <workItem from="1668426382589" duration="173000" />
     </task>
     <servers />
   </component>
