@@ -393,6 +393,12 @@ class DashboardController extends Controller
                 } else if ($res[$i]->related == 44) {
                     $ticket['ticketName'] = $ticket[0]->topic;
                 } else if ($res[$i]->related == 46) {
+                    if($ticket['0']->archive_type=='jal_archieve'){
+                        $archive= Archive::find($ticket['0']->archive_id);
+                        if($archive){
+                            $ticket['0']->archive_title=$archive->subject;
+                        }
+                    }
                     $ticket['config']->ticket_name .= ' '.$this->archiveNames[$ticket[0]->archive_type];
                 }
                 $ticket['response'] = DB::select("SELECT app_responses.*,admins.nick_name,admins.image FROM `app_responses` join admins on app_responses.created_by=admins.id where trans_id=".$res[$i]->id." order by id desc limit 1");
@@ -443,6 +449,12 @@ class DashboardController extends Controller
                 } else if ($res[$i]->related == 44) {
                     $ticket['ticketName'] = $ticket[0]->topic;
                 } else if ($res[$i]->related == 46) {
+                    if($ticket['0']->archive_type=='jal_archieve'){
+                        $archive= Archive::find($ticket['0']->archive_id);
+                        if($archive){
+                            $ticket['0']->archive_title=$archive->subject;
+                        }
+                    }
                     $ticket['config']->ticket_name .= ' '.$this->archiveNames[$ticket[0]->archive_type];
                 }
                 // $ticket['response']=DB::select("SELECT app_responses.*,admins.nick_name,admins.image FROM `app_responses` join admins on app_responses.created_by=admins.id where trans_id=".$res[$i]->id." order by id desc limit 1");
@@ -499,6 +511,12 @@ class DashboardController extends Controller
                 } else if ($res[$i]->related == 44) {
                     $ticket['ticketName'] = $ticket[0]->topic;
                 } else if ($res[$i]->related == 46) {
+                    if($ticket['0']->archive_type=='jal_archieve'){
+                        $archive= Archive::find($ticket['0']->archive_id);
+                        if($archive){
+                            $ticket['0']->archive_title=$archive->subject;
+                        }
+                    }
                     $ticket['config']->ticket_name .= ' '.$this->archiveNames[$ticket[0]->archive_type];
                 }
 

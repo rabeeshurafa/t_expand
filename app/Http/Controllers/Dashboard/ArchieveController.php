@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Managers\AttatchmentManager;
+use App\Models\Folder;
+use App\Models\linkedTo;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
 use App\Models\Equpment;
@@ -83,14 +85,15 @@ class ArchieveController extends Controller
         }
         $empRole->type = $request->archive_t;
         $empRole->empid = $request->empid;
-        if ($request->emp_to_json)
+        if ($request->emp_to_json) {
             $empRole->archiveroles = json_encode($request->emp_to_json);
-        else
+        } else {
             $empRole->archiveroles = '[""]';
-        $res=$empRole->save();
+        }
+        $res = $empRole->save();
         if ($res) {
 
-            return response()->json(['success' => trans('تم الحفظ'),'id'=>$empRole->id]);
+            return response()->json(['success' => trans('تم الحفظ'), 'id' => $empRole->id]);
 
         }
 
@@ -234,8 +237,9 @@ class ArchieveController extends Controller
                 DB::raw("CONCAT(name,' ','(مواطن)' )AS label"))->get();
         $volunteer = Volunteer::where('name', 'like', '%'.$emp_data.'%')->select('*',
                 DB::raw("CONCAT(name )AS label"))->get();
-
-        $names = $equip->merge($vehicle)->merge($project)->merge($admin)->merge($department)->merge($equip)->merge($orgnization)->merge($specialAsset)->merge($user)->merge($volunteer);
+        $folder = Folder::where('name', 'like', '%'.$emp_data.'%')->select('*', DB::raw('name AS label'))->get();
+        $names = $equip->merge($vehicle)->merge($project)->merge($admin)->merge($department)->merge($equip)
+                ->merge($orgnization)->merge($specialAsset)->merge($user)->merge($volunteer)->merge($folder);
 
         // ->merge($inArchive)        // ->merge($outArchive)->merge($munArchive)->merge($projArchive)     
 
@@ -1254,7 +1258,7 @@ class ArchieveController extends Controller
         $archive_type = Constant::where('parent', '101')->where('status', 1)->get();
 
         return view('dashboard.archive.lawArchive',
-                compact( 'archive_config', 'type', 'archive_type', 'url'));
+                compact('archive_config', 'type', 'archive_type', 'url'));
 
     }
 
@@ -1271,7 +1275,7 @@ class ArchieveController extends Controller
         $archive_type = Constant::where('parent', '102')->where('status', 1)->get();
 
         return view('dashboard.empArchive.index',
-                compact( 'archive_config', 'type', 'archive_type', 'url'));
+                compact('archive_config', 'type', 'archive_type', 'url'));
 
     }
 
@@ -1643,7 +1647,7 @@ class ArchieveController extends Controller
         $archive_type = Constant::where('parent', 53)->where('status', 1)->get();
 
         return view('dashboard.archive.outArchive',
-                compact( 'archive_config', 'type', 'archive_type', 'url'));
+                compact('archive_config', 'type', 'archive_type', 'url'));
 
     }
 
@@ -1985,7 +1989,7 @@ class ArchieveController extends Controller
         foreach ($archive as $row) {
             $attach = json_decode($row->json_feild);
             $attachIds = json_decode($row->attach_ids) ?? array();
-            $rawFiles=File::whereIn('id',$attachIds)->get();
+            $rawFiles = File::whereIn('id', $attachIds)->get();
             $count = sizeof($attachIds);
             $i = 0;
             $files = array();
@@ -2028,7 +2032,7 @@ class ArchieveController extends Controller
         foreach ($archive['info'] as $row) {
             $attach = json_decode($row->json_feild);
             $attachIds = json_decode($row->attach_ids) ?? array();
-            $rawFiles=File::whereIn('id',$attachIds)->get();
+            $rawFiles = File::whereIn('id', $attachIds)->get();
             $count = sizeof($attachIds);
             $i = 0;
             foreach ($attach as $key => $value) {
@@ -2128,8 +2132,8 @@ class ArchieveController extends Controller
         $url = "jal_archieve";
 
         $archive_type = Constant::where('parent', 99)->where('status', 1)->get();
-
-        return view('dashboard.archive.jalArchive', compact('type', 'archive_type', 'url'));
+        $archive_config = ArchiveRole::where('empid', Auth()->user()->id)->where('type', $type)->first();
+        return view('dashboard.archive.jalArchive', compact('type', 'archive_type', 'url', 'archive_config'));
 
     }
 
@@ -2143,7 +2147,7 @@ class ArchieveController extends Controller
                 $agenda->employee = json_encode(array());
             }
         }
-        $type = 'agArchive';
+        $type = 'agenda_archieve';
 
         $url = "agenda_archieve";
 
@@ -2314,13 +2318,51 @@ class ArchieveController extends Controller
 
     public function jalArchieve_info_all(Request $request)
     {
-
-        $archive = Archive::where('type', 'agArchive')
+        $archive = Archive::where('type', 'agArchive')->where('archives.enabled', 1)
                 ->select('archives.*', 't_constant.name as type_id_name')
                 ->leftJoin('t_constant', 't_constant.id', 'archives.type_id')
-                ->orderBy('id', 'DESC')->with('relatedTo')->with('files')->get();
+                ->orderBy('id', 'DESC')->with('relatedTo')->with('files');
+        if ($request->search_Linked_to_id != 0 && $request->search_Linked_to_model != 0) {
+            $linkedTo = linkedTo::where('model_name', $request->search_Linked_to_model)
+                    ->where('model_id', $request->search_Linked_to_id)->where('enabled', 1)->first();
+            if ($linkedTo) {
+                $archive = $archive->where('archives.id', $linkedTo->archive_id)->get();
+            }
+        } else if (strlen(trim($request->search_Linked_to)) > 0) {
+            $linkedTos = linkedTo::where('name', 'like', '%'.$request->search_Linked_to.'%')->where('enabled',
+                    1)->get('archive_id');
+            $archiveIds = [];
+            foreach ($linkedTos as $linkedTo) {
+                $archiveIds[] = $linkedTo->archive_id;
+            }
+            $archive = $archive->whereIn('archives.id', $archiveIds)->get();
+        } else {
+            $archive = $archive->get();
+        }
 
-        return DataTables::of($archive)->addIndexColumn()->addColumn('relatedTo', function ($archive) {
+        foreach ($archive as $row) {
+            if ($row->relatedTo) {
+                foreach ($row->relatedTo as $related_to) {
+                    $st = $related_to->model_name;
+                    if ($st != 0) {
+                        $url = explode('\\', ($st));
+                        $url = Str::lower($url[2]);
+                        $url = $url."s";
+                        if ($url == 'specialassets') {
+                            $url = 'special_assets';
+                        }
+                        //$row->files[]=$temp;
+                        $uu = DB::select('select url,name from '.$url.' where id='.$related_to->model_id);
+                        if ($uu != []) {
+                            $uu = $uu[0];
+                        }
+                        $related_to->setAttribute('url', $uu);
+                    }
+
+                }
+            }
+        }
+        return DataTables::of($archive)->addIndexColumn()/*->addColumn('relatedTo', function ($archive) {
 
             if ($archive->relatedTo) {
 
@@ -2328,7 +2370,7 @@ class ArchieveController extends Controller
 
                 foreach ($archive->relatedTo as $related_to) {
 
-                    $actionBtn .= ' '.$related_to->name.' ';
+                    $actionBtn .= ' ' . $related_to->name . ' ';
 
                 }
 
@@ -2340,7 +2382,7 @@ class ArchieveController extends Controller
 
             }
 
-        })->make(true);
+        })*/ ->make(true);
 
     }
 
@@ -2373,9 +2415,9 @@ class ArchieveController extends Controller
             $attach = json_decode($row->json_feild);
             $files = array();
             foreach ($attach as $id) {
-                $temp=(array) $id;
+                $temp = (array) $id;
                 $file = File::find($id->id);
-                $file->real_name= array_search ($file->url, $temp);
+                $file->real_name = array_search($file->url, $temp);
                 $files[] = $file;
             }
             $row->files = $files;
@@ -2429,9 +2471,9 @@ class ArchieveController extends Controller
             $attach = json_decode($row->json_feild);
             $files = array();
             foreach ($attach as $id) {
-                $temp=(array) $id;
+                $temp = (array) $id;
                 $file = File::find($id->id);
-                $file->real_name= array_search ($file->url, $temp);
+                $file->real_name = array_search($file->url, $temp);
                 $files[] = $file;
             }
             $row->files = $files;
@@ -2522,9 +2564,9 @@ class ArchieveController extends Controller
         $attach = json_decode($archive['info']->json_feild);
         $files = array();
         foreach ($attach as $id) {
-            $temp=(array) $id;
+            $temp = (array) $id;
             $file = File::find($id->id);
-            $file->real_name= array_search ($file->url, $temp);
+            $file->real_name = array_search($file->url, $temp);
             $files[] = $file;
         }
         $archive['files'] = $files;
@@ -2735,9 +2777,9 @@ class ArchieveController extends Controller
         $attach = json_decode($archive['info']->json_feild);
         $files = array();
         foreach ($attach as $id) {
-            $temp=(array) $id;
+            $temp = (array) $id;
             $file = File::find($id->id);
-            $file->real_name= array_search ($file->url, $temp);
+            $file->real_name = array_search($file->url, $temp);
             $files[] = $file;
         }
         $archive['files'] = $files;

@@ -107,10 +107,14 @@
                             {{'الادوية'}}
                         @elseif ($type=="EarchLic")
                             {{'شهادات الاراضي'}}
-                        @elseif ($type=="agArchive")
+                        @elseif ($type=="agenda_archieve")
                             {{'ارشيف الجلسات'}}
                         @elseif ($type=="taboArchive")
                             {{'ارشيف الطابو'}}
+                        @elseif ($type=="agArchive")
+                            {{'ارشيف الجلسات'}}
+                        @elseif ($type=="folder")
+                            {{'المجلدات'}}
                         @else
                             {{ trans('archive.search_result') }}
                         @endif
@@ -119,6 +123,26 @@
                 </div>
                 <div class="card-body">
                     <div class="form-body">
+                        @if($type=="agArchive")
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group paddmob">
+                                        <div class="input-group subscribermob">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    مرتبط ب
+                                                </span>
+                                            </div>
+                                            <input type="text" id="search_Linked_to"
+                                                   class="form-control"
+                                                   name="search_Linked_to" onchange="/*reload();*/" oninput="/*$('#search_Linked_to_id').val(0);$('#search_Linked_to_model').val(0);*/reload();">
+                                            <input type="hidden" id="search_Linked_to_id" name="search_Linked_to_id" value="0">
+                                            <input type="hidden" id="search_Linked_to_model" name="search_Linked_to_model" value="0">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                         @if($type=="taboArchive")
                             <div class="row">
                                 <div class="col-md-3 col-sm-12">
@@ -208,6 +232,48 @@
                                                 {{trans('archive.attach')}}
                                             </th>
                                             <th style="width:79px!important;" class="hidemob">
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                    @elseif($type=="folder")
+                                        <thead>
+                                        <tr style="text-align:center !important;background: #00A3E8;">
+                                            <th width="50px"> #</th>
+                                            <th> اسم المجلد</th>
+                                            <th> مكان المجلد</th>
+                                            <th> الترميز</th>
+                                            <th> من</th>
+                                            <th> إلى</th>
+                                            <th> ملاحظات</th>
+                                            <th style="width: 80px"></th>
+                                        </tr>
+                                        </thead>
+                                    @elseif($type=='agArchive')
+                                        <thead>
+                                        <tr style="text-align:center !important;background: #00A3E8;">
+                                            <th>
+                                                #
+                                            </th>
+                                            <th style="width: 250px;">
+                                                اسم الاجتماع
+                                            </th>
+                                            <th>
+                                                رقم الجلسة
+                                            </th>
+                                            <th>
+                                                تاريخ الجلسة
+                                            </th>
+                                            <th>
+                                                مرتبط ب
+                                            </th>
+                                            <th>
+                                                الموضوع
+                                            </th>
+
+                                            <th style="width: 180px;">
+                                                {{trans('archive.attach')}}
+                                            </th>
+                                            <th style="width:160px!important;">
                                             </th>
                                         </tr>
                                         </thead>
@@ -891,7 +957,7 @@
                                             </th>
                                         </tr>
                                         </thead>
-                                    @elseif ($type == 'agArchive')
+                                    @elseif ($type == 'agenda_archieve')
                                         <thead>
                                         <tr style="text-align:center !important;background: #00A3E8;">
                                             <th width="10px">
@@ -1012,6 +1078,8 @@
             d.type = $('#type').val();
           }
         },
+        @elseif($type=="folder")
+        ajax: "{{ route('folderInfoALl') }}",
         @elseif ($type == 'equip')
         ajax: "{{ route('equip_info_all') }}",
         @elseif ($type == 'project')
@@ -1038,7 +1106,7 @@
             d.type = $('#type').val();
           }
         },
-        @elseif($type=="agArchive")
+        @elseif($type=="agenda_archieve")
         ajax: {
           url: '{{ route('agenda_info_all') }}',
           data: function (d) {
@@ -1057,6 +1125,16 @@
           url: '{{ route('financeArchive_info_all') }}',
           data: function (d) {
             d.type = $('#type').val();
+          }
+        },
+        @elseif ($type=='agArchive')
+        ajax: {
+          url: "{{ route('jalArchieve_info_all') }}",
+          data: function (d) {
+            d.type = $('#type').val();
+            d.search_Linked_to = $('#search_Linked_to').val();
+            d.search_Linked_to_id = $('#search_Linked_to_id').val();
+            d.search_Linked_to_model = $('#search_Linked_to_model').val();
           }
         },
         @elseif($type=="jobLicArchive")
@@ -1183,6 +1261,131 @@
             name: 'name',
           },
 
+        ],
+        @elseif ($type=='agArchive')
+        columns: [
+          {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+          {data: 'type_id_name'},
+          {data: 'serisal'},
+          {data: 'date'},
+          {
+            data: null,
+            render: function (data, row, type) {
+              $actionBtn = '';
+              for (i = 0; i < data?.related_to?.length; i++) {
+                relatedTo = data?.related_to[i];
+                if (relatedTo?.model_id == 0) {
+                  $actionBtn += relatedTo?.name+' - '
+                } else {
+                  url = relatedTo?.url?.url;
+                  $actionBtn += '<a target="_blank" href="{{ route('admin.dashboard') }}/' + url + '?id=' + relatedTo?.model_id + '">' + relatedTo?.name + '</a>  -  ';
+                }
+              }
+              return $actionBtn;
+            },
+            name: 'relatedTo',
+
+          },
+          {data: 'subject'},
+          // {
+          //     data: null,
+
+          //     render:function(data,row,type){
+          //         if(data.related_to.length>0){
+          //             console.log(data.related_to);
+          //             var i=1;
+          //             $actionBtn="<div class='row' style='margin-left:0px;'>";
+          //                 data.related_to.forEach(related_to => {
+          //                 $actionBtn += '<div id="names" class=" col-sm-6 ">'
+          //                       +'  <span class="attach-text">'+related_to.name+'</span>'
+          //                     +'</div>';
+          //             });
+          //             $actionBtn += '</div>';
+          //             return $actionBtn;
+          //         }
+          //         else{return '';}
+          //     },
+          //     name:'fileIDS',
+          // },
+
+          {
+            data: null,
+
+            render: function (data, row, type) {
+              if (data.files.length > 0) {
+                var i = 1;
+                $actionBtn = "<div class='row' style='margin-left:0px;'>";
+                data.files.forEach(file => {
+                  shortCutName = file.real_name;
+                  shortCutName = shortCutName.substring(0, 20);
+                  urlfile = '{{ asset('') }}';
+                  urlfile += file.url;
+                  if (file.extension == "jpg" || file.extension == "png" || file.extension == "jfif")
+                    fileimage = '{{ asset('assets/images/ico/image.png') }}';
+                  else if (file.extension == "pdf")
+                    fileimage = '{{ asset('assets/images/ico/pdf.png') }}';
+                  else if (file.extension == "doc" || file.extension == "docx")
+                    fileimage = 'https://template.expand.ps/public/assets/images/ico/word.png';
+                  else if (file.extension == "excel" || file.extension == "xsc")
+                    fileimage = '{{ asset('assets/images/ico/excellogo.png') }}';
+                  else
+                    fileimage = '{{ asset('assets/images/ico/file.png') }}';
+                  $actionBtn += '<div id="attach" class=" col-sm-12 ">'
+                    + '<div class="attach">'
+                    + ' <a class="attach-close1" href="' + urlfile + '" style="color: #74798D; float:left;" target="_blank">'
+                    + '  <span class="attach-text">' + shortCutName + '</span>'
+                    + '    <img style="width: 20px;"src="' + fileimage + '">'
+                    + '</a>'
+                    + '</div>'
+                    + '</div>';
+                });
+                $actionBtn += '</div>';
+                return $actionBtn;
+              } else {
+                return '';
+              }
+            },
+            name: 'fileIDS',
+          },
+          {
+            data: null,
+            render: function (data, row, type) {
+              $actionBtn = '';
+                @can('store_archive')
+                  $actionBtn = '<a onclick="update(' + (data.id ?? '') + ')" class="btn btn-info"><i style="color:#ffffff" class="fa fa-edit"></i> </a>';
+                @endcan
+                        @can('archive_delete')
+                  $actionBtn += '<a onclick="delete_archive(' + (data.id ?? '') + ')" style="margin-right:17px;" onclick="" class="btn btn-info"><i style="color:#ffffff;" class="fa fa-trash"></i> </a>';
+                @endcan
+                  $actionBtn += `<a target="_blank" href='{{ route('admin.dashboard') }}/printArchive/archive/${data.id}' style="margin-right:17px;" onclick="" class="btn btn-info"><i style="color:#ffffff;" class="fa fa-print"></i> </a>`;
+              return $actionBtn;
+            },
+            name: 'name',
+          },
+        ],
+        @elseif($type == 'folder')
+        columns: [
+          {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+          {data: 'name', name: 'name'},
+          {data: 'place', name: 'place'},
+          {data: 'encoding', name: 'encoding'},
+          {data: 'fromNo', name: 'fromNo'},
+          {data: 'toNo', name: 'toNo'},
+          {data: 'notes', name: 'notes'},
+          {
+            data: null,
+            render: function (data, row, type) {
+              $actionBtn = '';
+                @can('edit_model')
+                  $actionBtn += '<a onclick="update(' + data.id + ')" class="btn btn-info"><i style="color:#ffffff" class="fa fa-edit"></i> </a>';
+                @endcan
+                        @can('delete_model')
+                  $actionBtn += '<a onclick="delete_folder(' + (data.id ?? '') + ')" style="margin-right:17px;" onclick="" class="btn btn-info"><i style="color:#ffffff;" class="fa fa-trash"></i> </a>';
+                @endcan
+                  return $actionBtn;
+            },
+            name: 'name',
+          },
         ],
         @elseif($type == 'buildings'||$type == 'warehouses'||$type == 'Gardens_lands')
         columns: [
@@ -1654,7 +1857,7 @@
             name: 'name',
           },
         ],
-        @elseif ($type=='agArchive')
+        @elseif ($type=='agenda_archieve')
         columns: [
           {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
           {data: 'agenda_number'},

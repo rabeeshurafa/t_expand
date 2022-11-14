@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\JalRequest;
+use App\Managers\UpdateSubscriberManager;
 use Illuminate\Http\Request;
 use App\Models\Archive;
 use App\Models\File;
 use App\Models\linkedTo;
+use Illuminate\Support\Facades\Auth;
 
 class JalArchieveController extends Controller
 {
@@ -38,9 +41,9 @@ class JalArchieveController extends Controller
     //             $copyTo = new linkedTo();
     //             $copyTo->archive_id =  $archive->id;
     //             $copyTo->model_id =  $request->copyToID[$i];
-    //             $copyTo->name =  $request->copyToCustomer[$i];    
-    //             $copyTo->model_name =  $request->copyToType[$i];   
-    //             $copyTo->save();         
+    //             $copyTo->name =  $request->copyToCustomer[$i];
+    //             $copyTo->model_name =  $request->copyToType[$i];
+    //             $copyTo->save();
     //         }
     //     }
     //     if ($archive) {
@@ -48,9 +51,10 @@ class JalArchieveController extends Controller
     //     }
     //         return response()->json(['error'=>$validator->errors()->all()]);
     // }
-    public function store_jal_archive(Request $request)
+    public function store_jal_archive(JalRequest $request)
 
     {
+//        dd($request->all());
         $archive = Archive::where('id', $request->ArchiveID)->first();
         if ($archive) {
 
@@ -58,17 +62,16 @@ class JalArchieveController extends Controller
 
             $archive->type_id = $request->archive_type;
 
-            $archive->name = $request->customername=='0'?'':$request->customername;
+            $archive->name = $request->customername == '0' ? '' : $request->customername;
 
             $archive->model_name = $request->customerType;
-            
-            if($request->msgDate){
-            $from = explode('/', ($request->msgDate));
 
-            $from = $from[2] . '-' . $from[1] . '-' . $from[0];
-            }
-            else{
-               $from="0000-00-00";
+            if ($request->msgDate) {
+                $from = explode('/', ($request->msgDate));
+
+                $from = $from[2] . '-' . $from[1] . '-' . $from[0];
+            } else {
+                $from = "0000-00-00";
             }
             $archive->date = $from;
 
@@ -77,14 +80,17 @@ class JalArchieveController extends Controller
             $archive->type = $request->msgType;
 
             $archive->serisal = $request->msgid;
-            
-            $archive->url =  $request->url;
+            $archive->subject = $request->subject;
+            $archive->decision = $request->decision;
+            $archive->notes = $request->notes;
+
+            $archive->url = $request->url;
 
             $archive->save();
 
             $files_ids = $request->formDataaaorgIdList;
             File::where('archive_id', $request->ArchiveID)
-            ->update(['archive_id' => 0,'model_name'=>'']);
+                    ->update(['archive_id' => 0, 'model_name' => '']);
             if ($files_ids) {
 
                 foreach ($files_ids as $id) {
@@ -100,23 +106,24 @@ class JalArchieveController extends Controller
                 }
 
             }
-            linkedTo::where('archive_id',$archive->id)->delete();
+            linkedTo::where('archive_id', $archive->id)->delete();
             if ($request->copyToText[0] != null) {
 
                 for ($i = 0; $i < count($request->copyToText); $i++) {
-
+                    $copyToCustomer=$request->copyToText[$i];
+                    if($request->copyToID[$i] != 0 && $request->copyToID[$i] != null) {
+                        if($request->copyToType[$i]=="App\Models\User" ){
+                            UpdateSubscriberManager::updateCNationalID($request->copyToID[$i],$request->national_id[$i]);
+                        }
+                        $copyToCustomer=$request->copyToCustomer[$i];
+                    }
                     $copyTo = new linkedTo();
-
-                    $copyTo->archive_id =  $archive->id;
-
-                    $copyTo->model_id =  $request->copyToID[$i];
-
-                    $copyTo->name =  $request->copyToCustomer[$i];
-
-                    $copyTo->model_name =  $request->copyToType[$i];
-
+                    $copyTo->archive_id = $archive->id;
+                    $copyTo->model_id = $request->copyToID[$i];
+                    $copyTo->name = $copyToCustomer;
+                    $copyTo->model_name = $request->copyToType[$i];
+                    $copyTo->national_id = $request->national_id[$i];
                     $copyTo->save();
-
                 }
 
             }
@@ -129,28 +136,29 @@ class JalArchieveController extends Controller
 
             $archive->type_id = $request->archive_type;
 
-            $archive->name = $request->customername=='0'?'':$request->customername;
+            $archive->name = $request->customername == '0' ? '' : $request->customername;
 
             $archive->model_name = $request->customerType;
 
-            if($request->msgDate){
-            $from = explode('/', ($request->msgDate));
+            if ($request->msgDate) {
+                $from = explode('/', ($request->msgDate));
 
-            $from = $from[2] . '-' . $from[1] . '-' . $from[0];
-            }
-            else{
-               $from="0000-00-00";
+                $from = $from[2] . '-' . $from[1] . '-' . $from[0];
+            } else {
+                $from = "0000-00-00";
             }
             $archive->date = $from;
-            
+
             $archive->title = $request->msgTitle;
 
             $archive->type = $request->msgType;
 
             $archive->serisal = $request->msgid;
 
-            $archive->url =  $request->url;
-
+            $archive->url = $request->url;
+            $archive->subject = $request->subject;
+            $archive->decision = $request->decision;
+            $archive->notes = $request->notes;
             $archive->add_by = Auth()->user()->id;
 
             //dd( $request->customername=='0',$request->customername,$archive);
@@ -177,19 +185,20 @@ class JalArchieveController extends Controller
             if ($request->copyToText[0] != null) {
 
                 for ($i = 0; $i < count($request->copyToText); $i++) {
-
+                    $copyToCustomer=$request->copyToText[$i];
+                    if($request->copyToID[$i] != 0 && $request->copyToID[$i] != null) {
+                        if($request->copyToType[$i]=="App\Models\User" ){
+                            UpdateSubscriberManager::updateCNationalID($request->copyToID[$i],$request->national_id[$i]);
+                        }
+                        $copyToCustomer=$request->copyToCustomer[$i];
+                    }
                     $copyTo = new linkedTo();
-
-                    $copyTo->archive_id =  $archive->id;
-
-                    $copyTo->model_id =  $request->copyToID[$i];
-
-                    $copyTo->name =  $request->copyToCustomer[$i];
-
-                    $copyTo->model_name =  $request->copyToType[$i];
-
+                    $copyTo->archive_id = $archive->id;
+                    $copyTo->model_id = $request->copyToID[$i];
+                    $copyTo->name = $copyToCustomer;
+                    $copyTo->model_name = $request->copyToType[$i];
+                    $copyTo->national_id = $request->national_id[$i];
                     $copyTo->save();
-
                 }
 
             }
@@ -198,13 +207,28 @@ class JalArchieveController extends Controller
 
         if ($archive) {
 
-            return response()->json(['success' => trans('admin.archive_added')]);
+            return response()->json(['success' => trans('admin.archive_added'), 'id' => $archive->id]);
 
         }
 
         return response()->json(['error' => $validator->errors()->all()]);
 
     }
+
+    function deleteJalArchive(Request $request){
+        $linkedTos=linkedTo::where('archive_id',$request->id)->get();
+        foreach ($linkedTos as $linkedTo){
+            $linkedTo->enabled=0;
+            $linkedTo->deleted_by=Auth()->user()->id;
+            $linkedTo->save();
+        }
+        $archive=Archive::find($request->id);
+        $archive->enabled=0;
+        $archive->deleted_by=Auth()->user()->id;
+        $archive->save();
+        return response()->json(['success' => 'done']);
+    }
+
     public function archieve_info(Request $request)
 
     {

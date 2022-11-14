@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\linkedTo;
 use Illuminate\Http\Request;
 use App\Models\Menu;
 use App\Models\TicketConfig;
@@ -237,7 +238,12 @@ class GeneralRequescontroller extends Controller
         } else {
             $archive['info'] = Archive::find($Id);
             $archive['files'] = File::where('archive_id', '=', $Id)->where('model_name', 'App\Models\Archive')->get();
-            $archive['CopyTo'] = CopyTo::where('archive_id', '=', $Id)->where('enabled', 1)->get();
+            if($type== 'jal_archieve'){
+                $archive['CopyTo'] = linkedTo::where('archive_id', '=', $Id)->where('enabled',1)->get();
+                $archive['jalType'] = Constant::where('id', $archive['info']->type_id)->first();
+            }else{
+                $archive['CopyTo'] = CopyTo::where('archive_id', '=', $Id)->where('enabled', 1)->get();
+            }
         }
         if ($type == 'mun_archieve') {
             $archive['docTypes'] = Constant::where('parent', 49)->where('status', 1)->get();
