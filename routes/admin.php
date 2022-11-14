@@ -310,6 +310,20 @@ Route::group([
         Route::get('printdailywork/{from}/{to}/{emp_id}/{mostt}/{state}',
                 'DailyWorkController@printDailyWorkReport')->name('printdailywork');
 
+        Route::get('folder','FolderController@index')->name('folder')->middleware("can:folder");
+        Route::post('storefolder','FolderController@store')->name('storefolder');
+        Route::get('getFolder','FolderController@folderInfo')->name('getFolder');
+        Route::get('folderAutoComplete','FolderController@folderAutoComplete')->name('folderAutoComplete');
+        Route::get('folderInfoALl','FolderController@folderInfoALl')->name('folderInfoALl');
+        Route::post('deleteFolder','FolderController@delete')->name('deleteFolder');
+        Route::get('folderOutArchive','FolderController@folderOutArchive')->name('folderOutArchive');
+        Route::get('folderInArchive','FolderController@folderInArchive')->name('folderInArchive');
+        Route::get('folderCopyArchive','FolderController@folderCopyArchive')->name('folderCopyArchive');
+        Route::get('folderJalArchive','FolderController@folderJalArchive')->name('folderJalArchive');
+        Route::get('folderOtherArchive','FolderController@folderOtherArchive')->name('folderOtherArchive');
+        Route::get('foldercontractArchive','FolderController@foldercontractArchive')->name('foldercontractArchive');
+        Route::get('folderfinaceArchive','FolderController@folderfinaceArchive')->name('folderfinaceArchive');
+
         Route::get('mailPage', 'mailController@mailPage')->name('mailPage');
         Route::post('getMessage', 'mailController@getMessage')->name('getMessage');
         Route::post('getNextMessage', 'mailController@getNextMessage')->name('getNextMessage');
@@ -854,6 +868,8 @@ Route::group([
         });
         Route::post('agendaAttach', 'AgendaArchieveController@agendaAttach')->name('agendaAttach');
         Route::get('agendaforwording', 'AgendaArchieveController@agendaArchiveForwording')->name('agendaforwording');
+        Route::post('savePrintMeeting', 'AgendaArchieveController@savePrintMeeting')->name('savePrintMeeting');
+        Route::post('savePrintDes', 'AgendaArchieveController@savePrintDes')->name('savePrintDes');
         Route::get('searchEmpByName', 'AgendaArchieveController@searchEmpByName')
                 ->name('searchEmpByName');
         Route::get('searchSubscriberByName', 'AgendaArchieveController@searchSubscriberByName')

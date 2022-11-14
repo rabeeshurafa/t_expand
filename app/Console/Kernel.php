@@ -53,7 +53,7 @@ class Kernel extends ConsoleKernel
             curl_close($curl);
             $access_token=json_decode($response)->access_token;
             DB::update("update settings set dropbox_access_token = '".$access_token."' where 1" );
-        })->everyMinute();
+        })->everyThreeHours();
 
     }
 

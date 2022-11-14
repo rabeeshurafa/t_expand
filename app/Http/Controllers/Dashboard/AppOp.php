@@ -7410,8 +7410,8 @@ order by created_at asc");
             $app->active_trans = 1;
             $app->save();
 //            $app->active_trans=$this->saveTrans($app->id,$request->app_type,$request->AssignedToID,$request->note,$request->AssDeptID,1,$ticket_type,$request);
-            $app->active_trans = $this->saveTrans($request, $app->id, $request->app_type, $request->AssignedToID,
-                    $request->note, $request->AssDeptID, 1, $ticket_type);
+            $app->active_trans = $this->saveTrans($app->id, $request->app_type, $request->AssignedToID, $request->note,
+                    $request->AssDeptID, 1, $ticket_type, $request);
             $app->save();
             if ($app) {
                 $archive = null;

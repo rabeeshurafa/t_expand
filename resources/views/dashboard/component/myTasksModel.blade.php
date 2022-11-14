@@ -537,9 +537,13 @@
             }
 
             $actionBtn = `<a onclick="$('body').trigger('click');$('.loader').removeClass('hide')" href="${rout}/viewTicket/${data['trans'].ticket_id}/${data['trans'].related}">
-                                                                ${ticket_name_o == '' ? data['config'].ticket_name : ticket_name_o}
-                                                                    <span class="hideMob">(${data[0].app_no})</span>
-                                                                </a>`
+                            ${ticket_name_o == '' ? data['config'].ticket_name : ticket_name_o}
+                                <span class="hideMob">(${data[0].app_no})</span>
+                            </a>
+                            <div>
+                              ${(data['0']?.archive_title??'').substring(0, 30)}
+                            </div>
+                          `
             return $actionBtn;
           },
           name: 'config.ticket_name'
@@ -720,9 +724,13 @@
             }
 
             $actionBtn = `<a onclick="$('body').trigger('click');$('.loader').removeClass('hide')" href="${rout}/viewTicket/${data['trans'].ticket_id}/${data['trans'].related}">
-                                                                ${ticket_name_o == '' ? data['config'].ticket_name : ticket_name_o}
-                                                                    <span class="hideMob">(${data[0].app_no})</span>
-                                                                </a>`
+                            ${ticket_name_o == '' ? data['config'].ticket_name : ticket_name_o}
+                                <span class="hideMob">(${data[0].app_no})</span>
+                            </a>
+                            <div>
+                              ${(data['0']?.archive_title??'').substring(0, 30)}
+                            </div>
+                          `
             return $actionBtn;
           },
           name: 'config.ticket_name'
@@ -903,9 +911,13 @@
             }
 
             $actionBtn = `<a onclick="$('body').trigger('click');$('.loader').removeClass('hide')" href="${rout}/viewTicket/${data['trans'].ticket_id}/${data['trans'].related}">
-                                                                ${ticket_name_o == '' ? data['config'].ticket_name : ticket_name_o}
-                                                                    <span class="hideMob">(${data[0].app_no})</span>
-                                                                </a>`
+                            ${ticket_name_o == '' ? data['config'].ticket_name : ticket_name_o}
+                                <span class="hideMob">(${data[0].app_no})</span>
+                            </a>
+                            <div>
+                              ${(data['0']?.archive_title??'').substring(0, 30)}
+                            </div>
+                          `
             return $actionBtn;
           },
           name: 'config.ticket_name'

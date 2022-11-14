@@ -918,7 +918,7 @@
 
         itopic = 1;
 
-        function saveMeeting(topicRowId=0) {
+        function saveMeeting(topicRowId=itopic) {
             //meetingID
             //lastorder
             // if(forwardId==0) {
@@ -1324,7 +1324,7 @@
                                                 <img src="{{ asset('assets/images/ico/upload.png') }}" style="height: 32px;">
                                                 مرفقات
                                             </a>
-                                            <a class="dropdown-item" href="{{ url('') }}/ar/admin/printDes/${itopic}" target="_blank">
+                                            <a class="dropdown-item" href="{{ url('') }}/ar/admin/printDes/${id}" target="_blank">
                                                 <img src="https://doc.expand.ps/images/printer.jpeg" style="height: 32px;">
                                                 طباعة
                                             </a>
@@ -1335,7 +1335,7 @@
                                                 <img src="https://t.palexpand.ps/assets/images/ico/scannerpdf.png"  style="cursor:pointer;" >
                                                 سكانر
                                             </a>
-                                            <a class="dropdown-item" href="{{ url('') }}/ar/admin/trackingArchive/agenda_archieve/${itopic}" target="_blank">
+                                            <a class="dropdown-item" href="{{ url('') }}/ar/admin/trackingArchive/agenda_archieve/${id}" target="_blank">
                                                 متابعة
                                             </a>
                                         </div>

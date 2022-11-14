@@ -195,7 +195,7 @@ class SubscriberController extends Controller
             $user->phone_two = $request->formDataMobileNo2;
 
             $user->national_id = $request->formDataNationalID;
-            $user->passport_number = $request->passport_number;
+//            $user->passport_number = $request->passport_number;
 
             $user->cutomer_num = $request->formDataCutomerNo;
 
@@ -261,7 +261,7 @@ class SubscriberController extends Controller
             $user->phone_two = $request->formDataMobileNo2;
 
             $user->national_id = $request->formDataNationalID;
-            $user->passport_number = $request->passport_number;
+//            $user->passport_number = $request->passport_number;
 
             $user->cutomer_num = $request->formDataCutomerNo;
 

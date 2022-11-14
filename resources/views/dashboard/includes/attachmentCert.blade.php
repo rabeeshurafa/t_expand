@@ -133,7 +133,7 @@
                 $(".form-actions").removeClass('hide');
                 $(".loader").addClass('hide');
 
-                ticketScannedAttache(response.file, attach_index, true)
+              row=ticketScannedAttache(response.file, attach_index, true)
                 attach_index++
                 $(".addAttatch").append(row)
             },

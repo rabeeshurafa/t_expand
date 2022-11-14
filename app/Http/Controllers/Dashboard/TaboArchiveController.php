@@ -21,7 +21,7 @@ class TaboArchiveController extends Controller
         $url = "tabo_archive";
         $hod = TaboExcel::where('enabled', 1)->get();
         $archive_type = Constant::where('parent', 6444)->where('status', 1)->get();
-        $archive_config = ArchiveRole::where('empid', Auth()->user()->id)->where('type', $type)->get();
+        $archive_config = ArchiveRole::where('empid', Auth()->user()->id)->where('type', $type)->first();
         return view('dashboard.archive.taboArchive', compact('type', 'url', 'hod', 'archive_type', 'archive_config'));
     }
 
