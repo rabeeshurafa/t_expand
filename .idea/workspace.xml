@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a16e4324-61f7-4759-b5ed-4280ce8af87e" name="Changes" comment="" />
+    <list default="true" id="a16e4324-61f7-4759-b5ed-4280ce8af87e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/connectedArchive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ArchieveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ArchieveController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/outArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/outArchive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/fetch_table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/fetch_table.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -279,6 +286,9 @@
       <workItem from="1668426382589" duration="173000" />
       <workItem from="1668426799591" duration="2322000" />
       <workItem from="1668441981137" duration="3460000" />
+      <workItem from="1668493028325" duration="9119000" />
+      <workItem from="1668534079650" duration="172000" />
+      <workItem from="1668534336515" duration="7228000" />
     </task>
     <servers />
   </component>

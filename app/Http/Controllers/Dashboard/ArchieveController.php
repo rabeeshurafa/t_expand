@@ -26,7 +26,7 @@ use App\Models\AgendaExtention;
 use App\Models\File;
 use App\Models\Constant;
 use Session;
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ArchiveRequest;
 use App\Http\Requests\LawArchive;
 use App\Models\Address;
@@ -2842,6 +2842,17 @@ class ArchieveController extends Controller
 
         }
 
+    }
+
+    public function getArchiveForConnect(Request $request)
+    {
+        $archive = Archive::where(function($query) use ($request){
+                    $query->where('title', 'like', '%'.$request->term.'%')
+                            ->orWhere('serisal', 'like','%'.$request->term.'%');
+                })
+                ->where('enabled', 1)->whereNotIn('type',['taskArchive','WarningArchive','certArchive'])
+                ->select('title', 'id', 'serisal', 'type', DB::raw("title AS label"))->get();
+        return response()->json($archive);
     }
 
 }

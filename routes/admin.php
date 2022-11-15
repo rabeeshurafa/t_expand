@@ -792,7 +792,8 @@ Route::group([
 
         Route::get('archive_auto_complete', 'ArchieveController@archive_auto_complete')
                 ->name('archive_auto_complete');
-
+        Route::get('get_archive', 'ArchieveController@getArchiveForConnect')
+                ->name('get_archive');
         // Route::post('law_archieve_all','ArchieveController@law_archieve_all')->name('law_archieve_all');
         Route::post('store_lawArchive', 'ArchieveController@store_lawArchive')->name('store_lawArchive');
         Route::post('store_archive', 'ArchieveController@store_archive')->name('store_archive');

@@ -1444,6 +1444,12 @@
               } else {
                 $actionBtn = '<a target="_blank" href="{{ route('admin.dashboard') }}">' + (data.name ?? '') + '</a>';
               }
+              if(data?.trackLink){
+                $actionBtn +=`
+                            <a target="_blank" href="{{asset(app()->getLocale())}}/admin${data?.trackLink}"  style="margin-right:17px;" >
+                            <img title="تم تحويل الطلب الى ${data?.emp_receive} في قسم ${data?.dept_receive}" src="https://tf.palexpand.ps/assets/images/arrow.png " style="cursor:pointer;height: 32px;display:inline">
+                            </a>` ;
+              }
               return $actionBtn;
             },
             name: 'name',
@@ -2008,6 +2014,12 @@
                     <a target="_blank" href="{{asset(app()->getLocale())}}/admin/printArchive/archive/${data.id}"  style="margin-right:17px;" >
                     <img class="fa fa-print" tabindex="0" title="print" src="https://c.palexpand.ps/assets/images/ico/Printer.png " style="cursor:pointer;height: 32px;display:inline">
                     </a>`;
+              if(data?.trackLink){
+                $actionBtn +=`
+                                <a target="_blank" href="{{asset(app()->getLocale())}}/admin${data?.trackLink}"  style="margin-right:17px;" >
+                                <img title="تم تحويل الطلب الى ${data?.emp_receive} في قسم ${data?.dept_receive}" src="https://tf.palexpand.ps/assets/images/arrow.png " style="cursor:pointer;height: 32px;display:inline">
+                                </a>` ;
+              }
               return $actionBtn;
             },
             name: 'name',
@@ -2105,6 +2117,12 @@
                     <a target="_blank" href="{{asset(app()->getLocale())}}/admin/printArchive/archive/${data.id}"  style="margin-right:17px;" >
                     <img class="fa fa-print" tabindex="0" title="print" src="https://c.palexpand.ps/assets/images/ico/Printer.png " style="cursor:pointer;height: 32px;display:inline">
                     </a>`;
+                  if(data?.trackLink){
+                    $actionBtn +=`
+                                <a target="_blank" href="{{asset(app()->getLocale())}}/admin${data?.trackLink}"  style="margin-right:17px;" >
+                                <img title="تم تحويل الطلب الى ${data?.emp_receive} في قسم ${data?.dept_receive}" src="https://tf.palexpand.ps/assets/images/arrow.png " style="cursor:pointer;height: 32px;display:inline">
+                                </a>` ;
+                  }
               return $actionBtn;
             },
             name: 'name',
@@ -2204,6 +2222,12 @@
                         <a target="_blank" href="{{asset(app()->getLocale())}}/admin/printArchive/archive/${data.id}"  style="margin-right:17px;" >
                         <img class="fa fa-print" tabindex="0" title="print" src="https://c.palexpand.ps/assets/images/ico/Printer.png " style="cursor:pointer;height: 32px;display:inline">
                         </a>`
+              if(data?.trackLink){
+                $actionBtn +=`
+                                <a target="_blank" href="{{asset(app()->getLocale())}}/admin${data?.trackLink}"  style="margin-right:17px;" >
+                                <img title="تم تحويل الطلب الى ${data?.emp_receive} في قسم ${data?.dept_receive}" src="https://tf.palexpand.ps/assets/images/arrow.png " style="cursor:pointer;height: 32px;display:inline">
+                                </a>` ;
+              }
               return $actionBtn;
             },
             name: 'name',
@@ -2510,6 +2534,12 @@
                         @can('archive_delete')
                   $actionBtn += '<a onclick="delete_archive(' + (data.id ?? '') + ')" style="margin-right:17px;" onclick="" class="btn btn-info"><i style="color:#ffffff;" class="fa fa-trash"></i> </a>';
                 @endcan
+                if(data?.trackLink){
+                  $actionBtn +=`
+                                <a target="_blank" href="{{asset(app()->getLocale())}}/admin${data?.trackLink}"  style="margin-right:17px;" >
+                                <img title="تم تحويل الطلب الى ${data?.emp_receive} في قسم ${data?.dept_receive}" src="https://tf.palexpand.ps/assets/images/arrow.png " style="cursor:pointer;height: 32px;display:inline">
+                                </a>` ;
+                }
                   return $actionBtn;
             },
             name: 'name',
