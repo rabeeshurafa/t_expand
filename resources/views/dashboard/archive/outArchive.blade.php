@@ -490,7 +490,8 @@
                                         <div class="col-md-12 checkCop">
 
                                             <input type="checkbox" name="copyTo"
-                                                   onclick="$('.copyto').toggle()"> {{trans('archive.copy_to')}}
+                                                   onclick="$('.copyto').toggle()">
+                                            {{trans('archive.copy_to')}}
 
                                         </div>
 
@@ -542,7 +543,7 @@
                                         </div>
 
                                     </div>
-
+                                    @include('dashboard.archive.connectedArchive')
                                 </div>
 
                                 <div class="col-lg-4 col-md-12 ">
@@ -960,6 +961,7 @@
               timer: 1500
 
             })
+            $('.connected-to').html('')
             $('input[name="copyToID[]"]').val('');
             $('input[name="copyToCustomer[]"]').val('');
             $('input[name="copyToType[]"]').val('');
@@ -1158,7 +1160,7 @@
 
             $('#archive_type').val(response.info.type_id);
             $('#notes').val(response.info.notes);
-
+            setConnected(response?.connect_to??[]);
             let date = (response.info.date)
 
             dates = ""
@@ -1349,43 +1351,24 @@
           + '</div>')
 
         $(".cust_auto").autocomplete({
-
           source: 'archive_auto_complete',
-
           minLength: 1,
-
-
           select: function (event, ui) {
-
-
             // var currentIndex=$("input[name^=copyToID]").length -1;
-
             $(this).removeAttr('style');
-
             $(this).next().val(ui.item.id);
-
             $(this).next().next().val(ui.item.name);
-
             $(this).next().next().next().val(ui.item.model);
-
             // $('input[name="copyToID[]"]').eq(currentIndex).val(ui.item.id);
-
             // $('input[name="copyToCustomer[]"]').eq(currentIndex).val(ui.item.name);
-
             // $('input[name="copyToType[]"]').eq(currentIndex).val(ui.item.model);
-
           }
-
         });
         $('input[name="copyToText[]"]').on("keyup", function () {
           if ($(this).val() == '') {
-
             $(this).next().val(0);
           }
-
         })
-
-
       }
 
       function delete_archive($id) {

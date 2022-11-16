@@ -286,7 +286,7 @@
                                         </div>
 
                                     </div>
-
+                                    @include('dashboard.archive.connectedArchive')
                                 </div>
 
                                 <div class="col-lg-5 col-md-12">
@@ -656,6 +656,7 @@
               timer: 1500
 
             })
+            $('.connected-to').html('')
             $('input[name="copyToID[]"]').val('');
             $('input[name="copyToCustomer[]"]').val('');
             $('input[name="copyToType[]"]').val('');

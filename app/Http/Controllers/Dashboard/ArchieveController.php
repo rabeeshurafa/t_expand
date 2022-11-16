@@ -26,7 +26,7 @@ use App\Models\AgendaExtention;
 use App\Models\File;
 use App\Models\Constant;
 use Session;
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ArchiveRequest;
 use App\Http\Requests\LawArchive;
 use App\Models\Address;
@@ -773,9 +773,26 @@ class ArchieveController extends Controller
         }
     }
 
+    public function preparconnectTo($ids = [], $types = []): array
+    {
+        $connectTo = array();
+        $connectToTrade = array();
+        $connectToArchive = array();
+        for ($i = 0; $i < sizeof($ids??[]); $i++) {
+            if ($types[$i] == 'trade_archive') {
+                $connectToTrade[] = intval($ids[$i]);
+            } else {
+                $connectToArchive[] = intval($ids[$i]);
+            }
+        }
+        $connectTo['connectToTrade'] = $connectToTrade;
+        $connectTo['connectToArchive'] = $connectToArchive;
+        return $connectTo;
+    }
 
     public function store_archive(ArchiveRequest $request)
     {
+        $connectTo = $this->preparconnectTo($request->connectedToID, $request->connectedToType);
         $scannedFileIds = array();
         if ($request->scannerfile != null) {
             foreach ($request->scannerfile as $scan) {
@@ -795,166 +812,105 @@ class ArchieveController extends Controller
         if ($archive) {
             // dd($request->all());
             $archive->model_id = $request->customerid;
-
             $archive->type_id = $request->archive_type;
-
             $archive->name = $request->customername == '0' ? '' : $request->customername;
-
             $archive->model_name = $request->customerType;
-
             if ($request->msgDate) {
                 $from = explode('/', ($request->msgDate));
-
                 $from = $from[2].'-'.$from[1].'-'.$from[0];
             } else {
                 $from = "0000-00-00";
             }
             $archive->date = $from;
-
             $archive->title = $request->msgTitle;
-
             $archive->type = $request->msgType;
-
             $archive->serisal = $request->msgid;
-
             $archive->url = $request->url;
             $archive->notes = $request->notes;
+            $archive->connect_to = $connectTo;
             $archive->save();
 
             $files_ids = $request->formDataaaorgIdList;
             File::where('archive_id', $request->ArchiveID)
                     ->update(['archive_id' => 0, 'model_name' => '']);
             if ($files_ids) {
-
                 foreach ($files_ids as $id) {
-
                     $file = File::find($id);
-
                     $file->archive_id = $archive->id;
-
                     $file->model_name = "App\Models\Archive";
-
                     $file->save();
-
                 }
-
             }
             ///////////////scanner file/////////
             foreach ($scannedFileIds as $fileid) {
                 $file = File::find($fileid);
-
                 $file->archive_id = $archive->id;
-
                 $file->model_name = "App\Models\Archive";
-
                 $file->save();
             }
             ///////////////////////////////////
             CopyTo::where('archive_id', $archive->id)->delete();
             if ($request->copyToText[0] != null) {
-
                 for ($i = 0; $i < count($request->copyToText); $i++) {
-
                     $copyTo = new CopyTo();
-
                     $copyTo->archive_id = $archive->id;
-
                     $copyTo->model_id = $request->copyToID[$i];
-
                     $copyTo->name = $request->copyToCustomer[$i];
-
                     $copyTo->model_name = $request->copyToType[$i];
-
                     $copyTo->save();
-
                 }
-
             }
 
         } else {
-
             $archive = new Archive();
-
             $archive->model_id = $request->customerid;
-
             $archive->type_id = $request->archive_type;
-
             $archive->name = $request->customername == '0' ? '' : $request->customername;
-
             $archive->model_name = $request->customerType;
-
             if ($request->msgDate) {
                 $from = explode('/', ($request->msgDate));
-
                 $from = $from[2].'-'.$from[1].'-'.$from[0];
             } else {
                 $from = "0000-00-00";
             }
             $archive->date = $from;
-
             $archive->title = $request->msgTitle;
-
             $archive->type = $request->msgType;
-
             $archive->serisal = $request->msgid;
-
             $archive->url = $request->url;
             $archive->notes = $request->notes;
-
             $archive->add_by = Auth()->user()->id;
-
-            //dd( $request->customername=='0',$request->customername,$archive);
+            $archive->connect_to = $connectTo;
             $archive->save();
-
             $files_ids = $request->formDataaaorgIdList;
 
             if ($files_ids) {
-
                 foreach ($files_ids as $id) {
-
                     $file = File::find($id);
-
                     $file->archive_id = $archive->id;
-
                     $file->model_name = "App\Models\Archive";
-
                     $file->save();
-
                 }
-
             }
             ///////////////scanner file/////////
             foreach ($scannedFileIds as $fileid) {
                 $file = File::find($fileid);
-
                 $file->archive_id = $archive->id;
-
                 $file->model_name = "App\Models\Archive";
-
                 $file->save();
             }
             ///////////////////////////////////
 
             if ($request->copyToText[0] != null) {
-
                 for ($i = 0; $i < count($request->copyToText); $i++) {
-
                     $copyTo = new CopyTo();
-
                     $copyTo->archive_id = $archive->id;
-
                     $copyTo->model_id = $request->copyToID[$i];
-
                     $copyTo->name = $request->copyToCustomer[$i];
-
                     $copyTo->model_name = $request->copyToType[$i];
-
                     $copyTo->save();
-
                 }
-
             }
-
         }
 
         if ($archive) {
@@ -1709,6 +1665,7 @@ class ArchieveController extends Controller
 
     public function store_finance_archive(Request $request)
     {
+        $connectTo = $this->preparconnectTo($request->connectedToID, $request->connectedToType);
         $attach = array();
         $attachName = $request->attachName;
         $attachFile = $request->attachFile;
@@ -1725,36 +1682,24 @@ class ArchieveController extends Controller
         if ($archive) {
             // dd($request->all());
             $archive->model_id = $request->supplierid;
-
             $archive->type_id = $request->financeType;
-
             $archive->name = $request->suppliername == '0' ? '' : $request->suppliername;
-
             $archive->model_name = $request->supplierType;
-
             if ($request->date) {
                 $from = explode('/', ($request->date));
-
                 $from = $from[2].'-'.$from[1].'-'.$from[0];
             } else {
                 $from = "0000-00-00";
             }
             $archive->date = $from;
-
             $archive->title = $request->notes;
-
             $archive->type = $request->msgType;
-
             // $archive->serisal = $request->msgid;
-
             $archive->url = $request->url;
-
             // $archive->fileIDs = $request->AttahType;
-
             $archive->json_feild = json_encode($attach);
-
             $archive->add_by = Auth()->user()->id;
-
+            $archive->connect_to = $connectTo;
             $archive->save();
             $prevFiles = File::where('model_name', "App\Models\Archive")->where('archive_id', $archive->id)->get();
             foreach ($prevFiles as $prevFile) {
@@ -1795,18 +1740,11 @@ class ArchieveController extends Controller
             */
         } else {
             $archive = new Archive();
-
             $archive->model_id = $request->supplierid;
-
             $archive->type_id = $request->financeType;
-
-            $archive->name = $request->suppliername == '0' ? '' : $request->suppliername;
-
             $archive->model_name = $request->supplierType;
-
             if ($request->date) {
                 $from = explode('/', ($request->date));
-
                 $from = $from[2].'-'.$from[1].'-'.$from[0];
             } else {
                 $from = "0000-00-00";
@@ -1817,8 +1755,8 @@ class ArchieveController extends Controller
             $archive->serisal = $request->msgid;
             $archive->url = $request->url;
             $archive->add_by = Auth()->user()->id;
-            // $archive->attachment_id = $request->AttahType;
             $archive->json_feild = json_encode($attach);
+            $archive->connect_to = $connectTo;
             $archive->save();
             if ($attachFile_ids) {
                 foreach ($attachFile_ids as $id) {
@@ -2545,17 +2483,33 @@ class ArchieveController extends Controller
 
     }
 
+    public function getConnectedArchive($connectToArchiveIds,$connectToTradeIds): array
+    {
+        $connectToArchive = Archive::whereIn('id', $connectToArchiveIds)->where('type','!=','financeArchive')->get([
+                'id', 'title', 'type','url'
+        ]);
+
+        $connectToTrade = TradeArchive::whereIn('trade_archives.id', $connectToTradeIds)
+                ->select(DB::raw("CONCAT(trade_no ,' ',t_constant.name )AS title"), 'trade_archives.id',
+                        'trade_no as serisal', DB::raw("CONCAT('trade_archive')AS type"),'url')
+                ->leftJoin('t_constant', 't_constant.id', 'trade_archives.trade_type')->get();
+
+        $financeArchive = Archive::whereIn('archives.id', $connectToArchiveIds)
+                ->where('type','financeArchive')
+                ->leftJoin('t_constant', 't_constant.id', 'archives.type_id')
+                ->select("t_constant.name AS title", 'archives.id','serisal', 'type','url')->get();
+        return ([...$connectToArchive, ...$connectToTrade,...$financeArchive]??[]);
+    }
+
     public function archieve_info(Request $request)
     {
-
         $archive['info'] = Archive::find($request['archive_id']);
-
+        $archive['connect_to'] = array();
+        $archive['connect_to'] = $this->getConnectedArchive($archive['info']->connect_to->connectToArchive,$archive['info']->connect_to->connectToTrade);
         $archive['files'] = File::where('archive_id', '=', $request['archive_id'])->where('model_name',
                 'App\Models\Archive')->get();
         $archive['CopyTo'] = CopyTo::where('archive_id', '=', $request['archive_id'])->where('enabled', 1)->get();
-
         return response()->json($archive);
-
     }
 
     public function financeArchive_info(Request $request)
@@ -2570,6 +2524,8 @@ class ArchieveController extends Controller
             $files[] = $file;
         }
         $archive['files'] = $files;
+        $archive['connect_to'] = array();
+        $archive['connect_to'] = $this->getConnectedArchive($archive['info']->connect_to->connectToArchive,$archive['info']->connect_to->connectToTrade);
         return response()->json($archive);
     }
 
@@ -2842,6 +2798,27 @@ class ArchieveController extends Controller
 
         }
 
+    }
+
+    public function getArchiveForConnect(Request $request)
+    {
+        $archive = Archive::where(function ($query) use ($request) {
+            $query->where('title', 'like', '%'.$request->term.'%')
+                    ->orWhere('serisal', 'like', '%'.$request->term.'%');
+        })
+                ->where('enabled', 1)->whereNotIn('type', ['taskArchive', 'WarningArchive', 'certArchive','financeArchive','agArchive','specialEmpArchive'])
+                ->select('title', 'id', 'serisal', 'type','url', DB::raw("title AS label"));
+        $tradeArchive = TradeArchive::where('trade_no', $request->term)->where('enabled', 1)->with('Type')
+                ->select(DB::raw("CONCAT(trade_no ,' ',t_constant.name )AS title"), 'trade_archives.id',
+                        'trade_no as serisal', DB::raw("CONCAT('trade_archive')AS type"),'url',
+                        DB::raw("CONCAT(trade_no ,' ',t_constant.name )AS label"))
+                ->leftJoin('t_constant', 't_constant.id', 'trade_archives.trade_type');
+        $financeArchive = Archive::where('t_constant.name','like', '%'.$request->term.'%')
+                ->where('type','financeArchive')->where('enabled', 1)
+                ->select("t_constant.name AS title", 'archives.id','serisal', 'type','url',"t_constant.name AS label")
+                ->leftJoin('t_constant', 't_constant.id', 'archives.type_id');
+        $archives = $archive->unionAll($tradeArchive)->unionAll($financeArchive)->get();
+        return response()->json($archives);
     }
 
 }

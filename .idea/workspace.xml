@@ -5,31 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a16e4324-61f7-4759-b5ed-4280ce8af87e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/FolderController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Requests/JalRequest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Managers/UpdateSubscriberManager.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/Folder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_09_25_101106_add_ag_archives_attributes_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_09_25_101106_add_enabled_to_linked_to_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_10_10_102637_add_national_id_to_linked_to.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_11_05_141554_create_folders_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_11_07_104244_add_beneficiaryid_to_elecs.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2022_11_07_104244_add_beneficiaryid_to_waters.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/Folder/index.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/dashboard/component/folder_archive.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2022_11_16_084839_add_connected_archives_to_archives_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2022_11_16_093949_add_flow_index_to_tickets_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Kernel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ArchieveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ArchieveController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/DashboardController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ElecController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ElecController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/GeneralRequescontroller.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/GeneralRequescontroller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/JalArchieveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/JalArchieveController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/WaterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/WaterController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/jalArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/jalArchive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/fetch_table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/fetch_table.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/myTasksModel.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/myTasksModel.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/elec/elecAdd.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/elec/elecAdd.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/water/waterAdd.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/water/waterAdd.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Managers/AttatchmentManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Managers/AttatchmentManager.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Archive.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Archive.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/assetsArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/assetsArchive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/connectedArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/connectedArchive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/lawArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/lawArchive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/licFileArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/licFileArchive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/outArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/outArchive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/printDes.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/printDes.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -227,7 +215,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/laragon/www/t_expand/database/migrations",
+    "last_opened_file_path": "C:/laragon/www/tadamon",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -305,6 +293,11 @@
       <workItem from="1668426382589" duration="173000" />
       <workItem from="1668426799591" duration="2322000" />
       <workItem from="1668441981137" duration="3460000" />
+      <workItem from="1668493028325" duration="9119000" />
+      <workItem from="1668534079650" duration="172000" />
+      <workItem from="1668534336515" duration="7257000" />
+      <workItem from="1668579150492" duration="6740000" />
+      <workItem from="1668587564490" duration="11247000" />
     </task>
     <servers />
   </component>
