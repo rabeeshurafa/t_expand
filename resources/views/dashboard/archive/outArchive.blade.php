@@ -961,6 +961,7 @@
               timer: 1500
 
             })
+            $('.connected-to').html('')
             $('input[name="copyToID[]"]').val('');
             $('input[name="copyToCustomer[]"]').val('');
             $('input[name="copyToType[]"]').val('');
@@ -1159,7 +1160,7 @@
 
             $('#archive_type').val(response.info.type_id);
             $('#notes').val(response.info.notes);
-
+            setConnected(response?.connect_to??[]);
             let date = (response.info.date)
 
             dates = ""

@@ -8,6 +8,7 @@ namespace App\Models;
 
 use App\Casts\Json;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -34,7 +35,13 @@ class Archive extends Model
 
     }
 
- 
+    public function connectTo(): Attribute
+    {
+        return new Attribute(
+                get: fn($value) => json_decode($value),
+                set: fn($value) => json_encode($value),
+        );
+    }
 
     public function Admin(){
 

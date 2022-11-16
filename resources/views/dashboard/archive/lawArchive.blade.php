@@ -263,7 +263,7 @@
                                         </div>
 
                                     </div>
-
+                                    @include('dashboard.archive.connectedArchive')
                                 </div>
 
                                 <div class="col-md-5 ">
@@ -598,7 +598,7 @@
 
             })
             $('#customerid').val('');
-
+            $('.connected-to').html('')
             $('#customerName').val('');
             $('#customername').val('');
             $('#pk_i_id').val('');

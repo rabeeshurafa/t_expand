@@ -288,7 +288,7 @@
                                         </div>
 
                                     </div>
-
+                                    @include('dashboard.archive.connectedArchive')
                                     <div style="text-align: center;">
 
                                         <button type="submit" class="btn btn-primary" id="saveBtn" style="">
@@ -578,7 +578,7 @@
                 timer: 1500
 
               })
-
+              $('.connected-to').html('')
               $(".formDataaaFilesArea").html('');
               if ($('#track').val() == 1) {
                 let url = `{{ route('admin.dashboard') }}/trackingArchive/${$('#url').val()}/${response.id}`
@@ -673,7 +673,7 @@
               })
 
               $(".formDataaaFilesArea").html('');
-
+              $('.connected-to').html('')
               this.reset();
 
               $('.wtbl').DataTable().ajax.reload();
@@ -875,7 +875,7 @@
             row = '';
             if (data.all_files) {
               for (j = 0; j < data.all_files.length; j++) {
-                row += attacheWithAttachName(response.files[j], response.files[j].real_name)
+                row=attacheWithAttachName(data.all_files[j], $("#AttahType option:selected").text())
               }
 
               $(".alert-danger").addClass("hide");

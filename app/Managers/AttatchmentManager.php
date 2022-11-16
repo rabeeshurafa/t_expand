@@ -64,7 +64,7 @@ class AttatchmentManager
         }
     }
 
-    public function creatImages($images)
+    public static function creatImages($images)
     {
         $data = $images;
 
@@ -112,7 +112,7 @@ class AttatchmentManager
         return $file;
     }
 
-    public function creatPdf($images)
+    public static function creatPdf($images)
     {
         $pdf_base64 = $images;
         $pdf_base64 = substr($pdf_base64, strpos($pdf_base64, ',') + 1);
@@ -203,12 +203,12 @@ class AttatchmentManager
         return $file;
     }*/
 
-    public function saveScanedFile($type, $data)
+    public static function saveScanedFile($type, $data)
     {
         if ($type == 'application/pdf') {
-            $file = $this->creatPdf($data);
+            $file = self::creatPdf($data);
         } else {
-            $file = $this->creatImages($data);
+            $file = self::creatImages($data);
         }
         if ($file) {
             return $file;
