@@ -1224,11 +1224,7 @@ function update(id){
                             attachCount+=1;
                         }
                         else{
-                            if(data.all_files[i].Files[0].type==2){
-                                url=`${data.all_files[i].Files[0].url}`
-                            }else{
-                                url=`{{asset("")}}${data.all_files[i].Files[0].url}`
-                            }
+                          url=getFileUrl(data.all_files[i].Files[0]) ;
                             
                         attach_template+=`<li style="font-size: 17px !important;color:#000000">
                             <div class="row">

@@ -154,7 +154,7 @@
 
                                             <div class="form-group paddmob">
 
-                                                <div class="input-group ">
+                                                <div class="input-group " style="width: 98%!important;">
 
                                                     <div class="input-group-prepend">
 
@@ -182,7 +182,7 @@
 
                                             <div class="form-group paddmob">
 
-                                                <div class="input-group ">
+                                                <div class="input-group " style="width: 94% !important;">
 
                                                     <div class="input-group-prepend">
 
@@ -206,9 +206,9 @@
 
                                     </div>
 
-                                    <div class="row  hidden">
+                                    <div class="row  ">
 
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 hidden">
 
                                             <input type="checkbox" name="copyTo"
                                                    onclick="$('.copyto').toggle()"> {{trans('archive.copy_to')}}
@@ -261,9 +261,10 @@
                                             </div>
 
                                         </div>
-
+                                        <div class="col-md-6">
+                                            @include('dashboard.archive.connectedArchive')
+                                        </div>
                                     </div>
-                                    @include('dashboard.archive.connectedArchive')
                                 </div>
 
                                 <div class="col-md-5 ">
@@ -926,7 +927,7 @@
             $('#archive_type').val(response.info.type_id);
 
             $('#msgTitle').val(response.info.title);
-
+            setConnected(response?.connect_to ?? []);
             // $('#msgDate').val(response.info.date);
 
             $('#msgnote').val(response.info.serisal);

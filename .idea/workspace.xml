@@ -6,8 +6,21 @@
   <component name="ChangeListManager">
     <list default="true" id="a16e4324-61f7-4759-b5ed-4280ce8af87e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketRecive/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ArchieveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ArchieveController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/TradeArchive.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/TradeArchive.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/assetsArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/assetsArchive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/connectedArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/connectedArchive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/lawArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/lawArchive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/licFileArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/licFileArchive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/outArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/outArchive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/tradeArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/tradeArchive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/cert/assurance.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/assurance.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/cert/cert.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/cert.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/cert/generalCert.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/generalCert.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/cert/modelCert.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/modelCert.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/cert/sendOut.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/sendOut.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/cert/warningCert.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/warningCert.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/component/fetch_table.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/component/fetch_table.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -198,22 +211,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/laragon/www/tadamon&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/laragon/www/attil",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\laragon\www\t_expand\database\migrations" />
@@ -288,7 +301,8 @@
       <workItem from="1668534336515" duration="7257000" />
       <workItem from="1668579150492" duration="6740000" />
       <workItem from="1668587564490" duration="11837000" />
-      <workItem from="1668614989126" duration="8556000" />
+      <workItem from="1668614989126" duration="9326000" />
+      <workItem from="1668665140051" duration="15973000" />
     </task>
     <servers />
   </component>

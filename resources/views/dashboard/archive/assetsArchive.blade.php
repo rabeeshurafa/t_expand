@@ -232,20 +232,21 @@
                                     </div>
                                     <div class="row">
 
-                                        <div class="col-md-12 checkCop">
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-md-12 checkCop" style="padding-bottom: 7px;">
 
-                                            <input type="checkbox" name="copyTo"
-                                                   onclick="$('.copyto').toggle()"> {{trans('archive.copy_to')}}
+                                                    <input type="checkbox" name="copyTo"
+                                                           onclick="$('.copyto').toggle()"> {{trans('archive.copy_to')}}
 
-                                        </div>
+                                                </div>
+                                                <div class="col-md-12  copyto hide">
 
-                                        <div class="col-md-8  copyto hide">
+                                                    <div class="form-group paddmob">
 
-                                            <div class="form-group paddmob">
+                                                        <div class="input-group w-91">
 
-                                                <div class="input-group w-91">
-
-                                                    <div class="input-group-prepend">
+                                                            <div class="input-group-prepend">
 
                                                             <span class="input-group-text" id="basic-addon1">
 
@@ -253,21 +254,24 @@
 
                                                             </span>
 
-                                                    </div>
+                                                            </div>
 
-                                                    <input type="text" id="copyToText[]" class="form-control cust_auto"
-                                                           name="copyToText[]">
+                                                            <input type="text" id="copyToText[]"
+                                                                   class="form-control cust_auto"
+                                                                   name="copyToText[]">
 
-                                                    <input type="hidden" id="copyToID[]" name="copyToID[]" value="0">
+                                                            <input type="hidden" id="copyToID[]" name="copyToID[]"
+                                                                   value="0">
 
-                                                    <input type="hidden" id="copyToCustomer[]" name="copyToCustomer[]"
-                                                           value="0">
+                                                            <input type="hidden" id="copyToCustomer[]"
+                                                                   name="copyToCustomer[]"
+                                                                   value="0">
 
-                                                    <input type="hidden" id="copyToType[]" name="copyToType[]"
-                                                           value="0">
+                                                            <input type="hidden" id="copyToType[]" name="copyToType[]"
+                                                                   value="0">
 
-                                                    <div class="input-group-append" onclick="addRec()"
-                                                         style="cursor:pointer">
+                                                            <div class="input-group-append" onclick="addRec()"
+                                                                 style="cursor:pointer">
 
                                                             <span class="input-group-text input-group-text2">
 
@@ -275,18 +279,21 @@
 
                                                             </span>
 
+                                                            </div>
+
+                                                            <!-- 2166  -->
+
+                                                        </div>
+
                                                     </div>
 
-                                                    <!-- 2166  -->
-
                                                 </div>
-
                                             </div>
-
                                         </div>
-
+                                        <div class="col-md-6">
+                                            @include('dashboard.archive.connectedArchive')
+                                        </div>
                                     </div>
-                                    @include('dashboard.archive.connectedArchive')
                                 </div>
 
                                 <div class="col-lg-5 col-md-12">
@@ -997,7 +1004,7 @@
             $('#customerType').val(response.info.model_name);
 
             $('#archive_type').val(response.info.type_id);
-
+            setConnected(response?.connect_to ?? []);
             $('#msgTitle').val(response.info.title);
             $('#notes').val(response.info.notes);
             let date = (response.info.date)

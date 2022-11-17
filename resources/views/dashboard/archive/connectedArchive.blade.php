@@ -10,7 +10,7 @@
     </div>
 </div>
 <div class="row cop">
-    <div class="col-md-8 connected-to">
+    <div class="col-md-12 connected-to">
        {{--<div class="form-group paddmob">
             <div class="input-group w-91">
                 <div class="input-group-prepend">

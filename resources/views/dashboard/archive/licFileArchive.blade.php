@@ -288,7 +288,11 @@
                                         </div>
 
                                     </div>
-                                    @include('dashboard.archive.connectedArchive')
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            @include('dashboard.archive.connectedArchive')
+                                        </div>
+                                    </div>
                                     <div style="text-align: center;">
 
                                         <button type="submit" class="btn btn-primary" id="saveBtn" style="">
@@ -771,7 +775,7 @@
             $('#notes').val(response.info.title);
 
             $('#financeType').val(response.info.type_id);
-
+            setConnected(response?.connect_to??[]);
             let date = (response.info.date)
 
             dates = ""

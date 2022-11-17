@@ -33,6 +33,15 @@
         margin-right: 10px;
     }
 
+    .go-right-90 {
+        /*transform: translate3d(90px, -188px, 0px) !important;*/
+        right: -90px!important;
+    }
+
+    .go-right-55 {
+        /*transform: translate3d(56px, -145px, 0px) !important;*/
+        right: -56px!important;
+    }
 </style>
 
 <input type="hidden" id="type" name="type" value="{{$type}}">
@@ -135,9 +144,12 @@
                                             </div>
                                             <input type="text" id="search_Linked_to"
                                                    class="form-control"
-                                                   name="search_Linked_to" onchange="/*reload();*/" oninput="/*$('#search_Linked_to_id').val(0);$('#search_Linked_to_model').val(0);*/reload();">
-                                            <input type="hidden" id="search_Linked_to_id" name="search_Linked_to_id" value="0">
-                                            <input type="hidden" id="search_Linked_to_model" name="search_Linked_to_model" value="0">
+                                                   name="search_Linked_to" onchange="/*reload();*/"
+                                                   oninput="/*$('#search_Linked_to_id').val(0);$('#search_Linked_to_model').val(0);*/reload();">
+                                            <input type="hidden" id="search_Linked_to_id" name="search_Linked_to_id"
+                                                   value="0">
+                                            <input type="hidden" id="search_Linked_to_model"
+                                                   name="search_Linked_to_model" value="0">
                                         </div>
                                     </div>
                                 </div>
@@ -176,7 +188,8 @@
                                                 </span>
                                             </div>
                                             <input type="text" id="pieceNoSearch" class="form-control"
-                                                   placeholder="رقم القطعة" name="pieceNoSearch" oninput="$('#tabo_data_idSearch').val('');reload();">
+                                                   placeholder="رقم القطعة" name="pieceNoSearch"
+                                                   oninput="$('#tabo_data_idSearch').val('');reload();">
                                             <input type="hidden" id="tabo_data_idSearch" name="tabo_data_idSearch">
                                         </div>
                                     </div>
@@ -231,7 +244,7 @@
                                             <th width="410px;">
                                                 {{trans('archive.attach')}}
                                             </th>
-                                            <th style="width:79px!important;" class="hidemob">
+                                            <th style="width:30px!important;" class="hidemob">
                                             </th>
                                         </tr>
                                         </thead>
@@ -339,7 +352,7 @@
                                             <th style="width:320px">
                                                 {{trans('archive.attach')}}
                                             </th>
-                                            <th style="width:160px!important;">
+                                            <th style="width:30px!important;">
                                             </th>
                                         </tr>
                                         </thead>
@@ -433,7 +446,7 @@
                                             <th style="width:320px">
                                                 {{trans('archive.attach')}}
                                             </th>
-                                            <th style="width:80px!important;">
+                                            <th style="width:30px!important;">
                                             </th>
                                         </tr>
                                         </thead>
@@ -914,7 +927,7 @@
                                             <th width="230px">
                                                 {{trans('archive.attach')}}
                                             </th>
-                                            <th style="width:140px;" class="hidemob">
+                                            <th style="width:30px;" class="hidemob">
                                             </th>
                                             <!--<th>-->
                                             <!--</th>-->
@@ -1031,6 +1044,64 @@
     "2081": '{{trans('archive.build_type3')}}'
   };
 
+  function archiveOperations(data) {
+    let actionBtn = `<div class="row"><div class="dropdown">
+                        <button class="btn btn-secondary" style="background-color: transparent !important; border-color: transparent !important;"
+                                type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fa fa-ellipsis-v  mr-0" style="color:#1E9FF2;" aria-hidden="true"></i>
+                        </button>
+                    <div class="dropdown-menu go-right-55" aria-labelledby="dropdownMenuButton">`
+      @can('store_archive')
+        actionBtn += '<a onclick="update(' + (data.id ?? '') + ')" class="dropdown-item">' +
+        '<i style="color:#1E9FF2" class="fa fa-edit"></i>' +
+        ' تعديل </a>';
+      @endcan
+              @can('archive_delete')
+        actionBtn += '<a onclick="delete_archive(' + (data.id ?? '') + ')" onclick="" class="dropdown-item">' +
+        '<i style="color:#1E9FF2;" class="fa fa-trash"></i>' +
+        'حذف </a>';
+      @endcan
+    /*$actionBtn += `
+      <a target="_blank" href="{{asset(app()->getLocale())}}/admin/printArchive/archive/${data.id}" class="dropdown-item">
+        <img class="fa fa-print" tabindex="0" title="print" src="https://c.palexpand.ps/assets/images/ico/Printer.png " style="cursor:pointer;height: 32px;display:inline">
+    </a>`;*/
+    if (data?.trackLink) {
+      actionBtn += `<a target="_blank" href="{{asset(app()->getLocale())}}/admin${data?.trackLink}"
+                    title="تم تحويل الطلب الى ${data?.emp_receive} في قسم ${data?.dept_receive}" class="dropdown-item">
+                    <img src="https://tf.palexpand.ps/assets/images/arrow.png " style="cursor:pointer;height: 16px;display:inline">
+                   متابعة
+                   </a>`;
+    }
+    actionBtn += `</div></div>`
+    actionBtn += getArchiveConnectedTo(data?.connect_to);
+    actionBtn += `</div>`
+    return actionBtn;
+  }
+
+  function getArchiveConnectedTo(connectedTos) {
+    let connectedList = '';
+    for (let i = 0; i < connectedTos?.length; i++) {
+      if (i === 0) {
+        connectedList += `<div class="dropdown" title="ارتباطات الارشيف">
+                        <button class="btn btn-secondary" style="background-color: transparent !important; border-color: transparent !important;"
+                                type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fa fa-link  mr-0" style="color:#1E9FF2;" aria-hidden="true"></i>
+                        </button>
+                    <div class="dropdown-menu go-right-90" aria-labelledby="dropdownMenuButton">`
+      }
+      let connectedTo = connectedTos[i];
+      let type = connectedTo?.url;
+      if (type === 'contract_archieve') {
+        type = 'dep_archieve';
+      }
+      const url = `{{ route('admin.dashboard') }}/${type}?id=${connectedTo?.id}`
+      connectedList += `<a target="_blank" class="dropdown-item" href="${url}">${connectedTo?.title?.substring(0, 20)}</a>`
+    }
+    if (connectedTos?.length > 0) {
+      connectedList += `</div></div>`
+    }
+    return connectedList;
+  }
 
   var types = $('#type').val();
   $(function () {
@@ -1275,7 +1346,7 @@
               for (i = 0; i < data?.related_to?.length; i++) {
                 relatedTo = data?.related_to[i];
                 if (relatedTo?.model_id == 0) {
-                  $actionBtn += relatedTo?.name+' - '
+                  $actionBtn += relatedTo?.name + ' - '
                 } else {
                   url = relatedTo?.url?.url;
                   $actionBtn += '<a target="_blank" href="{{ route('admin.dashboard') }}/' + url + '?id=' + relatedTo?.model_id + '">' + relatedTo?.name + '</a>  -  ';
@@ -1444,11 +1515,11 @@
               } else {
                 $actionBtn = '<a target="_blank" href="{{ route('admin.dashboard') }}">' + (data.name ?? '') + '</a>';
               }
-              if(data?.trackLink){
-                $actionBtn +=`
+              if (data?.trackLink) {
+                $actionBtn += `
                             <a target="_blank" href="{{asset(app()->getLocale())}}/admin${data?.trackLink}"  style="margin-right:17px;" >
                             <img title="تم تحويل الطلب الى ${data?.emp_receive} في قسم ${data?.dept_receive}" src="https://tf.palexpand.ps/assets/images/arrow.png " style="cursor:pointer;height: 32px;display:inline">
-                            </a>` ;
+                            </a>`;
               }
               return $actionBtn;
             },
@@ -1468,7 +1539,7 @@
                 data.arch_files.forEach(file => {
                   shortCutName = file.real_name;
                   shortCutName = shortCutName.substring(0, 20);
-                  urlfile=getFileUrl(file)
+                  urlfile = getFileUrl(file)
                   if (file.url.includes(".jpg") || file.url.includes(".png"))
                     fileimage = '{{ asset('assets/images/ico/image.png') }}';
                   else if (file.url.includes(".pdf"))
@@ -1497,15 +1568,10 @@
           {
             data: null,
             render: function (data, row, type) {
-              $actionBtn = '';
-                @can('store_archive')
-                  $actionBtn = '<a onclick="update(' + (data.id ?? '') + ')" class="btn btn-info"><i style="color:#ffffff" class="fa fa-edit"></i> </a>';
-                @endcan
-                        @can('archive_delete')
-                  $actionBtn += '<a onclick="delete_archive(' + (data.id ?? '') + ')" style="margin-right:17px;" onclick="" class="btn btn-info"><i style="color:#ffffff;" class="fa fa-trash"></i> </a>';
-                @endcan
-                  return $actionBtn;
+              return archiveOperations(data);
             },
+            orderable: false,
+            searchable: false,
             name: 'name',
           },
         ],
@@ -1609,7 +1675,7 @@
         columns: [
           {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
           {data: 'msgTitle'},
-          {data: 'hod_name',name:'tabo_excels.hod_name'},
+          {data: 'hod_name', name: 'tabo_excels.hod_name'},
           {data: 'hodNo'},
           {data: 'pieceNo'},
           {data: 'citizenName'},
@@ -1785,14 +1851,21 @@
           },
         ],
         @elseif($type == 'volunteer')
-        columns: [{data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false}, {
-          data: null,
-          render: function (data, row, type) {
-            $actionBtn = '<a ondblclick="update(' + data.id + ')">' + data.name + '</a>';
-            return $actionBtn;
+        columns: [
+          {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+          {
+            data: null,
+            render: function (data, row, type) {
+              $actionBtn = '<a ondblclick="update(' + data.id + ')">' + data.name + '</a>';
+              return $actionBtn;
+            },
+            name: 'name',
           },
-          name: 'name',
-        }, {data: 'birthdate'}, {data: 'address.city.name'}, {data: 'blood_type'}, {data: 'lincence.name'},],
+          {data: 'birthdate'},
+          {data: 'address.city.name'},
+          {data: 'blood_type'},
+          {data: 'lincence.name'},
+        ],
         @elseif($type == 'equip')
         columns: [
           {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
@@ -1908,8 +1981,8 @@
                 var c = 0;
                 $actionBtn = "<div class='row' style='margin-left:0px;'>";
                 data.files.forEach(file => {
-                  shortCutName=data.file_ids[c].attachName;
-                  $actionBtn += attacheViewWithIcon(file,6,shortCutName);
+                  shortCutName = data.file_ids[c].attachName;
+                  $actionBtn += attacheViewWithIcon(file, 6, shortCutName);
                   c++;
                 });
                 $actionBtn += '</div>';
@@ -2003,25 +2076,10 @@
             data: null,
             className: "hidemob",
             render: function (data, row, type) {
-              $actionBtn = '';
-                @can('store_archive')
-                  $actionBtn = '<a onclick="update(' + (data.id ?? '') + ')" class="btn btn-info"><i style="color:#ffffff" class="fa fa-edit"></i> </a>';
-                @endcan
-                        @can('archive_delete')
-                  $actionBtn += '<a onclick="delete_archive(' + (data.id ?? '') + ')" style="margin-right:17px;" onclick="" class="btn btn-info"><i style="color:#ffffff;" class="fa fa-trash"></i> </a>';
-                @endcan
-                  $actionBtn += `
-                    <a target="_blank" href="{{asset(app()->getLocale())}}/admin/printArchive/archive/${data.id}"  style="margin-right:17px;" >
-                    <img class="fa fa-print" tabindex="0" title="print" src="https://c.palexpand.ps/assets/images/ico/Printer.png " style="cursor:pointer;height: 32px;display:inline">
-                    </a>`;
-              if(data?.trackLink){
-                $actionBtn +=`
-                                <a target="_blank" href="{{asset(app()->getLocale())}}/admin${data?.trackLink}"  style="margin-right:17px;" >
-                                <img title="تم تحويل الطلب الى ${data?.emp_receive} في قسم ${data?.dept_receive}" src="https://tf.palexpand.ps/assets/images/arrow.png " style="cursor:pointer;height: 32px;display:inline">
-                                </a>` ;
-              }
-              return $actionBtn;
+              return archiveOperations(data);
             },
+            orderable: false,
+            searchable: false,
             name: 'name',
           },
         ],
@@ -2091,7 +2149,7 @@
                 var i = 1;
                 $actionBtn = "<div class='row' style='margin-left:0px;'>";
                 data.files.forEach(file => {
-                  $actionBtn += attacheViewWithIcon(file,6);
+                  $actionBtn += attacheViewWithIcon(file, 6);
                 });
                 $actionBtn += '</div>';
                 return $actionBtn;
@@ -2105,26 +2163,10 @@
             data: null,
             className: "hidemob",
             render: function (data, row, type) {
-              $actionBtn = '';
-                @can('store_archive')
-                  $actionBtn = '<a onclick="update(' + data.id + ')" class="btn btn-info"><i style="color:#ffffff" class="fa fa-edit"></i> </a>';
-                @endcan
-                        @can('archive_delete')
-                  $actionBtn += '<a onclick="delete_archive(' + data.id + ')" style="margin-right:17px;" onclick="" class="btn btn-info"><i style="color:#ffffff;" class="fa fa-trash"></i> </a>';
-                @endcan
-
-                  $actionBtn += `
-                    <a target="_blank" href="{{asset(app()->getLocale())}}/admin/printArchive/archive/${data.id}"  style="margin-right:17px;" >
-                    <img class="fa fa-print" tabindex="0" title="print" src="https://c.palexpand.ps/assets/images/ico/Printer.png " style="cursor:pointer;height: 32px;display:inline">
-                    </a>`;
-                  if(data?.trackLink){
-                    $actionBtn +=`
-                                <a target="_blank" href="{{asset(app()->getLocale())}}/admin${data?.trackLink}"  style="margin-right:17px;" >
-                                <img title="تم تحويل الطلب الى ${data?.emp_receive} في قسم ${data?.dept_receive}" src="https://tf.palexpand.ps/assets/images/arrow.png " style="cursor:pointer;height: 32px;display:inline">
-                                </a>` ;
-                  }
-              return $actionBtn;
+              return archiveOperations(data);
             },
+            orderable: false,
+            searchable: false,
             name: 'name',
           },
         ],
@@ -2202,7 +2244,7 @@
                 var i = 1;
                 $actionBtn = "<div class='row' style='margin-left:0px;'>";
                 data.files.forEach(file => {
-                  $actionBtn += attacheViewWithIcon(file,12);
+                  $actionBtn += attacheViewWithIcon(file, 12);
                 });
                 $actionBtn += '</div>';
                 return $actionBtn;
@@ -2216,20 +2258,10 @@
             data: null,
             className: "hidemob",
             render: function (data, row, type) {
-              $actionBtn = '<a onclick="update(' + data.id + ')" class="btn btn-info"><i style="color:#ffffff" class="fa fa-edit"></i> </a>';
-              $actionBtn += '<a style="margin-right:17px;" onclick="delete_archive(' + data.id + ')" class="btn btn-info"><i style="color:#ffffff;" class="fa fa-trash"></i> </a>';
-              $actionBtn += `
-                        <a target="_blank" href="{{asset(app()->getLocale())}}/admin/printArchive/archive/${data.id}"  style="margin-right:17px;" >
-                        <img class="fa fa-print" tabindex="0" title="print" src="https://c.palexpand.ps/assets/images/ico/Printer.png " style="cursor:pointer;height: 32px;display:inline">
-                        </a>`
-              if(data?.trackLink){
-                $actionBtn +=`
-                                <a target="_blank" href="{{asset(app()->getLocale())}}/admin${data?.trackLink}"  style="margin-right:17px;" >
-                                <img title="تم تحويل الطلب الى ${data?.emp_receive} في قسم ${data?.dept_receive}" src="https://tf.palexpand.ps/assets/images/arrow.png " style="cursor:pointer;height: 32px;display:inline">
-                                </a>` ;
-              }
-              return $actionBtn;
+              return archiveOperations(data);
             },
+            orderable: false,
+            searchable: false,
             name: 'name',
           },
           // {
@@ -2321,7 +2353,7 @@
                 data.files.forEach(file => {
                   shortCutName = file.real_name;
                   shortCutName = shortCutName.substring(0, 20);
-                  urlfile=getFileUrl(file)
+                  urlfile = getFileUrl(file)
                   if (file.extension == "jpg" || file.extension == "png" || file.extension == "jfif")
                     fileimage = '{{ asset('assets/images/ico/image.png') }}';
                   else if (file.extension == "pdf")
@@ -2527,21 +2559,10 @@
           {
             data: null,
             render: function (data, row, type) {
-              $actionBtn = '';
-                @can('store_archive')
-                  $actionBtn = '<a onclick="update(' + (data.id ?? '') + ')" class="btn btn-info"><i style="color:#ffffff" class="fa fa-edit"></i> </a>';
-                @endcan
-                        @can('archive_delete')
-                  $actionBtn += '<a onclick="delete_archive(' + (data.id ?? '') + ')" style="margin-right:17px;" onclick="" class="btn btn-info"><i style="color:#ffffff;" class="fa fa-trash"></i> </a>';
-                @endcan
-                if(data?.trackLink){
-                  $actionBtn +=`
-                                <a target="_blank" href="{{asset(app()->getLocale())}}/admin${data?.trackLink}"  style="margin-right:17px;" >
-                                <img title="تم تحويل الطلب الى ${data?.emp_receive} في قسم ${data?.dept_receive}" src="https://tf.palexpand.ps/assets/images/arrow.png " style="cursor:pointer;height: 32px;display:inline">
-                                </a>` ;
-                }
-                  return $actionBtn;
+              return archiveOperations(data);
             },
+            orderable: false,
+            searchable: false,
             name: 'name',
           },
         ],
