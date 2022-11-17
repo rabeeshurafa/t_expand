@@ -29,23 +29,17 @@ use Session;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ArchiveRequest;
 use App\Http\Requests\LawArchive;
-use App\Models\Address;
 use App\Models\AttachmentType;
 use App\Models\LicenseType;
 use App\Models\ArchiveLicense;
 use App\Models\Area;
 use App\Models\City;
-use App\Models\CraftType;
 use App\Models\jobLicArchieve;
-use App\Models\LicenseRating;
 use App\Models\LimitNumber;
 use App\Models\Volunteer;
-use App\Models\Volunteer_Courses;
-use Illuminate\Support\Facades\DB as FacadesDB;
 use Illuminate\Support\Str;
 use App\Models\ArchiveRole;
 use App\Models\AgendaDetail;
-use Illuminate\Support\Facades\Storage;
 use App\Models\TradeArchive;
 
 class ArchieveController extends Controller
@@ -428,7 +422,6 @@ class ArchieveController extends Controller
 
     }
 
-
     public function volunteerReport()
     {
         $type = 'volunteerReport';
@@ -440,7 +433,6 @@ class ArchieveController extends Controller
         return view('dashboard.archive.volunteerReport', compact('type', 'attachment_type'
                 , 'license_type', 'url', 'city', 'town'));
     }
-
 
     public function volunteerArchieve_report(Request $request)
     {
@@ -923,197 +915,6 @@ class ArchieveController extends Controller
 
     }
 
-    // public function store_archive(ArchiveRequest $request)
-
-    // {
-    //     $archive = Archive::where('id', $request->ArchiveID)->first();
-    //     if ($archive) {
-    //         // dd($request->all());
-    //         $archive->model_id = $request->customerid;
-
-    //         $archive->type_id = $request->archive_type;
-
-    //         $archive->name = $request->customername=='0'?'':$request->customername;
-
-    //         $archive->model_name = $request->customerType;
-
-    //         if($request->msgDate){
-    //         $from = explode('/', ($request->msgDate));
-
-    //         $from = $from[2] . '-' . $from[1] . '-' . $from[0];
-    //         }
-    //         else{
-    //           $from="0000-00-00";
-    //         }
-    //         $archive->date = $from;
-
-    //         $archive->title = $request->msgTitle;
-
-    //         $archive->type = $request->msgType;
-
-    //         $archive->serisal = $request->msgid;
-
-    //         $archive->url =  $request->url;
-
-    //         $archive->save();
-
-    //         $files_ids = $request->formDataaaorgIdList;
-    //         File::where('archive_id', $request->ArchiveID)
-    //         ->update(['archive_id' => 0,'model_name'=>'']);
-    //         if ($files_ids) {
-
-    //             foreach ($files_ids as $id) {
-
-    //                 $file = File::find($id);
-
-    //                 $file->archive_id = $archive->id;
-
-    //                 $file->model_name = "App\Models\Archive";
-
-    //                 $file->save();
-
-    //             }
-
-    //         }
-    //         CopyTo::where('archive_id',$archive->id)->delete();
-    //         if ($request->copyToText[0] != null) {
-
-    //             for ($i = 0; $i < count($request->copyToText); $i++) {
-
-    //                 $copyTo = new CopyTo();
-
-    //                 $copyTo->archive_id =  $archive->id;
-
-    //                 $copyTo->model_id =  $request->copyToID[$i];
-
-    //                 $copyTo->name =  $request->copyToCustomer[$i];
-
-    //                 $copyTo->model_name =  $request->copyToType[$i];
-
-    //                 $copyTo->save();
-
-    //             }
-
-    //         }
-
-    //     } else {
-
-
-    //         $archive = new Archive();
-
-    //         $archive->model_id = $request->customerid;
-
-    //         $archive->type_id = $request->archive_type;
-
-    //         $archive->name = $request->customername=='0'?'':$request->customername;
-
-    //         $archive->model_name = $request->customerType;
-
-    //         if($request->msgDate){
-    //         $from = explode('/', ($request->msgDate));
-
-    //         $from = $from[2] . '-' . $from[1] . '-' . $from[0];
-    //         }
-    //         else{
-    //           $from="0000-00-00";
-    //         }
-    //         $archive->date = $from;
-
-    //         $archive->title = $request->msgTitle;
-
-    //         $archive->type = $request->msgType;
-
-    //         $archive->serisal = $request->msgid;
-
-    //         $archive->url =  $request->url;
-
-    //         $archive->add_by = Auth()->user()->id;
-
-    //         //dd( $request->customername=='0',$request->customername,$archive);
-    //         $archive->save();
-
-    //         $files_ids = $request->formDataaaorgIdList;
-
-    //         if ($files_ids) {
-
-    //             foreach ($files_ids as $id) {
-
-    //                 $file = File::find($id);
-
-    //                 $file->archive_id = $archive->id;
-
-    //                 $file->model_name = "App\Models\Archive";
-
-    //                 $file->save();
-
-    //             }
-
-    //         }
-
-    //         if ($request->copyToText[0] != null) {
-
-    //             for ($i = 0; $i < count($request->copyToText); $i++) {
-
-    //                 $copyTo = new CopyTo();
-
-    //                 $copyTo->archive_id =  $archive->id;
-
-    //                 $copyTo->model_id =  $request->copyToID[$i];
-
-    //                 $copyTo->name =  $request->copyToCustomer[$i];
-
-    //                 $copyTo->model_name =  $request->copyToType[$i];
-
-    //                 $copyTo->save();
-
-    //             }
-
-    //         }
-
-    //     }
-
-    //     if ($archive) {
-
-    //         return response()->json(['success' => trans('admin.archive_added')]);
-
-    //     }
-
-    //     return response()->json(['error' => $validator->errors()->all()]);
-
-    // }
-
-//    function upload_image($file, $prefix)
-//    {
-//
-//        // if ($file) {
-//
-//        //     $files = $file;
-//
-//        //     $imageName = $prefix . rand(3, 999) . '-' . time() . '.' . $files->extension();
-//
-//        //     $image = "storage/" . $imageName;
-//
-//        //     $files->move(public_path('storage'), $imageName);
-//
-//        //     $getValue = $image;
-//
-//        //     return $getValue;
-//
-//        // }
-//
-//        $filePath = $file->hashName();
-//        // Storage::disk('s3')->put($filePath, file_get_contents($file));
-//        Storage::disk('s3')->put($filePath, fopen($file, 'r+'));
-//
-//        return [
-//                'name' => $file->getClientOriginalName(),
-//                'extension' => $file->getClientOriginalExtension(),
-//                'path' => Storage::cloud()->url($filePath)
-//        ];
-//
-//    }
-
-
     public function in_archieve()
 
     {
@@ -1238,7 +1039,7 @@ class ArchieveController extends Controller
     public function store_lawArchive(LawArchive $request)
     {
 
-        // dd($request->all());
+        $connectTo = $this->preparconnectTo($request->connectedToID, $request->connectedToType);
         $archive = Archive::where('id', $request->ArchiveID)->first();
         if ($archive) {
 
@@ -1266,7 +1067,7 @@ class ArchieveController extends Controller
             $archive->serisal = $request->msgnote;
 
             $archive->url = $request->url;
-
+            $archive->connect_to = $connectTo;
             $archive->save();
 
             $files_ids = $request->formDataaaorgIdList;
@@ -1337,7 +1138,7 @@ class ArchieveController extends Controller
             $archive->url = $request->url;
 
             $archive->add_by = Auth()->user()->id;
-
+            $archive->connect_to = $connectTo;
             //dd( $request->customername=='0',$request->customername,$archive);
             $archive->save();
 
@@ -1546,7 +1347,6 @@ class ArchieveController extends Controller
         return response()->json(['error' => $validator->errors()->all()]);
 
     }
-
 
     public function cit_archieve()
 
@@ -1818,7 +1618,7 @@ class ArchieveController extends Controller
 
     public function store_trade_archive(Request $request)
     {
-        // dd($request->all());
+        $connectTo = $this->preparconnectTo($request->connectedToID, $request->connectedToType);
         $attach = array();
         $attachName = $request->attachName;
         $attachFile = $request->attachFile;
@@ -1848,6 +1648,7 @@ class ArchieveController extends Controller
         $archive->driverPhone = $request->driverPhone;
         $archive->url = $request->url;
         $archive->notes = $request->notes;
+        $archive->connect_to = $connectTo;
         if ($request->attachIds == null) {
             $attachIds = array();
         }
@@ -1904,6 +1705,7 @@ class ArchieveController extends Controller
 
         // dd($archive);
         foreach ($archive as $row) {
+            $row->connect_to=$this->getConnectedArchive($row->connect_to->connectToArchive,$row->connect_to->connectToTrade);
             if ($row->model_name) {
                 $st = $row->model_name;
                 $url = explode('\\', ($st));
@@ -1921,10 +1723,36 @@ class ArchieveController extends Controller
             } else {
                 $row->setAttribute('url', array());
             }
+            $attach = json_decode($row->json_feild);
+            $attachIds = json_decode($row->attach_ids) ?? array();
+            $rawFiles = File::whereIn('id', $attachIds)->get();
+            $count = sizeof($attachIds);
+            $i = 0;
+            $files = array();
+            foreach ($attach as $key => $value) {
+                // dd($value);
+                foreach ((array) $value as $key => $val) {
+                    $temp = array();
+                    if ($i < $count) {
+                        $temp['id'] = $attachIds[$i];
+                        $temp['file_links'] = $rawFiles[$i]->file_links;
+                        $i++;
+                    } else {
+                        $temp['id'] = 0;
+                        $temp['file_links'] = [];
+                    }
+                    $temp['real_name'] = $key;
+                    $temp['url'] = $val;
+
+                }
+                array_push($files, $temp);
+                // dd($temp);
+            }
+            $row['arch_files'] = $files;
         }
 
 
-        foreach ($archive as $row) {
+        /*foreach ($archive as $row) {
             $attach = json_decode($row->json_feild);
             $attachIds = json_decode($row->attach_ids) ?? array();
             $rawFiles = File::whereIn('id', $attachIds)->get();
@@ -1947,16 +1775,12 @@ class ArchieveController extends Controller
                     $temp['real_name'] = $key;
                     $temp['url'] = $val;
 
-
                 }
                 array_push($files, $temp);
-
                 // dd($temp);
-
-
             }
             $row['arch_files'] = $files;
-        }
+        }*/
 
         return DataTables::of($archive)->addIndexColumn()->make(true);
 
@@ -1965,11 +1789,14 @@ class ArchieveController extends Controller
     public function tradeArchive_info(Request $request)
     {
 
-        $archive['info'] = TradeArchive::where('id', $request['archive_id'])->get();
+        $archive['info'] = TradeArchive::where('id', $request['archive_id'])->first();
+        $archive['connect_to'] = array();
+        $archive['connect_to'] = $this->getConnectedArchive($archive['info']->connect_to->connectToArchive,$archive['info']->connect_to->connectToTrade);
+
         //dd($archive['info']);
-        foreach ($archive['info'] as $row) {
-            $attach = json_decode($row->json_feild);
-            $attachIds = json_decode($row->attach_ids) ?? array();
+//        foreach ($archive['info'] as $row) {
+            $attach = json_decode($archive['info']->json_feild);
+            $attachIds = json_decode($archive['info']->attach_ids) ?? array();
             $rawFiles = File::whereIn('id', $attachIds)->get();
             $count = sizeof($attachIds);
             $i = 0;
@@ -1990,10 +1817,10 @@ class ArchieveController extends Controller
                 //dd($temp);
                 $archive['files'][] = $temp;
             }
-        }
+//        }
 
         $type = $request['type'];
-        $archive['info'] = $archive['info'][0];
+//        $archive['info'] = $archive['info'][0];
 
         return response()->json($archive);
 
@@ -2192,6 +2019,7 @@ class ArchieveController extends Controller
                         'DESC')->with('archiveType')->with('Admin')->with('copyTo')->with('files')->get();
         // dd($archive->all());
         foreach ($archive as $row) {
+            $row->connect_to=$this->getConnectedArchive($row->connect_to->connectToArchive,$row->connect_to->connectToTrade);
             if ($row->model_name) {
                 $st = $row->model_name;
                 $url = explode('\\', ($st));
@@ -2214,42 +2042,27 @@ class ArchieveController extends Controller
         return DataTables::of($archive)->addIndexColumn()
                 ->editColumn('date', function ($archive) {
                     if ($archive->date) {
-
                         $actionBtn = " ";
                         $from = explode('-', ($archive->date));
-
                         $from = $from[2].'/'.$from[1].'/'.$from[0];
                         $actionBtn = $from;
                         return $actionBtn;
-
                     } else {
-
                         return '';
-
                     }
-
                 })
                 ->addColumn('copyTo', function ($archive) {
-
                     if ($archive->copyTo) {
-
                         $actionBtn = " ";
-
                         foreach ($archive->copyTo as $copyTo) {
                             if ($copyTo->enabled == 1) {
                                 $actionBtn .= ' '.$copyTo->name.', ';
                             }
-
                         }
-
                         return $actionBtn;
-
                     } else {
-
                         return '';
-
                     }
-
                 })->make(true);
 
     }
@@ -2389,6 +2202,7 @@ class ArchieveController extends Controller
                         'DESC')->with('archiveType')->with('Admin')->get();
 
         foreach ($archive as $row) {
+            $row->connect_to=$this->getConnectedArchive($row->connect_to->connectToArchive,$row->connect_to->connectToTrade);
             if ($row->model_name) {
                 $st = $row->model_name;
                 $url = explode('\\', ($st));
@@ -2403,9 +2217,6 @@ class ArchieveController extends Controller
             } else {
                 $row->setAttribute('url', array());
             }
-        }
-
-        foreach ($archive as $row) {
             $attach = json_decode($row->json_feild);
             $files = array();
             foreach ($attach as $id) {

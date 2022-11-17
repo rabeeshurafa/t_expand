@@ -3239,13 +3239,7 @@ function SaveReplay(){
                         shortCutName=response.file.real_name;
                         
                         shortCutID=response.file.id;
-                        
-                        urlfile='{{ asset('') }}';
-                        if(response.file.type!=2){
-                            urlfile+=response.file.url;
-                        }else{
-                            urlfile=response.file.url;
-                        }
+                        urlfile=getFileUrl(response.file)
                         shortCutName=shortCutName.substring(0, 40)
                             if(response.file.extension=="jpg"||response.file.extension=="png")
                             fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/image.png';
@@ -3370,18 +3364,10 @@ function startUpload(formDataStr)
                         file=data.all_files[j]
                         shortCutName=data.all_files[j].real_name;
                         shortCutID=data.all_files[j].id;
-                        urlfile='{{asset('')}}';
-                        console.log(urlfile);
-                        urlfile+=data.all_files[j].url;
-                        console.log(urlfile);
+                        urlfile=getFileUrl(data.all_files[j])
                          shortCutName=file.real_name;
                                 shortCutName=shortCutName.substring(0, 15);
-                                urlfile='{{asset('')}}';
-                                if(file.type!=2){
-                                    urlfile+=file.url;
-                                }else{
-                                    urlfile=file.url;
-                                }
+                                urlfile=getFileUrl(file)
                                 if(file.extension=="jpg"||file.extension=="png")
                                 fileimage='https://t.expand.ps/expand_repov1/public/assets/images/ico/image.png';
                                 else if(file.extension=="pdf")

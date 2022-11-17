@@ -419,7 +419,11 @@
                                         </div>
 
                                     </div>
-
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            @include('dashboard.archive.connectedArchive')
+                                        </div>
+                                    </div>
                                     <div style="text-align: center;">
 
                                         <button type="submit" class="btn btn-primary" id="saveBtn" style="">
@@ -752,7 +756,7 @@
               $('#suppliername').val('');
 
               $('#supplierType').val('');
-
+              $('.connected-to').html('')
               Swal.fire({
 
                 position: 'top-center',
@@ -962,7 +966,7 @@
             $('#driverName').val(response.info.driverName);
             $('#driverPhone').val(response.info.driverPhone);
             $('#notes').val(response.info.notes);
-
+            setConnected(response?.connect_to??[]);
             let date = (response.info.date)
 
             dates = ""
