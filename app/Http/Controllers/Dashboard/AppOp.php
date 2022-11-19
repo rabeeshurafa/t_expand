@@ -131,6 +131,7 @@ class AppOp extends Controller
     function prepearFees(Request $request)
     {
         $feesValue = $request->feesValue;
+        $feesValue2 = $request->feesValue2;
         $feesText = $request->feesText;
         $attachArr = array();
         if ($feesText) {
@@ -139,6 +140,7 @@ class AppOp extends Controller
                     $temp = array();
                     $temp['feesText'] = trim($feesText[$i]);
                     $temp['feesValue'] = trim($feesValue[$i]);
+                    $temp['feesValue2'] = trim($feesValue2[$i]);
                     $attachArr[] = $temp;
                 }
             }
