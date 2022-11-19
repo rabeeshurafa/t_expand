@@ -147,7 +147,7 @@
                                                     </select>
 
                                                     <div class="input-group-append"
-                                                         onclick="ShowConstantModal(105,'financeType','نوع المعاملة')"
+                                                         onclick="ShowConstantModal(6485,'financeType','نوع المعاملة')"
                                                          style="cursor:pointer;max-width: 15px;
 
                                                     margin-left: 0px !important;

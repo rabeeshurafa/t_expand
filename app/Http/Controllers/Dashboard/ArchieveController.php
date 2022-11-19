@@ -1454,7 +1454,7 @@ class ArchieveController extends Controller
 
         $attachment_type = Constant::where('parent', 106)->where('status', 1)->get();
         $archive_config = ArchiveRole::where('empid', Auth()->user()->id)->where('type', $type)->first();
-        $license_type = Constant::where('parent', 105)->where('status', 1)->get();
+        $license_type = Constant::where('parent', 6485)->where('status', 1)->get();
 
         $url = "finance_archive";
 
@@ -2199,9 +2199,13 @@ class ArchieveController extends Controller
         array_push($ids, (int) $my_id);
 
         $archive = Archive::select('archives.*')->where('type', 'financeArchive')
-                ->where('enabled', '1')->whereIn('add_by', $ids)->orderBy('id',
-                        'DESC')->with('archiveType')->with('Admin')->get();
-
+                ->where('enabled', '1')->orderBy('id',
+                        'DESC')->with('archiveType')->with('Admin');
+        if(Auth()->user()->id==74){
+            $archive = $archive->get();
+        }else{
+            $archive = $archive->whereIn('add_by', $ids)->get();
+        }
         foreach ($archive as $row) {
             $row->connect_to=$this->getConnectedArchive($row->connect_to->connectToArchive,$row->connect_to->connectToTrade);
             if ($row->model_name) {
