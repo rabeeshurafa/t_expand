@@ -198,37 +198,16 @@ class FolderController extends Controller
                 ->leftJoin('t_constant', 't_constant.id', 'archives.type_id')
                 ->with('archiveType')->with('files')->with('Admin')->orderBy('archives.created_at', 'DESC')->get();
         foreach ($Archive as $row) {
-            $i = 0;
-            $real_name = json_decode($row->json_feild);
-            foreach ($row['files'] as $file) {
-                $temp = array_keys(get_object_vars($real_name[$i]))[0];
-                $file->real_name = $temp;
-                $i++;
+            $attach = json_decode($row->json_feild);
+            $files = array();
+            foreach ($attach as $id) {
+                $temp=(array) $id;
+                $file = File::find($id->id);
+                $file->real_name= array_search ($file->url, $temp);
+                $files[] = $file;
             }
+            $row->files = $files;
         }
-//        foreach($Archive as $row){
-//
-//            $attach=json_decode($row->json_feild);
-//
-//            foreach($attach as $key=>$value){
-//
-//                foreach((array) $value as $key=>$val){
-//
-//                    $temp=array();
-//
-//                    $temp['real_name']=$key;
-//
-//                    $temp['url']=$val;
-//
-//                }
-//
-//                //dd($temp);
-//
-//                $row->files[]=$temp;
-//
-//            }
-//
-//        }
 
         return DataTables::of($Archive)
                 ->addIndexColumn()

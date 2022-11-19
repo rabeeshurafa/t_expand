@@ -392,7 +392,9 @@
                              التكاليف
                          </span>
                     </div>
-                        <?php $total=0;
+                        <?php
+                        $total=0;
+                        $total2=0;
                         $arr=json_decode($ticket->fees_json);
                         $arr=is_array($arr)?$arr:array();?>
                     <ol class="vasType 1vas addRec">
@@ -401,15 +403,19 @@
                         @foreach($arr as $fee)
                             <li style="font-size: 17px !important;color:#000000">
                                 <div class="row">
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-6">
                                         <input type="text" {{ $readonly?"readonly":"" }} name="feesText[]" class="form-control feesText" value="{{ $fee->feesText}}">
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="number"{{ $readonly?"readonly":"" }} style="font-weight:bold;text-align:center;" name="feesValue[]" class="form-control FessVals" value="{{ $fee->feesValue*1}}" onblur="calcTotal();addExtraRow();" onchange="calcTotal()">
+                                        <input type="number"{{ $readonly?"readonly":"" }} style="font-weight:bold;text-align:center;" name="feesValue[]" class="form-control FessVals" value="{{ intval($fee->feesValue)*1}}" onblur="calcTotal();addExtraRow();" onchange="calcTotal()">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="number"{{ $readonly?"readonly":"" }} style="font-weight:bold;text-align:center;" name="feesValue[]" class="form-control FessVals" value="{{ intval($fee->feesValue2)*1}}" onblur="calcTotal();addExtraRow();" onchange="calcTotal()">
                                     </div>
                                 </div>
                             </li>
-                                <?php $total+=$fee->feesValue; ?>
+                                <?php $total+=intval($fee->feesValue); ?>
+                                <?php $total2+=intval($fee->feesValue2); ?>
                         @endforeach
                         <?php } ?>
                     </ol>
@@ -417,11 +423,14 @@
                     <ol class="vasType 1vas " style="list-style-type: none;">
                         <li style="font-size: 17px !important;color:#000000">
                             <div class="row">
-                                <div class="col-sm-8">
+                                <div class="col-sm-6">
                                     الإجمالي
                                 </div>
                                 <div class="col-sm-3">
                                     <input type="number" style="font-weight:bold;text-align:center;" id="total" disabled="" name="total" class="form-control" value="{{$total}}">
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="number" style="font-weight:bold;text-align:center;" id="total" disabled="" name="total" class="form-control" value="{{$total2}}">
                                 </div>
                             </div>
                         </li>

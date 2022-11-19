@@ -504,6 +504,7 @@ Route::group([
                 'SubscriberController@subscriberOtherArchive')->name('subscriberOtherArchive');
         Route::get('subscribercontractArchive',
                 'SubscriberController@subscribercontractArchive')->name('subscribercontractArchive');
+        Route::get('subscriberfinanceArchive', 'SubscriberController@subscriberfinanceArchive')->name('subscriberfinanceArchive');
         Route::get('subscriberCert', 'SubscriberController@subscriberCert')->name('subscriberCert');
         Route::get('subscriberEarh_lic', 'SubscriberController@subscriberEarh_lic')->name('subscriberEarh_lic');
         Route::get('subscriberWarning', 'SubscriberController@subscriberWarning')->name('subscriberWarning');

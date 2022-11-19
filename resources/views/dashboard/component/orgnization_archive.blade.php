@@ -171,7 +171,18 @@
     										</b></a>
     
     									</li>
-    									
+                                        @can('orgfinaceArchive')
+                                            <li class="nav-item">
+
+                                                <a class="nav-link" style="color: #0073AA;" id="base-tab7" data-toggle="tab" aria-controls="ctab7" href="#ctab7" aria-expanded="false">
+                                                    <b>
+                                                        {{trans('archive.finance_achive')}}
+                                                        (<span id="ctabCnt7"></span>)
+
+                                                    </b></a>
+
+                                            </li>
+                                        @endcan
                                         @can('orgCopyArchive')
     									<li class="nav-item">
     
@@ -262,7 +273,18 @@
     										</b></a>
     
     									</li>
-    									
+                                        @can('bankfinaceArchive')
+                                            <li class="nav-item">
+
+                                                <a class="nav-link" style="color: #0073AA;" id="base-tab7" data-toggle="tab" aria-controls="ctab7" href="#ctab7" aria-expanded="false">
+                                                    <b>
+                                                        {{trans('archive.finance_achive')}}
+                                                        (<span id="ctabCnt7"></span>)
+
+                                                    </b></a>
+
+                                            </li>
+                                        @endcan
                                         @can('bankCopyArchive')
     									<li class="nav-item">
     
@@ -353,7 +375,18 @@
     										</b></a>
     
     									</li>
-    									
+                                        @can('officefinaceArchive')
+                                            <li class="nav-item">
+
+                                                <a class="nav-link" style="color: #0073AA;" id="base-tab7" data-toggle="tab" aria-controls="ctab7" href="#ctab7" aria-expanded="false">
+                                                    <b>
+                                                        {{trans('archive.finance_achive')}}
+                                                        (<span id="ctabCnt7"></span>)
+
+                                                    </b></a>
+
+                                            </li>
+                                        @endcan
                                         @can('officeCopyArchive')
     									<li class="nav-item">
     
@@ -545,8 +578,7 @@
                                         </p>
 
                                     </div>
-                                    
-                                    @if($types=='suppliers')
+
                                     <div class="tab-pane"  id="ctab7" aria-labelledby="base-tab7">
 
                                         <p>
@@ -590,7 +622,6 @@
                                         </p>
 
                                     </div>
-                                    @endif
                                     
                                     <div class="tab-pane"  id="ctab4" aria-labelledby="base-tab4">
 
@@ -2238,7 +2269,6 @@
     }
     
     function getFinanceArchive($id,$financeArchiveCount){
-
         var table = $('.financeArchivetbl').DataTable({
             destroy: true,
             ajax: {

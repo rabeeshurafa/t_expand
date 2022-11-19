@@ -470,7 +470,10 @@ class SubscriberController extends Controller
 
         $user['otherArchiveCount']  = Archive::where('model_id',$request['subscribe_id'])->where('enabled',1)
 
-        ->where('model_name',$model)->whereNotIn('type', ['outArchive','inArchive','contractArchive'])->count();
+        ->where('model_name',$model)->whereNotIn('type', ['outArchive','inArchive','contractArchive', 'financeArchive'])->count();
+
+        $user['financeArchiveCount']  = Archive::where('model_id',$request['subscribe_id'])->where('enabled',1)
+        ->where('model_name',$model)->where('type','financeArchive')->count();
         
         $user['certCount'] =Cert::where('citizen_id',$request['subscribe_id'])->where('t_farfromcenter.e_type','!=',4)->count();
         $user['warningCount'] =Cert::where('citizen_id',$request['subscribe_id'])->where('t_farfromcenter.e_type',4)->count();
@@ -645,7 +648,9 @@ class SubscriberController extends Controller
 
         // }
         $user['EarchLicCount'] = Earh_lic::whereJsonContains('id2',strval($request['subscribe_id']))->where('enabled',1)->count();
-        $user['ArchiveCount'] = $ArchiveCount + $CopyToCount +$ArchiveLicCount+$jalArchiveCount+$user['certCount']+$user['warningCount']+$user['EarchLicCount']+ $user['tradeArchiveCount'];
+        $user['ArchiveCount'] = $ArchiveCount + $CopyToCount +$ArchiveLicCount+$jalArchiveCount+
+                $user['certCount']+$user['warningCount']+$user['EarchLicCount']+
+                $user['tradeArchiveCount']+$user['financeArchiveCount'];
 
         // $user['job_title'] = JobTitle::where('id',$user['info']->job_title_id)->first()->name;
 
@@ -909,7 +914,7 @@ class SubscriberController extends Controller
         ->where('enabled',1)
         ->where('model_id',$request['subscriber_id'])
         ->where('model_name','App\\Models\\User')
-        ->whereNotIn('type', ['outArchive','inArchive','contractArchive'])
+        ->whereNotIn('type', ['outArchive','inArchive','contractArchive', 'financeArchive'])
         ->leftJoin('t_constant', 't_constant.id', 'archives.type_id')
         ->with('archiveType')->with('files')->with('copyTo')->with('Admin')->orderBy('archives.date', 'ASC')->get();
 
@@ -935,6 +940,33 @@ class SubscriberController extends Controller
         ->addIndexColumn()
 
         ->make(true);
+
+    }
+
+    public function subscriberfinanceArchive(Request $request)
+    {
+        $Archive = Archive::select('archives.*', 't_constant.name as type_id_name')
+                ->where('enabled', 1)
+                ->where('model_id', $request['subscriber_id'])
+                ->where('type', 'financeArchive')
+                ->where('model_name', 'App\\Models\\User')
+                ->leftJoin('t_constant', 't_constant.id', 'archives.type_id')
+                ->with('archiveType')->with('files')->with('Admin')->orderBy('archives.created_at', 'DESC')->get();
+        foreach ($Archive as $row) {
+            $attach = json_decode($row->json_feild);
+            $files = array();
+            foreach ($attach as $id) {
+                $temp=(array) $id;
+                $file = File::find($id->id);
+                $file->real_name= array_search ($file->url, $temp);
+                $files[] = $file;
+            }
+            $row->files = $files;
+        }
+
+        return DataTables::of($Archive)
+                ->addIndexColumn()
+                ->make(true);
 
     }
     

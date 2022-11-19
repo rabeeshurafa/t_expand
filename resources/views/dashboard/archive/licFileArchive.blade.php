@@ -715,7 +715,7 @@
 
         $(".cust").autocomplete({
 
-          source: 'supplier_auto_complete',
+          source: 'archive_auto_complete',
 
           minLength: 1,
 

@@ -1542,6 +1542,7 @@ class ArchieveController extends Controller
             $archive = new Archive();
             $archive->model_id = $request->supplierid;
             $archive->type_id = $request->financeType;
+            $archive->name = $request->suppliername == '0' ? '' : $request->suppliername;
             $archive->model_name = $request->supplierType;
             if ($request->date) {
                 $from = explode('/', ($request->date));
