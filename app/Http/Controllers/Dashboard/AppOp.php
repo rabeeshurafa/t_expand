@@ -672,7 +672,7 @@ order by created_at asc");
             $archive['info']->url = "agenda_archieve";
             $archive['files'] = [];
             if (is_array(json_decode($archive['info']->file_ids))) {
-                $files = File::whereIn('id', json_decode($archive['info']->file_ids))->get(['id', 'real_name', 'url']);
+                $files = File::whereIn('id', json_decode($archive['info']->file_ids))->get(['id', 'real_name', 'url','file_links']);
             }
             if (isset($files) && $files != null) {
                 foreach ($files as $file) {
@@ -680,6 +680,7 @@ order by created_at asc");
                     $temp['id'] = $file->id;
                     $temp['real_name'] = $file->real_name;
                     $temp['url'] = $file->url;
+                    $temp['file_links'] = $file->file_links;
                 }
                 $archive['files'][] = $temp;
             }

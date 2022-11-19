@@ -8,14 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/AppOp.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/AppOp.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/GeneralRequescontroller.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/GeneralRequescontroller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ReportController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/cert/assurance.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/assurance.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/cert/cert.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/cert.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/cert/generalCert.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/generalCert.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/cert/modelCert.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/modelCert.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/cert/sendOut.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/sendOut.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/cert/warningCert.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/warningCert.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/admin.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/agenda.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/agenda.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -213,7 +206,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/laragon/www/t_expand",
+    "last_opened_file_path": "C:/laragon/www/saida",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -298,7 +291,7 @@
       <workItem from="1668587564490" duration="11837000" />
       <workItem from="1668614989126" duration="9326000" />
       <workItem from="1668665140051" duration="15973000" />
-      <workItem from="1668844528356" duration="1604000" />
+      <workItem from="1668844528356" duration="3299000" />
     </task>
     <servers />
   </component>
