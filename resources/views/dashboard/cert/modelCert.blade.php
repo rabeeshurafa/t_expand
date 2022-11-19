@@ -1164,6 +1164,24 @@ function update(id){
                         attachCount+=1;
                         }
                     }
+                }else{
+                  attach_index = 1;
+                  $('.addAttatch').html(' ');
+                  attach_template += `<li style="font-size: 17px !important;color:#000000">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <input type="text" id="attachName[]" name="attachName[]" class="form-control attachName" placeholder="أدخل اسم المرفق" value="">
+                                    </div>
+                                    <div class="col-sm-5 attach_row_${1}">
+
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <img src="{{ asset('assets/images/ico/upload.png') }}" width="40"
+                                            height="40" style="cursor:pointer"
+                                            onclick="$('#currFile').val(${1});$('#attachfile').trigger('click');">
+                                    </div>
+                                </div>
+                            </li>`
                 }
                 setAttach_index(attach_index+1);
                 $('#currFile').val(attachCount);

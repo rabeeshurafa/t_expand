@@ -831,6 +831,11 @@
                 						<a class="dropdown-item" href="{{route('networkDevelopment')}}">صيانة وتطوير شبكة</a>
                 					</li>
                 					@endcan
+                					@can('internalMemo')
+                					<li data-menu="">
+                						<a class="dropdown-item" href="{{route('internalMemo')}}">مذكرة داخلية</a>
+                					</li>
+                					@endcan
                 				</ul>
     					</div>
     					@endcanany

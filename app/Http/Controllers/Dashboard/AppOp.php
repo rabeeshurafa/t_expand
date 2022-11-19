@@ -131,6 +131,7 @@ class AppOp extends Controller
     function prepearFees(Request $request)
     {
         $feesValue = $request->feesValue;
+        $feesValue2 = $request->feesValue2;
         $feesText = $request->feesText;
         $attachArr = array();
         if ($feesText) {
@@ -139,6 +140,7 @@ class AppOp extends Controller
                     $temp = array();
                     $temp['feesText'] = trim($feesText[$i]);
                     $temp['feesValue'] = trim($feesValue[$i]);
+                    $temp['feesValue2'] = trim($feesValue2[$i]);
                     $attachArr[] = $temp;
                 }
             }
@@ -636,6 +638,7 @@ order by created_at asc");
             $archive['info'] = TradeArchive::where('id', $Id)->first();
             $attach = json_decode($archive['info']->json_feild);
             $attachIds = json_decode($archive['info']->attach_ids) ?? array();
+            $rawFiles = File::whereIn('id', $attachIds)->get();
             $count = sizeof($attachIds);
             $i = 0;
             foreach ($attach as $key => $value) {
@@ -643,9 +646,11 @@ order by created_at asc");
                     $temp = array();
                     if ($i < $count) {
                         $temp['id'] = $attachIds[$i];
+                        $temp['file_links'] = $rawFiles[$i]->file_links;
                         $i++;
                     } else {
                         $temp['id'] = 0;
+                        $temp['file_links'] = [];
                     }
                     $temp['real_name'] = $key;
                     $temp['url'] = $val;
@@ -669,7 +674,7 @@ order by created_at asc");
             $archive['info']->url = "agenda_archieve";
             $archive['files'] = [];
             if (is_array(json_decode($archive['info']->file_ids))) {
-                $files = File::whereIn('id', json_decode($archive['info']->file_ids))->get(['id', 'real_name', 'url']);
+                $files = File::whereIn('id', json_decode($archive['info']->file_ids))->get(['id', 'real_name', 'url','file_links']);
             }
             if (isset($files) && $files != null) {
                 foreach ($files as $file) {
@@ -677,6 +682,7 @@ order by created_at asc");
                     $temp['id'] = $file->id;
                     $temp['real_name'] = $file->real_name;
                     $temp['url'] = $file->url;
+                    $temp['file_links'] = $file->file_links;
                 }
                 $archive['files'][] = $temp;
             }

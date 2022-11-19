@@ -189,6 +189,7 @@ class GeneralRequescontroller extends Controller
             $archive['info'] = TradeArchive::where('id', $Id)->first();
             $attach = json_decode($archive['info']->json_feild);
             $attachIds = json_decode($archive['info']->attach_ids) ?? array();
+            $rawFiles = File::whereIn('id', $attachIds)->get();
             $count = sizeof($attachIds);
             $i = 0;
             foreach ($attach as $key => $value) {
@@ -196,9 +197,11 @@ class GeneralRequescontroller extends Controller
                     $temp = array();
                     if ($i < $count) {
                         $temp['id'] = $attachIds[$i];
+                        $temp['file_links'] = $rawFiles[$i]->file_links;
                         $i++;
                     } else {
                         $temp['id'] = 0;
+                        $temp['file_links'] = [];
                     }
                     $temp['real_name'] = $key;
                     $temp['url'] = $val;
@@ -209,22 +212,20 @@ class GeneralRequescontroller extends Controller
         } else if ($type == 'finance_archive') {
             $archive['info'] = Archive::find($Id);
             $attach = json_decode($archive['info']->json_feild);
-            foreach ($attach as $key => $value) {
-                foreach ((array) $value as $key => $val) {
-                    $temp = array();
-                    $temp['id'] = 0;
-                    $temp['real_name'] = $key;
-                    $temp['url'] = $val;
-                }
-                //dd($temp);
-                $archive['files'][] = $temp;
+            $files = array();
+            foreach ($attach as $id) {
+                $temp = (array) $id;
+                $file = File::find($id->id);
+                $file->real_name = array_search($file->url, $temp);
+                $files[] = $file;
             }
+            $archive['files'] = $files;
         } else if ($type == 'agenda_archieve') {
             $archive['info'] = AgendaTopic::find($Id);
             $archive['info']->url = "agenda_archieve";
             $archive['files'] = [];
             if (is_array(json_decode($archive['info']->file_ids))) {
-                $files = File::whereIn('id', json_decode($archive['info']->file_ids))->get(['id', 'real_name', 'url']);
+                $files = File::whereIn('id', json_decode($archive['info']->file_ids))->get(['id', 'real_name', 'url','file_links']);
             }
             if (isset($files) && $files != null) {
                 foreach ($files as $file) {
@@ -232,6 +233,7 @@ class GeneralRequescontroller extends Controller
                     $temp['id'] = $file->id;
                     $temp['real_name'] = $file->real_name;
                     $temp['url'] = $file->url;
+                    $temp['file_links'] = $file->file_links;
                 }
                 $archive['files'][] = $temp;
             }

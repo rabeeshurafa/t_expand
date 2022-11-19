@@ -1111,7 +1111,7 @@ function suppArchive($contractArchiveCount,$outArchiveCount,$inArchiveCount,$cop
     @endcan
 } 
 
-function orgArchive($contractArchiveCount,$outArchiveCount,$inArchiveCount,$copyToCount,$jalArchiveCount,$otherArchiveCount,$certCount,$id){
+function orgArchive($contractArchiveCount,$outArchiveCount,$inArchiveCount,$copyToCount,$jalArchiveCount,$otherArchiveCount,$certCount,$financeArchiveCount,$id){
        
     @can('orgcontractArchive')
     getContractArchive($id,$contractArchiveCount);
@@ -1145,10 +1145,14 @@ function orgArchive($contractArchiveCount,$outArchiveCount,$inArchiveCount,$copy
     getOtherArchive($id,$otherArchiveCount);
     $archiveCount+=$otherArchiveCount;
     @endcan
+    @can('orgfinaceArchive')
+    getFinanceArchive($id,$financeArchiveCount);
+    $archiveCount+=$financeArchiveCount;
+    @endcan
     
 } 
 
-function bankArchive($contractArchiveCount,$outArchiveCount,$inArchiveCount,$copyToCount,$jalArchiveCount,$otherArchiveCount,$certCount,$id){
+function bankArchive($contractArchiveCount,$outArchiveCount,$inArchiveCount,$copyToCount,$jalArchiveCount,$otherArchiveCount,$certCount,$financeArchiveCount,$id){
        
     @can('bankcontractArchive')
     getContractArchive($id,$contractArchiveCount);
@@ -1182,10 +1186,14 @@ function bankArchive($contractArchiveCount,$outArchiveCount,$inArchiveCount,$cop
     getOtherArchive($id,$otherArchiveCount);
     $archiveCount+=$otherArchiveCount;
     @endcan
+    @can('bankfinaceArchive')
+    getFinanceArchive($id,$financeArchiveCount);
+    $archiveCount+=$financeArchiveCount;
+    @endcan
     
 } 
 
-function officeArchive($contractArchiveCount,$outArchiveCount,$inArchiveCount,$copyToCount,$jalArchiveCount,$otherArchiveCount,$certCount,$id){
+function officeArchive($contractArchiveCount,$outArchiveCount,$inArchiveCount,$copyToCount,$jalArchiveCount,$otherArchiveCount,$certCount,$financeArchiveCount,$id){
        
     @can('officecontractArchive')
     getContractArchive($id,$contractArchiveCount);
@@ -1219,7 +1227,11 @@ function officeArchive($contractArchiveCount,$outArchiveCount,$inArchiveCount,$c
     getOtherArchive($id,$otherArchiveCount);
     $archiveCount+=$otherArchiveCount;
     @endcan
-    
+
+    @can('officefinaceArchive')
+    getFinanceArchive($id,$financeArchiveCount);
+    $archiveCount+=$financeArchiveCount;
+    @endcan
 } 
 
 
@@ -1254,11 +1266,11 @@ function update($id)
                 if( $('#type').val()=='suppliers'){
                     suppArchive(response.contractArchiveCount,response.outArchiveCount,response.inArchiveCount,response.copyToCount,response.jalArchiveCount,response.otherArchiveCount,response.financeArchiveCount,response.certCount,response.info.id);
                 }else if( $('#type').val()=='orginzation'){
-                    orgArchive(response.contractArchiveCount,response.outArchiveCount,response.inArchiveCount,response.copyToCount,response.jalArchiveCount,response.otherArchiveCount,response.certCount,response.info.id);
+                    orgArchive(response.contractArchiveCount,response.outArchiveCount,response.inArchiveCount,response.copyToCount,response.jalArchiveCount,response.otherArchiveCount,response.certCount,response.financeArchiveCount,response.info.id);
                 }else if( $('#type').val()=='banks'){
-                    bankArchive(response.contractArchiveCount,response.outArchiveCount,response.inArchiveCount,response.copyToCount,response.jalArchiveCount,response.otherArchiveCount,response.certCount,response.info.id);
+                    bankArchive(response.contractArchiveCount,response.outArchiveCount,response.inArchiveCount,response.copyToCount,response.jalArchiveCount,response.otherArchiveCount,response.certCount,response.financeArchiveCount,response.info.id);
                 } else {
-                    officeArchive(response.contractArchiveCount,response.outArchiveCount,response.inArchiveCount,response.copyToCount,response.jalArchiveCount,response.otherArchiveCount,response.certCount,response.info.id);
+                    officeArchive(response.contractArchiveCount,response.outArchiveCount,response.inArchiveCount,response.copyToCount,response.jalArchiveCount,response.otherArchiveCount,response.certCount,response.financeArchiveCount,response.info.id);
                 }
                 
                 $('#orgnization_id').val(response.info.id);

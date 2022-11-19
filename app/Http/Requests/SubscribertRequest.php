@@ -25,7 +25,7 @@ class SubscribertRequest extends FormRequest
     {
         return [
             'formDataNameAR' => 'required|string',
-            'formDataNationalID' => ['required','string','digits:9',Rule::unique('users','national_id')->ignore($this->subscriber_id)],
+            'formDataNationalID' => ['nullable','string','digits:9',Rule::unique('users','national_id')->ignore($this->subscriber_id)],
             'formDataMobileNo1' => ['nullable','string','digits:10',Rule::unique('users','phone_one')->ignore($this->subscriber_id)],
             'formDataMobileNo2' => ['nullable','string','digits:10',Rule::unique('users','phone_two')->ignore($this->subscriber_id)],
         ];

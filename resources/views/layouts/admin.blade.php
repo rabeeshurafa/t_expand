@@ -1117,9 +1117,7 @@
 
                           shortCutName = response.copyTo[i].archive.files[j].real_name;
 
-                          urlfile = '{{ asset('') }}';
-
-                          urlfile += response.copyTo[i].archive.files[j].url;
+                          urlfile =getFileUrl(response?.copyTo[i]?.archive?.files[j]);
 
                           if (response.copyTo[i].archive.files[j].extension == "jpg" || response.copyTo[i].archive.files[j].extension == "png" || response.copyTo[i].archive.files[j].extension == "jfif")
 

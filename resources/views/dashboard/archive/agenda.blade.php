@@ -1670,7 +1670,7 @@
                     row1 = '';
 
                     for (j = 0; j < data.all_files.length; j++) {
-                      row +=topicAttache(data.all_files[j],id);
+                      row +=topicAttache(data.all_files[j],frmid);
                     }
                     $(".subject" + frmid + "ImagesArea").append(row)
                     $(".loader").addClass('hide');

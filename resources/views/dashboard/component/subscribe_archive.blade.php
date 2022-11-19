@@ -173,6 +173,20 @@
 
                                         </li>
                                     @endcan
+                                    @can('subscriberFinanceArchive')
+                                    <li class="nav-item">
+
+                                        <a class="nav-link" id="base-tab17" style="color: #0073AA;"
+                                           data-toggle="tab" aria-controls="ctab17" href="#ctab17"
+                                           aria-expanded="false">
+                                            <b>
+
+                                                ارشيف المالية
+                                                (<span id="ctabCnt17"></span>)
+                                            </b></a>
+
+                                    </li>
+                                @endcan
 								</ul>
 
                                 <div class="tab-content px-1 pt-1" style="margin-top:0px !important ;">
@@ -717,6 +731,50 @@
                                                 </tr>
 
                                             </thead>
+
+
+                                        </table>
+
+                                        </p>
+
+                                    </div>
+
+                                    <div class="tab-pane"  id="ctab17" aria-labelledby="base-tab17">
+
+                                        <p>
+
+                                        <table style="width:100%; margin-top: 10px;direction: rtl;" class="detailsTB table hdrTbl1 financeArchivetbl" >
+
+                                            <thead>
+
+                                            <tr>
+
+                                                <th scope="col" style="text-align: right;color:#ffffff; width: 10px;">#</th>
+
+                                                <th scope="col"  style="text-align:  right; direction:rtl; font-family: Arial, sans-serif !important;color:#ffffff; width: 150px;">
+
+                                                    {{trans('archive.date')}} </th>
+
+                                                <th scope="col" style="text-align: right; font-family: Arial, sans-serif !important;color:#ffffff">
+
+                                                    {{trans('archive.deal_type')}}</th>
+
+                                                <th scope="col" style="text-align: right; font-family: Arial, sans-serif !important;color:#ffffff">
+
+                                                    {{trans('admin.notes')}}</th>
+
+                                                <th scope="col" style="text-align: right; font-family: Arial, sans-serif !important;color:#ffffff">
+
+                                                    {{trans('archive.created_by')}}</th>
+
+                                                <th scope="col" style="text-align: center; font-family: Arial, sans-serif !important;color:#ffffff">
+
+                                                    {{trans('archive.attach')}}</th>
+
+                                            </tr>
+
+                                            </thead>
+
 
 
                                         </table>
@@ -2911,6 +2969,199 @@
         });
 
         $('#ctabCnt16').html($tradeArchiveCount);
+
+    }
+
+    function getFinanceArchive($id,$financeArchiveCount){
+      var table = $('.financeArchivetbl').DataTable({
+        destroy: true,
+        ajax: {
+          url: '{{ route('subscriberfinanceArchive') }}',
+          data: function (d) {
+            d.subscriber_id = $id;
+          }
+        },
+
+        columns:[
+          { data: 'DT_RowIndex', name: 'DT_RowIndex' , orderable: false, searchable: false},
+          {data:'date'},
+          {
+            data: null,
+            render:function(data,row,type){
+              $type ='';
+              if(data.archive_type!=null){
+                $type = data.archive_type.name;
+              }
+              return $type;
+            },
+            name:'type',
+
+          },
+          {data:'title'},
+          {
+            data: null,
+            render:function(data,row,type){
+              $admin ='';
+              if(data.admin!=null){
+                $admin = data.admin.nick_name;
+              }
+              return $admin;
+            },
+            name:'name',
+
+          },
+          {
+            data: null,
+
+            render:function(data,row,type){
+              if(data.files.length>0){
+                var i=1;
+                $actionBtn="<div class='row' style='margin-left:0px;'>";
+                data.files.forEach(file => {
+                  shortCutName=file.real_name;
+                  shortCutName=shortCutName.substring(0, 20);
+                  extension=file.url.split('.');
+                  urlfile=getFileUrl(file)
+                  if(extension[1]=="jpg"||extension[1]=="png")
+                    fileimage='{{ asset('assets/images/ico/image.png') }}';
+                  else if(extension[1]=="pdf")
+                    fileimage='{{ asset('assets/images/ico/pdf.png') }}';
+                  else if(extension[1]=="excel"||extension[1]=="xsc")
+                    fileimage='{{ asset('assets/images/ico/excellogo.png') }}';
+                  else
+                    fileimage='{{ asset('assets/images/ico/file.png') }}';
+                  $actionBtn += '<div id="attach" class=" col-sm-12 ">'
+                    +'<div class="attach">'
+                    +' <a class="attach-close1" href="'+urlfile+'" style="color: #74798D; float:left;" target="_blank">'
+                    +'  <span class="attach-text">'+shortCutName+'</span>'
+                    +'    <img style="width: 20px;"src="'+fileimage+'">'
+                    +'</a>'
+                    +'</div>'
+                    +'</div>';
+                });
+                $actionBtn += '</div>';
+                return $actionBtn;
+              }
+              else{return '';}
+            },
+            name:'fileIDS',
+          },
+
+        ],
+
+        dom: 'Bfltip',
+
+        buttons: [
+
+          {
+
+            extend: 'excel',
+
+            tag: 'img',
+
+            title:'',
+
+            attr:  {
+
+              title: 'excel',
+
+              src:'{{asset('assets/images/ico/excel.png')}}',
+
+              style: 'cursor:pointer; height: 32px;',
+
+            },
+
+
+
+          },
+
+          {
+
+            extend: 'print',
+
+            tag: 'img',
+
+            title:'',
+
+            attr:  {
+
+              title: 'print',
+
+              src:'{{asset('assets/images/ico/Printer.png')}} ',
+
+              style: 'cursor:pointer;height: 32px;',
+
+              class:"fa fa-print"
+
+            },
+
+            customize: function ( win ) {
+
+
+
+
+
+              $(win.document.body).find( 'table' ).find('tbody')
+
+                .css( 'font-size', '20pt' );
+
+            }
+
+          },
+
+        ],
+
+
+
+        "language": {
+
+          "sEmptyTable":     "ليست هناك بيانات متاحة في الجدول",
+
+          "sLoadingRecords": "جارٍ التحميل...",
+
+          "sProcessing":   "جارٍ التحميل...",
+
+          "sLengthMenu":   "أظهر _MENU_ مدخلات",
+
+          "sZeroRecords":  "لم يعثر على أية سجلات",
+
+          "sInfo":         "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+
+          "sInfoEmpty":    "يعرض 0 إلى 0 من أصل 0 سجل",
+
+          "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+
+          "sInfoPostFix":  "",
+
+          "sSearch":       "ابحث:",
+
+          "sUrl":          "",
+
+          "oPaginate": {
+
+            "sFirst":    "الأول",
+
+            "sPrevious": "السابق",
+
+            "sNext":     "التالي",
+
+            "sLast":     "الأخير"
+
+          },
+
+          "oAria": {
+
+            "sSortAscending":  ": تفعيل لترتيب العمود تصاعدياً",
+
+            "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
+
+          }
+
+        }
+
+      });
+
+      $('#ctabCnt17').html($financeArchiveCount);
 
     }
 </script>

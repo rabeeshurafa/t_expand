@@ -2171,6 +2171,10 @@
                         getTradeArchive(response.info.id, response.tradeArchiveCount);
                         $archiveCount += response.tradeArchiveCount;
                         @endcan
+                        @can('subscriberFinanceArchive')
+                        getFinanceArchive(response.info.id, response.financeArchiveCount);
+                        $archiveCount += response.financeArchiveCount;
+                        @endcan
                         $('#subscriber_id').val(response.info.id);
     
                         $('#formDataNameAR').val(response.info.name);

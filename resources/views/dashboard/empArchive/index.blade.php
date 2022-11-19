@@ -466,31 +466,8 @@
                     $('#editBtn').css('display','none');
                     $(".loader").addClass('hide');
                     $( ".archive_type" ).removeClass( "error" );
-                        shortCutName=response.file.real_name;
-        
-                        shortCutID=response.file.id;
-
-                        urlfile='{{ asset('') }}';
-
-                        if(response.file.type==1){
-                            urlfile+=response.file.url;
-                        }else{
-                            urlfile=response.file.url;
-                        }
-
-                            shortCutName=shortCutName.substring(0, 40)
-
-                            row='<div id="attach" class=" col-lg-6 ">' +
-                                '   <div class="attach" onmouseover="$(this).children().first().next().show()">'
-                                +'    <a class="attach-close1" href="'+urlfile+'" style="color: #74798D;" target="_blank">'
-                                +'    <span class="attach-text">'+shortCutName+'</span> </a>'
-                                +'    <a class="attach-close1" style="color: #74798D; float:left;" onclick="$(this).parent().parent().remove()">×</a>'
-                                +'      <input type="hidden" id="formDataaaimgUploads[]" name="formDataaaimgUploads[]" value="'+shortCutName+'">'
-                                +'             <input type="hidden" id="formDataaaorgNameList[]" name="formDataaaorgNameList[]" value="'+shortCutName+'">'
-								+'             <input type="hidden" id="formDataaaorgIdList[]" name="formDataaaorgIdList[]" value="'+shortCutID+'">'
-							    +'    </div>'
-                                +'  </div>'
-                        $(".formDataaaFilesArea").append(row)
+                    row = attacheView(response.file, 'formDataaa');
+                    $(".formDataaaFilesArea").append(row)
                 },
 
                 error: function(response){
@@ -802,44 +779,9 @@
             $("#msgDate").val(dates);
 
             row='';
-
-            // console.log(response);
-
-                // console.log(response.info.all_files);
-
                 if(response.files){
-
-                    var j=0;
-
                     for(j=0;j<response.files.length;j++){
-
-                        shortCutName=response.files[j].real_name;
-
-                        urlfile='{{ asset('') }}';
-
-                        if(response.files[j].type==1){
-                            urlfile+=response.files[j].url;
-                        }else{
-                            urlfile=response.files[j].url;
-                        }
-
-                        formDataStr="formDataaa";
-
-                        console.log(urlfile);
-
-                            shortCutName=shortCutName.substring(0, 20)
-
-                            row+='<div id="attach" class=" col-lg-6 ">' +
-
-                                '   <div class="attach" onmouseover="$(this).children().first().next().show()">'
-                                +'    <a class="attach-close1" href="'+urlfile+'" style="color: #74798D;" target="_blank">'
-                                +'    <span class="attach-text">'+shortCutName+'</span></a>'
-                                +'    <a class="attach-close1" style="color: #74798D; float:left;" onclick="$(this).parent().parent().remove()">×</a>'
-                                +'      <input type="hidden" id="'+formDataStr+'imgUploads[]" name="'+formDataStr+'imgUploads[]" value="'+shortCutName+'">'
-                                +'             <input type="hidden" id="'+formDataStr+'orgNameList[]" name="'+formDataStr+'orgNameList[]" value="'+shortCutName+'">'
-                                +'    </div>'
-                                +'  </div>' 
-
+                      row += attacheView(response.files[j], "formDataaa");
                     }
 
                     $(".formDataaaFilesArea").html(row)
