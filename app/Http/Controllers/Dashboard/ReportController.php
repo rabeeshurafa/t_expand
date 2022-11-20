@@ -1283,19 +1283,29 @@ var $archiveNames=array(
         ->where('archives.enabled', '0')->orderBy('id', 'DESC')->with('archiveType')->with('deleted_by')->with('Admin')->with('copyTo')->with('files')->get();
         // dd($archive->all());
         $licArchive= ArchiveLicense::select('archive_licenses.*')->whereRaw('CAST(archive_licenses.updated_at AS DATE) between ? and ?', [$from, $to])->where('archive_licenses.enabled', '0')->orderBy('id', 'DESC')->with('deleted_by')->with('Admin')->get();
-
-        foreach($licArchive as $row){
-            $attach=json_decode($row->json_feild);
-            foreach($attach as $key=>$value){
-                foreach((array) $value as $key=>$val){
-                    $temp=array();
-                    $temp['real_name']=$key;
-                    $temp['url']=$val;
-                }
-                //dd($temp);
-                $row->files[]=$temp;
+        foreach ($licArchive as $row) {
+            $attach = json_decode($row->json_feild);
+            $files = array();
+            foreach ($attach as $id) {
+                $temp = (array) $id;
+                $file = File::find($id->id);
+                $file->real_name = array_search($file->url, $temp);
+                $files[] = $file;
             }
+            $row->files = $files;
         }
+//        foreach($licArchive as $row){
+//            $attach=json_decode($row->json_feild);
+//            foreach($attach as $key=>$value){
+//                foreach((array) $value as $key=>$val){
+//                    $temp=array();
+//                    $temp['real_name']=$key;
+//                    $temp['url']=$val;
+//                }
+//                //dd($temp);
+//                $row->files[]=$temp;
+//            }
+//        }
 
         $archive=$archive->mergeRecursive($licArchive);
         $archive=$archive->sortByDesc('updated_at');

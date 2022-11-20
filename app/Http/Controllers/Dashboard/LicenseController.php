@@ -32,7 +32,7 @@ class LicenseController extends Controller
 
         $type="license_view";
         $setting = Setting::first();
-        $regions=Region::where('town_id',$setting->town_id)->get();
+        $regions=Region::where('status',1)->where('town_id',$setting->town_id)->get();
         $use_desc = Constant::where('parent',6214)->where('status',1)->get();
         return view('dashboard.license.licenseAdd',compact('type','regions','use_desc'));
 

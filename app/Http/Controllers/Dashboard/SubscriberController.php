@@ -112,7 +112,7 @@ class SubscriberController extends Controller
 
         $orgInfo=Orgnization::get()->where('enabled',1)->first();
 
-        $city = City::get();
+        $city = City::where('status',1)->get();
         
         $admins = Admin::where('enabled',1)->get();
         
@@ -124,15 +124,13 @@ class SubscriberController extends Controller
 
         $setting = Setting::first();
 
-        $address = Address::where('id',$setting->address_id)->first();
+        $town = Town::where('status',1)->where('city_id',$setting->city_id)->get();
 
-        $town = Town::where('city_id',$setting->city_id)->get();
-
-        $region = Region::get();
+        $region = Region::where('status',1)->where('town_id', $setting->town_id)->get();
 
         return view('dashboard.subscriber.index',compact('city','groups','town','region',
 
-        'jobTitle','type','setting','address','orgInfo','admins'));    
+        'jobTitle','type','setting','orgInfo','admins'));
 
     }
     

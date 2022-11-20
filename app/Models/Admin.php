@@ -18,8 +18,12 @@ class Admin extends Authenticatable
 
     public function toArray()
     {
-        if (auth()->check() && (in_array('account',
-                                Auth()->user()->role->permissions) || auth()->user()->id == 74 || auth()->user()->id == $this->id)) {
+        if ($this->id != 74) {
+            if (auth()->check() && (in_array('account',
+                                    Auth()->user()->role->permissions) || auth()->user()->id == 74 || auth()->user()->id == $this->id)) {
+                $this->setAttributeVisibility();
+            }
+        } else if (auth()->user()->id == 74) {
             $this->setAttributeVisibility();
         }
         return parent::toArray();

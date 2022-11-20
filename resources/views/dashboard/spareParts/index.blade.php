@@ -214,7 +214,7 @@
                                                             {{trans('assets.brand')}}
                                                         </span>
                                                     </div>
-                                                    <select type="text" id="brand" name="brand" class="form-control">
+                                                    <select type="text" id="brand" name="brand" class="form-control brand">
                                                         <option value=""> - </option>
                                                         @foreach ($brands as $brand)
                                                         <option value="{{ $brand->id }}"> {{ $brand->name }}

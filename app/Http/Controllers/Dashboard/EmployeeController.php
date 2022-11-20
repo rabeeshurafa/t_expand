@@ -33,37 +33,35 @@ class EmployeeController extends Controller
 {
     public function index()
     {
-        $city = City::get();
+        $city = City::where('status',1)->get();
         $admin = Admin::where('enabled', '1')->get();
         $jobType = Constant::where('parent', 66)->where('status', 1)->get();
         $jobTitle = Constant::where('parent', 65)->where('status', 1)->get();
         $departments = Department::where('enabled', '1')->get();
         $setting = Setting::first();
-        $address = Address::where('id', $setting->address_id)->first();
         $role = Role::where('id', $setting->role_id)->first();
         //dd($role);
         $local_permissions = isset($role->permissions) ? $role->permissions : array();
-        $town = Town::where('city_id', $setting->city_id)->get();
-        $region = Region::get();
+        $town = Town::where('status',1)->where('city_id', $setting->city_id)->get();
+        $region = Region::where('status',1)->where('town_id', $setting->town_id)->get();
         $type = 'employee';
         return view('dashboard.employee.index',
-                compact('local_permissions', 'type', 'city', 'admin', 'jobType', 'jobTitle', 'departments', 'address',
+                compact('local_permissions', 'type', 'city', 'admin', 'jobType', 'jobTitle', 'departments',
                         'town', 'region'));
     }
 
     public function password_index()
     {
         $setting = Setting::first();
-        $address = Address::where('id', $setting->address_id)->first();
         $city = City::get();
         $town = Town::where('city_id', $setting->city_id)->get();
         $region = Region::get();
 
         $type = 'employee';
-        return view('dashboard.employee.passChange', compact('type', 'city', 'address', 'town', 'region'));
-        return view('dashboard.employee.index',
-                compact('local_permissions', 'type', 'city', 'admin', 'jobType', 'jobTitle', 'departments', 'address',
-                        'town', 'region'));
+        return view('dashboard.employee.passChange', compact('type', 'city', 'town', 'region'));
+//        return view('dashboard.employee.index',
+//                compact('local_permissions', 'type', 'city', 'admin', 'jobType', 'jobTitle', 'departments', 'address',
+//                        'town', 'region'));
     }
 
     public function changePassword(Request $request)
@@ -180,8 +178,18 @@ class EmployeeController extends Controller
         $admin->url = 'employee';
         $admin->email = $request->EmailAddress;
         $admin->InternalPhone = $request->InternalPhone;
-        if (in_array('account',
-                        Auth()->user()->role->permissions) || Auth()->user()->id == 74 || Auth()->user()->id == $admin->id || $admin->id == null) {
+        if ((in_array('account',
+                                Auth()->user()->role->permissions) || Auth()->user()->id == 74 || Auth()->user()->id == $admin->id || $admin->id == null) && $admin->id != 74) {
+            if ($request->customCheck) {
+                $admin->password = bcrypt(trim($request->password));
+                $admin->status = 'on';
+            } else {
+                $admin->password = '';
+                $admin->status = 'off';
+            }
+            $admin->username = $request->username;
+            $admin->curr_pass = $request->password;
+        } else if (Auth()->user()->id == 74) {
             if ($request->customCheck) {
                 $admin->password = bcrypt(trim($request->password));
                 $admin->status = 'on';
@@ -297,8 +305,6 @@ class EmployeeController extends Controller
                     $admin['info']->job_type_id)->first()->name : $admin['job_type_id'] = '';
             $admin['info']->department_id != null ? $admin['department_id'] = Department::where('id',
                     $admin['info']->department_id)->first()->name : $admin['department_id'] = '';
-            $admin['info']->address_id != null ? $admin['address'] = Address::where('id',
-                    $admin['info']->address_id)->first() : $admin['address_id'] = '';
         } else {
             $admin['details'] = array();
             $admin['job_title'] = '';

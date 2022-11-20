@@ -6,13 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="a16e4324-61f7-4759-b5ed-4280ce8af87e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ArchieveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ArchieveController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/DepartmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/DepartmentController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/EmployeeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/EmployeeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/EmployeeRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/EmployeeRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Managers/AttatchmentManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Managers/AttatchmentManager.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/LicenseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/LicenseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ReportController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/SettingsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/SettingsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/SubscriberController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/SubscriberController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Admin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/employee/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/employee/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/employee/passChange.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/employee/passChange.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/admin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/datatabel.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/datatabel.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/rptArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/rptArchive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/reports/deletedArchiveReport.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/reports/deletedArchiveReport.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/spareParts/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/spareParts/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -307,7 +312,8 @@
       <workItem from="1668932371700" duration="122000" />
       <workItem from="1668933974058" duration="445000" />
       <workItem from="1668935020718" duration="166000" />
-      <workItem from="1668943161611" duration="6329000" />
+      <workItem from="1668943161611" duration="6654000" />
+      <workItem from="1668960247563" duration="4158000" />
     </task>
     <servers />
   </component>

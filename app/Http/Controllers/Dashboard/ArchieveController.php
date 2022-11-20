@@ -2417,20 +2417,31 @@ class ArchieveController extends Controller
                     't_constant.name as license_type_name')
                     ->selectRaw('DATE_FORMAT(archive_licenses.created_at, "%Y-%m-%d") as date')
                     ->leftJoin('t_constant', 't_constant.id', 'archive_licenses.license_id')
-                    ->with('files')->get();
+                    ->get();
             foreach ($archive['result'] as $row) {
                 $attach = json_decode($row->json_feild);
-                foreach ($attach as $key => $value) {
-                    foreach ((array) $value as $key => $val) {
-                        $temp = array();
-                        $temp['id'] = 0;
-                        $temp['real_name'] = $key;
-                        $temp['url'] = $val;
-                    }
-                    //dd($temp);
-                    $row->files[] = $temp;
+                $files = array();
+                foreach ($attach as $id) {
+                    $temp = (array) $id;
+                    $file = File::find($id->id);
+                    $file->real_name = array_search($file->url, $temp);
+                    $files[] = $file;
                 }
+                $row->files = $files;
             }
+//            foreach ($archive['result'] as $row) {
+//                $attach = json_decode($row->json_feild);
+//                foreach ($attach as $key => $value) {
+//                    foreach ((array) $value as $key => $val) {
+//                        $temp = array();
+//                        $temp['id'] = 0;
+//                        $temp['real_name'] = $key;
+//                        $temp['url'] = $val;
+//                    }
+//                    //dd($temp);
+//                    $row->files[] = $temp;
+//                }
+//            }
 
         } else {
 

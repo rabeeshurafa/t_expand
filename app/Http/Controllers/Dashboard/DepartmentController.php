@@ -470,7 +470,7 @@ class DepartmentController extends Controller
 
         $depaertment = Department::select('departments.*','admins.name as manager_name')
 
-        ->leftJoin('admins','admins.id','departments.admin_id')->with('linkDept')->where('departments.enabled',1);
+        ->leftJoin('admins','admins.id','departments.admin_id')->with('linkDept')->where('departments.enabled',1)->orderBy('id','DESC');
 
         return DataTables::of($depaertment)
 
