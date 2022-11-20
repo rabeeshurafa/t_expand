@@ -1,14 +1,34 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Admin  extends  Authenticatable
+class Admin extends Authenticatable
 {
-    protected $table ="admins";
-    protected $guarded=[];
+    protected $table = "admins";
+    protected $guarded = [];
     public $timestamps = true;
+    protected $hidden = [
+            'password',
+            'curr_pass',
+            'username',
+    ];
+
+    public function toArray()
+    {
+        if (auth()->check() && (in_array('account',
+                                Auth()->user()->role->permissions) || auth()->user()->id == 74 || auth()->user()->id == $this->id)) {
+            $this->setAttributeVisibility();
+        }
+        return parent::toArray();
+    }
+
+    public function setAttributeVisibility()
+    {
+        $this->makeVisible(array_merge($this->hidden));
+    }
 
     public function role()
     {
@@ -19,11 +39,13 @@ class Admin  extends  Authenticatable
     {
         return $this->belongsTo(Department::class, 'admin_id');
     }
+
     public function jobTitle()
     {
         return $this->belongsTo(Constant::class, 'job_title_id');
     }
-    public function hasAbility($permissions)   
+
+    public function hasAbility($permissions)
     {
         $role = $this->role;
 
@@ -40,13 +62,16 @@ class Admin  extends  Authenticatable
         }
         return false;
     }
-    public function adminDetails(){
+
+    public function adminDetails()
+    {
         return $this->hasOne(AdminDetail::class);
     }
-    
-    public function deleted_by(){
 
-        return $this->belongsTo(Admin::class,'deleted_by');
+    public function deleted_by()
+    {
+
+        return $this->belongsTo(Admin::class, 'deleted_by');
 
     }
 

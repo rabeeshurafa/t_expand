@@ -800,6 +800,7 @@ Route::group([
         Route::post('store_archive', 'ArchieveController@store_archive')->name('store_archive');
         Route::post('store_jal_archive', 'JalArchieveController@store_jal_archive')->name('store_jal_archive');
         Route::get('archieve_jal_info', 'JalArchieveController@archieve_info')->name('archieve_jal_info');
+        Route::post('deleteJalArchive', 'JalArchieveController@deleteJalArchive')->name('deleteJalArchive');
         Route::get('archieve_info_all', 'ArchieveController@archieve_info_all')
                 ->name('archieve_info_all');
         Route::get('printArchive/{type}/{id}', 'ArchieveController@printArchive')->name('printArchive');
