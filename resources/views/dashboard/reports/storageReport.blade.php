@@ -50,7 +50,9 @@
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title"><img src="{{ asset('assets/images/archive_ico.png') }}"
-                                    style="height: 32px" />{{ trans('archive.report_archive') }} </h4>
+                                    style="height: 32px" />
+                                    تقرير المساحة التخزينية    
+                                </h4>
                         </div>
                         <div class="card-body">
                             <form id="formDataaa" onsubmit="return false">
