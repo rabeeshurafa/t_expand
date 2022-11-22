@@ -10,6 +10,8 @@ use App\Models\LastTicket;
 use Yajra\DataTables\DataTables;
 use App\Models\Constant;
 use App\Models\AppTrans;
+use App\Models\Setting;
+use Illuminate\Support\Facades\DB as FacadesDB;
 use Illuminate\Support\Facades\Schema;
 
 class DashboardController extends Controller
@@ -30,7 +32,75 @@ class DashboardController extends Controller
             'agenda_archieve' => 'الجلسات',
             'jal_archieve' => 'الجلسات',
     );
-
+    public function getTypeAr($type)
+    {
+        if ($type == 'outArchive' || $type == 'out_archieve') {
+            return 'الصادر';
+        } else if ($type == 'inArchive' || $type == 'in_archieve') {
+            return 'الوارد';
+        } else if ($type == 'citArchive' || $type == 'cit_archieve') {
+            return 'المواطنين';
+        } else if ($type == 'customerArchive' || $type == 'customer_archieve') {
+            return 'الزبائن';
+        } else if ($type == 'munArchive' || $type == 'mun_archieve') {
+            return 'المؤسسة';
+        } else if ($type == 'financeArchive' || $type == 'finance_archive') {
+            return 'المالية';
+        } else if ($type == 'projArchive' || $type == 'proj_archieve') {
+            return 'المشاريع';
+        } else if ($type == 'assetsArchive' || $type == 'assets_archieve') {
+            return 'الاصول';
+        } else if ($type == 'empArchive' || $type == 'emp_archieve') {
+            return 'الموظفين';
+        } else if ($type == 'contractArchive' || $type == 'dep_archieve') {
+            return 'الاتفاقيات والعقود';
+        } else if ($type == 'lawArchieve' || $type == 'law_archieve') {
+            return 'القوانين والاجرائات';
+        } else if ($type == 'tradeArchive' || $type == 'trade_archive') {
+            return 'المعاملات';
+        } else if ($type == 'certArchive') {
+            return 'شهادات / مراسات خارجية';
+        } else if ($type == 'taskArchive') {
+            return 'الطلبات';
+        } else if ($type == 'WarningArchive') {
+            return 'الاخطارات';
+        } else if ($type == 'licArchive') {
+            return 'رخص البناء';
+        } else if ($type == 'agArchive' || $type == 'jal_archive' || $type == 'jalArchive') {
+            return 'الجلسات';
+        } else if ($type == 'others') {
+            return 'أخرى';
+        }
+        return $type;
+    }
+    public function dashboard_info()
+    {
+        $archive_info = $this->getArchiveInfo();
+        return $archive_info;
+    }
+    public function getArchiveInfo()
+    {
+        $archive['attachmentSize'] = 0;
+        $archive_max = Archive::where('enabled', 1)
+            ->whereNotNull('type')
+            ->select(FacadesDB::raw("SUM(`sizeAttachments`) as sizeAttachments"))->first();
+        $sum = 0;
+        if($archive_max) { 
+            $sum+= $archive_max->sizeAttachments;
+        }
+        $settings = Setting::first('max_upload');
+        $max_upload =  $settings->max_upload;
+        // foreach ($archive_max as $row) {
+        //     $sizeAttachments = (float)$row->sizeAttachments;
+        //     $sizeAttachments = round($sizeAttachments, 3);
+        //     $sum_max = $sum_max +  $sizeAttachments;
+        // }
+        $sum = round($sum / 1000, 3);
+        $archive['attachmentSize'] = $sum;
+        $archive['used'] = round($sum / ((int)$max_upload * 1000), 4);
+        $archive['max_upload'] = $max_upload;
+        return $archive;
+    }
     function masterQuery($where = '')
     {
         $sql = "";

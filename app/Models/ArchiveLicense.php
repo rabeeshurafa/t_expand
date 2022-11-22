@@ -14,11 +14,11 @@ class ArchiveLicense extends Model
 
 {
 
-    // public function files(){
+    public function files(){
 
-    //     return $this->hasMany(File::class,'archive_id');
+        return $this->hasMany(File::class,'archive_id')->where('model_name', 'App\Models\ArchiveLicense');
 
-    // }
+    }
 
     public function Admin(){
 
