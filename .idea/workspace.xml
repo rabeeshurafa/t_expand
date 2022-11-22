@@ -7,17 +7,17 @@
     <list default="true" id="a16e4324-61f7-4759-b5ed-4280ce8af87e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ArchieveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ArchieveController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/DepartmentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/DepartmentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/EmployeeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/EmployeeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/LicenseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/LicenseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ReportController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/SettingsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/SettingsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/SubscriberController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/SubscriberController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Admin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/js/datatabel.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/datatabel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/rptArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/rptArchive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/reports/deletedArchiveReport.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/reports/deletedArchiveReport.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/spareParts/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/spareParts/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/TaboArchiveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/TaboArchiveController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/jobLicArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/jobLicArchive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/licArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/licArchive.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/cert/assurance.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/assurance.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/cert/cert.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/cert.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/cert/warningCert.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/warningCert.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/elec/elecAdd.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/elec/elecAdd.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/jobLic/jobLic.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/jobLic/jobLic.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/jobLic/stopJobLic.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/jobLic/stopJobLic.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/license/licenseAdd.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/license/licenseAdd.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/water/waterAdd.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/water/waterAdd.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -215,7 +215,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/laragon/www/sammoa&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/laragon/www/idna&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -314,6 +314,10 @@
       <workItem from="1668935020718" duration="166000" />
       <workItem from="1668943161611" duration="6654000" />
       <workItem from="1668960247563" duration="4158000" />
+      <workItem from="1669024317984" duration="566000" />
+      <workItem from="1669031171868" duration="944000" />
+      <workItem from="1669098056215" duration="3179000" />
+      <workItem from="1669106173095" duration="980000" />
     </task>
     <servers />
   </component>

@@ -727,7 +727,7 @@ $.ajaxSetup({
   $( function() {
       
     $( ".cust_auto" ).autocomplete({
-		source: 'Linence_auto_complete',
+		source: 'subscribe_auto_complete',
 		minLength: 1,
 		
         select: function( event, ui ) {
@@ -741,7 +741,7 @@ $.ajaxSetup({
 });
 $( function() {
     $( ".cust" ).autocomplete({
-		source: 'Linence_auto_complete',
+		source: 'subscribe_auto_complete',
 		minLength: 1,
 		
         select: function( event, ui ) {

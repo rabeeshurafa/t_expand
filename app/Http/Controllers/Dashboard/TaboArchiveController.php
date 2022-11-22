@@ -88,10 +88,12 @@ class TaboArchiveController extends Controller
         array_push($ids, (int) $my_id);
         $archive = TaboArchive::select('tabo_archives.*', 'tabo_excels.hod_name as hod_name')
                 ->where('tabo_archives.enabled', '1')
-                ->whereIn('tabo_archives.added_by', $ids)
                 ->orderBy('tabo_archives.id', 'DESC')
                 ->with(['Admin', 'files'])
                 ->leftJoin('tabo_excels', 'tabo_excels.id', 'tabo_archives.hodId');
+        if(Auth()->user()->id!=74){
+            $archive=$archive->whereIn('tabo_archives.added_by', $ids);
+        }
         if($request->hodId != null && $request->hodId != ''){
             $archive=$archive->where('tabo_archives.hodId',$request->hodId);
         }
@@ -103,7 +105,7 @@ class TaboArchiveController extends Controller
 
     public function taboArchive_info(Request $request)
     {
-        $archive = TaboArchive::find($request->id)->with('files')->first();
+        $archive = TaboArchive::where('id',$request->id)->with('files')->first();
         return response()->json($archive);
     }
 

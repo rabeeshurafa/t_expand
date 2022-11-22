@@ -1017,7 +1017,7 @@
 
           $(function () {
             $("#beneficiary").autocomplete({
-              source: '{{route("Linence_auto_complete")}}',
+              source: '{{route("subscribe_auto_complete")}}',
               minLength: 1,
               select: function (event, ui) {
                 $('#beneficiary').val(ui.item.name);
@@ -1027,7 +1027,7 @@
           });
           $(function () {
             $(".cust").autocomplete({
-              source: '{{route("Linence_auto_complete")}}',
+              source: '{{route("subscribe_auto_complete")}}',
               minLength: 1,
               select: function (event, ui) {
                 $('#customerName').val(ui.item.name);

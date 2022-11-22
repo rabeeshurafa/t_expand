@@ -634,7 +634,7 @@ $( function() {
 
     $( ".cust" ).autocomplete({
 
-		source: 'Linence_auto_complete',
+		source: 'subscribe_auto_complete',
 
 		minLength: 1,
 
