@@ -51,6 +51,20 @@
 			</div>
 			
 			<div class="col-md-4">
+                <div class="d-flex align-items-end flex-column">
+                    {{-- <div class="mb-1" style="font-weight: bold;">المساحة الاجمالية المستخدمة</div> --}}
+                    <div>
+                        <div class="mb-1" style="display: inline; font-weight: bold;">المساحة المستخدمة : </div>
+                        <div class="mb-1 d-inline attachmentSize" style="direction: ltr; font-weight: bold;"></div>
+                    </div>
+                    <div class="font-small">
+                        <div class="mb-1" style="display: inline; font-weight: bold;">المساحة المسموحة : </div>
+                        <div class="mb-1 d-inline max_upload" style="direction: ltr; font-weight: bold;"></div>
+                    </div>
+                    <div class="mt-3">
+                        <div class="mb-1 d-inline used" style="font-weight: bold; direction: ltr; display: inline; unicode-bidi: embed;"></div>
+                    </div>
+                </div>
 			</div>
 			
 		</div>
@@ -1152,7 +1166,18 @@
         // $('.TaskModel').removeClass('hide');
         $('.TaskModel').removeClass('hidemob');
     @endcanany
-            
+    $(function(){
+        
+        $.ajax({
+                type: 'get', // the method (could be GET btw)
+                url: '{{route('dashboard_info')}}',
+                success: function(response) {
+                    $(".attachmentSize").html(`${response.attachmentSize} MB`)
+                    $(".max_upload").html(`${response.max_upload} GB`)
+                    $(".used").html(`${response.used}% of ${response.max_upload}GB used`)
+                },
+            });
+    })
     function showTasks(){
 
         if($('#showTask').val() == 0){

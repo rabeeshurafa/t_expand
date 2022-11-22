@@ -373,14 +373,29 @@ class ArchieveController extends Controller
                 $prevFile->archive_id = 0;
                 $prevFile->save();
             }
+            $sum = 0;
+            $countAttachments = 0;
             if ($attachFile_ids) {
                 foreach ($attachFile_ids as $id) {
                     $file = File::find($id);
                     $file->archive_id = $archive->id;
                     $file->model_name = "App\Models\ArchiveLicense";
+                    if ($file && $file->size) {
+                        $size = $file->size;
+                        if ($size && $size != '0') {
+                            $countAttachments++;
+                        }
+                        if (str_contains($size, 'mb')) {
+                            $size = (float)$size * 1000;
+                        }
+                        $sum = $sum +  (float)$size;
+                    }
                     $file->save();
                 }
             }
+            $archive->sizeAttachments = $sum;
+            $archive->countAttachments = $countAttachments;
+            $archive->save();
 
         } else {
 
@@ -403,14 +418,29 @@ class ArchieveController extends Controller
             $archive->license_date = $request->license_date;
             $archive->attachment_id = $request->AttahType;
             $archive->save();
+            $sum = 0;
+            $countAttachments = 0;
             if ($attachFile_ids) {
                 foreach ($attachFile_ids as $id) {
                     $file = File::find($id);
                     $file->archive_id = $archive->id;
                     $file->model_name = "App\Models\ArchiveLicense";
+                    if ($file && $file->size) {
+                        $size = $file->size;
+                        if ($size && $size != '0') {
+                            $countAttachments++;
+                        }
+                        if (str_contains($size, 'mb')) {
+                            $size = (float)$size * 1000;
+                        }
+                        $sum = $sum +  (float)$size;
+                    }
                     $file->save();
                 }
             }
+            $archive->sizeAttachments = $sum;
+            $archive->countAttachments = $countAttachments;
+            $archive->save();
 
         }
 
@@ -825,9 +855,21 @@ class ArchieveController extends Controller
             $files_ids = $request->formDataaaorgIdList;
             File::where('archive_id', $request->ArchiveID)
                     ->update(['archive_id' => 0, 'model_name' => '']);
+            $sum = 0;
+            $countAttachments = 0;
             if ($files_ids) {
                 foreach ($files_ids as $id) {
                     $file = File::find($id);
+                    if ($file && $file->size) {
+                        $size = $file->size;
+                        if ($size && $size != '0') {
+                            $countAttachments++;
+                        }
+                        if (str_contains($size, 'mb')) {
+                            $size = (float)$size * 1000;
+                        }
+                        $sum = $sum +  (float)$size;
+                    }
                     $file->archive_id = $archive->id;
                     $file->model_name = "App\Models\Archive";
                     $file->save();
@@ -838,8 +880,21 @@ class ArchieveController extends Controller
                 $file = File::find($fileid);
                 $file->archive_id = $archive->id;
                 $file->model_name = "App\Models\Archive";
+                if ($file && $file->size) {
+                    $size = $file->size;
+                    if ($size && $size != '0') {
+                        $countAttachments++;
+                    }
+                    if (str_contains($size, 'mb')) {
+                        $size = (float)$size * 1000;
+                    }
+                    $sum = $sum +  (float)$size;
+                }
                 $file->save();
             }
+            $archive->sizeAttachments = $sum;
+            $archive->countAttachments = $countAttachments;
+            $archive->save();
             ///////////////////////////////////
             CopyTo::where('archive_id', $archive->id)->delete();
             if ($request->copyToText[0] != null) {
@@ -876,10 +931,22 @@ class ArchieveController extends Controller
             $archive->save();
             $files_ids = $request->formDataaaorgIdList;
 
+            $sum = 0;
+            $countAttachments = 0;        
             if ($files_ids) {
                 foreach ($files_ids as $id) {
                     $file = File::find($id);
                     $file->archive_id = $archive->id;
+                    if ($file && $file->size) {
+                        $size = $file->size;
+                        if ($size && $size != '0') {
+                            $countAttachments++;
+                        }
+                        if (str_contains($size, 'mb')) {
+                            $size = (float)$size * 1000;
+                        }
+                        $sum = $sum +  (float)$size;
+                    }
                     $file->model_name = "App\Models\Archive";
                     $file->save();
                 }
@@ -889,8 +956,21 @@ class ArchieveController extends Controller
                 $file = File::find($fileid);
                 $file->archive_id = $archive->id;
                 $file->model_name = "App\Models\Archive";
+                if ($file && $file->size) {
+                    $size = $file->size;
+                    if ($size && $size != '0') {
+                        $countAttachments++;
+                    }
+                    if (str_contains($size, 'mb')) {
+                        $size = (float)$size * 1000;
+                    }
+                    $sum = $sum +  (float)$size;
+                }
                 $file->save();
             }
+            $archive->sizeAttachments = $sum;
+            $archive->countAttachments = $countAttachments;
+            $archive->save();
             ///////////////////////////////////
 
             if ($request->copyToText[0] != null) {
@@ -1072,6 +1152,8 @@ class ArchieveController extends Controller
 
             $files_ids = $request->formDataaaorgIdList;
 
+            $sum = 0;
+            $countAttachments = 0;
             if ($files_ids) {
 
                 foreach ($files_ids as $id) {
@@ -1081,12 +1163,25 @@ class ArchieveController extends Controller
                     $file->archive_id = $archive->id;
 
                     $file->model_name = "App\Models\Archive";
+                    if ($file && $file->size) {
+                        $size = $file->size;
+                        if ($size && $size != '0') {
+                            $countAttachments++;
+                        }
+                        if (str_contains($size, 'mb')) {
+                            $size = (float)$size * 1000;
+                        }
+                        $sum = $sum +  (float)$size;
+                    }
 
                     $file->save();
 
                 }
 
             }
+            $archive->sizeAttachments = $sum;
+            $archive->countAttachments = $countAttachments;
+            $archive->save();
             CopyTo::where('archive_id', $archive->id)->delete();
             if ($request->copyToText[0] != null) {
 
@@ -1144,6 +1239,8 @@ class ArchieveController extends Controller
 
             $files_ids = $request->formDataaaorgIdList;
 
+            $sum = 0;
+            $countAttachments = 0;
             if ($files_ids) {
 
                 foreach ($files_ids as $id) {
@@ -1153,12 +1250,25 @@ class ArchieveController extends Controller
                     $file->archive_id = $archive->id;
 
                     $file->model_name = "App\Models\Archive";
+                    if ($file && $file->size) {
+                        $size = $file->size;
+                        if ($size && $size != '0') {
+                            $countAttachments++;
+                        }
+                        if (str_contains($size, 'mb')) {
+                            $size = (float)$size * 1000;
+                        }
+                        $sum = $sum +  (float)$size;
+                    }
 
                     $file->save();
 
                 }
 
             }
+            $archive->sizeAttachments = $sum;
+            $archive->countAttachments = $countAttachments;
+            $archive->save();
 
             if ($request->copyToText[0] != null) {
 
@@ -1228,6 +1338,8 @@ class ArchieveController extends Controller
 
             $files_ids = $request->formDataaaorgIdList;
 
+            $sum = 0;
+            $countAttachments = 0;
             if ($files_ids) {
 
                 foreach ($files_ids as $id) {
@@ -1237,12 +1349,25 @@ class ArchieveController extends Controller
                     $file->archive_id = $archive->id;
 
                     $file->model_name = "App\Models\Archive";
+                    if ($file && $file->size) {
+                        $size = $file->size;
+                        if ($size && $size != '0') {
+                            $countAttachments++;
+                        }
+                        if (str_contains($size, 'mb')) {
+                            $size = (float)$size * 1000;
+                        }
+                        $sum = $sum +  (float)$size;
+                    }
 
                     $file->save();
 
                 }
 
             }
+            $archive->sizeAttachments = $sum;
+            $archive->countAttachments = $countAttachments;
+            $archive->save();
             CopyTo::where('archive_id', $archive->id)->delete();
             if ($request->copyToText[0] != null) {
 
@@ -1300,6 +1425,8 @@ class ArchieveController extends Controller
 
             $files_ids = $request->formDataaaorgIdList;
 
+            $sum = 0;
+            $countAttachments = 0;
             if ($files_ids) {
 
                 foreach ($files_ids as $id) {
@@ -1309,12 +1436,25 @@ class ArchieveController extends Controller
                     $file->archive_id = $archive->id;
 
                     $file->model_name = "App\Models\Archive";
+                    if ($file && $file->size) {
+                        $size = $file->size;
+                        if ($size && $size != '0') {
+                            $countAttachments++;
+                        }
+                        if (str_contains($size, 'mb')) {
+                            $size = (float)$size * 1000;
+                        }
+                        $sum = $sum +  (float)$size;
+                    }
 
                     $file->save();
 
                 }
 
             }
+            $archive->sizeAttachments = $sum;
+            $archive->countAttachments = $countAttachments;
+            $archive->save();
 
             if ($request->copyToText[0] != null) {
 
@@ -1507,14 +1647,29 @@ class ArchieveController extends Controller
                 $prevFile->save();
             }
 
+            $sum = 0;
+            $countAttachments = 0;
             if ($attachFile_ids) {
                 foreach ($attachFile_ids as $id) {
                     $file = File::find($id);
                     $file->archive_id = $archive->id;
                     $file->model_name = "App\Models\Archive";
+                    if ($file && $file->size) {
+                        $size = $file->size;
+                        if ($size && $size != '0') {
+                            $countAttachments++;
+                        }
+                        if (str_contains($size, 'mb')) {
+                            $size = (float)$size * 1000;
+                        }
+                        $sum = $sum +  (float)$size;
+                    }
                     $file->save();
                 }
             }
+            $archive->sizeAttachments = $sum;
+            $archive->countAttachments = $countAttachments;
+            $archive->save();
             /*
                 
                 CopyTo::where('archive_id',$archive->id)->delete();
@@ -1559,14 +1714,29 @@ class ArchieveController extends Controller
             $archive->json_feild = json_encode($attach);
             $archive->connect_to = $connectTo;
             $archive->save();
+            $sum = 0;
+            $countAttachments = 0;
             if ($attachFile_ids) {
                 foreach ($attachFile_ids as $id) {
                     $file = File::find($id);
                     $file->archive_id = $archive->id;
                     $file->model_name = "App\Models\Archive";
+                    if ($file && $file->size) {
+                        $size = $file->size;
+                        if ($size && $size != '0') {
+                            $countAttachments++;
+                        }
+                        if (str_contains($size, 'mb')) {
+                            $size = (float)$size * 1000;
+                        }
+                        $sum = $sum +  (float)$size;
+                    }
                     $file->save();
                 }
             }
+            $archive->sizeAttachments = $sum;
+            $archive->countAttachments = $countAttachments;
+            $archive->save();
             /*
             if ($request->copyToText[0] != null) {
 
@@ -2588,10 +2758,16 @@ class ArchieveController extends Controller
                 // dd($url);
 
                 if ($url) {
+                    $size = $url['size'];
+                    if ($size > (1024 * 1024))
+                        $size = round($size / 1000000, 3) . 'mb';
+                    else
+                        $size = round($size / 1000, 1) . 'kb';
                     $file = new File();
                     $file->url = $url['path'];
                     $file->real_name = $url['name'];
                     $file->extension = $url['extension'];
+                    $file->size = $size;
                     $file->file_links = $url['fileLinks'];
                     $file->type = 2;
                     $file->save();
