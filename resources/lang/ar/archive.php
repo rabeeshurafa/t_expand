@@ -67,6 +67,7 @@ return [
     'reports'   =>  'التقارير ',
     'report_archive'   =>  'تقرير الأرشيف ',
     'title_name'   =>  'العنوان  ',
+    'storage'   =>  'مساحة المرفقات',
 
     'jobLic_archive'   =>  'أرشيف رخص الحرف والصناعات ',
     'agenda_archieve'   =>  'أرشيف الجلسات ',

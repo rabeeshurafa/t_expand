@@ -58,6 +58,7 @@ class AttatchmentManager
             return [
                     'name' => $file->getClientOriginalName(),
                     'extension' => $file->getClientOriginalExtension(),
+                    'size' => $file->getSize(),
                     'path' => $imageName,
                     'fileLinks' => $fileLinks
             ];
@@ -98,13 +99,14 @@ class AttatchmentManager
         }
         $ftp = Storage::disk('ftp')->url(('texpand/' . $name . '.' . $type));
         $s3 = Storage::disk('s3')->url(($name . '.' . $type));
-
+        $size = Storage::disk('s3')->size($name . '.' . $type);
         $fileLinks['s3'] = $s3;
         $fileLinks['ftp'] = $ftp;
 //        $fileLinks['dropbox'] = $dropbox;
         $file = new File();
         $file->real_name = $name . '.' . $type;
         $file->extension = $type;
+        $file->size = $size;
         $file->url = 'storage/' . $name . '.' . $type;
         $file->type = '2';
         $file->file_links = $fileLinks;

@@ -142,7 +142,21 @@ var $archiveNames=array(
         $admins = Admin::where('enabled',1)->get();
         return view('dashboard.reports.tasksReport', compact('type','region','appStatus','admins'));
     }
-    
+    public function storage_report()
+    {
+        $type = 'storage_report';
+        $url = "storage_report";
+        $attachment_type = Constant::where('parent', 18)->where('status', 1)->get();
+        $archive_type_mun = Constant::where('parent', 49)->where('status', 1)->get();
+        $license_type = Constant::where('parent', 11)->where('status', 1)->get();
+        // $attachment_type = AttachmentType::get();
+
+        // $license_type = LicenseType::get();
+
+        return view('dashboard.reports.storageReport',
+                compact('type', 'attachment_type', 'archive_type_mun', 'license_type', 'url'));
+    }
+
     public function vacationReport()
     {
         $type = 'vacationReport';
@@ -161,7 +175,104 @@ var $archiveNames=array(
         $type= 'taskArchiveReport';
         return view('dashboard.reports.tasksArchiveReport',compact('type'));
     }
-    
+    public function storageReport(Request $request)
+    {
+        if ($request->get('arcType') == "licArchive" || $request->get('arcType') == "licFileArchive") {
+
+            $archive['type'] = "lic";
+            $archive['attachmentSize'] = 0;
+            $archive['data'] = ArchiveLicense::query();
+            if ($request->get('arcType')) {
+                $archive['data']->where('type', '=', $request->get('arcType'));
+            }
+            if ($request->get('start') && $request->get('end')) {
+
+                $from = date_create(($request->get('start')));
+
+                $from = explode('/', ($request->get('start')));
+
+                $from = $from[2].'-'.$from[1].'-'.$from[0];
+
+                $to = date_create(($request->get('end')));
+
+                $to = explode('/', ($request->get('end')));
+
+                $to = $to[2].'-'.$to[1].'-'.$to[0];
+
+                $archive['data']->whereRaw('CAST(archive_licenses.created_at AS DATE) between ? and ?', [$from, $to]);
+
+            }
+            $archive['data'] = $archive['data']->select('archive_licenses.*',
+                    't_constant.name as license_type_name')
+                    ->selectRaw('DATE_FORMAT(archive_licenses.created_at, "%Y-%m-%d") as date')
+                    ->leftJoin('t_constant', 't_constant.id', 'archive_licenses.license_id')
+                    ->with('files')->get();
+            foreach ($archive['data'] as $row) {
+                $sum = 0;
+                foreach ($row->files as $file) {
+                    if ($file && $file['size']) {
+                        $size = $file['size'];
+                        if (str_contains($size, 'kb')) {
+                            $size = (float)$size / 1000;
+                        }
+                        $sum = round($sum +  (float)$size, 3);
+                    }
+                }
+                $row->setAttribute('attachSize', $sum);
+                $archive['attachmentSize'] += $sum;
+            }
+
+        } else {
+            $archive['arcType'] = $request->get('arcType') ? $request->get('arcType') : 'all';
+            $archive['data'] = Archive::query();
+            if ($request->get('arcType')) {
+                if ($request->get('arcType') == "all" && $request->get('arcType') != "taskArchiveReport") {
+                } else if ($request->get('arcType') == "all" && $request->get('arcType') == "taskArchiveReport") {
+                    $archive['data']->whereIn('archives.type', ['taskArchive', 'certArchive'])->where('enabled', 1);
+                } else {
+                    $archive['data']->where('archives.type', '=', $request->get('arcType'))->where('enabled', 1);
+                }
+            }
+            if ($request->get('start') && $request->get('end')) {
+
+                $from = date_create(($request->get('start')));
+
+                $from = explode('/', ($request->get('start')));
+
+                $from = $from[2].'-'.$from[1].'-'.$from[0];
+
+                $to = date_create(($request->get('end')));
+
+                $to = explode('/', ($request->get('end')));
+
+                $to = $to[2].'-'.$to[1].'-'.$to[0];
+
+                $archive['data']->whereBetween('date', [$from, $to])->where('enabled', 1);
+
+            }
+            $archive['attachmentSize'] = 0;
+            $archive['data'] = $archive['data']->where('enabled', 1)->orderBy('id', 'DESC')->with('archiveType', 'Admin', 'copyTo', 'files')->get();
+            $index = 1;
+            foreach ($archive['data'] as $row) {
+                $row->setAttribute('rowId', $index++);
+                $sum = 0;
+                foreach ($row->files as $file) {
+                    if ($file && $file['size']) {
+                        $size = $file['size'];
+                        if (str_contains($size, 'kb')) {
+                            $size = (float)$size / 1000;
+                        }
+                        $sum = round($sum +  (float)$size, 3);
+                    }
+                }
+                $row->setAttribute('attachSize', $sum);
+                $archive['attachmentSize'] += $sum;
+            }
+        }
+        $archive['attachmentSize'] = round($archive['attachmentSize'], 3);
+        $archive['type'] = $request->get('arcType');
+        return response()->json($archive);
+    }
     public function subscriberReport(Request $request){
         
         if($request->region ==-1){

@@ -297,6 +297,7 @@ Route::group([
         Route::get('getWatingTaskAjax', 'DashboardController@getWatingTaskAjax')->name('getWatingTaskAjax');
         Route::get('getTaggedTaskAjax', 'DashboardController@getTaggedTaskAjax')->name('getTaggedTaskAjax');
         Route::get('getSenTTaskAjax', 'DashboardController@getSenTTaskAjax')->name('getSenTTaskAjax');
+        Route::get('dashboard_info', 'DashboardController@dashboard_info')->name('dashboard_info');
         Route::get('logout', 'LoginController@logout')->name('admin.logout');
 
         Route::get('updateReport', 'DailyWorkController@updateReport')->name('updateReport');
@@ -485,6 +486,8 @@ Route::group([
         Route::get('vacationsReport', 'ReportController@vacationsReport')->name('vacationsReport');
         Route::get('subscriberReport', 'ReportController@subscriberReport')->name('subscriberReport');
         Route::get('taskArchiveReport', 'ReportController@taskArchiveReport')->name('taskArchiveReport');
+        Route::get('storage_report', 'ReportController@storage_report')->name('storage_report');
+        Route::get('storage_report_data', 'ReportController@storageReport')->name('storage_report_data');
 
         /////////////////////////////////////////////////New Reports///////////////////////////////////////////////////////////
         Route::get('newSearchTasks', 'ReportController@newSearchTasks')->name('newSearchTasks');
