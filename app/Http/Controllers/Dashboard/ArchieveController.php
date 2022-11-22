@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Managers\AttatchmentManager;
 use App\Models\Folder;
+use App\Models\License;
 use App\Models\linkedTo;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
@@ -41,6 +42,7 @@ use Illuminate\Support\Str;
 use App\Models\ArchiveRole;
 use App\Models\AgendaDetail;
 use App\Models\TradeArchive;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class ArchieveController extends Controller
 
@@ -245,14 +247,19 @@ class ArchieveController extends Controller
 
     public function Linence_auto_complete(Request $request)
     {
-
-        $emp_data = $request['term'];
-
-        $users = User::where('name', 'like', '%'.$emp_data.'%')->where('enabled', '1')->select('*',
-                DB::raw("CONCAT(name)AS label"))->get();
-
-        return response()->json($users);
-
+//        $emp_data = $request['term'];
+//        $users = User::where('name', 'like', '%' . $emp_data . '%')->where('enabled', '1')->select('*', DB::raw("CONCAT(name)AS label"))->get();
+        $license = License::where(function ($query) use ($request) {
+            $query->where('users.name', 'like', '%'.$request->term.'%')
+                    ->orWhere('licenses.licNo', 'like', '%'.$request->term.'%');
+        })->where('licenses.enabled',
+                '1')->select(FacadesDB::raw("CONCAT(users.name ,' (',licenses.licNo,')' )AS title"),
+                'licenses.id as licId','licenses.licNo as licNo','users.id as userId', 'fileNo', 'users.model as userModel',
+                FacadesDB::raw("CONCAT(users.name ,' (',licenses.licNo,')' )AS label"), 'users.name as userName',
+                'licenses.systemUse as systemUse', 'licenses.use_desc as use_desc', 'peiceNo', 'hodNo', 'license_date')
+                ->leftJoin('users', 'users.id', 'licenses.user_id')
+                ->with(['systemUse', 'use_desc'])->get();
+        return response()->json($license);
     }
 
     public function licArchive_delete(Request $request)
@@ -2587,20 +2594,31 @@ class ArchieveController extends Controller
                     't_constant.name as license_type_name')
                     ->selectRaw('DATE_FORMAT(archive_licenses.created_at, "%Y-%m-%d") as date')
                     ->leftJoin('t_constant', 't_constant.id', 'archive_licenses.license_id')
-                    ->with('files')->get();
+                    ->get();
             foreach ($archive['result'] as $row) {
                 $attach = json_decode($row->json_feild);
-                foreach ($attach as $key => $value) {
-                    foreach ((array) $value as $key => $val) {
-                        $temp = array();
-                        $temp['id'] = 0;
-                        $temp['real_name'] = $key;
-                        $temp['url'] = $val;
-                    }
-                    //dd($temp);
-                    $row->files[] = $temp;
+                $files = array();
+                foreach ($attach as $id) {
+                    $temp = (array) $id;
+                    $file = File::find($id->id);
+                    $file->real_name = array_search($file->url, $temp);
+                    $files[] = $file;
                 }
+                $row->files = $files;
             }
+//            foreach ($archive['result'] as $row) {
+//                $attach = json_decode($row->json_feild);
+//                foreach ($attach as $key => $value) {
+//                    foreach ((array) $value as $key => $val) {
+//                        $temp = array();
+//                        $temp['id'] = 0;
+//                        $temp['real_name'] = $key;
+//                        $temp['url'] = $val;
+//                    }
+//                    //dd($temp);
+//                    $row->files[] = $temp;
+//                }
+//            }
 
         } else {
 

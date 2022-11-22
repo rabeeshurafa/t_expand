@@ -60,7 +60,7 @@
 
                                                     <div class="input-group-prepend">
 
-                                                        <span class="input-group-text" id="basic-addon1"> 
+                                                        <span class="input-group-text" id="basic-addon1">
 
                                                         اسم صاحب الترخيص
 
@@ -165,7 +165,7 @@
                                                     </div>
 
                                                         <input type="text" id="licNo" name="licNo" class="form-control eng-sm  valid" value="" placeholder="" autocomplete="off">
-                                                    
+
 
                                                 </div>
 
@@ -311,21 +311,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="row">
-                                        <div class="col-lg-10 col-md-12 ">
-                                            <div class="form-group paddmob">
-                                                <div class="input-group" style="width: 93% !important;">
-                                                    <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="basic-addon1">
-                                                        ملاحظات
-                                                    </span>
-                                                    </div>
-                                                    <input type="text" id="notes" class="form-control" name="notes"
-                                                           style="width: 30%;">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+
                                     <div class="row">
 
                                         <div class="col-lg-10 col-md-12 pr-0 pr-s-12">
@@ -349,7 +335,8 @@
 
                                                         @foreach($attachment_type as $attachment)
 
-                                                            <option value="{{$attachment->id}}"> {{$attachment->name}}   </option>
+                                                            <option
+                                                                    value="{{$attachment->id}}"> {{$attachment->name}}   </option>
 
                                                         @endforeach
 
@@ -366,6 +353,8 @@
                                                         </span>
 
                                                     </div>
+
+                                                    </select>
 
                                                     {{--<div class="input-group-append" onclick="ShowConstantModal(22,'AttahType','نوع المرفق')" style="cursor:pointer">
 
@@ -393,11 +382,11 @@
                                                         <img src="{{asset('assets/images/ico/upload.png')}}" width="40"
                                                              height="40" style="cursor:pointer"
                                                              onclick="document.getElementById('formDataaaupload-file[]').click(); return false">
-                                                        <img src="https://t.palexpand.ps/assets/images/ico/scanner.png"
+                                                        <img src="{{asset('assets/images/ico/scanner.png')}}"
                                                              style="cursor:pointer;    float: left;"
                                                              onclick="scanToJpg();">
 
-                                                        <img src="https://t.palexpand.ps/assets/images/ico/scannerpdf.png"
+                                                        <img src="{{asset('assets/images/ico/scannerpdf.png')}}"
                                                              style="cursor:pointer;    float: left;"
                                                              onclick="scanTopdf();">
                                                     </div>
@@ -610,7 +599,7 @@
             $('#editBtn').css('display', 'none');
             $(".loader").addClass('hide');
             $(".archive_type").removeClass("error");
-            row=attacheWithAttachName(response.file, $("#AttahType option:selected").text())
+            row = attacheWithAttachName(response.file, $("#AttahType option:selected").text())
             $(".formDataaaFilesArea").append(row)
           },
 
@@ -745,109 +734,34 @@
 
 
       $(function () {
-
         $(".cust").autocomplete({
-
           source: 'Linence_auto_complete',
-
           minLength: 1,
-
-
           select: function (event, ui) {
-
-            console.log(ui.item.model);
-
-            $('#customerid').val(ui.item.id);
-
-            $('#customername').val(ui.item.name);
-
-            $('#customerType').val(ui.item.model);
-
-            $('#licNo').val(ui.item.licNo);
-
-            $('#licn').val(ui.item.licn);
-
-            $('#licnfile').val(ui.item.licnfile);
-
-            let subscriber_id = ui.item.id;
-
-            $.ajax({
-
-              type: 'get', // the method (could be GET btw)
-
-              url: "license_info_byUser",
-
-
-              data: {
-
-                subscriber_id: subscriber_id,
-
-              },
-
-              success: function (response) {
-
-                template = ""
-
-                count = 0;
-
-                $('#fileNo').remove('');
-
-                if (response.info.length > 0) {
-
-                  template += '<select onchange="fillData($(this).val())" class="form-control" name="fileNo" id="fileNo">'
-
-                  template += '<option value="0">-- اختر --</option>'
-
-                  response.info.forEach(licence => {
-
-                    count++;
-
-                    template += '<option value="' + licence.fileNo + '"> ' + (licence.fileNo ?? 'بدون') + '</option>'
-
-
-                  });
-
-                  template += '</select>'
-
-
-                } else {
-
-                  template += '<input type="text" id="fileNo" name="fileNo" class="form-control eng-sm  valid" value="" placeholder="" autocomplete="off">'
-
-                }
-
-                $('#licGroup').append(template);
-
-
-              },
-
-            });
-
-
+            $('#customerid').val(ui?.item?.userId);
+            $('#customername').val(ui?.item?.userName);
+            $('#customerType').val(ui?.item?.userModel);
+            $('#licNo').val(ui?.item?.licNo);
+            $('#fileNo').val(ui?.item?.fileNo);
+            $('#license_date').val(ui?.item?.license_date);
+            $('#licn').val(ui?.item?.hodNo);
+            $('#licnfile').val(ui?.item?.peiceNo);
+            $('#use_desc').val(ui?.item?.use_desc?.name);
+            $('#pk_i_id').val(ui?.item?.licId);
           }
-
         });
-
       });
 
       function update($id) {
-
         let archive_id = $id;
-
         $('#saveBtn').text("تعديل");
-
         $(".formDataaaFilesArea").html('');
 
         $.ajax({
-
           type: 'get', // the method (could be GET btw)
-
           url: "{{ route('archieveLic_info') }}",
-
           data: {
-
             archive_id: archive_id,
-
           },
 
           success: function (response) {
@@ -858,7 +772,6 @@
             //$('#customerName').val(response.info.name);
             $('#pk_i_id').val(response.info.license_id);
             $('#customerType').val(response.info.model_name);
-            $('#notes').val(response.info.notes);
             $('#licNo').val(response.info.licNo);
             $('#fileNo').val(response.info.fileNo);
             $('#use_desc').val(response.info.use_desc);
@@ -887,11 +800,8 @@
       }
 
       function fillData($id) {
-
         let license_id = $id;
-
         console.log(license_id);
-
         $.ajax({
 
           type: 'get', // the method (could be GET btw)
@@ -944,13 +854,14 @@
 
             $("#license_date").val(dates);
             $("#licNo").val((response.info.licNo ?? ''));
-            $("#use_desc").val((response.info.use_desc != null ? response.info.use_desc.name : ''));
+            $("#use_desc").val((response.info.use_desc != null ? (response?.info?.use_desc?.name) : ''));
 
           },
 
         });
 
       }
+
 
       function doUploadAttach1(formDataStr) {
 
@@ -971,10 +882,15 @@
         var formData = new FormData($("#" + formDataStr)[0]);
 
         $.ajax({
+
           url: 'uploadAttach',
+
           type: 'POST',
+
           data: formData,
+
           dataType: "json",
+
           async: true,
 
           success: function (data) {
@@ -983,36 +899,62 @@
 
             if (data.all_files) {
               for (j = 0; j < data.all_files.length; j++) {
-                row=attacheWithAttachName(data.all_files[j], $("#AttahType option:selected").text())
+                row = attacheWithAttachName(data.all_files[j], $("#AttahType option:selected").text())
               }
+
               $(".alert-danger").addClass("hide");
+
               $(".alert-success").removeClass('hide');
+
               $("." + formDataStr + "FilesArea").append(row)
+
               $(".loader").addClass('hide');
               $(".form-control-file").val('');
+
               //document.getElementById(""+formDataStr+"upload-file[]").value="";
+
               $(".group1").colorbox({rel: 'group1'});
+
               setTimeout(function () {
+
                 $(".alert-danger").addClass("hide");
+
                 $(".alert-success").addClass("hide");
+
               }, 2000)
+
             } else {
+
               $(".alert-success").addClass("hide");
+
               $(".alert-danger").removeClass('hide');
+
             }
+
             $(".loader").addClass('hide');
+
             $(".form-actions").removeClass('hide');
+
           },
 
           error: function () {
+
             $(".alert-success").addClass("hide");
+
             $(".alert-danger").removeClass('hide');
+
             $(".loader").addClass('hide');
+
             $(".form-actions").removeClass('hide');
+
           },
+
           cache: false,
+
           contentType: false,
+
           processData: false
+
         });
 
       }

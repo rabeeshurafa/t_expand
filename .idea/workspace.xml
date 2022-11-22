@@ -6,10 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="a16e4324-61f7-4759-b5ed-4280ce8af87e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/empArchive/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/empArchive/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/setting/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/setting/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/ticketPrint/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/ticketPrint/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,22 +196,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/laragon/www/sammoa",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/laragon/www/idna&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\laragon\www\t_expand\database\migrations" />
@@ -298,6 +294,21 @@
       <workItem from="1668851158910" duration="47000" />
       <workItem from="1668853570291" duration="108000" />
       <workItem from="1668854117921" duration="160000" />
+      <workItem from="1668860649804" duration="2309000" />
+      <workItem from="1668924998197" duration="2507000" />
+      <workItem from="1668931608113" duration="172000" />
+      <workItem from="1668932371700" duration="122000" />
+      <workItem from="1668933974058" duration="445000" />
+      <workItem from="1668935020718" duration="166000" />
+      <workItem from="1668943161611" duration="6654000" />
+      <workItem from="1668960247563" duration="4158000" />
+      <workItem from="1669024317984" duration="566000" />
+      <workItem from="1669031171868" duration="944000" />
+      <workItem from="1669098056215" duration="3179000" />
+      <workItem from="1669106173095" duration="980000" />
+      <workItem from="1669110415029" duration="96000" />
+      <workItem from="1669113192192" duration="203000" />
+      <workItem from="1669118958657" duration="1242000" />
     </task>
     <servers />
   </component>
