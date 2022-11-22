@@ -6,18 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="a16e4324-61f7-4759-b5ed-4280ce8af87e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ArchieveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/ArchieveController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/TaboArchiveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Dashboard/TaboArchiveController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/jobLicArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/jobLicArchive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/archive/licArchive.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/archive/licArchive.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/cert/assurance.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/assurance.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/cert/cert.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/cert.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/cert/warningCert.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/cert/warningCert.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/elec/elecAdd.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/elec/elecAdd.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/jobLic/jobLic.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/jobLic/jobLic.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/jobLic/stopJobLic.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/jobLic/stopJobLic.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/license/licenseAdd.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/license/licenseAdd.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboard/water/waterAdd.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboard/water/waterAdd.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -318,6 +306,9 @@
       <workItem from="1669031171868" duration="944000" />
       <workItem from="1669098056215" duration="3179000" />
       <workItem from="1669106173095" duration="980000" />
+      <workItem from="1669110415029" duration="96000" />
+      <workItem from="1669113192192" duration="203000" />
+      <workItem from="1669118958657" duration="1242000" />
     </task>
     <servers />
   </component>
