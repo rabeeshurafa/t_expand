@@ -1117,7 +1117,7 @@
 
                           shortCutName = response.copyTo[i].archive.files[j].real_name;
 
-                          urlfile =getFileUrl(response?.copyTo[i]?.archive?.files[j]);
+                          urlfile = getFileUrl(response?.copyTo[i]?.archive?.files[j]);
 
                           if (response.copyTo[i].archive.files[j].extension == "jpg" || response.copyTo[i].archive.files[j].extension == "png" || response.copyTo[i].archive.files[j].extension == "jfif")
 
@@ -1635,10 +1635,14 @@
               select: function (event, ui) {
 
                 var id = ui.item.id;
-                if (ui.item.url == 'contract_archieve')
-                  ui.item.url = 'dep_archieve';
-
-                var url = '{{ route('admin.dashboard') }}/' + ui.item.url;
+                var url = ui.item.url;
+                if (url === 'finance_archive') {
+                  url = 'financeArchive'
+                }
+                if (url === 'contract_archieve') {
+                  url = 'financeArchive'
+                }
+                url = '{{ route('admin.dashboard') }}/' + url;
 
                 var fullUrl = url + '?id' + '=' + id;
 
@@ -1663,10 +1667,13 @@
               select: function (event, ui) {
 
                 var id = ui.item.id;
-                if (ui.item.url == 'contract_archieve')
-                  ui.item.url = 'dep_archieve';
                 var url = ui.item.url;
-
+                if (url === 'finance_archive') {
+                  url = 'financeArchive'
+                }
+                if (url === 'contract_archieve') {
+                  url = 'financeArchive'
+                }
                 var fullUrl = 'admin/' + url + '?id' + '=' + id;
 
                 $(location).attr('href', fullUrl)
