@@ -972,7 +972,7 @@ $.ajaxSetup({
 
     $( ".cust_auto" ).autocomplete({
 
-		source: 'Linence_auto_complete',
+		source: 'subscribe_auto_complete',
 
 		minLength: 1,
 
@@ -1000,7 +1000,7 @@ $( function() {
 
     $( ".cust" ).autocomplete({
 
-		source: 'Linence_auto_complete',
+		source: 'subscribe_auto_complete',
 
 		minLength: 1,
 

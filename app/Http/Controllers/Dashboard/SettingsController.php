@@ -121,8 +121,8 @@ class SettingsController extends Controller
         $setting = Setting::first();
         $address = Address::where('id',$setting->address_id)->first();
         $city = City::get();
-        $town = Town::get();
-        $region = Region::get();
+        $town = Town::where('status',1)->where('city_id', $setting->city_id)->get();
+        $region = Region::where('status',1)->where('town_id', $setting->town_id)->get();
         return view('dashboard.setting.index',compact('setting','city','address','town','region'));
     }
 

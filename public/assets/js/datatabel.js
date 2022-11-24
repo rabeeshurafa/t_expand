@@ -43,7 +43,7 @@ var KTAppEcommerceProducts = function () {
     return {
         init: function () {
             (t = document.querySelector("#kt_ecommerce_products_table")) && ((tbl = $(t).DataTable({
-                info: !1,
+                info: 1,
                 dom: 'Bflrtip',
                 processing: !0,
                 serverSide: !0,

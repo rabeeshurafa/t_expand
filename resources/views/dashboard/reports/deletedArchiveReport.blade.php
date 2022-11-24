@@ -355,6 +355,9 @@
                             }else if(elem.type=='depArchive'){
                                 $row+= "<td>" + 'أرشيف الأقسام' + "</td>" ;
                             
+                            }else if(elem.type=='financeArchive'){
+                                $row+= "<td>" + 'أرشيف قسم المالية' + "</td>" ;
+
                             }else{
                                 $row+= "<td>" + 'بدون تصنيف' + "</td>" ;
                             }
