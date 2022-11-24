@@ -1043,7 +1043,6 @@
     "2080": '{{trans('archive.build_type2')}}',
     "2081": '{{trans('archive.build_type3')}}'
   };
-
   function archiveOperations(data) {
     let actionBtn = `<div class="row"><div class="dropdown">
                         <button class="btn btn-secondary" style="background-color: transparent !important; border-color: transparent !important;"
@@ -1061,6 +1060,14 @@
         '<i style="color:#1E9FF2;" class="fa fa-trash"></i>' +
         'حذف </a>';
       @endcan
+      actionBtn += `<a onclick="send_email_archive(${data.id??''})" class="dropdown-item">
+        <i style="color:#1E9FF2;" class="fa fa-envelope"></i>
+        ارسال ايميل </a>`;
+        if (data?.email_logs?.length != 0) {
+          actionBtn += `<a onclick="send_email_archive(${data.id??''},'detail','${data?.type??''}')" class="dropdown-item">
+          <i style="color:#1E9FF2;" class="fa fa-envelope"></i>
+          الايميلات المرسلة </a>`;
+        }
     /*$actionBtn += `
       <a target="_blank" href="{{asset(app()->getLocale())}}/admin/printArchive/archive/${data.id}" class="dropdown-item">
         <img class="fa fa-print" tabindex="0" title="print" src="https://c.palexpand.ps/assets/images/ico/Printer.png " style="cursor:pointer;height: 32px;display:inline">

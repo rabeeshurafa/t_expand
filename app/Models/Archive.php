@@ -7,7 +7,7 @@ namespace App\Models;
 
 
 use App\Casts\Json;
-
+use App\Models\Email\EmailLog;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,7 +28,10 @@ class Archive extends Model
         return $this->hasMany(linkedTo::class);
 
     }
-
+    public function EmailLogs()
+    {
+        return $this->hasMany(EmailLog::class)->where('archive_type', '!=', 'tradeArchive');
+    }
     public function archiveFiles(){
 
         return $this->hasMany(File::class);
