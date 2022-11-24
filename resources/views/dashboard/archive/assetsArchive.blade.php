@@ -383,7 +383,7 @@
 
     @include('dashboard.archive.arc_config')
     @include('dashboard.component.fetch_table')
-
+    @include('dashboard.archive.email_archive')
     <script>
       function scanToJpg() {
         scanner.scan(displayImagesOnPage,
