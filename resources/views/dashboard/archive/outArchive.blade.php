@@ -656,7 +656,7 @@
     </div>
     @include('dashboard.archive.arc_config')
     @include('dashboard.component.fetch_table')
-
+    @include('dashboard.archive.email_archive')
 
     <script>
       // $( document ).ready(function() {
@@ -664,7 +664,7 @@
       //         $('#msgid').val("م م ع /")
       //     }
       // });
-
+      
       function scanToJpg() {
         scanner.scan(displayImagesOnPage,
           {

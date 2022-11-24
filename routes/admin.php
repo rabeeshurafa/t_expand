@@ -791,6 +791,7 @@ Route::group([
 
         /*****************/
         Route::get('search', 'SearchController@full_search')->name('search');
+        Route::get('full_search_email', 'SearchController@full_search_email')->name('full_search_email');
         Route::get('out_archieve',
                 'ArchieveController@out_archieve')->name('out_archieve')->middleware('can:out_archieve');
 
@@ -867,6 +868,9 @@ Route::group([
         Route::get('financeArchive_info_all',
                 'ArchieveController@financeArchive_info_all')->name('financeArchive_info_all');
         Route::get('financeArchive_info', 'ArchieveController@financeArchive_info')->name('financeArchive_info');
+        Route::post('getEmail', 'ArchieveController@getEmail')->name('getEmail');
+        Route::post('sendEmail', 'ArchieveController@sendEmail')->name('sendEmail');
+        Route::get('getLogsEmail/{id}/{type}', 'ArchieveController@getLogsEmail')->name('getLogsEmail');
 
         Route::group(['prefix' => 'profile'], function () {
             Route::get('edit', 'ProfileController@editProfile')->name('edit.profile');
