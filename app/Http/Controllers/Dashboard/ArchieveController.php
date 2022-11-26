@@ -265,9 +265,9 @@ class ArchieveController extends Controller
                 '1')->select(FacadesDB::raw("CONCAT(users.name ,' (',licenses.licNo,')' )AS title"),
                 'licenses.id as licId','licenses.licNo as licNo','users.id as userId', 'fileNo', 'users.model as userModel',
                 FacadesDB::raw("CONCAT(users.name ,' (',licenses.licNo,')' )AS label"), 'users.name as userName',
-                'licenses.systemUse as systemUse', 'licenses.use_desc as use_desc', 'peiceNo', 'hodNo', 'license_date')
+                'licenses.use_desc as use_desc', 'peiceNo', 'hodNo', 'license_date')
                 ->leftJoin('users', 'users.id', 'licenses.user_id')
-                ->with(['systemUse', 'use_desc'])->get();
+                ->with(['use_desc'])->get();
         return response()->json($license);
     }
 
