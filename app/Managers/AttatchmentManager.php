@@ -40,31 +40,32 @@ class AttatchmentManager
     {
         if ($file) {
             $files = $file;
-            $imageName = $prefix.rand(3, 999).'-'.time().'.'.$files->getClientOriginalExtension();
-            Storage::disk('ftp')->put(('expand/texpand/'.$imageName), fopen($file, 'r+'));
-            Storage::disk('s3')->put($imageName, fopen($file, 'r+'));
-            $res = Storage::disk('dropbox')->put(('texpand/'.$imageName), fopen($file, 'r+'));
-            $dropbox = ('texpand/'.$imageName);
+            $imageName = $prefix . rand(3, 999) . '-' . time() . '.' . $files->getClientOriginalExtension();
+            Storage::disk('ftp')->put(('expand/texpand/' . $imageName), fopen($file, 'r+'));
+            // Storage::disk('s3')->put($imageName, fopen($file, 'r+'));
+            Storage::disk('s3')->put($imageName, Storage::disk('ftp')->get('expand/texpand/' . $imageName));
+
+            $res = Storage::disk('dropbox')->put(('texpand/' . $imageName), fopen($file, 'r+'));
+            $dropbox = ('texpand/' . $imageName);
             if ($res) {
                 $fileLinks['dropbox'] = $dropbox;
             }
-            $ftp = Storage::disk('ftp')->url(('texpand/'.$imageName));
+            $ftp = Storage::disk('ftp')->url(('texpand/' . $imageName));
             $s3 = Storage::disk('s3')->url($imageName);
 
             $fileLinks['s3'] = $s3;
             $fileLinks['ftp'] = $ftp;
-//            $fileLinks['dropbox'] = $dropbox;
+            //            $fileLinks['dropbox'] = $dropbox;
 
             return [
-                    'name' => $file->getClientOriginalName(),
-                    'extension' => $file->getClientOriginalExtension(),
-                    'size' => $file->getSize(),
-                    'path' => $imageName,
-                    'fileLinks' => $fileLinks
+                'name' => $file->getClientOriginalName(),
+                'extension' => $file->getClientOriginalExtension(),
+                'size' => $file->getSize(),
+                'path' => $imageName,
+                'fileLinks' => $fileLinks
             ];
         }
     }
-
     public static function creatImages($images)
     {
         $data = $images;
@@ -92,9 +93,9 @@ class AttatchmentManager
         $name = 'scanner' . rand(3, 999) . '-' . time();
         Storage::disk('ftp')->put(('expand/texpand/' . $name . '.' . $type), $data);
         Storage::disk('s3')->put(($name . '.' . $type), $data);
-        $res=Storage::disk('dropbox')->put('texpand/' .($name . '.' . $type), $data);
+        $res = Storage::disk('dropbox')->put('texpand/' . ($name . '.' . $type), $data);
         $dropbox = ($name . '.' . $type);
-        if($res) {
+        if ($res) {
             $fileLinks['dropbox'] = $dropbox;
         }
         $ftp = Storage::disk('ftp')->url(('texpand/' . $name . '.' . $type));
@@ -102,7 +103,7 @@ class AttatchmentManager
         $size = Storage::disk('s3')->size($name . '.' . $type);
         $fileLinks['s3'] = $s3;
         $fileLinks['ftp'] = $ftp;
-//        $fileLinks['dropbox'] = $dropbox;
+        //        $fileLinks['dropbox'] = $dropbox;
         $file = new File();
         $file->real_name = $name . '.' . $type;
         $file->extension = $type;
@@ -127,9 +128,9 @@ class AttatchmentManager
         $name = 'scanner' . rand(3, 999) . '-' . time();
         Storage::disk('ftp')->put(('expand/texpand/' . $name . '.pdf'), $pdf_decoded);
         Storage::disk('s3')->put(($name . '.pdf'), $pdf_decoded);
-        $res=Storage::disk('dropbox')->put(('texpand/'.$name . '.pdf'), $pdf_decoded);
-        $dropbox = ('texpand/'.$name . '.pdf');
-        if($res) {
+        $res = Storage::disk('dropbox')->put(('texpand/' . $name . '.pdf'), $pdf_decoded);
+        $dropbox = ('texpand/' . $name . '.pdf');
+        if ($res) {
             $fileLinks['dropbox'] = $dropbox;
         }
         $ftp = Storage::disk('ftp')->url(('texpand/' . $name . '.pdf'));
@@ -148,7 +149,7 @@ class AttatchmentManager
         return $file;
     }
 
- /*   public function creatImages($images)
+    /*   public function creatImages($images)
     {
         $data = $images;
 
@@ -219,11 +220,12 @@ class AttatchmentManager
         }
     }
 
-    public static function local_upload_image($file, $prefix){
-        if($file){
+    public static function local_upload_image($file, $prefix)
+    {
+        if ($file) {
             $files = $file;
-            $imageName = $prefix.rand(3,999).'-'.time().'.'.$files->extension();
-            $image = "storage/".$imageName;
+            $imageName = $prefix . rand(3, 999) . '-' . time() . '.' . $files->extension();
+            $image = "storage/" . $imageName;
             $files->move(public_path('storage'), $imageName);
             $getValue = $image;
             return $getValue;
