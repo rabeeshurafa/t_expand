@@ -110,6 +110,9 @@ class ArchieveController extends Controller
         $archive->deleted_by = Auth()->user()->id;
         $archive->enabled = 0;
         $archive->save();
+        activity()
+            ->performedOn($archive)
+            ->log('deleted');
         if ($archive) {
 
             return response()->json(['success' => trans('admin.subscriber_added')]);
@@ -400,6 +403,9 @@ class ArchieveController extends Controller
             } catch (\Throwable $th) {
                 return response()->json(['status' => false, 'from' => $email, 'message' => 'first try ' . $th->getMessage()]);
             }
+            activity()
+                ->performedOn($archieve_info['info'])
+                ->log('email-archive');
             return response()->json(['status' => true, 'message' => 'تم الارسال بنجاح']);
         } catch (\Throwable $th) {
             return response()->json(['status' => false, 'message' => $th->getMessage()]);
@@ -983,6 +989,9 @@ class ArchieveController extends Controller
                     $copyTo->save();
                 }
             }
+            activity()
+            ->performedOn($archive)
+            ->log('updated');
         } else {
             $archive = new Archive();
             $archive->model_id = $request->customerid;
@@ -1058,6 +1067,9 @@ class ArchieveController extends Controller
                     $copyTo->save();
                 }
             }
+            activity()
+            ->performedOn($archive)
+            ->log('created');
         }
 
         if ($archive) {

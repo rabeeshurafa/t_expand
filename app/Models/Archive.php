@@ -10,67 +10,70 @@ use App\Casts\Json;
 use App\Models\Email\EmailLog;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
-
-
+// use Spatie\Activitylog\LogOptions;
+// use Spatie\Activitylog\Traits\LogsActivity;
 
 class Archive extends Model
 
 {
-
-    public function copyTo(){
+    // use LogsActivity;
+    public function copyTo()
+    {
 
         return $this->hasMany(CopyTo::class);
-
     }
-
-    public function relatedTo(){
+    // public function getActivitylogOptions(): LogOptions
+    // {
+    //     return LogOptions::defaults()->useLogName('archive')->logOnly(['*'])->dontLogIfAttributesChangedOnly(['updated_at', 'enabled', 'deleted_by','sizeAttachments','countAttachments']);
+    // }
+    public function relatedTo()
+    {
 
         return $this->hasMany(linkedTo::class);
-
     }
     public function EmailLogs()
     {
         return $this->hasMany(EmailLog::class)->where('archive_type', '!=', 'tradeArchive');
     }
-    public function archiveFiles(){
+    public function archiveFiles()
+    {
 
         return $this->hasMany(File::class);
-
     }
 
     public function connectTo(): Attribute
     {
         return new Attribute(
-                get: fn($value) => json_decode($value),
-                set: fn($value) => json_encode($value),
+            get: fn ($value) => json_decode($value),
+            set: fn ($value) => json_encode($value),
         );
     }
 
-    public function Admin(){
+    public function Admin()
+    {
 
-        return $this->belongsTo(Admin::class,'add_by');
-
+        return $this->belongsTo(Admin::class, 'add_by');
     }
 
-    public function deleted_by(){
+    public function deleted_by()
+    {
 
-        return $this->belongsTo(Admin::class,'deleted_by');
-
+        return $this->belongsTo(Admin::class, 'deleted_by');
     }
 
-    public function files() {
+    public function files()
+    {
 
-        return $this->archiveFiles()->where('model_name','App\Models\Archive');
-
+        return $this->archiveFiles()->where('model_name', 'App\Models\Archive');
     }
 
-    
-    public function archiveType(){
 
-        return $this->belongsTo(Constant::class,'type_id');
+    public function archiveType()
+    {
 
+        return $this->belongsTo(Constant::class, 'type_id');
     }
-    
+
     // public function modelname(){
     //     dd($this);
     //     if($this->attributes['model_name'])
@@ -100,4 +103,3 @@ class Archive extends Model
 
 
 }
-
