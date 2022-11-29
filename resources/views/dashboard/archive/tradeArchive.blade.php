@@ -440,6 +440,11 @@
                                                 حفظ ومتابعة
                                             </button>
                                         @endcan
+                                        {{-- <input type="hidden" id="send_email" name="send_email" value="0">
+                                        <button onclick="$('#send_email').val(1);save();" type="button"
+                                                class="btn btn-primary save" id="saveBtn" style="">
+                                            حفظ وارسال
+                                        </button> --}}
                                     </div>
 
                                 </div>
@@ -481,7 +486,7 @@
     </div>
     @include('dashboard.archive.arc_config')
     @include('dashboard.component.fetch_table')
-
+    @include('dashboard.archive.email_archive')
     <script>
       function scanToJpg() {
         scanner.scan(displayImagesOnPage,
@@ -785,6 +790,10 @@
                 window.open(url, '_blank');
                 $('#track').val(0);
               }
+              // if ($('#send_email').val() == 1) {
+              //   send_email_archive(response.id)
+              //   $('#send_email').val(0);
+              // }
               // $('.kt_ecommerce_products_table').DataTable().ajax.reload();
               $('.wtbl').DataTable().ajax.reload();
             },

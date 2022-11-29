@@ -308,7 +308,11 @@
                                                 حفظ ومتابعة
                                             </button>
                                         @endcan
-
+                                        <input type="hidden" id="send_email" name="send_email" value="0">
+                                        <button onclick="$('#send_email').val(1);save();" type="button"
+                                                class="btn btn-primary save" id="saveBtn" style="">
+                                            حفظ وارسال
+                                        </button>
                                     </div>
 
                                 </div>
@@ -588,6 +592,10 @@
                 let url = `{{ route('admin.dashboard') }}/trackingArchive/${$('#url').val()}/${response.id}`
                 window.open(url, '_blank');
                 $('#track').val(0);
+              }
+              if ($('#send_email').val() == 1) {
+                send_email_archive(response.id)
+                $('#send_email').val(0);
               }
               this.reset();
 
