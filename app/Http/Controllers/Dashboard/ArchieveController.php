@@ -356,6 +356,7 @@ class ArchieveController extends Controller
             } else if ($type == 'App\Models\User') {
                 $object = User::query();
             }
+            if(!isset($object)) continue;
             $email = $object->where('model', '=', $models[$i])
                     ->where('id', '=', $model_ids[$i])
                     ->select('id', 'email as label', 'email as value', 'name')->first();

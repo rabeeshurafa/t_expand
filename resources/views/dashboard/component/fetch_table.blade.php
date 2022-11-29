@@ -1060,6 +1060,7 @@
         '<i style="color:#1E9FF2;" class="fa fa-trash"></i>' +
         'حذف </a>';
       @endcan
+      if(data.model != "App\\Models\\ArchiveTrade") {
       actionBtn += `<a onclick="send_email_archive(${data.id??''})" class="dropdown-item">
         <i style="color:#1E9FF2;" class="fa fa-envelope"></i>
         ارسال ايميل </a>`;
@@ -1068,6 +1069,7 @@
           <i style="color:#1E9FF2;" class="fa fa-envelope"></i>
           الايميلات المرسلة </a>`;
         }
+      }
     /*$actionBtn += `
       <a target="_blank" href="{{asset(app()->getLocale())}}/admin/printArchive/archive/${data.id}" class="dropdown-item">
         <img class="fa fa-print" tabindex="0" title="print" src="https://c.palexpand.ps/assets/images/ico/Printer.png " style="cursor:pointer;height: 32px;display:inline">
