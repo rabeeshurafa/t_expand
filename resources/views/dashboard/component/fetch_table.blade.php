@@ -1512,7 +1512,7 @@
 
           },
           // {data: 'trade_no'},
-          {data: 'trade_type_name', name: 't_constant.name'},
+          {data: 'trade_type_name', name: 'trade_type_name'},
           {
             data: null,
             render: function (data, row, type) {
