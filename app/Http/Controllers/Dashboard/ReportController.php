@@ -73,6 +73,7 @@ use App\Models\Smslog;
 use App\Models\Region;
 use Illuminate\Support\Str;
 use App\Models\Setting;
+use Spatie\Activitylog\Models\Activity;
 
 
 class ReportController extends Controller{
@@ -120,6 +121,11 @@ var $archiveNames=array(
     {
         $type = 'deletedDefinitionsReport';
         return view('dashboard.reports.deletedDefinitions', compact('type'));
+    }
+    public function logReport()
+    {
+        $type = 'logReport';
+        return view('dashboard.reports.logReport', compact('type'));
     }
     public function customerReport()
     {
@@ -174,6 +180,39 @@ var $archiveNames=array(
     public function taskArchiveReport(){
         $type= 'taskArchiveReport';
         return view('dashboard.reports.tasksArchiveReport',compact('type'));
+    }
+    public function report_logs(Request $request)
+    {
+        // activity()
+        //     ->log('log-report');
+        $activity = Activity::query();
+        if ($request->get('from') && $request->get('to')) {
+
+            $from = date_create(($request->get('from')));
+
+            $from = explode('/', ($request->get('from')));
+
+            $from = $from[2] . '-' . $from[1] . '-' . $from[0];
+
+            $to = date_create(($request->get('to')));
+
+            $to = explode('/', ($request->get('to')));
+
+            $to = $to[2] . '-' . $to[1] . '-' . $to[0];
+            $from = $from . ' ' . '00:00:00';
+            $to = $to . ' ' . '23:00:00';    
+        }
+        if ($from && $to) {
+            $activity->whereBetween('activity_log.created_at', [$from, $to]);
+        }
+        $withString = ['causer' => function ($query) {
+            $query->select('id', 'name', 'nick_name');
+        }, 'subject'];
+        $activity =  $activity->with($withString)->orderBy('created_at', 'DESC')->get()->each(function ($row, $index) {
+            $row->rowId = $index + 1;
+        });
+
+        return response()->json($activity);
     }
     public function storageReport(Request $request)
     {
