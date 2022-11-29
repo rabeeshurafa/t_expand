@@ -201,6 +201,7 @@ Route::group([
         /****************************************/
 
         Route::get('download_backup', 'BackupController@downloadBackup')->name('download_backup');
+        Route::get('setFileUploaded', 'ArchieveController@setFileUploaded')->name('setFileUploaded');
 
         Route::get('getWaterTickets', 'TasksTableController@getWaterTickets')->name('getWaterTickets');
         Route::get('getElecSubscriptionTickets',
