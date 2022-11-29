@@ -163,13 +163,13 @@
                                                 <th width="10px">
                                                     #
                                                 </th>
-                                                <th width="150px">
+                                                <th width="120px">
                                                     {{ 'الموظف' }}
                                                 </th>
-                                                <th width="150px">
+                                                <th width="120px">
                                                     {{ 'الوقت والتاريخ' }}
                                                 </th>
-                                                <th width="150px">
+                                                <th width="300px">
                                                     {{ 'الحركة' }}
                                                 </th>
                                             </tr>
