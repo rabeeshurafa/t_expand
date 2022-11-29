@@ -325,13 +325,13 @@
                                 </button>
                                 <input type="hidden" id="print" class="form-control"
                                        name="print" value="0">
-                                <button onclick="save();$('#print').val(1);" type="button" class="btn btn-primary save"
+                                {{-- <button onclick="save();$('#print').val(1);" type="button" class="btn btn-primary save"
                                         id="saveBtn"
                                         style="">
 
                                     حفظ وطباعة
 
-                                </button>
+                                </button> --}}
                                 @can('trackingArchive')
                                     <input type="hidden" id="track" name="track" value="0">
                                     <button onclick="$('#track').val(1);save();" type="button"

@@ -53,15 +53,15 @@
 			<div class="col-md-4">
                 <div class="d-flex align-items-end flex-column">
                     {{-- <div class="mb-1" style="font-weight: bold;">المساحة الاجمالية المستخدمة</div> --}}
-                    <div>
+                    {{-- <div>
                         <div class="mb-1" style="display: inline; font-weight: bold;">المساحة المستخدمة : </div>
                         <div class="mb-1 d-inline attachmentSize" style="direction: ltr; font-weight: bold;"></div>
                     </div>
                     <div class="font-small">
                         <div class="mb-1" style="display: inline; font-weight: bold;">المساحة المسموحة : </div>
                         <div class="mb-1 d-inline max_upload" style="direction: ltr; font-weight: bold;"></div>
-                    </div>
-                    <div class="mt-3">
+                    </div> --}}
+                    <div class="">
                         <div class="mb-1 d-inline used" style="font-weight: bold; direction: ltr; display: inline; unicode-bidi: embed;"></div>
                     </div>
                 </div>
