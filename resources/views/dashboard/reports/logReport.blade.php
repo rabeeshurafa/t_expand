@@ -163,13 +163,13 @@
                                                 <th width="10px">
                                                     #
                                                 </th>
-                                                <th width="150px">
+                                                <th width="120px">
                                                     {{ 'الموظف' }}
                                                 </th>
-                                                <th width="150px">
+                                                <th width="120px">
                                                     {{ 'الوقت والتاريخ' }}
                                                 </th>
-                                                <th width="150px">
+                                                <th width="300px">
                                                     {{ 'الحركة' }}
                                                 </th>
                                             </tr>
@@ -311,15 +311,20 @@
             else if (description === 'daily-report') return 'اصدار تقرير الارشيف اليومي'
             else if (description === 'deleted-archive-report') return 'اصدار تقرير حذف الارشيف'
             else if (description === 'central-archive-report') return 'اصدار تقرير الارشيف المركزي'
-            else if (description === 'daily-work-report') return 'اصدار تقرير العمل اليومي'
+            else if (description === 'daily-work-report') return 'اصدار تقرير المهام اليومي'
             else if (description === 'system-ticket-report') return 'اصدار تقرير الطلبات على النظام'
             else if (description === 'details-ticket-report') return 'اصدار تقرير الطلبات التفصيلي'
+            else if (description === 'vacations-report') return 'اصدار تقرير الاجازات والمغادرات'
+            else if (description === 'subscriber-report') return 'اصدار تقرير المشتركين'
+            else if (description === 'tasks-archive-report') return 'اصدار تقرير ارشيف الطلبات'
+            else if (description === 'storage-report') return 'اصدار تقرير المساحة التخزينية'
             else if (description === 'open-archive-info') return 'فتح'
             else return 'حركة'
         }
         const getName = (row) => {
             const name = row?.subject_type
-            if (name === 'App\\Models\\User' || name === 'App\\Models\\Admin') return 'موظف'
+            if (name === 'App\\Models\\Admin') return 'موظف'
+            else if (name === 'App\\Models\\User') return 'مواطن'
             else if (name === 'App\\Models\\Department' || name === 'App\\Models\\Definition\\Department') return 'قسم'
             else if (name === 'App\\Models\\Archive' || name === 'App\\Models\\Archive\\Archive') return 'أرشيف'
             else if (name === 'App\\Models\\Project' || name === 'App\\Models\\Definition\\Project') return 'مشروع'
@@ -391,7 +396,7 @@
             if (row.subject_type) {
                 if (row.subject_type === 'App\\Models\\Archive' || row.subject_type ===
                     'App\\Models\\Archive\\Archive') {
-                    return `قام ب ${getDescription(row.description)} ${getTypeAr(row?.subject?.type)} ${row?.subject?.title} ${row?.subject?.name ? `- ${row?.subject?.name}` : ''}`
+                    return `قام ب ${getDescription(row.description)} ${getTypeAr(row?.subject?.type)} - ${row?.subject?.title} ${row?.subject?.name ? `- ${row?.subject?.name}` : ''}`
                 } else if (row.subject_type === 'App\\Models\\Archive\\TradeArchive') {
                     return `قام ب ${getDescription(row.description)} أرشيف المعاملات ${row?.subject?.document_place} ${row?.subject?.name ? `- ${row?.subject?.name}` : ''}`
                 } else if (row.subject_type === 'App\\Models\\Certificates\\Cert') {
@@ -401,7 +406,7 @@
                 } else if (row.subject_type === 'App\\Models\\Definition\\Setting') {
                     return `قام ب ${getDescription(row.description)} ${getName(row)}`
                 } else if (row.subject_type === 'App\\Models\\Ticket\\AppTicket46') {
-                    return `قام ب ${getDescription(row.description)} ${getName(row)} ${getTypeAr(row?.subject?.archive_type)} ${row?.subject?.archive_title} ${row?.subject?.customer_name ? `- ${row?.subject?.customer_name}` : ''}`
+                    return `قام ب ${getDescription(row.description)} ${getName(row)} ${getTypeAr(row?.subject?.archive_type)} - ${row?.subject?.archive_title} ${row?.subject?.customer_name ? `- ${row?.subject?.customer_name}` : ''}`
                 } else if (row.subject_type === 'App\\Models\\Ticket\\AppTicket1') {
                     return `قام ب ${getDescription(row.description)} ${getName(row)} ${row?.subject?.customer_name ? `- ${row?.subject?.customer_name}` : ''}`
                 } else if (row.subject_type === 'App\\Models\\Archive\\AgendaDetail') {

@@ -308,6 +308,8 @@ var $archiveNames=array(
                 $archive['attachmentSize'] += $sum;
             }
         }
+        activity()
+            ->log('storage-report');
         $archive['attachmentSize'] = round($archive['attachmentSize'], 3);
         $archive['type'] = $request->get('arcType');
         return response()->json($archive);
@@ -496,7 +498,8 @@ var $archiveNames=array(
             $res=$tempRes;
         }
         
-        
+        activity()
+            ->log('subscriber-report');
         return DataTables::of($res)->addIndexColumn()->make(true);
 
     }
@@ -548,7 +551,8 @@ var $archiveNames=array(
                 $message->ticket_No=1000;
             }
         }
-
+        activity()
+        ->log('sms-report');
         // dd($messages);
         // return $messages;
         return DataTables::of($messages)->addIndexColumn()->make(true);
@@ -579,7 +583,8 @@ var $archiveNames=array(
         if($request->emp_id!=null){
             $emp_id=$request->emp_id;
         }
-        
+        activity()
+            ->log('vacations-report');
         if($request->vacType==1){
             if($emp_id!=0){
                $vac= AppTicket32::select('app_ticket32s.*','t_constant.name as vac_name')
@@ -997,6 +1002,8 @@ var $archiveNames=array(
             }
             
         }
+        activity()
+            ->log('system-ticket-report');
         return $res;
     }
     
@@ -1185,7 +1192,8 @@ var $archiveNames=array(
             }
             return $date1 - $date2; // $v2 - $v1 to reverse direction
         });
-        
+        activity()
+            ->log('daily-work-report');
         // dd($result);
         
         return $result;
@@ -1407,7 +1415,8 @@ var $archiveNames=array(
             }
             return $date1 - $date2; // $v2 - $v1 to reverse direction
         });
-        
+        activity()
+            ->log('details-ticket-report');
        return $result; 
     }
     
@@ -1481,7 +1490,8 @@ var $archiveNames=array(
                     $row->setAttribute('url',array());
                 }
         }
-        
+        activity()
+            ->log('deleted-archive-report');
         return DataTables::of($archive)->addIndexColumn()
         ->editColumn('date', function ($archive) {
             if ($archive->date) {
@@ -1540,7 +1550,8 @@ var $archiveNames=array(
             $to = $to[2] . '-' . $to[1] . '-' . $to[0];
 
         }
-        
+        activity()
+            ->log('daily-report');
         if($request->get('arcType')==1){
 
             $archive = Archive::select('archives.*')->whereRaw('CAST(archives.created_at AS DATE) between ? and ?', [$from, $to])
@@ -1683,7 +1694,8 @@ var $archiveNames=array(
 
         }
         
-        
+        activity()
+            ->log('deleted-definition-report');
         
         $res = Admin::select('admins.*')->whereRaw('CAST(admins.updated_at AS DATE) between ? and ?', [$from, $to])
         ->where('admins.enabled', '0')->orderBy('updated_at', 'DESC')->with('deleted_by')->get();
@@ -1766,6 +1778,9 @@ var $archiveNames=array(
             $user->enabled=1;
             $user->deleted_by=0;
             $user->save();
+            activity()
+                ->performedOn($user)
+                ->log('restore');
             if ($user) {
 
                 return response()->json(['success'=>trans('admin.subscriber_added')]);
