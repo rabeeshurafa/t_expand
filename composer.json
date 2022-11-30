@@ -8,6 +8,7 @@
         "php": "^8.0.2",
         "astrotomic/laravel-translatable": "^11.10",
         "darryldecode/cart": "^4.2",
+        "doctrine/dbal": "^3.5",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^3.0",
         "guzzlehttp/guzzle": "^7.5",

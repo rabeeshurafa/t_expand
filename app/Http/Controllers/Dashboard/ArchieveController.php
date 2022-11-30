@@ -197,65 +197,65 @@ class ArchieveController extends Controller
         // ->select('*',DB::raw("CONCAT(name , '(  أرشيف المواطنين   )' )AS label"))->get();   
 
         $equip = Equpment::where('name', 'like', '%' . $emp_data . '%')->where('enabled', '1')->select(
-            '*',
-            DB::raw('name AS label')
-            //, DB::raw("CONCAT(name ,' ', ' (اجهزه و معدات) ' )AS label")
+                '*',
+                DB::raw('name AS label')
+        //, DB::raw("CONCAT(name ,' ', ' (اجهزه و معدات) ' )AS label")
         )->get();
 
         $vehicle = Vehicle::where('name', 'like', '%' . $emp_data . '%')->where('enabled', '1')->select(
-            '*',
-            DB::raw('name AS label')
-            //, DB::raw("CONCAT(name , ' ',' (المركبات) ' )AS label")
+                '*',
+                DB::raw('name AS label')
+        //, DB::raw("CONCAT(name , ' ',' (المركبات) ' )AS label")
         )->get();
 
         $project = Project::where('name', 'like', '%' . $emp_data . '%')->where('enabled', '1')->select(
-            '*',
-            DB::raw('name AS label')
-            //, DB::raw("CONCAT(name , ' ',' (المشاريع) ' )AS label")
+                '*',
+                DB::raw('name AS label')
+        //, DB::raw("CONCAT(name , ' ',' (المشاريع) ' )AS label")
         )->get();
 
         $admin = Admin::where('admins.id', '!=', '74')->where('name', 'like', '%' . $emp_data . '%')->where(
-            'enabled',
-            '1'
+                'enabled',
+                '1'
         )->select(
-            '*',
-            DB::raw('name AS label')
-            //, DB::raw("CONCAT(name , ' ',' ( الموظفين ) ' )AS label")
+                '*',
+                DB::raw('name AS label')
+        //, DB::raw("CONCAT(name , ' ',' ( الموظفين ) ' )AS label")
         )->get();
 
         $department = Department::where('name', 'like', '%' . $emp_data . '%')->where('enabled', '1')->select(
-            '*',
-            DB::raw('name AS label')
-            //, DB::raw("CONCAT(name ,' ', ' (الاقسام) ' )AS label")
+                '*',
+                DB::raw('name AS label')
+        //, DB::raw("CONCAT(name ,' ', ' (الاقسام) ' )AS label")
         )->get();
 
         $orgnization = Orgnization::where('name', 'like', '%' . $emp_data . '%')->where('enabled', '1')->select(
-            '*',
-            DB::raw('name AS label')
-            //, DB::raw("CONCAT(name )AS label")
+                '*',
+                DB::raw('name AS label')
+        //, DB::raw("CONCAT(name )AS label")
         )->get();
 
         $specialAsset = SpecialAsset::where('name', 'like', '%' . $emp_data . '%')->where('enabled', '1')->select(
-            '*',
-            DB::raw('name AS label')
-            //DB::raw("CONCAT(name , ' ',' (المباني و المستودعات و الاراضي) ' )AS label")
+                '*',
+                DB::raw('name AS label')
+        //DB::raw("CONCAT(name , ' ',' (المباني و المستودعات و الاراضي) ' )AS label")
         )->get();
 
         $user = User::where('name', 'like', '%' . $emp_data . '%')->where('enabled', '1')->select(
-            '*',
-            DB::raw("CONCAT(name,' ','(مواطن)' )AS label")
+                '*',
+                DB::raw("CONCAT(name,' ','(مواطن)' )AS label")
         )->get();
         $volunteer = Volunteer::where('name', 'like', '%' . $emp_data . '%')->select(
-            '*',
-            DB::raw("CONCAT(name )AS label")
+                '*',
+                DB::raw("CONCAT(name )AS label")
         )->get();
         $folder = Folder::where('name', 'like', '%' . $emp_data . '%')->select('*', DB::raw('name AS label'))->get();
         $names = $equip->merge($vehicle)->merge($project)->merge($admin)->merge($department)->merge($equip)
-            ->merge($orgnization)->merge($specialAsset)->merge($user)->merge($volunteer)->merge($folder);
+                ->merge($orgnization)->merge($specialAsset)->merge($user)->merge($volunteer)->merge($folder);
 
-        // ->merge($inArchive)        // ->merge($outArchive)->merge($munArchive)->merge($projArchive)     
+        // ->merge($inArchive)        // ->merge($outArchive)->merge($munArchive)->merge($projArchive)
 
-        // ->merge($empArchive)->merge($depArchive)->merge($citArchive)        ->merge($orgnization)->merge($specialAsset)->merge($user);      
+        // ->merge($empArchive)->merge($depArchive)->merge($citArchive)        ->merge($orgnization)->merge($specialAsset)->merge($user);
 
         return response()->json($names);
     }
@@ -266,11 +266,18 @@ class ArchieveController extends Controller
 //        $users = User::where('name', 'like', '%' . $emp_data . '%')->where('enabled', '1')->select('*', DB::raw("CONCAT(name)AS label"))->get();
         $license = License::where(function ($query) use ($request) {
             $query->where('users.name', 'like', '%'.$request->term.'%')
-                    ->orWhere('licenses.licNo', 'like', '%'.$request->term.'%');
+                    ->orWhere('licenses.licNo', 'like', '%'.$request->term.'%')
+                    ->orWhere('licenses.fileNo', 'like', '%'.$request->term.'%');
         })->where('licenses.enabled',
-                '1')->select(FacadesDB::raw("CONCAT(users.name ,' (',licenses.licNo,')' )AS title"),
+                '1')->select(FacadesDB::raw("CONCAT(users.name ,' (',(CASE 
+                        WHEN licenses.licNo != null THEN licenses.licNo
+                        ELSE licenses.fileNo
+                        END),')' )AS title"),
                 'licenses.id as licId','licenses.licNo as licNo','users.id as userId', 'fileNo', 'users.model as userModel',
-                FacadesDB::raw("CONCAT(users.name ,' (',licenses.licNo,')' )AS label"), 'users.name as userName',
+                FacadesDB::raw("CONCAT(users.name ,' (',(CASE 
+                        WHEN licenses.licNo != null THEN licenses.licNo
+                        ELSE licenses.fileNo
+                        END),')' )AS label"), 'users.name as userName',
                 'licenses.use_desc as use_desc', 'peiceNo', 'hodNo', 'license_date')
                 ->leftJoin('users', 'users.id', 'licenses.user_id')
                 ->with(['use_desc'])->get();
@@ -360,8 +367,8 @@ class ArchieveController extends Controller
             }
             if(!isset($object)) continue;
             $email = $object->where('model', '=', $models[$i])
-                ->where('id', '=', $model_ids[$i])
-                ->select('id', 'email as label', 'email as value', 'name')->first();
+                    ->where('id', '=', $model_ids[$i])
+                    ->select('id', 'email as label', 'email as value', 'name')->first();
             if ($email)
                 $emails[] = $email;
         }
@@ -377,8 +384,8 @@ class ArchieveController extends Controller
         try {
             $archieve_info['info'] = Archive::find($request['archive_id']);
             $archieve_info['files'] = File::where('archive_id', '=', $request['archive_id'])->where(
-                'model_name',
-                'App\Models\Archive'
+                    'model_name',
+                    'App\Models\Archive'
             )->get();
             $email = auth()->user()->email;
             $is_email_exist = $email ? true:false;
@@ -397,9 +404,9 @@ class ArchieveController extends Controller
             // $data['files_test'] = $request->files_test;
             try {
                 Mail::to($request->to)
-                    ->cc($data['cc'])
-                    // ->attachFromStorage($data['file'])
-                    ->send(new  SendMailBySystem($data));
+                        ->cc($data['cc'])
+                        // ->attachFromStorage($data['file'])
+                        ->send(new  SendMailBySystem($data));
                 $emailLog = new EmailLog();
                 $emailLog->archive_id = $request->archive_id;
                 $emailLog->archive_type = $archieve_info['info']->type;
@@ -461,8 +468,8 @@ class ArchieveController extends Controller
 
             $archive->save();
             $prevFiles = File::where('model_name', "App\Models\ArchiveLicense")->where(
-                'archive_id',
-                $archive->id
+                    'archive_id',
+                    $archive->id
             )->get();
             foreach ($prevFiles as $prevFile) {
                 $prevFile->archive_id = 0;
@@ -558,12 +565,12 @@ class ArchieveController extends Controller
         $city = City::get();
         $town = Area::get();
         return view('dashboard.archive.volunteerReport', compact(
-            'type',
-            'attachment_type',
-            'license_type',
-            'url',
-            'city',
-            'town'
+                'type',
+                'attachment_type',
+                'license_type',
+                'url',
+                'city',
+                'town'
         ));
     }
 
@@ -690,8 +697,8 @@ class ArchieveController extends Controller
             $row->courses=Volunteer_Courses::where('volunteer_id',$row->id)->get();*/
         }
         $archive = Volunteer::whereIn(
-            'id',
-            $id
+                'id',
+                $id
         )->with('address.city')->with('address.area')->with('lincence')->with('Volunteercourse')->get();
         //     $query = DB::getQueryLog();
         //     print_r($query);
@@ -948,7 +955,7 @@ class ArchieveController extends Controller
 
             $files_ids = $request->formDataaaorgIdList;
             File::where('archive_id', $request->ArchiveID)
-                ->update(['archive_id' => 0, 'model_name' => '']);
+                    ->update(['archive_id' => 0, 'model_name' => '']);
             $sum = 0;
             $countAttachments = 0;
             if ($files_ids) {
@@ -1188,8 +1195,8 @@ class ArchieveController extends Controller
         $archive_type = Constant::where('parent', '101')->where('status', 1)->get();
 
         return view(
-            'dashboard.archive.lawArchive',
-            compact('archive_config', 'type', 'archive_type', 'url')
+                'dashboard.archive.lawArchive',
+                compact('archive_config', 'type', 'archive_type', 'url')
         );
     }
 
@@ -1206,8 +1213,8 @@ class ArchieveController extends Controller
         $archive_type = Constant::where('parent', '102')->where('status', 1)->get();
 
         return view(
-            'dashboard.empArchive.index',
-            compact('archive_config', 'type', 'archive_type', 'url')
+                'dashboard.empArchive.index',
+                compact('archive_config', 'type', 'archive_type', 'url')
         );
     }
 
@@ -1618,8 +1625,8 @@ class ArchieveController extends Controller
         $archive_type = Constant::where('parent', 53)->where('status', 1)->get();
 
         return view(
-            'dashboard.archive.outArchive',
-            compact('archive_config', 'type', 'archive_type', 'url')
+                'dashboard.archive.outArchive',
+                compact('archive_config', 'type', 'archive_type', 'url')
         );
     }
 
@@ -1642,8 +1649,8 @@ class ArchieveController extends Controller
         $depArchive = ArchiveType::where('type', 'depArchive')->get();
 
         return view(
-            'dashboard.archive.outArchive',
-            compact('depArchive', 'citArchive', 'type', 'archive_type', 'url', 'projArchive', 'empArchive')
+                'dashboard.archive.outArchive',
+                compact('depArchive', 'citArchive', 'type', 'archive_type', 'url', 'projArchive', 'empArchive')
         );
     }
 
@@ -1660,8 +1667,8 @@ class ArchieveController extends Controller
         $license_type = Constant::where('parent', 11)->where('status', 1)->get();
 
         return view(
-            'dashboard.archive.licArchive',
-            compact('type', 'attachment_type', 'archive_config', 'license_type', 'url')
+                'dashboard.archive.licArchive',
+                compact('type', 'attachment_type', 'archive_config', 'license_type', 'url')
         );
     }
 
@@ -1677,8 +1684,8 @@ class ArchieveController extends Controller
         $url = "finance_archive";
 
         return view(
-            'dashboard.archive.licFileArchive',
-            compact('type', 'archive_config', 'attachment_type', 'license_type', 'url')
+                'dashboard.archive.licFileArchive',
+                compact('type', 'archive_config', 'attachment_type', 'license_type', 'url')
         );
     }
 
@@ -1753,26 +1760,26 @@ class ArchieveController extends Controller
             $archive->countAttachments = $countAttachments;
             $archive->save();
             /*
-                
+
                 CopyTo::where('archive_id',$archive->id)->delete();
                 if ($request->copyToText[0] != null) {
-    
+
                     for ($i = 0; $i < count($request->copyToText); $i++) {
-    
+
                         $copyTo = new CopyTo();
-    
+
                         $copyTo->archive_id =  $archive->id;
-    
+
                         $copyTo->model_id =  $request->copyToID[$i];
-    
+
                         $copyTo->name =  $request->copyToCustomer[$i];
-    
+
                         $copyTo->model_name =  $request->copyToType[$i];
-    
+
                         $copyTo->save();
-    
+
                     }
-    
+
                 }
             */
         } else {
@@ -1865,8 +1872,8 @@ class ArchieveController extends Controller
         $url = "trade_archive";
 
         return view(
-            'dashboard.archive.tradeArchive',
-            compact('tradeNo', 'type', 'archive_config', 'attachment_type', 'license_type', 'url')
+                'dashboard.archive.tradeArchive',
+                compact('tradeNo', 'type', 'archive_config', 'attachment_type', 'license_type', 'url')
         );
     }
 
@@ -1957,10 +1964,10 @@ class ArchieveController extends Controller
         array_push($ids, (int) $my_id);
 
         $archive = TradeArchive::select('trade_archives.*', 't_constant.name as trade_type_name')
-            ->where('trade_archives.enabled', 1)->whereIn('add_by', $ids)
-            ->leftJoin('t_constant', 't_constant.id', 'trade_archives.trade_type')
-            ->with('Admin')
-            ->orderBy('id', 'DESC')->get();
+                ->where('trade_archives.enabled', 1)->whereIn('add_by', $ids)
+                ->leftJoin('t_constant', 't_constant.id', 'trade_archives.trade_type')
+                ->with('Admin')
+                ->orderBy('id', 'DESC')->get();
 
         // dd($archive);
         foreach ($archive as $row) {
@@ -2121,17 +2128,17 @@ class ArchieveController extends Controller
         $regions = Constant::where('parent', '154')->where('status', 1)->get();
 
         return view(
-            'dashboard.archive.jobLicArchive',
-            compact(
-                'type',
-                'attachment_type',
-                'archive_config',
-                'url',
-                'craftType',
-                'limitNumber',
-                'licenseRating',
-                'regions'
-            )
+                'dashboard.archive.jobLicArchive',
+                compact(
+                        'type',
+                        'attachment_type',
+                        'archive_config',
+                        'url',
+                        'craftType',
+                        'limitNumber',
+                        'licenseRating',
+                        'regions'
+                )
         );
     }
 
@@ -2150,8 +2157,8 @@ class ArchieveController extends Controller
         // $license_type = LicenseType::get();
 
         return view(
-            'dashboard.archive.rptArchive',
-            compact('type', 'attachment_type', 'archive_type_mun', 'license_type', 'url')
+                'dashboard.archive.rptArchive',
+                compact('type', 'attachment_type', 'archive_type_mun', 'license_type', 'url')
         );
     }
 
@@ -2194,13 +2201,13 @@ class ArchieveController extends Controller
         // dd($mymeetings);
         if (Auth()->user()->id == 74) {
             $agendas = AgendaDetail::where(
-                'enabled',
-                1
+                    'enabled',
+                    1
             )->with('AgendaTopic')->with('AgendaExtention')->orderBy('created_at', 'DESC')->get();
         } else {
             $agendas = AgendaDetail::where('enabled', 1)->whereIn(
-                'agenda_extention_id',
-                $mymeetings
+                    'agenda_extention_id',
+                    $mymeetings
             )->with('AgendaTopic')->with('AgendaExtention')->orderBy('created_at', 'DESC')->get();
         }
         foreach ($agendas as $agenda) {
@@ -2248,8 +2255,8 @@ class ArchieveController extends Controller
         $regions = Region::get();
 
         return view(
-            'dashboard.archive.jobLicReport',
-            compact('type', 'attachment_type', 'license_type', 'url', 'regions')
+                'dashboard.archive.jobLicReport',
+                compact('type', 'attachment_type', 'license_type', 'url', 'regions')
         );
     }
 
@@ -2287,10 +2294,10 @@ class ArchieveController extends Controller
         array_push($ids, (int) $my_id);
 
         $archive = Archive::select('archives.*')->where('type', $type)
-            ->where('enabled', '1')->whereIn('add_by', $ids)->orderBy(
-                'id',
-                'DESC'
-            )->with('archiveType')->with('Admin')->with('copyTo', 'EmailLogs.User')->with('files')->get();
+                ->where('enabled', '1')->whereIn('add_by', $ids)->orderBy(
+                        'id',
+                        'DESC'
+                )->with('archiveType')->with('Admin')->with('copyTo', 'EmailLogs.User')->with('files')->get();
         // dd($archive->all());
         foreach ($archive as $row) {
             $row->connect_to = $this->getConnectedArchive($row->connect_to->connectToArchive, $row->connect_to->connectToTrade);
@@ -2314,48 +2321,48 @@ class ArchieveController extends Controller
         }
 
         return DataTables::of($archive)->addIndexColumn()
-            ->editColumn('date', function ($archive) {
-                if ($archive->date) {
-                    $actionBtn = " ";
-                    $from = explode('-', ($archive->date));
-                    $from = $from[2] . '/' . $from[1] . '/' . $from[0];
-                    $actionBtn = $from;
-                    return $actionBtn;
-                } else {
-                    return '';
-                }
-            })
-            ->addColumn('copyTo', function ($archive) {
-                if ($archive->copyTo) {
-                    $actionBtn = " ";
-                    foreach ($archive->copyTo as $copyTo) {
-                        if ($copyTo->enabled == 1) {
-                            $actionBtn .= ' ' . $copyTo->name . ', ';
-                        }
+                ->editColumn('date', function ($archive) {
+                    if ($archive->date) {
+                        $actionBtn = " ";
+                        $from = explode('-', ($archive->date));
+                        $from = $from[2] . '/' . $from[1] . '/' . $from[0];
+                        $actionBtn = $from;
+                        return $actionBtn;
+                    } else {
+                        return '';
                     }
-                    return $actionBtn;
-                } else {
-                    return '';
-                }
-            })->make(true);
+                })
+                ->addColumn('copyTo', function ($archive) {
+                    if ($archive->copyTo) {
+                        $actionBtn = " ";
+                        foreach ($archive->copyTo as $copyTo) {
+                            if ($copyTo->enabled == 1) {
+                                $actionBtn .= ' ' . $copyTo->name . ', ';
+                            }
+                        }
+                        return $actionBtn;
+                    } else {
+                        return '';
+                    }
+                })->make(true);
     }
 
     public function jalArchieve_info_all(Request $request)
     {
         $archive = Archive::where('type', 'agArchive')->where('archives.enabled', 1)
-            ->select('archives.*', 't_constant.name as type_id_name')
-            ->leftJoin('t_constant', 't_constant.id', 'archives.type_id')
-            ->orderBy('id', 'DESC')->with('relatedTo')->with('files');
+                ->select('archives.*', 't_constant.name as type_id_name')
+                ->leftJoin('t_constant', 't_constant.id', 'archives.type_id')
+                ->orderBy('id', 'DESC')->with('relatedTo')->with('files');
         if ($request->search_Linked_to_id != 0 && $request->search_Linked_to_model != 0) {
             $linkedTo = linkedTo::where('model_name', $request->search_Linked_to_model)
-                ->where('model_id', $request->search_Linked_to_id)->where('enabled', 1)->first();
+                    ->where('model_id', $request->search_Linked_to_id)->where('enabled', 1)->first();
             if ($linkedTo) {
                 $archive = $archive->where('archives.id', $linkedTo->archive_id)->get();
             }
         } else if (strlen(trim($request->search_Linked_to)) > 0) {
             $linkedTos = linkedTo::where('name', 'like', '%' . $request->search_Linked_to . '%')->where(
-                'enabled',
-                1
+                    'enabled',
+                    1
             )->get('archive_id');
             $archiveIds = [];
             foreach ($linkedTos as $linkedTo) {
@@ -2429,15 +2436,15 @@ class ArchieveController extends Controller
         array_push($ids, (int) $my_id);
 
         $archive = ArchiveLicense::select(
-            'archive_licenses.*',
-            't_constant.name as license_type_name',
-            'licenses.notes as notes'
+                'archive_licenses.*',
+                't_constant.name as license_type_name',
+                'licenses.notes as notes'
         )
-            ->where('archive_licenses.type', $type)->where('archive_licenses.enabled', 1)->whereIn('add_by', $ids)
-            ->leftJoin('t_constant', 't_constant.id', 'archive_licenses.license_id')
-            ->leftJoin('licenses', 'licenses.fileNo', 'archive_licenses.fileNo')
-            ->with('Admin')
-            ->orderBy('id', 'DESC')->get();
+                ->where('archive_licenses.type', $type)->where('archive_licenses.enabled', 1)->whereIn('add_by', $ids)
+                ->leftJoin('t_constant', 't_constant.id', 'archive_licenses.license_id')
+                ->leftJoin('licenses', 'licenses.fileNo', 'archive_licenses.fileNo')
+                ->with('Admin')
+                ->orderBy('id', 'DESC')->get();
         foreach ($archive as $row) {
             $attach = json_decode($row->json_feild);
             $files = array();
@@ -2473,10 +2480,10 @@ class ArchieveController extends Controller
         array_push($ids, (int) $my_id);
 
         $archive = Archive::select('archives.*')->where('type', 'financeArchive')
-            ->where('enabled', '1')->orderBy(
-                'id',
-                'DESC'
-            )->with('archiveType')->with('Admin');
+                ->where('enabled', '1')->orderBy(
+                        'id',
+                        'DESC'
+                )->with('archiveType')->with('Admin');
         if (Auth()->user()->id == 74) {
             $archive = $archive->get();
         } else {
@@ -2510,20 +2517,20 @@ class ArchieveController extends Controller
         }
 
         return DataTables::of($archive)->addIndexColumn()
-            ->editColumn('date', function ($archive) {
-                if ($archive->date) {
+                ->editColumn('date', function ($archive) {
+                    if ($archive->date) {
 
-                    $actionBtn = " ";
-                    $from = explode('-', ($archive->date));
+                        $actionBtn = " ";
+                        $from = explode('-', ($archive->date));
 
-                    $from = $from[2] . '/' . $from[1] . '/' . $from[0];
-                    $actionBtn = $from;
-                    return $actionBtn;
-                } else {
+                        $from = $from[2] . '/' . $from[1] . '/' . $from[0];
+                        $actionBtn = $from;
+                        return $actionBtn;
+                    } else {
 
-                    return '';
-                }
-            })->make(true);
+                        return '';
+                    }
+                })->make(true);
     }
 
     public function archieveJoblic_info_all(Request $request)
@@ -2546,11 +2553,11 @@ class ArchieveController extends Controller
         array_push($ids, (int) $my_id);
 
         $archive = jobLicArchieve::select('job_lic_archieves.*')->whereIn(
-            'added_by',
-            $ids
+                'added_by',
+                $ids
         )->where('job_lic_archieves.enabled', 1)->with('craftType')->with('licenseRating')->orderBy(
-            'id',
-            'DESC'
+                'id',
+                'DESC'
         )->with('files')->get();
 
         return DataTables::of($archive)->addIndexColumn()->addColumn('status', function ($archive) {
@@ -2575,23 +2582,23 @@ class ArchieveController extends Controller
     public function getConnectedArchive($connectToArchiveIds, $connectToTradeIds): array
     {
         $connectToArchive = Archive::whereIn('id', $connectToArchiveIds)->where('type', '!=', 'financeArchive')->get([
-            'id', 'title', 'type', 'url'
+                'id', 'title', 'type', 'url'
         ]);
 
         $connectToTrade = TradeArchive::whereIn('trade_archives.id', $connectToTradeIds)
-            ->select(
-                DB::raw("CONCAT(trade_no ,' ',t_constant.name )AS title"),
-                'trade_archives.id',
-                'trade_no as serisal',
-                DB::raw("CONCAT('trade_archive')AS type"),
-                'url'
-            )
-            ->leftJoin('t_constant', 't_constant.id', 'trade_archives.trade_type')->get();
+                ->select(
+                        DB::raw("CONCAT(trade_no ,' ',t_constant.name )AS title"),
+                        'trade_archives.id',
+                        'trade_no as serisal',
+                        DB::raw("CONCAT('trade_archive')AS type"),
+                        'url'
+                )
+                ->leftJoin('t_constant', 't_constant.id', 'trade_archives.trade_type')->get();
 
         $financeArchive = Archive::whereIn('archives.id', $connectToArchiveIds)
-            ->where('type', 'financeArchive')
-            ->leftJoin('t_constant', 't_constant.id', 'archives.type_id')
-            ->select("t_constant.name AS title", 'archives.id', 'serisal', 'type', 'url')->get();
+                ->where('type', 'financeArchive')
+                ->leftJoin('t_constant', 't_constant.id', 'archives.type_id')
+                ->select("t_constant.name AS title", 'archives.id', 'serisal', 'type', 'url')->get();
         return ([...$connectToArchive, ...$connectToTrade, ...$financeArchive] ?? []);
     }
 
@@ -2601,8 +2608,8 @@ class ArchieveController extends Controller
         $archive['connect_to'] = array();
         $archive['connect_to'] = $this->getConnectedArchive($archive['info']->connect_to->connectToArchive, $archive['info']->connect_to->connectToTrade);
         $archive['files'] = File::where('archive_id', '=', $request['archive_id'])->where(
-            'model_name',
-            'App\Models\Archive'
+                'model_name',
+                'App\Models\Archive'
         )->get();
         $archive['CopyTo'] = CopyTo::where('archive_id', '=', $request['archive_id'])->where('enabled', 1)->get();
         return response()->json($archive);
@@ -2637,7 +2644,7 @@ class ArchieveController extends Controller
             if ($request->get('customerid')) {
 
                 $archive['result']->where('model_id', $request['customerid'])
-                    ->where('model_name', $request->get('customerType'));
+                        ->where('model_name', $request->get('customerType'));
             }
 
             if ($request->get('arcType')) {
@@ -2723,7 +2730,7 @@ class ArchieveController extends Controller
             if ($request->get('customerid')) {
 
                 $archive['result']->where('model_id', $request['customerid'])->where('enabled', 1)
-                    ->where('model_name', $request->get('customerType'));
+                        ->where('model_name', $request->get('customerType'));
             }
 
             if ($request->get('arcType')) {
@@ -2793,16 +2800,16 @@ class ArchieveController extends Controller
         if ($request->get('customerId') && $request->get('model')) {
 
             $archive->where('model_id', '=', $request->get('customerId'))->where(
-                'model_name',
-                '=',
-                $request->get('model')
+                    'model_name',
+                    '=',
+                    $request->get('model')
             )->where('enabled', 1);
         } else {
         }
 
         $archive = $archive->select('job_lic_archieves.*')->where(
-            'job_lic_archieves.enabled',
-            1
+                'job_lic_archieves.enabled',
+                1
         )->with('craftType')->with('licenseRating')->orderBy('id', 'DESC')->with('files')->get();
 
         return DataTables::of($archive)->addIndexColumn()->addColumn('status', function ($archive) {
@@ -2846,21 +2853,21 @@ class ArchieveController extends Controller
     {
 
         $archive['info'] = jobLicArchieve::where(
-            'job_lic_archieves.id',
-            $request['archive_id']
+                'job_lic_archieves.id',
+                $request['archive_id']
         )->where(
-            'job_lic_archieves.enabled',
-            1
+                'job_lic_archieves.enabled',
+                1
         )->select('job_lic_archieves.*')->where(
-            'job_lic_archieves.enabled',
-            1
+                'job_lic_archieves.enabled',
+                1
         )->with('craftType')->with('licenseRating')->get();
 
         $archive['info'] = $archive['info'][0];
 
         $archive['files'] = File::where('archive_id', '=', $request['archive_id'])->where(
-            'model_name',
-            'App\Models\jobLicArchieve'
+                'model_name',
+                'App\Models\jobLicArchieve'
         )->get();
 
         return response()->json($archive);
@@ -2914,24 +2921,24 @@ class ArchieveController extends Controller
     {
         $archive = Archive::where(function ($query) use ($request) {
             $query->where('title', 'like', '%' . $request->term . '%')
-                ->orWhere('serisal', 'like', '%' . $request->term . '%');
+                    ->orWhere('serisal', 'like', '%' . $request->term . '%');
         })
-            ->where('enabled', 1)->whereNotIn('type', ['taskArchive', 'WarningArchive', 'certArchive', 'financeArchive', 'agArchive', 'specialEmpArchive'])
-            ->select('title', 'id', 'serisal', 'type', 'url', DB::raw("title AS label"));
+                ->where('enabled', 1)->whereNotIn('type', ['taskArchive', 'WarningArchive', 'certArchive', 'financeArchive', 'agArchive', 'specialEmpArchive'])
+                ->select('title', 'id', 'serisal', 'type', 'url', DB::raw("title AS label"));
         $tradeArchive = TradeArchive::where('trade_no', $request->term)->where('enabled', 1)->with('Type')
-            ->select(
-                DB::raw("CONCAT(trade_no ,' ',t_constant.name )AS title"),
-                'trade_archives.id',
-                'trade_no as serisal',
-                DB::raw("CONCAT('trade_archive')AS type"),
-                'url',
-                DB::raw("CONCAT(trade_no ,' ',t_constant.name )AS label")
-            )
-            ->leftJoin('t_constant', 't_constant.id', 'trade_archives.trade_type');
+                ->select(
+                        DB::raw("CONCAT(trade_no ,' ',t_constant.name )AS title"),
+                        'trade_archives.id',
+                        'trade_no as serisal',
+                        DB::raw("CONCAT('trade_archive')AS type"),
+                        'url',
+                        DB::raw("CONCAT(trade_no ,' ',t_constant.name )AS label")
+                )
+                ->leftJoin('t_constant', 't_constant.id', 'trade_archives.trade_type');
         $financeArchive = Archive::where('t_constant.name', 'like', '%' . $request->term . '%')
-            ->where('type', 'financeArchive')->where('enabled', 1)
-            ->select("t_constant.name AS title", 'archives.id', 'serisal', 'type', 'url', "t_constant.name AS label")
-            ->leftJoin('t_constant', 't_constant.id', 'archives.type_id');
+                ->where('type', 'financeArchive')->where('enabled', 1)
+                ->select("t_constant.name AS title", 'archives.id', 'serisal', 'type', 'url', "t_constant.name AS label")
+                ->leftJoin('t_constant', 't_constant.id', 'archives.type_id');
         $archives = $archive->unionAll($tradeArchive)->unionAll($financeArchive)->get();
         return response()->json($archives);
     }

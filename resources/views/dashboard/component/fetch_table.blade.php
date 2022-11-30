@@ -132,6 +132,76 @@
                 </div>
                 <div class="card-body">
                     <div class="form-body">
+                        @if($type=="project")
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="input-group" style="">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text " id="basic-addon1">
+                                                    الجهة الممولة
+                                                </span>
+                                            </div>
+                                            <input type="text" id="searchOrganization" class="form-control"
+                                                   onchange="resetSearch();" onblur="resetSearch();"
+                                                   name="searchOrganization">
+                                            <input type="hidden" id="searchOrganizationId" onchange="reload();"
+                                                   class="form-control"
+                                                   name="searchOrganizationId">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="input-group" style="">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text " id="basic-addon1">
+                                                    الشركة المنفذة
+                                                </span>
+                                            </div>
+                                            <input type="text" id="searchSupp" class="form-control"
+                                                   onchange="resetSearch();" onblur="resetSearch();"
+                                                   name="searchSupp">
+                                            <input type="hidden" id="searchSuppId" onchange="reload();"
+                                                   class="form-control"
+                                                   name="searchSuppId">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group paddmob">
+                                        <div class="input-group subscribermob">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    {{ 'من تاريخ' }}
+                                                </span>
+                                            </div>
+                                            <input type="text" id="search_from"
+                                                   class="form-control singledate" maxlength="10" data-mask="00/00/0000"
+                                                   placeholder="{{date('d/m/Y')}}"
+                                                   name="search_from">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group paddmob">
+                                        <div class="input-group subscribermob">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    {{ 'الي تاريخ' }}
+                                                </span>
+                                            </div>
+                                            <input type="search_to" id="search_to"
+                                                   class="form-control singledate" maxlength="10" data-mask="00/00/0000"
+                                                   placeholder="{{date('d/m/Y')}}"
+                                                   name="search_from">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                         @if($type=="agArchive")
                             <div class="row">
                                 <div class="col-md-3">
@@ -244,7 +314,7 @@
                                             <th width="410px;">
                                                 {{trans('archive.attach')}}
                                             </th>
-                                            <th style="width:30px!important;" class="hidemob">
+                                            <th style="width:60px!important;" class="hidemob">
                                             </th>
                                         </tr>
                                         </thead>
@@ -352,7 +422,7 @@
                                             <th style="width:320px">
                                                 {{trans('archive.attach')}}
                                             </th>
-                                            <th style="width:30px!important;">
+                                            <th style="width:60px!important;">
                                             </th>
                                         </tr>
                                         </thead>
@@ -446,7 +516,7 @@
                                             <th style="width:320px">
                                                 {{trans('archive.attach')}}
                                             </th>
-                                            <th style="width:30px!important;">
+                                            <th style="width:60px!important;">
                                             </th>
                                         </tr>
                                         </thead>
@@ -927,7 +997,7 @@
                                             <th width="230px">
                                                 {{trans('archive.attach')}}
                                             </th>
-                                            <th style="width:30px;" class="hidemob">
+                                            <th style="width:60px;" class="hidemob">
                                             </th>
                                             <!--<th>-->
                                             <!--</th>-->
@@ -1084,15 +1154,15 @@
       <a target="_blank" href="{{asset(app()->getLocale())}}/admin/printArchive/archive/${data.id}" class="dropdown-item">
         <img class="fa fa-print" tabindex="0" title="print" src="https://c.palexpand.ps/assets/images/ico/Printer.png " style="cursor:pointer;height: 32px;display:inline">
     </a>`;*/
-    if (data?.trackLink) {
-      actionBtn += `<a target="_blank" href="{{asset(app()->getLocale())}}/admin${data?.trackLink}"
-                    title="تم تحويل الطلب الى ${data?.emp_receive} في قسم ${data?.dept_receive}" class="dropdown-item">
-                    <img src="https://tf.palexpand.ps/assets/images/arrow.png " style="cursor:pointer;height: 16px;display:inline">
-                   متابعة
-                   </a>`;
-    }
+
     actionBtn += `</div></div>`
     actionBtn += getArchiveConnectedTo(data?.connect_to);
+    if (data?.trackLink) {
+      actionBtn += `<div><a target="_blank" href="{{asset(app()->getLocale())}}/admin${data?.trackLink}"
+                    title="تم تحويل الطلب الى ${data?.emp_receive} في قسم ${data?.dept_receive}" style="margin-top: auto;margin-bottom: auto;">
+                    <img src="https://tf.palexpand.ps/assets/images/arrow.png " style="cursor:pointer;height: 16px;display:inline">
+                   </a></div>`;
+    }
     actionBtn += `</div>`
     return actionBtn;
   }
@@ -1524,7 +1594,7 @@
 
           },
           // {data: 'trade_no'},
-          {data: 'trade_type_name', name: 't_constant.name'},
+          {data: 'trade_type_name', name: 'trade_type_name'},
           {
             data: null,
             render: function (data, row, type) {

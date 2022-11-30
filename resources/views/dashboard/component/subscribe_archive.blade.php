@@ -2407,10 +2407,14 @@
                         { data: null, 
                             render:function(data,row,type){
                                 $name ='';
-                                if(data.agenda_detail!=null)
+                                if(data?.type==='agArchive'){
+                                  $name =data?.archive_type?.name??'';
+                                }else{
+                                  if(data.agenda_detail!=null)
                                     if(data.agenda_detail.agenda_extention.name !=null){
-                                        $name = data.agenda_detail.agenda_extention.name;
+                                      $name = data.agenda_detail.agenda_extention.name;
                                     }
+                                }
                                 return $name;
                             },
                             name:'name',
@@ -2418,10 +2422,15 @@
                         { data: null, 
                             render:function(data,row,type){
                                 $agenda_number ='';
-                                if(data.agenda_detail!=null)
-                                    if(data.agenda_detail.agenda_number !=null){
-                                        $agenda_number = data.agenda_detail.agenda_number;
-                                    }
+
+                              if(data?.type==='agArchive'){
+                                $agenda_number =data?.serisal??'';
+                              }else {
+                                if (data.agenda_detail != null)
+                                  if (data.agenda_detail.agenda_number != null) {
+                                    $agenda_number = data.agenda_detail.agenda_number;
+                                  }
+                              }
                                 return $agenda_number;
                             },
                             name:'name',

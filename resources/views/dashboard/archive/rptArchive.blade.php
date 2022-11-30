@@ -343,7 +343,8 @@
           $(".col1").text('اسم صاحب الرخصة')
           $(".col1").attr("style", "width:200px!important")
           $(".col2").text('رقم الرخصة').attr("style", "width:100px!important")
-          $(".col3").text('نوع الترخيص').attr("style", "width:100px!important")
+          $(".col3").text('الغاية من الإستعمال').attr("style", "width:100px!important")
+          $(".col7").text('تاريخ فتح الملف').attr("style", "width:100px!important")
           $(".col4").text('رقم الحوض').attr("style", "width:80px!important")
           $(".col5").text('أنشئ بواسطة').attr("style", "width:80px!important")
           $(".col6").text('تاريخ الإدخال')
@@ -550,8 +551,8 @@
                   "<td>" + c + "</td>" +
                   "<td>" + (elem.name ?? '') + "</td>" +
                   "<td>" + (elem.licNo ?? '') + "</td>" +
-                  "<td>" + (elem.license_type_name ?? '') + "</td>" +
-                  "<td>" + (elem.licn ?? '') + "</td>" +
+                  "<td>" + (elem.license_date ?? '') + "</td>" +
+                  "<td>" + (elem.use_desc ?? '') + "</td>" +
                   "<td>" + (elem.licnfile ?? '') + "</td>" +
                   "<td>" + (elem.admin == null ? '' : elem.admin.nick_name) + "</td>" +
                   "<td>" + (elem.date ?? '') + "</td>" +
