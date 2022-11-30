@@ -288,6 +288,9 @@ class ArchieveController extends Controller
         // }
         $archive->deleted_by = Auth()->user()->id;
         $archive->enabled = 0;
+        activity()
+            ->performedOn($archive)
+            ->log('deleted');
         // dd($user->all());
         $archive->save();
         if ($archive) {
@@ -488,6 +491,9 @@ class ArchieveController extends Controller
             $archive->sizeAttachments = $sum;
             $archive->countAttachments = $countAttachments;
             $archive->save();
+            activity()
+            ->performedOn($archive)
+            ->log('updated');
         } else {
 
             $archive = new ArchiveLicense();
@@ -532,6 +538,9 @@ class ArchieveController extends Controller
             $archive->sizeAttachments = $sum;
             $archive->countAttachments = $countAttachments;
             $archive->save();
+            activity()
+            ->performedOn($archive)
+            ->log('created');
         }
 
         if ($archive) {
@@ -1284,6 +1293,9 @@ class ArchieveController extends Controller
                     $copyTo->save();
                 }
             }
+            activity()
+            ->performedOn($archive)
+            ->log('updated');
         } else {
 
             $archive = new Archive();
@@ -1366,6 +1378,9 @@ class ArchieveController extends Controller
                     $copyTo->save();
                 }
             }
+            activity()
+            ->performedOn($archive)
+            ->log('created');
         }
 
         if ($archive) {
@@ -1685,6 +1700,9 @@ class ArchieveController extends Controller
         $archive = Archive::where('id', $request->ArchiveID)->first();
         if ($archive) {
             // dd($request->all());
+            activity()
+            ->performedOn($archive)
+            ->log('updated');
             $archive->model_id = $request->supplierid;
             $archive->type_id = $request->financeType;
             $archive->name = $request->suppliername == '0' ? '' : $request->suppliername;
@@ -1801,6 +1819,9 @@ class ArchieveController extends Controller
             $archive->sizeAttachments = $sum;
             $archive->countAttachments = $countAttachments;
             $archive->save();
+            activity()
+            ->performedOn($archive)
+            ->log('created');
             /*
             if ($request->copyToText[0] != null) {
 
@@ -1865,6 +1886,13 @@ class ArchieveController extends Controller
         $archive = TradeArchive::where('id', $request->ArchiveID)->first();
         if ($archive == null) {
             $archive = new TradeArchive();
+            activity()
+            ->performedOn($archive)
+            ->log('created');
+        } else {
+            activity()
+            ->performedOn($archive)
+            ->log('updated');
         }
 
         $archive->trade_type = $request->tradeType;
@@ -2061,6 +2089,9 @@ class ArchieveController extends Controller
         $archive->deleted_by = Auth()->user()->id;
         $archive->enabled = 0;
         $archive->save();
+        activity()
+            ->performedOn($archive)
+            ->log('deleted');
         if ($archive) {
 
             return response()->json(['success' => trans('admin.subscriber_added')]);
