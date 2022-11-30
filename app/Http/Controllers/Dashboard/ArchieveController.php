@@ -134,6 +134,9 @@ class ArchieveController extends Controller
         $archive->deleted_by = 0;
         $archive->enabled = 1;
         $archive->save();
+        activity()
+            ->performedOn($archive)
+            ->log('restore');
         if ($archive) {
 
             return response()->json(['success' => trans('admin.subscriber_added')]);
@@ -2226,6 +2229,9 @@ class ArchieveController extends Controller
         } else if ($type == 'trade') {
             $archive = TradeArchive::where('id', $id)->with('Admin')->first();
         }
+        activity()
+            ->performedOn($archive)
+            ->log('seen-print');
         $urlfile = asset('');
         $archive->link = $urlfile . 'ar/admin/' . $archive->url . '/?id=' . $archive->id;
         return view('dashboard.archive.printArchive', compact('archive'));
@@ -2692,10 +2698,19 @@ class ArchieveController extends Controller
             if ($request->get('arcType')) {
 
                 if ($request->get('arcType') == "all" && $request->get('msgType') != "taskArchiveReport") {
+                    activity()
+            ->log('central-archive-report');
                 } else if ($request->get('arcType') == "all" && $request->get('msgType') == "taskArchiveReport") {
+                    activity()
+                    ->log('tasks-archive-report');
                     $archive['result']->whereIn('archives.type', ['taskArchive', 'certArchive'])->where('enabled', 1);
                 } else {
-
+                    if($request->get('msgType') == "taskArchiveReport")
+                        activity()
+                        ->log('tasks-archive-report');
+                    else
+                        activity()
+                        ->log('central-archive-report');
                     $archive['result']->where('archives.type', '=', $request->get('arcType'))->where('enabled', 1);
                     // dd($archive['result']->get());
                 }
@@ -2735,7 +2750,7 @@ class ArchieveController extends Controller
 
             $archive['result'] = $archive['result']->where('enabled', 1)->with('copyTo')->with('files')->get();
         }
-
+        
         return response()->json($archive);
     }
 

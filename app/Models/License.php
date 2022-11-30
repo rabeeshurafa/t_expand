@@ -10,6 +10,10 @@ class License extends Model
     {
         return $this->belongsTo(Constant::class,'region');
     }
+    public function User()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
     public function systemUse()
     {
         return $this->belongsTo(Constant::class,'systemUse');
