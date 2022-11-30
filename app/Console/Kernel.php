@@ -89,44 +89,44 @@ class Kernel extends ConsoleKernel
                 }
             }
         })->everyThirtyMinutes()->between('14:00','8:00');
-        $schedule->call(function () {
-            $files = File::where('upload_dropbox', 0)->take(5)->get();
-            foreach ($files as $file) {
-                try {
-                    $imageName = $file->url;
-                    $res = Storage::disk('dropbox')->put(('texpand/'.$imageName),
-                            Storage::disk('ftp')->get('expand/texpand/'.$imageName));
-                    $dropbox = ('texpand/'.$imageName);
-                    if ($res) {
-                        $file->file_links->dropbox = $dropbox;
-                        $file->upload_dropbox = 1;
-                    }
-                    $file->save();
-                } catch (\Exception $e) {
-                    Log::error($file);
-                    Log::error($e);
-                }
-            }
-        })->everyTwoHours()->between('8:00','14:00');
-        $schedule->call(function () {
-            $files = File::where('upload_dropbox', 0)->take(5)->get();
-            foreach ($files as $file) {
-                try {
-                    $imageName = $file->url;
-                    $res = Storage::disk('dropbox')->put(('texpand/'.$imageName),
-                            Storage::disk('ftp')->get('expand/texpand/'.$imageName));
-                    $dropbox = ('texpand/'.$imageName);
-                    if ($res) {
-                        $file->file_links->dropbox = $dropbox;
-                        $file->upload_dropbox = 1;
-                    }
-                    $file->save();
-                } catch (\Exception $e) {
-                    Log::error($file);
-                    Log::error($e);
-                }
-            }
-        })->everyThirtyMinutes()->between('14:00','8:00');
+//        $schedule->call(function () {
+//            $files = File::where('upload_dropbox', 0)->take(5)->get();
+//            foreach ($files as $file) {
+//                try {
+//                    $imageName = $file->url;
+//                    $res = Storage::disk('dropbox')->put(('texpand/'.$imageName),
+//                            Storage::disk('ftp')->get('expand/texpand/'.$imageName));
+//                    $dropbox = ('texpand/'.$imageName);
+//                    if ($res) {
+//                        $file->file_links->dropbox = $dropbox;
+//                        $file->upload_dropbox = 1;
+//                    }
+//                    $file->save();
+//                } catch (\Exception $e) {
+//                    Log::error($file);
+//                    Log::error($e);
+//                }
+//            }
+//        })->everyTwoHours()->between('8:00','14:00');
+//        $schedule->call(function () {
+//            $files = File::where('upload_dropbox', 0)->take(5)->get();
+//            foreach ($files as $file) {
+//                try {
+//                    $imageName = $file->url;
+//                    $res = Storage::disk('dropbox')->put(('texpand/'.$imageName),
+//                            Storage::disk('ftp')->get('expand/texpand/'.$imageName));
+//                    $dropbox = ('texpand/'.$imageName);
+//                    if ($res) {
+//                        $file->file_links->dropbox = $dropbox;
+//                        $file->upload_dropbox = 1;
+//                    }
+//                    $file->save();
+//                } catch (\Exception $e) {
+//                    Log::error($file);
+//                    Log::error($e);
+//                }
+//            }
+//        })->everyThirtyMinutes()->between('14:00','8:00');
     }
 
     /**

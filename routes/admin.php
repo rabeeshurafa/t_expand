@@ -902,6 +902,8 @@ Route::group([
                 ->name('doEditMeetingTitle');
         Route::get('printDes/{id}', 'AgendaArchieveController@printDes')
                 ->name('printDes');
+        Route::get('printMeeting/{id}','AgendaArchieveController@printMeeting')
+                ->name('printMeeting');
         Route::get('archieve_agenda_report',
                 'AgendaArchieveController@archieve_agenda_report')->name('archieve_agenda_report');
         Route::get('meetingAttach', 'AgendaArchieveController@meetingAttach')->name('meetingAttach');

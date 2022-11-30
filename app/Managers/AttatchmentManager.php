@@ -44,11 +44,11 @@ class AttatchmentManager
             Storage::disk('ftp')->put(('expand/texpand/' . $imageName), fopen($file, 'r+'));
             // Storage::disk('s3')->put($imageName, fopen($file, 'r+'));
 //            Storage::disk('s3')->put($imageName, Storage::disk('ftp')->get('expand/texpand/' . $imageName));
-//            $res = Storage::disk('dropbox')->put(('texpand/' . $imageName), Storage::disk('ftp')->get('expand/texpand/' . $imageName));
-//            $dropbox = ('texpand/' . $imageName);
-//            if ($res) {
-//                $fileLinks['dropbox'] = $dropbox;
-//            }
+            $res = Storage::disk('dropbox')->put(('texpand/' . $imageName), Storage::disk('ftp')->get('expand/texpand/' . $imageName));
+            $dropbox = ('texpand/' . $imageName);
+            if ($res) {
+                $fileLinks['dropbox'] = $dropbox;
+            }
             $ftp = Storage::disk('ftp')->url(('texpand/' . $imageName));
 //            $s3 = Storage::disk('s3')->url($imageName);
 //
@@ -92,17 +92,16 @@ class AttatchmentManager
         $name = 'scanner' . rand(3, 999) . '-' . time();
         Storage::disk('ftp')->put(('expand/texpand/' . $name . '.' . $type), $data);
 //        Storage::disk('s3')->put(($name . '.' . $type), $data);
-//        $res = Storage::disk('dropbox')->put('texpand/' . ($name . '.' . $type), $data);
-//        $dropbox = ($name . '.' . $type);
-//        if ($res) {
-//            $fileLinks['dropbox'] = $dropbox;
-//        }
-//        $ftp = Storage::disk('ftp')->url(('texpand/' . $name . '.' . $type));
+        $res = Storage::disk('dropbox')->put('texpand/' . ($name . '.' . $type), $data);
+        $dropbox = ($name . '.' . $type);
+        if ($res) {
+            $fileLinks['dropbox'] = $dropbox;
+        }
+        $ftp = Storage::disk('ftp')->url(('texpand/' . $name . '.' . $type));
 //        $s3 = Storage::disk('s3')->url(($name . '.' . $type));
-//        $size = Storage::disk('s3')->size($name . '.' . $type);
+        $size = Storage::disk('ftp')->size(('texpand/' . $name . '.' . $type));
 //        $fileLinks['s3'] = $s3;
         $fileLinks['ftp'] = $ftp;
-        //        $fileLinks['dropbox'] = $dropbox;
         $file = new File();
         $file->real_name = $name . '.' . $type;
         $file->extension = $type;
@@ -127,11 +126,11 @@ class AttatchmentManager
         $name = 'scanner' . rand(3, 999) . '-' . time();
         Storage::disk('ftp')->put(('expand/texpand/' . $name . '.pdf'), $pdf_decoded);
 //        Storage::disk('s3')->put(($name . '.pdf'), $pdf_decoded);
-//        $res = Storage::disk('dropbox')->put(('texpand/' . $name . '.pdf'), $pdf_decoded);
-//        $dropbox = ('texpand/' . $name . '.pdf');
-//        if ($res) {
-//            $fileLinks['dropbox'] = $dropbox;
-//        }
+        $res = Storage::disk('dropbox')->put(('texpand/' . $name . '.pdf'), $pdf_decoded);
+        $dropbox = ('texpand/' . $name . '.pdf');
+        if ($res) {
+            $fileLinks['dropbox'] = $dropbox;
+        }
         $ftp = Storage::disk('ftp')->url(('texpand/' . $name . '.pdf'));
 //        $s3 = Storage::disk('s3')->url(($name . '.pdf'));
 
