@@ -214,7 +214,9 @@ class SubscriberController extends Controller
             $user->allowed_emp   = json_encode($request->allowedEmp);
 
             $user->save();
-
+            activity()
+                ->performedOn($user)
+                ->log('created');
          }else{
 
             $user = User::find($request->subscriber_id);
@@ -284,7 +286,9 @@ class SubscriberController extends Controller
             $user->job_title_id  = $request->formDataProfessionID;
 
             $user->save();
-
+            activity()
+                ->performedOn($user)
+                ->log('updated');
          }
 
          if ($user) {
@@ -380,7 +384,9 @@ class SubscriberController extends Controller
         }
 
         if ($user) {
-
+            activity()
+                ->performedOn($user)
+                ->log('deleted');
 
 
             return response()->json(['success'=>trans('admin.subscriber_added')]);

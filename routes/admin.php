@@ -568,6 +568,8 @@ Route::group([
                 'ReportController@deletedArchiveReport')->name('deletedArchiveReport')->middleware('can:deletedArchiveReport');
         Route::get('deletedDefinitionsReport',
                 'ReportController@deletedDefinitionsReport')->name('deletedDefinitionsReport');
+        Route::get('logReport','ReportController@logReport')->name('logReport');
+        Route::get('report_logs','ReportController@report_logs')->name('report_logs');
         Route::get('deletedDefinitions', 'ReportController@deletedDefinitions')->name('deletedDefinitions');
         Route::get('allArchive', 'ReportController@allArchive')->name('allArchive');
         Route::get('deletedArchive', 'ReportController@deletedArchive')->name('deletedArchive');

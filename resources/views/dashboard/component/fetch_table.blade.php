@@ -1043,6 +1043,10 @@
     "2080": '{{trans('archive.build_type2')}}',
     "2081": '{{trans('archive.build_type3')}}'
   };
+  function goToPrint(id) {
+    let url = `{{ route('admin.dashboard') }}/printArchive/archive/${id}`
+              window.open(url, '_blank');
+  }
   function archiveOperations(data) {
     let actionBtn = `<div class="row"><div class="dropdown">
                         <button class="btn btn-secondary" style="background-color: transparent !important; border-color: transparent !important;"
@@ -1060,6 +1064,12 @@
         '<i style="color:#1E9FF2;" class="fa fa-trash"></i>' +
         'حذف </a>';
       @endcan
+          console.log(data)
+          if(data.type && data.type!='tradeArchive' ) {
+            actionBtn += `<a onclick="goToPrint(${data.id})" class="dropdown-item">
+            <i style="color:#1E9FF2;" class="fa fa-print"></i>
+            طباعة </a>`;
+          }
       if(data.model != "App\\Models\\ArchiveTrade") {
       actionBtn += `<a onclick="send_email_archive(${data.id??''})" class="dropdown-item">
         <i style="color:#1E9FF2;" class="fa fa-envelope"></i>

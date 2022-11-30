@@ -110,6 +110,9 @@ class ArchieveController extends Controller
         $archive->deleted_by = Auth()->user()->id;
         $archive->enabled = 0;
         $archive->save();
+        activity()
+            ->performedOn($archive)
+            ->log('deleted');
         if ($archive) {
 
             return response()->json(['success' => trans('admin.subscriber_added')]);
@@ -131,6 +134,9 @@ class ArchieveController extends Controller
         $archive->deleted_by = 0;
         $archive->enabled = 1;
         $archive->save();
+        activity()
+            ->performedOn($archive)
+            ->log('restore');
         if ($archive) {
 
             return response()->json(['success' => trans('admin.subscriber_added')]);
@@ -289,6 +295,9 @@ class ArchieveController extends Controller
         // }
         $archive->deleted_by = Auth()->user()->id;
         $archive->enabled = 0;
+        activity()
+            ->performedOn($archive)
+            ->log('deleted');
         // dd($user->all());
         $archive->save();
         if ($archive) {
@@ -407,6 +416,9 @@ class ArchieveController extends Controller
             } catch (\Throwable $th) {
                 return response()->json(['status' => false, 'from' => $email, 'message' => 'first try ' . $th->getMessage()]);
             }
+            activity()
+                ->performedOn($archieve_info['info'])
+                ->log('email-archive');
             return response()->json(['status' => true, 'message' => 'تم الارسال بنجاح']);
         } catch (\Throwable $th) {
             return response()->json(['status' => false, 'message' => $th->getMessage()]);
@@ -486,6 +498,9 @@ class ArchieveController extends Controller
             $archive->sizeAttachments = $sum;
             $archive->countAttachments = $countAttachments;
             $archive->save();
+            activity()
+            ->performedOn($archive)
+            ->log('updated');
         } else {
 
             $archive = new ArchiveLicense();
@@ -530,6 +545,9 @@ class ArchieveController extends Controller
             $archive->sizeAttachments = $sum;
             $archive->countAttachments = $countAttachments;
             $archive->save();
+            activity()
+            ->performedOn($archive)
+            ->log('created');
         }
 
         if ($archive) {
@@ -990,6 +1008,9 @@ class ArchieveController extends Controller
                     $copyTo->save();
                 }
             }
+            activity()
+            ->performedOn($archive)
+            ->log('updated');
         } else {
             $archive = new Archive();
             $archive->model_id = $request->customerid;
@@ -1065,6 +1086,9 @@ class ArchieveController extends Controller
                     $copyTo->save();
                 }
             }
+            activity()
+            ->performedOn($archive)
+            ->log('created');
         }
 
         if ($archive) {
@@ -1276,6 +1300,9 @@ class ArchieveController extends Controller
                     $copyTo->save();
                 }
             }
+            activity()
+            ->performedOn($archive)
+            ->log('updated');
         } else {
 
             $archive = new Archive();
@@ -1358,6 +1385,9 @@ class ArchieveController extends Controller
                     $copyTo->save();
                 }
             }
+            activity()
+            ->performedOn($archive)
+            ->log('created');
         }
 
         if ($archive) {
@@ -1677,6 +1707,9 @@ class ArchieveController extends Controller
         $archive = Archive::where('id', $request->ArchiveID)->first();
         if ($archive) {
             // dd($request->all());
+            activity()
+            ->performedOn($archive)
+            ->log('updated');
             $archive->model_id = $request->supplierid;
             $archive->type_id = $request->financeType;
             $archive->name = $request->suppliername == '0' ? '' : $request->suppliername;
@@ -1793,6 +1826,9 @@ class ArchieveController extends Controller
             $archive->sizeAttachments = $sum;
             $archive->countAttachments = $countAttachments;
             $archive->save();
+            activity()
+            ->performedOn($archive)
+            ->log('created');
             /*
             if ($request->copyToText[0] != null) {
 
@@ -1857,6 +1893,13 @@ class ArchieveController extends Controller
         $archive = TradeArchive::where('id', $request->ArchiveID)->first();
         if ($archive == null) {
             $archive = new TradeArchive();
+            activity()
+            ->performedOn($archive)
+            ->log('created');
+        } else {
+            activity()
+            ->performedOn($archive)
+            ->log('updated');
         }
 
         $archive->trade_type = $request->tradeType;
@@ -2053,6 +2096,9 @@ class ArchieveController extends Controller
         $archive->deleted_by = Auth()->user()->id;
         $archive->enabled = 0;
         $archive->save();
+        activity()
+            ->performedOn($archive)
+            ->log('deleted');
         if ($archive) {
 
             return response()->json(['success' => trans('admin.subscriber_added')]);
@@ -2221,6 +2267,9 @@ class ArchieveController extends Controller
         } else if ($type == 'trade') {
             $archive = TradeArchive::where('id', $id)->with('Admin')->first();
         }
+        activity()
+            ->performedOn($archive)
+            ->log('seen-print');
         $urlfile = asset('');
         $archive->link = $urlfile . 'ar/admin/' . $archive->url . '/?id=' . $archive->id;
         return view('dashboard.archive.printArchive', compact('archive'));
@@ -2687,10 +2736,19 @@ class ArchieveController extends Controller
             if ($request->get('arcType')) {
 
                 if ($request->get('arcType') == "all" && $request->get('msgType') != "taskArchiveReport") {
+                    activity()
+            ->log('central-archive-report');
                 } else if ($request->get('arcType') == "all" && $request->get('msgType') == "taskArchiveReport") {
+                    activity()
+                    ->log('tasks-archive-report');
                     $archive['result']->whereIn('archives.type', ['taskArchive', 'certArchive'])->where('enabled', 1);
                 } else {
-
+                    if($request->get('msgType') == "taskArchiveReport")
+                        activity()
+                        ->log('tasks-archive-report');
+                    else
+                        activity()
+                        ->log('central-archive-report');
                     $archive['result']->where('archives.type', '=', $request->get('arcType'))->where('enabled', 1);
                     // dd($archive['result']->get());
                 }
@@ -2730,7 +2788,7 @@ class ArchieveController extends Controller
 
             $archive['result'] = $archive['result']->where('enabled', 1)->with('copyTo')->with('files')->get();
         }
-
+        
         return response()->json($archive);
     }
 
