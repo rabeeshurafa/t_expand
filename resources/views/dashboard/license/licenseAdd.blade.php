@@ -173,7 +173,7 @@
                                                 {{"المنطقة"}}
                                             </span>
                                                 </div>
-                                                <select id="region" class="form-control" name="region">
+                                                <select id="region" class="form-control region_id" name="region">
                                                     <option value="">{{"الكل"}}</option>
                                                     @foreach($regions as $sub)
                                                         <option value="{{ $sub->id }}" @if(isset($ticket))
