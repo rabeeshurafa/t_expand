@@ -397,8 +397,11 @@
                 if (row.subject_type === 'App\\Models\\Archive' || row.subject_type ===
                     'App\\Models\\Archive\\Archive') {
                     return `قام ب ${getDescription(row.description)} ${getTypeAr(row?.subject?.type)} - ${row?.subject?.title} ${row?.subject?.name ? `- ${row?.subject?.name}` : ''}`
-                } else if (row.subject_type === 'App\\Models\\Archive\\TradeArchive') {
+                } else if (row.subject_type === 'App\\Models\\Archive\\TradeArchive' || row.subject_type ===
+                    'App\\Models\\TradeArchive') {
                     return `قام ب ${getDescription(row.description)} أرشيف المعاملات ${row?.subject?.document_place} ${row?.subject?.name ? `- ${row?.subject?.name}` : ''}`
+                } else if (row.subject_type === 'App\\Models\\ArchiveLicense') {
+                    return `قام ب ${getDescription(row.description)} ${getTypeAr(row?.subject?.type)} - ${row?.subject?.fileNo} ${row?.subject?.name ? `- ${row?.subject?.name}` : ''}`
                 } else if (row.subject_type === 'App\\Models\\Certificates\\Cert') {
                     return `قام ب ${getDescription(row.description)} ${getName(row)} - ${row?.subject?.citizen_name}`
                 } else if (row.subject_type === 'App\\Models\\Certificates\\CertExtention') {
