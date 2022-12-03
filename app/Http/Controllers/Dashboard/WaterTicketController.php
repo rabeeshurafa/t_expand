@@ -197,44 +197,25 @@ class WaterTicketController extends Controller
 
         $i = count($request->attachName);
         $archive = new Archive();
-
         $archive->model_id = $request->subscriber_id;
-
         $archive->type_id = '6046';
-
         $archive->name = $request->subscriber_name;
-
         $archive->model_name = 'App\\Models\\User';
-
         $date = date("Y/m/d");
-
         $from = explode('/', ($date));
-
         $from = $from[0].'-'.$from[1].'-'.$from[2];
-
         $archive->date = $from;
-
         $archive->task_name = $taskname;
-
         $archive->task_link = $tasklink;
-
         $archive->title = $request->attachName[($i - 1)];
-
         $archive->type = 'taskArchive';
-
         $archive->serisal = '';
-
         $archive->url = 'cit_archieve';
-
         $archive->add_by = Auth()->user()->id;
-
         $archive->save();
-
         $file = File::find($attachid);
         $file->archive_id = $archive->id;
-
         $file->model_name = "App\Models\Archive";
-
         $file->save();
 
     }
@@ -244,46 +225,26 @@ class WaterTicketController extends Controller
 
         $i = count($request->attachName1);
         $archive = new Archive();
-
         $archive->model_id = $request->subscriberId1;
-
         $archive->type_id = '6046';
-
         $archive->name = $request->subscriberName1;
-
         $archive->model_name = 'App\\Models\\User';
-
         $date = date("Y/m/d");
-
         $from = explode('/', ($date));
-
         $from = $from[0].'-'.$from[1].'-'.$from[2];
-
         $archive->date = $from;
-
         $archive->task_name = $taskname;
-
         $archive->task_link = $tasklink;
-
         $archive->title = $request->attachName1[($i - 1)];
-
         $archive->type = 'taskArchive';
-
         $archive->serisal = '';
-
         $archive->url = 'cit_archieve';
-
         $archive->add_by = Auth()->user()->id;
-
         $archive->save();
-
         $file = File::find($attachid);
         $file->archive_id = $archive->id;
-
         $file->model_name = "App\Models\Archive";
-
         $file->save();
-
     }
 
     function saveCertFilesArchieve(Request $request, $taskname, $tasklink, $attachid)
@@ -291,51 +252,30 @@ class WaterTicketController extends Controller
 
         $i = count($request->attachName);
         $archive = new Archive();
-
         $archive->model_id = $request->applicantID;
-
-
         $archive->type_id = '6046';
-
         $archive->name = $request->citizen_name;
-
         $archive->model_name = $request->model;
-
         $date = date("Y/m/d");
-
         $from = explode('/', ($date));
-
         $from = $from[0].'-'.$from[1].'-'.$from[2];
-
         $archive->date = $from;
-
         $archive->task_name = $taskname;
-
         $archive->task_link = $tasklink;
-
         $archive->title = $request->attachName[($i - 1)];
-
         $archive->type = 'certArchive';
-
         $archive->serisal = '';
-
         if ($request->model == 'App\\Models\\User') {
             $archive->url = 'cit_archieve';
         } else {
             $archive->url = 'org_archieve';
         }
-
         $archive->add_by = Auth()->user()->id;
-
         $archive->save();
-
         $file = File::find($attachid);
         $file->archive_id = $archive->id;
-
         $file->model_name = "App\Models\Archive";
-
         $file->save();
-
     }
 
     function saveWarningArchieve(Request $request, $taskname, $tasklink, $attachid)
@@ -343,47 +283,26 @@ class WaterTicketController extends Controller
 
         $i = count($request->attachName1);
         $archive = new Archive();
-
         $archive->model_id = $request->subscriberID;
-
-
         $archive->type_id = '6046';
-
         $archive->name = $request->subscriberName;
-
         $archive->model_name = 'App\\Models\\User';
-
         $date = date("Y/m/d");
-
         $from = explode('/', ($date));
-
         $from = $from[0].'-'.$from[1].'-'.$from[2];
-
         $archive->date = $from;
-
         $archive->task_name = $taskname;
-
         $archive->task_link = $tasklink;
-
         $archive->title = $request->attachName1[($i - 1)];
-
         $archive->type = 'WarningArchive';
-
         $archive->serisal = '';
-
         $archive->url = 'Warning_archieve';
-
         $archive->add_by = Auth()->user()->id;
-
         $archive->save();
-
         $file = File::find($attachid);
         $file->archive_id = $archive->id;
-
         $file->model_name = "App\Models\Archive";
-
         $file->save();
-
     }
 
     public function uploadTicketAttach(Request $request)

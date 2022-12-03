@@ -39,7 +39,7 @@
         return view;
     }
 
-    function attacheViewWithIcon(attach, fileWidth = 6, attachName = null) {
+    function attacheViewWithIcon(attach, fileWidth = 6, attachName = null,index=0) {
         let shortCutName = attach.real_name;
         shortCutName = shortCutName.substring(0, 20);
         let urlFile = getFileUrl(attach);
@@ -51,7 +51,7 @@
           <span class="attach-text hidemob">${(attachName ?? shortCutName)}</span>
             <img style="width: 20px;"src="${fileImage}">
         </a>
-        <input type="hidden" id="attach_ids[]" name="attach_ids[]" value="${attach.id}">
+        <input type="hidden" id="attach_ids${index}" name="attach_ids[]" value="${attach.id}">
         </div>
         </div>`;
         return view;
@@ -92,7 +92,7 @@
         return `<li style="font-size: 17px !important;color:#000000">
                     <div class="row">
                         <div class="col-sm-6">
-                      <input type="text" required="" id="attachName[]" name="attachName[]" class="form-control attachName" value="${attach.attachName}">
+                      <input type="text" required="" id="attachName${index+1}" name="attachName[]" class="form-control attachName" value="${attach.attachName}">
                         </div>
                         <div class="col-sm-5 attach_row_${index + 1}">
                             <div id="attach" class=" col-sm-12 ">
@@ -102,7 +102,7 @@
                                         <span class="attach-text">${shortCutName}</span>
                                         <img style="width: 20px;" src='${fileImage}'>
                                     </a>
-                                    <input type="hidden" id="attach_ids[]" name="attach_ids[]" value="${attach.attach_ids}">
+                                    <input type="hidden" id="attach_ids${index+1}" name="attach_ids[]" value="${attach.attach_ids}">
                                 </div>
                             </div>
                         </div>
@@ -121,7 +121,7 @@
         return `<li style="font-size: 17px !important;color:#000000">
                     <div class="row">
                         <div class="col-sm-6 attmob">
-                            <input type="text" required id="attachName[]" name="attachName[]" class="form-control attachName">
+                            <input type="text" required id="attachName${index}" key="${index}" name="attachName[]" class="form-control attachName">
                         </div>
                         <div class="attdocmob col-sm-5 attach_row_${index}">
                         <div id="attach" class=" col-sm-12 ">
@@ -130,12 +130,12 @@
                                     <span class="attach-text hidemob">${shortCutName}</span>
                                     <img style="width: 20px;"src="${fileImage}">
                                 </a>
-                                <input type="hidden" id="attach_ids[]" name="attach_ids[]" value="${attach.id}">
+                                <input type="hidden" id="attach_ids${index}" name="attach_ids[]" value="${attach.id}">
                             </div>
                         </div>
                     </div>
                     <div class="attdelmob">
-                        <img src="{{ asset('assets/images/ico/upload.png') }}" width="40" height="40" style="cursor:pointer" onclick="$('#currFile').val(${index});$('#attachfile').trigger('click'); return false">
+                        <img src="{{ asset('assets/images/ico/upload.png') }}" width="40" height="40" style="cursor:pointer" onclick="$('#currFile').val(${index});validateName(${index})">
                     </div>
                     <div class="attdelmob">
                         <i class="fa fa-trash" id="plusElement1" style="padding-top:10px;position: relative;left: 3%;cursor: pointer;  color:#1E9FF2;font-size: 15pt; " onclick="$(this).parent().parent().parent().remove()"></i>
