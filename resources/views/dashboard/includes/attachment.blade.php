@@ -23,7 +23,7 @@
                         <div class="col-sm-5 attmob">
                             <input type="text" id="attachName1" key="1" name="attachName[]"
                                    class="form-control attachName"
-                                   placeholder="أخل اسم المرفق"
+                                   placeholder="أدخل اسم المرفق"
                                    {{$ticketInfo->force_attach==1?"required":"" }}   value="">
                         </div>
                         <div class="attdocmob col-sm-5 attach_row_1 ">
@@ -247,7 +247,7 @@
         var row = '<li style="font-size: 17px !important;color:#000000">' +
           '<div class="row">' +
           '<div class="col-sm-5 attmob">' +
-          `<input type="text" id="attachName${attach_index}" key=${attach_index} name="attachName[]" class="form-control attachName">` +
+          `<input type="text" id="attachName${attach_index}" key="${attach_index}" name="attachName[]" class="form-control attachName">` +
           '</div>' +
           '<div class="attdocmob col-sm-5 attach_row_' + attach_index + '">' +
           `<input type="hidden" id="attach_ids${attach_index}" name="attach_ids[]" value="">` +
