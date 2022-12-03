@@ -1,8 +1,9 @@
 @extends('layouts.admin')
 @section('search')
-<li class="dropdown dropdown-language nav-item hideMob">
-            <input id="searchContent" name="searchContent" class="form-control SubPagea round full_search" placeholder="بحث" style="text-align: center;width: 350px; margin-top: 15px !important;">
-          </li>
+    <li class="dropdown dropdown-language nav-item hideMob">
+        <input id="searchContent" name="searchContent" class="form-control SubPagea round full_search" placeholder="بحث"
+               style="text-align: center;width: 350px; margin-top: 15px !important;">
+    </li>
 @endsection
 @section('content')
 
@@ -56,7 +57,7 @@
             cursor: pointer;
         }
 
-        .rate:not(:checked)>label {
+        .rate:not(:checked) > label {
             font-size: 30px !important;
         }
 
@@ -84,7 +85,7 @@
 
 
     <link rel="stylesheet" type="text/css"
-        href="https://template.expand.ps/app-assets/global/plugins/jquery-multi-select/css/multi-select-rtl.css" />
+          href="https://template.expand.ps/app-assets/global/plugins/jquery-multi-select/css/multi-select-rtl.css"/>
 
     <script src="https://db.expand.ps/assets/jquery.min.js" type="text/javascript"></script>
 
@@ -96,7 +97,7 @@
 
                 <div class="col-sm-12 col-md-6">
                     <div class="card leftSide">
-                        
+
                         @include('dashboard.component.ticketHeader',['ticketInfo'=>$ticketInfo])
                         <div class="card-content collapse show">
                             <div class="card-body" style="padding-bottom: 0px;">
@@ -110,14 +111,15 @@
                                                             {{ 'نوع الشبكة' }}
                                                         </span>
                                                     </div>
-                                                    <select class="form-control networkType" name="networkType" id="networkType">
+                                                    <select class="form-control networkType" name="networkType"
+                                                            id="networkType">
                                                         <option value="">{{ 'نوع الشبكة' }} </option>
                                                         @foreach($networkTypes as $networkType)
-                                                        <option value="{{ $networkType->id }}">{{ $networkType->name }} </option>
+                                                            <option value="{{ $networkType->id }}">{{ $networkType->name }} </option>
                                                         @endforeach
                                                     </select>
                                                     <div class="input-group-append hideMob"
-                                                        onclick="ShowConstantModal(6058,'networkType','نوع الشبكة')">
+                                                         onclick="ShowConstantModal(6058,'networkType','نوع الشبكة')">
                                                         <span class="input-group-text input-group-text2">
                                                             <i class="fa fa-external-link"></i>
                                                         </span>
@@ -127,8 +129,8 @@
                                         </div>
                                     </div>
 
-                                    <input type="hidden" id="app_type"  name="app_type" value="5">
-                                    <input type="hidden" id="dept_id"  name="dept_id" value="{{$ticketInfo->dept_id}}">
+                                    <input type="hidden" id="app_type" name="app_type" value="5">
+                                    <input type="hidden" id="dept_id" name="dept_id" value="{{$ticketInfo->dept_id}}">
                                     @include('dashboard.includes.maldesc_ticket',['name_maldesc'=>'وصف الصيانة أو التطوير'])
 
                                     @include('dashboard.includes.regionsTemplate')
@@ -143,11 +145,6 @@
                 </div>
                 @include('dashboard.includes.forward')
             </div>
-            </div>
-
-
-
-
         </form>
     </section>
 
@@ -156,9 +153,8 @@
 
 
 
-<script>
-$(document).ready(function () {
-
+    <script>
+      $(document).ready(function () {
 
 
 //     $( "#subscriber_name" ).autocomplete({
@@ -169,78 +165,82 @@ $(document).ready(function () {
 //             getFullData(ui.item.id)
 // 		}
 // 	});
-    
 
 
-    $('#ticketFrm').submit(function(e) {
-        e.preventDefault();
-        $(".loader").removeClass('hide');
-        $(".form-actions").addClass('hide');
-    // $( "#subscriber_name" ).removeClass( "error" );
-    // $( "#subscriber_id" ).removeClass( "error" );
-    // $( "#MobileNo" ).removeClass( "error" );
-    $( "#AreaID" ).removeClass( "error" );
-    // $( "#Address" ).removeClass( "error" );
-    $( "#subscriptionType" ).removeClass( "error" );
-       let formData = new FormData(this);
-       $.ajax({
-          type:'POST',
-          url: "saveTicket30",
-           data: formData,
-           contentType: false,
-           processData: false,
-           success: (response) => {
-               $(".form-actions").removeClass('hide');
-            $('.wtbl').DataTable().ajax.reload();  
-            // console.log('response');
-             if (response.success!=null) {
+        $('#ticketFrm').submit(function (e) {
+          e.preventDefault();
+          if (validateAttachments()) {
+            return false;
+          }
+          $(".loader").removeClass('hide');
+          $(".form-actions").addClass('hide');
+          // $( "#subscriber_name" ).removeClass( "error" );
+          // $( "#subscriber_id" ).removeClass( "error" );
+          // $( "#MobileNo" ).removeClass( "error" );
+          $("#AreaID").removeClass("error");
+          // $( "#Address" ).removeClass( "error" );
+          $("#subscriptionType").removeClass("error");
+          let formData = new FormData(this);
+          $.ajax({
+            type: 'POST',
+            url: "saveTicket30",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: (response) => {
+              $(".form-actions").removeClass('hide');
+              $('.wtbl').DataTable().ajax.reload();
+              // console.log('response');
+              if (response.success != null) {
                 $(".loader").addClass('hide');
-			Swal.fire({
-				position: 'top-center',
-				icon: 'success',
-				title: '{{trans('admin.data_added')}}',
-				showConfirmButton: false,
-				timer: 1500
-				})
-            writeUserData('viewTicket/'+response.app_id+'/'+response.app_type)
-            if(print==true){
-                let url=`{{ route('admin.dashboard') }}/printTicket/${response.app_id}/${response.app_type}`
-                window.open(url, '_blank');
-                print=false;
-				}
-				setTimeout(function(){self.location='{{asset('/ar/admin')}}'},1500)
-               this.reset();
-             }else{
-                 console.log(response.error);
-                 if(response.error=='no_attatch'){
-                     
-                    $(".attachName").addClass('error');
-                    Swal.fire({
-    				position: 'top-center',
-    				icon: 'error',
-    				title: 'أدخل المرفقات',
-    				showConfirmButton: true,
-    				timer: 2000
-    				})
-                    $(".loader").addClass('hide');
-    				return false;
-                 }
-                 $(".loader").addClass('hide');
+                Swal.fire({
+                  position: 'top-center',
+                  icon: 'success',
+                  title: '{{trans('admin.data_added')}}',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+                writeUserData('viewTicket/' + response.app_id + '/' + response.app_type)
+                if (print == true) {
+                  let url = `{{ route('admin.dashboard') }}/printTicket/${response.app_id}/${response.app_type}`
+                  window.open(url, '_blank');
+                  print = false;
+                }
+                setTimeout(function () {
+                  self.location = '{{asset('/ar/admin')}}'
+                }, 1500)
+                this.reset();
+              } else {
+                console.log(response.error);
+                if (response.error == 'no_attatch') {
 
-    			Swal.fire({
-    				position: 'top-center',
-    				icon: 'error',
-    				title: '{{trans('admin.error_save')}}',
-    				showConfirmButton: false,
-    				timer: 1500
-    				})
-                 }
-             //location.reload();
+                  $(".attachName").addClass('error');
+                  Swal.fire({
+                    position: 'top-center',
+                    icon: 'error',
+                    title: 'أدخل المرفقات',
+                    showConfirmButton: true,
+                    timer: 2000
+                  })
+                  $(".loader").addClass('hide');
+                  return false;
+                }
+                $(".loader").addClass('hide');
 
-           },
-           error: function(response){
-            $(".loader").addClass('hide');
-            $(".form-actions").removeClass('hide');
+                Swal.fire({
+                  position: 'top-center',
+                  icon: 'error',
+                  title: '{{trans('admin.error_save')}}',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+              }
+              //location.reload();
+
+            },
+            error: function (response) {
+              $(".loader").addClass('hide');
+              $(".form-actions").removeClass('hide');
 // 			if(response.responseJSON.errors.subscriber_name){
 //                 $( "#subscriber_name" ).addClass( "error" );
 //                 $( "#subscriber_name" ).get(0).setCustomValidity('أدخل اسم معرف مسبقا ');
@@ -262,30 +262,30 @@ $(document).ready(function () {
 //                     this.setCustomValidity('')
 //                 })
 //             }
-            if(response.responseJSON.errors.AreaID){
-                $( "#AreaID" ).addClass( "error" );
-                $( "#AreaID" ).get(0).setCustomValidity('يرجى اختيار منطقة ');
-                $( "#AreaID" ).on('input',function(){
-                    this.setCustomValidity('')
+              if (response.responseJSON.errors.AreaID) {
+                $("#AreaID").addClass("error");
+                $("#AreaID").get(0).setCustomValidity('يرجى اختيار منطقة ');
+                $("#AreaID").on('input', function () {
+                  this.setCustomValidity('')
                 })
-            }
-            // if(response.responseJSON.errors.Address){
-            //     $( "#Address" ).addClass( "error" );
-            // }
-            
+              }
+              // if(response.responseJSON.errors.Address){
+              //     $( "#Address" ).addClass( "error" );
+              // }
 
-			Swal.fire({
-				position: 'top-center',
-				icon: 'error',
-				title: 'يرجى تعبئة الحقول الاجبارية',
-				showConfirmButton: false,
-				timer: 1500
-				})
-			
-           }
-       });
-  });
-});
-</script>
+
+              Swal.fire({
+                position: 'top-center',
+                icon: 'error',
+                title: 'يرجى تعبئة الحقول الاجبارية',
+                showConfirmButton: false,
+                timer: 1500
+              })
+
+            }
+          });
+        });
+      });
+    </script>
 @stop
 

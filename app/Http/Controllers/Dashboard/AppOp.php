@@ -109,20 +109,22 @@ class AppOp extends Controller
     function prepearAttach(Request $request)
     {
         $attach_ids = $request->attach_ids;
-        $attachNameTemp = ($request->attachName ?? array());
-        $attachName = array();
-        foreach ($attachNameTemp as $attach) {
-            if ($attach != null || $attach != '') {
-                array_push($attachName, $attach);
-            }
-        }
+//        $attachNameTemp = ($request->attachName ?? array());
+        $attachName = ($request->attachName ?? array());
+//        foreach ($attachNameTemp as $attach) {
+//            if ($attach != null || $attach != '') {
+//                array_push($attachName, $attach);
+//            }
+//        }
         $attachArr = array();
         if ($attach_ids) {
             for ($i = 0; $i < sizeof($attach_ids); $i++) {
-                $temp = array();
-                $temp['attachName'] = trim($attachName[$i]);
-                $temp['attach_ids'] = trim($attach_ids[$i]);
-                $attachArr[] = $temp;
+                if ($attach_ids[$i] != null) {
+                    $temp = array();
+                    $temp['attachName'] = trim($attachName[$i]);
+                    $temp['attach_ids'] = trim($attach_ids[$i]);
+                    $attachArr[] = $temp;
+                }
             }
         }
         return $attachArr;
@@ -674,7 +676,9 @@ order by created_at asc");
             $archive['info']->url = "agenda_archieve";
             $archive['files'] = [];
             if (is_array(json_decode($archive['info']->file_ids))) {
-                $files = File::whereIn('id', json_decode($archive['info']->file_ids))->get(['id', 'real_name', 'url','file_links']);
+                $files = File::whereIn('id', json_decode($archive['info']->file_ids))->get([
+                        'id', 'real_name', 'url', 'file_links'
+                ]);
             }
             if (isset($files) && $files != null) {
                 foreach ($files as $file) {
@@ -1476,60 +1480,41 @@ order by created_at asc");
     {
         $files_ids = $request->attach_ids;
         $attachNameTemp = $request->attachName;
-        $attachName = array();
-        foreach ($attachNameTemp as $attach) {
-            if ($attach != null || $attach != '') {
-                array_push($attachName, $attach);
-            }
-        }
-        $request->attachName = $attachName;
+        $attachName = $request->attachName;
+//        foreach ($attachNameTemp as $attach) {
+//            if ($attach != null || $attach != '') {
+//                array_push($attachName, $attach);
+//            }
+//        }
+//        $request->attachName = $attachName;
         if ($files_ids) {
             $i = 0;
             foreach ($files_ids as $id) {
-                $archive = new Archive();
-
-                $archive->model_id = $request->subscriber_id;
-
-                $archive->type_id = '6046';
-
-                $archive->name = $request->subscriber_name;
-
-                $archive->model_name = $model;
-
-                $date = date("Y/m/d");
-
-                $from = explode('/', ($date));
-
-                $from = $from[0].'-'.$from[1].'-'.$from[2];
-
-                $archive->date = $from;
-
-                $archive->task_name = $taskname;
-
-                $archive->task_link = $tasklink;
-
-                $archive->title = $request->attachName[$i];
-
-                $archive->type = 'taskArchive';
-
-                $archive->serisal = '';
-
-                $archive->url = 'cit_archieve';
-
-                $archive->add_by = Auth()->user()->id;
-
-                //dd( $request->customername=='0',$request->customername,$archive);
-                $archive->save();
-
-                $file = File::find($id);
-
-                $file->archive_id = $archive->id;
-
-                $file->model_name = "App\Models\Archive";
-
-                $file->save();
-
-                $i++;
+                if ($id != null) {
+                    $archive = new Archive();
+                    $archive->model_id = $request->subscriber_id;
+                    $archive->type_id = '6046';
+                    $archive->name = $request->subscriber_name;
+                    $archive->model_name = $model;
+                    $date = date("Y/m/d");
+                    $from = explode('/', ($date));
+                    $from = $from[0].'-'.$from[1].'-'.$from[2];
+                    $archive->date = $from;
+                    $archive->task_name = $taskname;
+                    $archive->task_link = $tasklink;
+                    $archive->title = $request->attachName[$i];
+                    $archive->type = 'taskArchive';
+                    $archive->serisal = '';
+                    $archive->url = 'cit_archieve';
+                    $archive->add_by = Auth()->user()->id;
+                    //dd( $request->customername=='0',$request->customername,$archive);
+                    $archive->save();
+                    $file = File::find($id);
+                    $file->archive_id = $archive->id;
+                    $file->model_name = "App\Models\Archive";
+                    $file->save();
+                    $i++;
+                }
             }
 
         }
@@ -1678,7 +1663,7 @@ order by created_at asc");
         if (($request->AssignedToID == null || $request->AssDeptID == null) && $request->app_id == null) {
             return response()->json(['app_id' => 0, 'app_type' => 0, 'error' => 'حدث خطأ']);
         }
-        // dd($this->prepeardebt($request));
+//         dd($request->all());
         $app_id = $request->app_id;
         $ticket_type = 1;
         $this->updateCMobile($request->subscriber_id, $request->MobileNo);

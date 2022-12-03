@@ -1,8 +1,9 @@
 @extends('layouts.admin')
 @section('search')
-<li class="dropdown dropdown-language nav-item hideMob">
-            <input id="searchContent" name="searchContent" class="form-control SubPagea round full_search" placeholder="بحث" style="text-align: center;width: 350px; margin-top: 15px !important;">
-          </li>
+    <li class="dropdown dropdown-language nav-item hideMob">
+        <input id="searchContent" name="searchContent" class="form-control SubPagea round full_search" placeholder="بحث"
+               style="text-align: center;width: 350px; margin-top: 15px !important;">
+    </li>
 @endsection
 @section('content')
 
@@ -56,7 +57,7 @@
             cursor: pointer;
         }
 
-        .rate:not(:checked)>label {
+        .rate:not(:checked) > label {
             font-size: 30px !important;
         }
 
@@ -92,10 +93,12 @@
             margin-right: 25px;
             border-bottom: 1px solid #2C303B;
         }
+
         .phoneDiv {
-                padding-left: 0px;
+            padding-left: 0px;
         }
-        .swal2-html-container{
+
+        .swal2-html-container {
             font-size: 18px !important;
 
         }
@@ -103,7 +106,7 @@
 
 
     <link rel="stylesheet" type="text/css"
-        href="https://template.expand.ps/app-assets/global/plugins/jquery-multi-select/css/multi-select-rtl.css" />
+          href="https://template.expand.ps/app-assets/global/plugins/jquery-multi-select/css/multi-select-rtl.css"/>
 
     <script src="https://db.expand.ps/assets/jquery.min.js" type="text/javascript"></script>
 
@@ -121,16 +124,19 @@
                                 <div class="form-body">
                                     @include('dashboard.includes.wasel')
                                     <div class="row" style="padding-right: 21px;">
-                                         <div class="input-group-prepend">
-                                            <label class="form-label " style="color: #ff9149; font-weight:bold">القدرة</label>
+                                        <div class="input-group-prepend">
+                                            <label class="form-label "
+                                                   style="color: #ff9149; font-weight:bold">القدرة</label>
                                         </div>
                                         <div class="col-sm-12 col-md-3">
-                                            <input type="radio" name="phase[]" checked="" id="radio-1" class="jui-radio-buttons" value="1" >
+                                            <input type="radio" name="phase[]" checked="" id="radio-1"
+                                                   class="jui-radio-buttons" value="1">
 
                                             <label for="radio-1">1 فاز</label>
-                                            <input type="radio" name="phase[]" id="radio-2" class="jui-radio-buttons" value="2" >
+                                            <input type="radio" name="phase[]" id="radio-2" class="jui-radio-buttons"
+                                                   value="2">
                                             <label for="radio-2">3 فاز</label>
-                                         </div>
+                                        </div>
 
                                         <div class="col-md-8">
                                             <div class="form-group">
@@ -140,10 +146,10 @@
                                                     </label>
                                                     <div class="col-sm-12 col-md-6">
                                                         <input type="radio" name="pos" checked="" id="pos-1"
-                                                            class="jui-radio-buttons" value="1" >
+                                                               class="jui-radio-buttons" value="1">
                                                         <label for="radio-1">{{ 'ضمن البناء' }}</label>
                                                         <input type="radio" name="pos" id="pos-2"
-                                                            class="jui-radio-buttons" value="2" >
+                                                               class="jui-radio-buttons" value="2">
                                                         <label for="radio-2">{{ 'خارج البناء' }}</label>
                                                     </div>
                                                 </div>
@@ -151,9 +157,8 @@
                                         </div>
                                     </div>
                                     @include('dashboard.includes.subscriber')
-                                                        <input type="hidden" id="app_type"  name="app_type" value="1">
-                                                        <input type="hidden" id="dept_id"  name="dept_id" value="{{$ticketInfo->dept_id}}">
-
+                                    <input type="hidden" id="app_type" name="app_type" value="1">
+                                    <input type="hidden" id="dept_id" name="dept_id" value="{{$ticketInfo->dept_id}}">
 
                                     @include('dashboard.includes.regionsTemplate')
 
@@ -167,23 +172,23 @@
 
                                             <table class="detailsTB table" style="margin-left: 15px;">
                                                 <tbody>
-                                                    <tr>
-                                                        <th scope="col">
-                                                            {{ '#' }}
-                                                        </th>
-                                                        <th scope="col">
-                                                            {{ 'رقم الإشتراك' }}
-                                                        </th>
-                                                        <th scope="col" class="hideMob"
-                                                            style="text-align: -webkit-center;">
-                                                            {{ 'العداد' }}
-                                                        </th>
-                                                        <th scope="col" style="text-align: -webkit-center;">
-                                                            {{ 'وصف مكان العداد' }}
-                                                        </th>
-                                                        <th scope="col"></th>
+                                                <tr>
+                                                    <th scope="col">
+                                                        {{ '#' }}
+                                                    </th>
+                                                    <th scope="col">
+                                                        {{ 'رقم الإشتراك' }}
+                                                    </th>
+                                                    <th scope="col" class="hideMob"
+                                                        style="text-align: -webkit-center;">
+                                                        {{ 'العداد' }}
+                                                    </th>
+                                                    <th scope="col" style="text-align: -webkit-center;">
+                                                        {{ 'وصف مكان العداد' }}
+                                                    </th>
+                                                    <th scope="col"></th>
 
-                                                    </tr>
+                                                </tr>
                                                 </tbody>
                                                 <tbody id="recList">
 
@@ -197,8 +202,6 @@
                             </div>
                         </div>
 
-
-
                         <div class="row">
                             <div class="col-md attachs-section">
                                 <img src="https://db.expand.ps/images/google35.png" width="40" height="40">
@@ -210,13 +213,16 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <div class="input-group licNoGroup" id="licGroup" style="width: 93% !important;">
+                                        <div class="input-group licNoGroup" id="licGroup"
+                                             style="width: 93% !important;">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="basic-addon1">
                                                 {{"رقم الرخصة"}}
                                                 </span>
                                             </div>
-                                            <input type="text" id="licNo" name="licNo" class="form-control eng-sm  valid" value="" placeholder="" autocomplete="off">
+                                            <input type="text" id="licNo" name="licNo"
+                                                   class="form-control eng-sm  valid" value="" placeholder=""
+                                                   autocomplete="off">
                                         </div>
                                     </div>
                                 </div>
@@ -232,10 +238,11 @@
                                                 المنطقة
                                                 </span>
                                             </div>
-                                            <select id="AreaID1" name="AreaID1" type="text" style="height: 36px !important" class="form-control">
+                                            <select id="AreaID1" name="AreaID1" type="text"
+                                                    style="height: 36px !important" class="form-control">
                                                 <option value=""> -- اختر --</option>
-                                                 @foreach($region as $sub)
-                                                <option value="{{ $sub->id }}">{{ $sub->name }}</option>
+                                                @foreach($region as $sub)
+                                                    <option value="{{ $sub->id }}">{{ $sub->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -251,15 +258,18 @@
                                                 </span>
                                             </div>
                                             <textarea type="text" id="Address1" class="form-control"
-                                                placeholder="العنوان بالتفصيل" name="Address1"
-                                                style="height: 35px;"></textarea>
+                                                      placeholder="العنوان بالتفصيل" name="Address1"
+                                                      style="height: 35px;"></textarea>
 
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-1 " style="padding-right: 0px;" >
-                                    <a id="customer_location" href="https://www.google.com/maps/place/%D9%82%D8%B7%D9%86%D8%A9%E2%80%AD/@31.826923,35.1102,15z/data=!4m5!3m4!1s0x1502d13f350757bf:0xfe87f6d80cc3de8f!8m2!3d31.826923!4d35.1102" target="_blank">
-                                        <img src="https://db.expand.ps/images/google35.png" style="    margin-left: -5px;;width:32px;height:32px;border-radius: 5px;"></a>
+                                <div class="col-md-1 " style="padding-right: 0px;">
+                                    <a id="customer_location"
+                                       href="https://www.google.com/maps/place/%D9%82%D8%B7%D9%86%D8%A9%E2%80%AD/@31.826923,35.1102,15z/data=!4m5!3m4!1s0x1502d13f350757bf:0xfe87f6d80cc3de8f!8m2!3d31.826923!4d35.1102"
+                                       target="_blank">
+                                        <img src="https://db.expand.ps/images/google35.png"
+                                             style="    margin-left: -5px;;width:32px;height:32px;border-radius: 5px;"></a>
                                 </div>
                             </div>
 
@@ -272,11 +282,6 @@
                 </div>
                 @include('dashboard.includes.forward')
             </div>
-            </div>
-
-
-
-
         </form>
     </section>
 
@@ -284,116 +289,115 @@
     @include('dashboard.component.tasks_table')
     @include('dashboard.component.fetch_Task_table')
 
-<script>
+    <script>
 
-$(document).ready(function () {
+      $(document).ready(function () {
 
-    $( "#subscriber_name" ).autocomplete({
-		source:'subscribe_auto_complete',
-		minLength: 1,
-        select: function( event, ui ) {
+        $("#subscriber_name").autocomplete({
+          source: 'subscribe_auto_complete',
+          minLength: 1,
+          select: function (event, ui) {
             $("#subscriber_id").val(ui.item.id)
             getFullData(ui.item.id)
 
-            subscriber_id=ui.item.id;
+            subscriber_id = ui.item.id;
 
             $.ajax({
 
-            type: 'get', // the method (could be GET btw)
+              type: 'get', // the method (could be GET btw)
 
-            url: "license_info_byUser",
-                data: {
+              url: "license_info_byUser",
+              data: {
 
-                    subscriber_id: subscriber_id,
+                subscriber_id: subscriber_id,
 
-                },
-                success:function(response){
+              },
+              success: function (response) {
 
-                    template=""
+                template = ""
 
-                    count = 0;
+                count = 0;
 
-                    $('#licNo').remove('');
+                $('#licNo').remove('');
 
-                    if(response.info.length>0)
+                if (response.info.length > 0) {
 
-                    {
+                  template += '<select onchange="fillData($(this).val())" class="form-control" name="licNo" id="licNo">'
 
-                        template += '<select onchange="fillData($(this).val())" class="form-control" name="licNo" id="licNo">'
+                  template += '<option value="0">-- اختر --</option>'
 
-                        template +='<option value="0">-- اختر --</option>'
+                  response.info.forEach(licence => {
 
-                        response.info.forEach(licence => {
+                    count++;
 
-                            count++;
-
-                               template +='<option value="'+licence.id+'"> '+(licence.licNo??'بدون')+'</option>'
+                    template += '<option value="' + licence.id + '"> ' + (licence.licNo ?? 'بدون') + '</option>'
 
 
-                        });
-                        template +='</select>'
+                  });
+                  template += '</select>'
 
-                    }
+                } else {
 
-                    else {
+                  template += '<input type="text" id="licNo" name="licNo" class="form-control eng-sm  valid" value="" placeholder="" autocomplete="off">'
 
-                        template += '<input type="text" id="licNo" name="licNo" class="form-control eng-sm  valid" value="" placeholder="" autocomplete="off">'
-
-                    }
+                }
 
                 $('#licGroup').append(template);
 
 
-
-                },
+              },
 
             });
 
-            if( {{$ticketInfo->apps_btn}}==1)
-                getSubscriberTasks(ui.item.id)
-		}
-	});
+            if ({{$ticketInfo->apps_btn}} == 1)
+              getSubscriberTasks(ui.item.id)
+          }
+        });
 
 
-
-    $('#ticketFrm').submit(function(e) {
-        $(".loader").removeClass('hide');
-        $(".form-actions").addClass('hide');
-       e.preventDefault();
-       $( "#subscriber_name" ).removeClass( "error" );
-        $( "#subscriber_id" ).removeClass( "error" );
-        $( "#MobileNo" ).removeClass( "error" );
-        $( "#AreaID" ).removeClass( "error" );
-        $( "#AreaID1" ).removeClass( "error" );
-       let formData = new FormData(this);
-       $.ajax({
-          type:'POST',
-          url: "saveTicket10",
-           data: formData,
-           contentType: false,
-           processData: false,
-           success: (response) => {
-               $(".form-actions").removeClass('hide');
-            $('.wtbl').DataTable().ajax.reload();
-            // console.log('response');
-             if (response.success!=null) {
+        $('#ticketFrm').submit(function (e) {
+          e.preventDefault();
+          if (validateAttachments()) {
+            return false;
+          }
+          $(".loader").removeClass('hide');
+          $(".form-actions").addClass('hide');
+          $("#subscriber_name").removeClass("error");
+          $("#subscriber_id").removeClass("error");
+          $("#MobileNo").removeClass("error");
+          $("#AreaID").removeClass("error");
+          $("#AreaID1").removeClass("error");
+          let formData = new FormData(this);
+          $.ajax({
+            type: 'POST',
+            url: "saveTicket10",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: (response) => {
+              $(".form-actions").removeClass('hide');
+              $('.wtbl').DataTable().ajax.reload();
+              // console.log('response');
+              if (response.success != null) {
                 $(".loader").addClass('hide');
-			    Swal.fire({
-				position: 'top-center',
-				icon: 'success',
-				title: '{{trans('admin.data_added')}}',
-				showConfirmButton: false,
-				timer: 1500
-				})
+                Swal.fire({
+                  position: 'top-center',
+                  icon: 'success',
+                  title: '{{trans('admin.data_added')}}',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
 
-				writeUserData('viewTicket/'+response.app_id+'/'+response.app_type)
-                if(print==true){
-                let url=`{{ route('admin.dashboard') }}/printTicket/${response.app_id}/${response.app_type}`
-                window.open(url, '_blank');
-                print=false;
-				}
-				setTimeout(function(){self.location='{{asset('/ar/admin')}}'},1500)
-               this.reset();
+                writeUserData('viewTicket/' + response.app_id + '/' + response.app_type)
+                if (print == true) {
+                  let url = `{{ route('admin.dashboard') }}/printTicket/${response.app_id}/${response.app_type}`
+                  window.open(url, '_blank');
+                  print = false;
+                }
+                setTimeout(function () {
+                  self.location = '{{asset('/ar/admin')}}'
+                }, 1500)
+                this.reset();
 
 //             if(print==true){
 //                 self.location=`{{ route('admin.dashboard') }}/printTicket/${response.app_id}/${response.app_type}`
@@ -402,263 +406,222 @@ $(document).ready(function () {
 // writeUserData('viewTicket/'+response.app_id+'/'+response.app_type)
 //         				setTimeout(function(){self.location='{{asset('/ar/admin')}}'},1500)
 //               this.reset();
-             }else{
-                 console.log(response.error);
-                 if(response.error=='no_nationalID'){
+              } else {
+                console.log(response.error);
+                if (response.error == 'no_nationalID') {
 
-                    $("#national_id").addClass('error');
-                    Swal.fire({
-    				position: 'top-center',
-    				icon: 'error',
-    				title: 'أدخل رقم الهوية',
-    				showConfirmButton: true,
-    				timer: 2000
-    				})
-                    $(".loader").addClass('hide');
-    				return false;
-                 }
-                 if(response.error=='no_attatch'){
+                  $("#national_id").addClass('error');
+                  Swal.fire({
+                    position: 'top-center',
+                    icon: 'error',
+                    title: 'أدخل رقم الهوية',
+                    showConfirmButton: true,
+                    timer: 2000
+                  })
+                  $(".loader").addClass('hide');
+                  return false;
+                }
+                if (response.error == 'no_attatch') {
 
-                     $(".attachName").addClass('error');
-                     Swal.fire({
-    				position: 'top-center',
-    				icon: 'error',
-    				title: 'أدخل المرفقات',
-    				showConfirmButton: true,
-    				timer: 2000
-    				})
-                    $(".loader").addClass('hide');
-    				return false;
-                 }
-                 $(".loader").addClass('hide');
+                  $(".attachName").addClass('error');
+                  Swal.fire({
+                    position: 'top-center',
+                    icon: 'error',
+                    title: 'أدخل المرفقات',
+                    showConfirmButton: true,
+                    timer: 2000
+                  })
+                  $(".loader").addClass('hide');
+                  return false;
+                }
+                $(".loader").addClass('hide');
 
-    			Swal.fire({
-    				position: 'top-center',
-    				icon: 'error',
-    				title: '{{trans('admin.error_save')}}',
-    				showConfirmButton: false,
-    				timer: 1500
-    				})
-                 }
-             //location.reload();
+                Swal.fire({
+                  position: 'top-center',
+                  icon: 'error',
+                  title: '{{trans('admin.error_save')}}',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+              }
+              //location.reload();
 
-           },
-           error: function(response){
-            $(".loader").addClass('hide');
-            $(".form-actions").removeClass('hide');
-			if(response.responseJSON.errors.subscriber_name){
-                $( "#subscriber_name" ).addClass( "error" );
-                $( "#subscriber_name" ).get(0).setCustomValidity('أدخل اسم معرف مسبقا ');
-                $( "#subscriber_name" ).on('input',function(){
-                    this.setCustomValidity('')
+            },
+            error: function (response) {
+              $(".loader").addClass('hide');
+              $(".form-actions").removeClass('hide');
+              if (response.responseJSON.errors.subscriber_name) {
+                $("#subscriber_name").addClass("error");
+                $("#subscriber_name").get(0).setCustomValidity('أدخل اسم معرف مسبقا ');
+                $("#subscriber_name").on('input', function () {
+                  this.setCustomValidity('')
                 })
-            }
-            if(response.responseJSON.errors.subscriber_id){
-                $( "#subscriber_name" ).addClass( "error" );
-                $( "#subscriber_name" ).get(0).setCustomValidity('أدخل اسم معرف مسبقا ');
-                $( "#subscriber_name" ).on('input',function(){
-                    this.setCustomValidity('')
+              }
+              if (response.responseJSON.errors.subscriber_id) {
+                $("#subscriber_name").addClass("error");
+                $("#subscriber_name").get(0).setCustomValidity('أدخل اسم معرف مسبقا ');
+                $("#subscriber_name").on('input', function () {
+                  this.setCustomValidity('')
                 })
-            }
-            if(response.responseJSON.errors.MobileNo){
-                $( "#MobileNo" ).addClass( "error" );
-                $( "#MobileNo" ).get(0).setCustomValidity('أدخل رقم جوال ');
-                $( "#MobileNo" ).on('blur',function(){
-                    this.setCustomValidity('')
+              }
+              if (response.responseJSON.errors.MobileNo) {
+                $("#MobileNo").addClass("error");
+                $("#MobileNo").get(0).setCustomValidity('أدخل رقم جوال ');
+                $("#MobileNo").on('blur', function () {
+                  this.setCustomValidity('')
                 })
-            }
-            if(response.responseJSON.errors.AreaID){
-                $( "#AreaID" ).addClass( "error" );
-                $( "#AreaID" ).get(0).setCustomValidity('يرجى اختيار منطقة ');
-                $( "#AreaID" ).on('input',function(){
-                    this.setCustomValidity('')
+              }
+              if (response.responseJSON.errors.AreaID) {
+                $("#AreaID").addClass("error");
+                $("#AreaID").get(0).setCustomValidity('يرجى اختيار منطقة ');
+                $("#AreaID").on('input', function () {
+                  this.setCustomValidity('')
                 })
-            }
-            if(response.responseJSON.errors.licNo){
-                $( "#licNo" ).addClass( "error" );
-                $( "#licNo" ).get(0).setCustomValidity('يرجى ادخال رقم الرخصة ');
-                $( "#licNo" ).on('input',function(){
-                    this.setCustomValidity('')
+              }
+              if (response.responseJSON.errors.licNo) {
+                $("#licNo").addClass("error");
+                $("#licNo").get(0).setCustomValidity('يرجى ادخال رقم الرخصة ');
+                $("#licNo").on('input', function () {
+                  this.setCustomValidity('')
                 })
-            }
-            // if(response.responseJSON.errors.Address){
-            //     $( "#Address" ).addClass( "error" );
-            // }
-            if(response.responseJSON.errors.AreaID1){
-                $( "#AreaID1" ).addClass( "error" );
-                $( "#AreaID1" ).get(0).setCustomValidity('يرجى اختيار منطقة ');
-                $( "#AreaID1" ).on('input',function(){
-                    this.setCustomValidity('')
+              }
+              // if(response.responseJSON.errors.Address){
+              //     $( "#Address" ).addClass( "error" );
+              // }
+              if (response.responseJSON.errors.AreaID1) {
+                $("#AreaID1").addClass("error");
+                $("#AreaID1").get(0).setCustomValidity('يرجى اختيار منطقة ');
+                $("#AreaID1").on('input', function () {
+                  this.setCustomValidity('')
                 })
+              }
+              Swal.fire({
+                position: 'top-center',
+                icon: 'error',
+                title: 'يرجى تعبئة الحقول الاجبارية',
+                showConfirmButton: false,
+                timer: 1500
+              })
             }
-			Swal.fire({
-				position: 'top-center',
-				icon: 'error',
-				title: 'يرجى تعبئة الحقول الاجبارية',
-				showConfirmButton: false,
-				timer: 1500
-				})
-           }
-       });
-  });
-});
+          });
+        });
+      });
 
-function getFullData(id){
+      function getFullData(id) {
 
         $.ajaxSetup({
 
-            headers: {
+          headers: {
 
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
 
-            }
+          }
 
         });
-    formData={'id':id}
-       $.ajax({
-          type:'POST',
+        formData = {'id': id}
+        $.ajax({
+          type: 'POST',
           url: "appCustomer",
-           data: formData,
-           /*contentType: false,
-           processData: false,*/
-           success: (response) => {
-             if (response) {
-                 srch=response.phone_one==null?(response.phone_two==null?'':response.phone_two):response.phone_one
-                if(srch.search("056")>=0)
-                    $('#mobImg').attr('src','{{asset('assets/images/w35.png')}}');
-                else
-                    $('#mobImg').attr('src','{{asset('assets/images/jawwal35.png')}}');
-                $('#MobileNo').val(response.phone_one==null?(response.phone_two==null?'':response.phone_two):response.phone_one)
-                $('#national_id').val((response.national_id??''))
-                $(".loader").addClass('hide');
-                if(response.elec!=null){
-                     var len = response.elec.length;
-                     $row='';
-                    for(var i=0; i<len; i++){
-                        // if(response.elec[i].counter==null)
-                        //       continue;
-                       $row+=
-                        '<tr id="memRow1">'+
-                        '<td style="color:#1E9FF2">'+(i+1)+'</td> '+
-                        '<td>'+
-                            (response.elec[i].subscription_no??'')+
-                            '<input type="hidden" name="SubscribtionIdList[]" value="'+response.elec[i].id+'"><input type="text" class="form-control form-control1 numFeild hide" name="SubscribtionNumList[]" value="'+(response.elec[i].licNo??'')+'">'+
-                        '</td>'+
-                        '<td class="hideMob" style="text-align: -webkit-center;">'+
-                            (response.elec[i].counter==null?'':response.elec[i].counter.name)+
-                            '<input type="text" class="form-control form-control1 alphaFeild hide" name="CounterTypeList[]" value="'+(response.elec[i].counter==null?'':response.elec[i].counter.name)+'">'+
-                        '</td>'+
-                        '<td style="text-align: -webkit-center;">'+
-                            (response.elec[i].placeDesc??'')+
-                            '<input type="text" class="form-control form-control1   hide" name="CapacityList[]" value="'+(response.elec[i].placeDesc??'')+'">'+
-                        '</td>'+
-                        '<td>'+
-                                '<input type="radio" id="counters" name="counters" checked="" value="'+response.elec[i].id+'" onclick="">'+
-                        '</td>'+
-                        '</tr>';
-                    }
-                    $("#recList").append($row);
-
+          data: formData,
+          /*contentType: false,
+          processData: false,*/
+          success: (response) => {
+            if (response) {
+              srch = response.phone_one == null ? (response.phone_two == null ? '' : response.phone_two) : response.phone_one
+              if (srch.search("056") >= 0)
+                $('#mobImg').attr('src', '{{asset('assets/images/w35.png')}}');
+              else
+                $('#mobImg').attr('src', '{{asset('assets/images/jawwal35.png')}}');
+              $('#MobileNo').val(response.phone_one == null ? (response.phone_two == null ? '' : response.phone_two) : response.phone_one)
+              $('#national_id').val((response.national_id ?? ''))
+              $(".loader").addClass('hide');
+              if (response.elec != null) {
+                var len = response.elec.length;
+                $row = '';
+                for (var i = 0; i < len; i++) {
+                  // if(response.elec[i].counter==null)
+                  //       continue;
+                  $row +=
+                    '<tr id="memRow1">' +
+                    '<td style="color:#1E9FF2">' + (i + 1) + '</td> ' +
+                    '<td>' +
+                    (response.elec[i].subscription_no ?? '') +
+                    '<input type="hidden" name="SubscribtionIdList[]" value="' + response.elec[i].id + '"><input type="text" class="form-control form-control1 numFeild hide" name="SubscribtionNumList[]" value="' + (response.elec[i].licNo ?? '') + '">' +
+                    '</td>' +
+                    '<td class="hideMob" style="text-align: -webkit-center;">' +
+                    (response.elec[i].counter == null ? '' : response.elec[i].counter.name) +
+                    '<input type="text" class="form-control form-control1 alphaFeild hide" name="CounterTypeList[]" value="' + (response.elec[i].counter == null ? '' : response.elec[i].counter.name) + '">' +
+                    '</td>' +
+                    '<td style="text-align: -webkit-center;">' +
+                    (response.elec[i].placeDesc ?? '') +
+                    '<input type="text" class="form-control form-control1   hide" name="CapacityList[]" value="' + (response.elec[i].placeDesc ?? '') + '">' +
+                    '</td>' +
+                    '<td>' +
+                    '<input type="radio" id="counters" name="counters" checked="" value="' + response.elec[i].id + '" onclick="">' +
+                    '</td>' +
+                    '</tr>';
                 }
+                $("#recList").append($row);
 
-                if(response.elec.length!=0){
-                    $("#saveBtn").removeClass("hide");
-                    $("#saveBtnSend").removeClass("hide");
-                    //$(".errArea").addClass("hide");
-                }
-                else
-                {
+              }
 
-                        $("#saveBtn").addClass("hide");
-                        $("#saveBtnSend").addClass("hide");
-                        $("#recList").html('');
-                        //$(".errArea").removeClass("hide");
-                        Swal.fire({
-            				position: 'top-center',
-            				icon: 'error',
-            				title: 'لا يمكن تقديم الطلب لعدم وجود اشتراك معرف في النظام',
-            				showConfirmButton: true,
-            				})
-                }
+              if (response.elec.length != 0) {
+                $("#saveBtn").removeClass("hide");
+                $("#saveBtnSend").removeClass("hide");
+                //$(".errArea").addClass("hide");
+              } else {
 
-                if(response.errorList.length==0 && response.elec.length!=0){
+                $("#saveBtn").addClass("hide");
+                $("#saveBtnSend").addClass("hide");
+                $("#recList").html('');
+                //$(".errArea").removeClass("hide");
+                Swal.fire({
+                  position: 'top-center',
+                  icon: 'error',
+                  title: 'لا يمكن تقديم الطلب لعدم وجود اشتراك معرف في النظام',
+                  showConfirmButton: true,
+                })
+              }
+
+              if (response.errorList.length == 0 && response.elec.length != 0) {
+                $(".btnArea").removeClass("hide");
+                //$(".errArea").addClass("hide");
+              } else if (response.errorList.length != 0 && response.elec.length != 0) {
+                $(".btnArea").addClass("hide");
+                //$(".errArea").removeClass("hide");
+                err = '<ul>'
+                for (i = 0; i < response.errorList.length; i++)
+                  err += '<li style="font-size: 16px !important;font-weight: bold;">' + response.errorList[i] + "</li>";
+                err += '<ul>'
+                Swal.fire({
+                  title: err,
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'متابعة الطلب',
+                  cancelButtonText: 'الغاء الطلب',
+                }).then((result) => {
+                  /* Read more about isConfirmed, isDenied below */
+                  if (result.isConfirmed) {
                     $(".btnArea").removeClass("hide");
-                    //$(".errArea").addClass("hide");
-                }else if(response.errorList.length!=0 && response.elec.length!=0){
-                    $(".btnArea").addClass("hide");
-                        //$(".errArea").removeClass("hide");
-                        err='<ul>'
-                    for(i=0;i<response.errorList.length;i++)
-                        err+='<li style="font-size: 16px !important;font-weight: bold;">'+response.errorList[i]+"</li>";
-                        err+='<ul>'
-                       Swal.fire({
-                            title: err,
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'متابعة الطلب',
-                            cancelButtonText: 'الغاء الطلب',
-                        }).then((result) => {
-                          /* Read more about isConfirmed, isDenied below */
-                          if (result.isConfirmed) {
-                              $(".btnArea").removeClass("hide");
 
-                              if(response.warning.length!=0){
-                                $(".btnArea").addClass("hide");
-                                warningText='  المواطن لديه اخطار';
-                                for(i=0 ; i< response.warning.length ; i++){
-                                    warningOpj=response.warning[i];
-                                    if(response.warning.length!=1 && i>=1){
-                                        warningText+=' - ';
-                                    }
-                                    warningText+=warningOpj.type.name;
-                                    warningText+=' بسبب ';
-                                    warningText+=warningOpj.warning_reason;
-                                    warningText+=' يرجى مراجعة قسم ';
-                                    warningText+=warningOpj.dept.name;
-                                }
-
-                                Swal.fire({
-                                    title: 'لايمكن تقديم الطلب',
-                                    text: warningText,
-                                    icon: 'warning',
-                                    showCancelButton: true,
-                                    confirmButtonColor: '#3085d6',
-                                    cancelButtonColor: '#d33',
-                                    confirmButtonText: 'متابعة الطلب',
-                                    cancelButtonText: 'الغاء الطلب',
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        $(".btnArea").removeClass("hide");
-                                    }else{
-                                        setTimeout(function(){self.location='{{asset('/ar/admin')}}'},1500)
-                                    }
-                                })
-                            }
-                            // Swal.fire('Saved!', '', 'success')
-                          } else {
-                            setTimeout(function(){self.location='{{asset('/ar/admin')}}'},1500)
-                          }
-                        })
-                }
-
-                if(response.warning.length!=0 && response.elec.length!=0 && response.errorList.length==0){
-                    $(".btnArea").addClass("hide");
-                    warningText='  المواطن لديه اخطار';
-                    for(i=0 ; i< response.warning.length ; i++){
-                        warningOpj=response.warning[i];
-                        if(response.warning.length!=1 && i>=1){
-                            warningText+=' - ';
+                    if (response.warning.length != 0) {
+                      $(".btnArea").addClass("hide");
+                      warningText = '  المواطن لديه اخطار';
+                      for (i = 0; i < response.warning.length; i++) {
+                        warningOpj = response.warning[i];
+                        if (response.warning.length != 1 && i >= 1) {
+                          warningText += ' - ';
                         }
-                        warningText+=warningOpj.type.name;
-                        warningText+=' بسبب ';
-                        warningText+=warningOpj.warning_reason;
-                        warningText+=' يرجى مراجعة قسم ';
-                        warningText+=warningOpj.dept.name;
-                    }
+                        warningText += warningOpj.type.name;
+                        warningText += ' بسبب ';
+                        warningText += warningOpj.warning_reason;
+                        warningText += ' يرجى مراجعة قسم ';
+                        warningText += warningOpj.dept.name;
+                      }
 
-                    Swal.fire({
+                      Swal.fire({
                         title: 'لايمكن تقديم الطلب',
                         text: warningText,
                         icon: 'warning',
@@ -667,592 +630,637 @@ function getFullData(id){
                         cancelButtonColor: '#d33',
                         confirmButtonText: 'متابعة الطلب',
                         cancelButtonText: 'الغاء الطلب',
-                    }).then((result) => {
+                      }).then((result) => {
                         if (result.isConfirmed) {
-                            $(".btnArea").removeClass("hide");
-                        }else{
-                            setTimeout(function(){self.location='{{asset('/ar/admin')}}'},1500)
+                          $(".btnArea").removeClass("hide");
+                        } else {
+                          setTimeout(function () {
+                            self.location = '{{asset('/ar/admin')}}'
+                          }, 1500)
                         }
-                    })
+                      })
+                    }
+                    // Swal.fire('Saved!', '', 'success')
+                  } else {
+                    setTimeout(function () {
+                      self.location = '{{asset('/ar/admin')}}'
+                    }, 1500)
+                  }
+                })
+              }
+
+              if (response.warning.length != 0 && response.elec.length != 0 && response.errorList.length == 0) {
+                $(".btnArea").addClass("hide");
+                warningText = '  المواطن لديه اخطار';
+                for (i = 0; i < response.warning.length; i++) {
+                  warningOpj = response.warning[i];
+                  if (response.warning.length != 1 && i >= 1) {
+                    warningText += ' - ';
+                  }
+                  warningText += warningOpj.type.name;
+                  warningText += ' بسبب ';
+                  warningText += warningOpj.warning_reason;
+                  warningText += ' يرجى مراجعة قسم ';
+                  warningText += warningOpj.dept.name;
                 }
-                getCert(response.id,response.archive.certCount);
+
+                Swal.fire({
+                  title: 'لايمكن تقديم الطلب',
+                  text: warningText,
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'متابعة الطلب',
+                  cancelButtonText: 'الغاء الطلب',
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    $(".btnArea").removeClass("hide");
+                  } else {
+                    setTimeout(function () {
+                      self.location = '{{asset('/ar/admin')}}'
+                    }, 1500)
+                  }
+                })
+              }
+              getCert(response.id, response.archive.certCount);
                 @can('subscriberContractArchive')
-                getContractArchive(response.id,response.archive.contractArchiveCount);
+                getContractArchive(response.id, response.archive.contractArchiveCount);
                 @endcan
 
                 @can('subscriberLicArchive')
-                getLicArchive(response.id,response.archive.licArchiveCount);
+                getLicArchive(response.id, response.archive.licArchiveCount);
                 @endcan
 
                 @can('subscriberOutArchive')
-                getOutArchive(response.id,response.archive.outArchiveCount);
+                getOutArchive(response.id, response.archive.outArchiveCount);
                 @endcan
 
                 @can('subscriberInArchive')
-                getInArchive(response.id,response.archive.inArchiveCount);
+                getInArchive(response.id, response.archive.inArchiveCount);
                 @endcan
 
                 @can('subscriberOtherArchive')
-                getOtherArchive(response.id,response.archive.otherArchiveCount);
+                getOtherArchive(response.id, response.archive.otherArchiveCount);
                 @endcan
 
                 @can('subscriberCopyArchive')
-                getCopyArchive(response.id,response.archive.copyToCount);
+                getCopyArchive(response.id, response.archive.copyToCount);
                 @endcan
 
                 @can('subscriberJalArchive')
-                getJalArchive(response.id,response.archive.linkToCount);
+                getJalArchive(response.id, response.archive.linkToCount);
                 @endcan
-             }
+            }
 
-           },
-           error: function(response){
+          },
+          error: function (response) {
             $(".loader").addClass('hide');
 
-			Swal.fire({
-				position: 'top-center',
-				icon: 'error',
-				title: '{{trans('admin.error_save')}}',
-				showConfirmButton: false,
-				timer: 1500
-				})
-           }
-       });
-}
+            Swal.fire({
+              position: 'top-center',
+              icon: 'error',
+              title: '{{trans('admin.error_save')}}',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }
+        });
+      }
 
 
-function getSubscriberTasks(id){
+      function getSubscriberTasks(id) {
 
         let subscribe_id = id;
 
-            $.ajax({
+        $.ajax({
 
-                type: 'get',
+          type: 'get',
 
-                url: "subscriber_tasks",
+          url: "subscriber_tasks",
 
-                data: {
+          data: {
 
-                    subscribe_id: subscribe_id,
+            subscribe_id: subscribe_id,
 
-                },
+          },
 
-                success: function(response) {
+          success: function (response) {
 
-                    if (response.status!=false) {
+            if (response.status != false) {
 
-                        drawtasks(response.tikets);
+              drawtasks(response.tikets);
 
-                    }else{
-                        Swal.fire({
+            } else {
+              Swal.fire({
 
-            				position: 'top-center',
+                position: 'top-center',
 
-            				icon: 'error',
+                icon: 'error',
 
-            				title: 'لايوجد طلبات لهاذا المواطن',
+                title: 'لايوجد طلبات لهاذا المواطن',
 
-            				showConfirmButton: false,
+                showConfirmButton: false,
 
-            				timer: 1500
+                timer: 1500
 
-        				})
-                    }
-                },
+              })
+            }
+          },
 
-            });
-
-}
-
-        $(function() {
-            var table = $('.tasktbl1').DataTable({
-                "language": {
-                    "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
-                    "sLoadingRecords": "جارٍ التحميل...",
-                    "sProcessing": "جارٍ التحميل...",
-                    "sLengthMenu": "أظهر _MENU_ مدخلات",
-                    "sZeroRecords": "لم يعثر على أية سجلات",
-                    "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
-                    "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
-                    "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
-                    "sInfoPostFix": "",
-                    "sSearch": "ابحث:",
-                    "sUrl": "",
-                    "oPaginate": {
-                        "sFirst": "الأول",
-                        "sPrevious": "السابق",
-                        "sNext": "التالي",
-                        "sLast": "الأخير"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
-                        "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
-                    }
-                }
-            });
-        });
-        $(function() {
-            var table = $('.tasktbl2').DataTable({
-                "language": {
-                    "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
-                    "sLoadingRecords": "جارٍ التحميل...",
-                    "sProcessing": "جارٍ التحميل...",
-                    "sLengthMenu": "أظهر _MENU_ مدخلات",
-                    "sZeroRecords": "لم يعثر على أية سجلات",
-                    "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
-                    "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
-                    "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
-                    "sInfoPostFix": "",
-                    "sSearch": "ابحث:",
-                    "sUrl": "",
-                    "oPaginate": {
-                        "sFirst": "الأول",
-                        "sPrevious": "السابق",
-                        "sNext": "التالي",
-                        "sLast": "الأخير"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
-                        "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
-                    }
-                }
-            });
-        });
-        $(function() {
-            var table = $('.tasktbl3').DataTable({
-                "language": {
-                    "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
-                    "sLoadingRecords": "جارٍ التحميل...",
-                    "sProcessing": "جارٍ التحميل...",
-                    "sLengthMenu": "أظهر _MENU_ مدخلات",
-                    "sZeroRecords": "لم يعثر على أية سجلات",
-                    "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
-                    "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
-                    "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
-                    "sInfoPostFix": "",
-                    "sSearch": "ابحث:",
-                    "sUrl": "",
-                    "oPaginate": {
-                        "sFirst": "الأول",
-                        "sPrevious": "السابق",
-                        "sNext": "التالي",
-                        "sLast": "الأخير"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
-                        "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
-                    }
-                }
-            });
-        });
-        $(function() {
-            var table = $('.tasktbl4').DataTable({
-                "language": {
-                    "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
-                    "sLoadingRecords": "جارٍ التحميل...",
-                    "sProcessing": "جارٍ التحميل...",
-                    "sLengthMenu": "أظهر _MENU_ مدخلات",
-                    "sZeroRecords": "لم يعثر على أية سجلات",
-                    "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
-                    "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
-                    "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
-                    "sInfoPostFix": "",
-                    "sSearch": "ابحث:",
-                    "sUrl": "",
-                    "oPaginate": {
-                        "sFirst": "الأول",
-                        "sPrevious": "السابق",
-                        "sNext": "التالي",
-                        "sLast": "الأخير"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
-                        "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
-                    }
-                }
-            });
         });
 
-        function drawtasks($tickets){
+      }
 
-            if ( $.fn.DataTable.isDataTable( '.tasktbl1' ) ) {
-
-                $(".tasktbl1").dataTable().fnDestroy();
-
-                $('#cMyTask1').empty();
-
+      $(function () {
+        var table = $('.tasktbl1').DataTable({
+          "language": {
+            "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
+            "sLoadingRecords": "جارٍ التحميل...",
+            "sProcessing": "جارٍ التحميل...",
+            "sLengthMenu": "أظهر _MENU_ مدخلات",
+            "sZeroRecords": "لم يعثر على أية سجلات",
+            "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+            "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
+            "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+            "sInfoPostFix": "",
+            "sSearch": "ابحث:",
+            "sUrl": "",
+            "oPaginate": {
+              "sFirst": "الأول",
+              "sPrevious": "السابق",
+              "sNext": "التالي",
+              "sLast": "الأخير"
+            },
+            "oAria": {
+              "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
+              "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
             }
-            if ( $.fn.DataTable.isDataTable( '.tasktbl2' ) ) {
-
-                $(".tasktbl2").dataTable().fnDestroy();
-
-                $('#cMyTask2').empty();
-
+          }
+        });
+      });
+      $(function () {
+        var table = $('.tasktbl2').DataTable({
+          "language": {
+            "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
+            "sLoadingRecords": "جارٍ التحميل...",
+            "sProcessing": "جارٍ التحميل...",
+            "sLengthMenu": "أظهر _MENU_ مدخلات",
+            "sZeroRecords": "لم يعثر على أية سجلات",
+            "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+            "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
+            "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+            "sInfoPostFix": "",
+            "sSearch": "ابحث:",
+            "sUrl": "",
+            "oPaginate": {
+              "sFirst": "الأول",
+              "sPrevious": "السابق",
+              "sNext": "التالي",
+              "sLast": "الأخير"
+            },
+            "oAria": {
+              "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
+              "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
             }
-            if ( $.fn.DataTable.isDataTable( '.tasktbl3' ) ) {
-
-                $(".tasktbl3").dataTable().fnDestroy();
-
-                $('#cMyTask3').empty();
-
+          }
+        });
+      });
+      $(function () {
+        var table = $('.tasktbl3').DataTable({
+          "language": {
+            "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
+            "sLoadingRecords": "جارٍ التحميل...",
+            "sProcessing": "جارٍ التحميل...",
+            "sLengthMenu": "أظهر _MENU_ مدخلات",
+            "sZeroRecords": "لم يعثر على أية سجلات",
+            "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+            "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
+            "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+            "sInfoPostFix": "",
+            "sSearch": "ابحث:",
+            "sUrl": "",
+            "oPaginate": {
+              "sFirst": "الأول",
+              "sPrevious": "السابق",
+              "sNext": "التالي",
+              "sLast": "الأخير"
+            },
+            "oAria": {
+              "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
+              "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
             }
-            if ( $.fn.DataTable.isDataTable( '.tasktbl4' ) ) {
-
-                $(".tasktbl4").dataTable().fnDestroy();
-
-                $('#cMyTask4').empty();
-
+          }
+        });
+      });
+      $(function () {
+        var table = $('.tasktbl4').DataTable({
+          "language": {
+            "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
+            "sLoadingRecords": "جارٍ التحميل...",
+            "sProcessing": "جارٍ التحميل...",
+            "sLengthMenu": "أظهر _MENU_ مدخلات",
+            "sZeroRecords": "لم يعثر على أية سجلات",
+            "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+            "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
+            "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+            "sInfoPostFix": "",
+            "sSearch": "ابحث:",
+            "sUrl": "",
+            "oPaginate": {
+              "sFirst": "الأول",
+              "sPrevious": "السابق",
+              "sNext": "التالي",
+              "sLast": "الأخير"
+            },
+            "oAria": {
+              "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
+              "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
             }
+          }
+        });
+      });
 
-            engCount=0;
-            waterCount=0;
-            elecCount=0;
-            otherCount=0;
+      function drawtasks($tickets) {
 
-            for(i=0 ; i<$tickets.length ; i++){
-                taskRow='';
-                link= '/admin/viewTicket/'+$tickets[i]['trans']['ticket_id']+'/'+$tickets[i]['trans']['related'];
-                if($tickets[i]['0']['app_type']==1){
-                    elecCount++;
-                    taskRow+= '<tr style="text-align:center">'
+        if ($.fn.DataTable.isDataTable('.tasktbl1')) {
 
-    					+'<td >'+elecCount+'</td>'
+          $(".tasktbl1").dataTable().fnDestroy();
 
-    					+'<td>'
-                        +$tickets[i]['0']['nick_name']
-    					+'</td>'
-
-    					+'<td>'
-    					+'<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
-                            +'<span class="hideMob" >'+ $tickets[i]['config']['ticket_name'] +' ('+$tickets[i]['0']['app_no'] +')' +'</span>'
-                        +'</a>'
-    					+'</td>'
-
-    					+'<td>'
-                        +$tickets[i]['0']['created_at'].substring(0,10) +'&nbsp;&nbsp;&nbsp;'+$tickets[i]['0']['created_at'].substring(11,16)
-    					+'</td>'
-
-    					+'<td>'
-                        +($tickets[i]['trans']['s_note'] ??'')
-    					+'</td>'
-
-    		            +'</tr>'
-    		        $('#cMyTask2').append(taskRow);
-		        }
-                if($tickets[i]['0']['app_type']==2){
-                    waterCount++;
-                    taskRow+= '<tr style="text-align:center">'
-
-    					+'<td >'+waterCount+'</td>'
-
-    					+'<td>'
-                        +$tickets[i]['0']['nick_name']
-    					+'</td>'
-
-    					+'<td>'
-                        +'<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
-                            +'<span class="hideMob" >'+ $tickets[i]['config']['ticket_name'] +' ('+$tickets[i]['0']['app_no'] +')' +'</span>'
-                        +'</a>'
-    					+'</td>'
-
-    					+'<td>'
-                        +$tickets[i]['0']['created_at'].substring(0,10) +'&nbsp;&nbsp;&nbsp;'+$tickets[i]['0']['created_at'].substring(11,16)
-    					+'</td>'
-
-    					+'<td>'
-                        +($tickets[i]['trans']['s_note'] ??'')
-    					+'</td>'
-
-    		            +'</tr>'
-    		        $('#cMyTask3').append(taskRow);
-		        }
-                if($tickets[i]['0']['app_type']==3){
-                    engCount++;
-                    taskRow+= '<tr style="text-align:center">'
-
-    					+'<td >'+engCount+'</td>'
-
-    					+'<td>'
-                        +$tickets[i]['0']['nick_name']
-    					+'</td>'
-
-    					+'<td>'
-                        +'<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
-                            +'<span class="hideMob" >'+ $tickets[i]['config']['ticket_name'] +' ('+$tickets[i]['0']['app_no'] +')' +'</span>'
-                        +'</a>'
-    					+'</td>'
-
-    					+'<td>'
-                        +$tickets[i]['0']['created_at'].substring(0,10) +'&nbsp;&nbsp;&nbsp;'+$tickets[i]['0']['created_at'].substring(11,16)
-    					+'</td>'
-
-    					+'<td>'
-                        +($tickets[i]['trans']['s_note'] ??'')
-    					+'</td>'
-
-    		            +'</tr>'
-    		        $('#cMyTask1').append(taskRow);
-		        }
-                if($tickets[i]['0']['app_type']==4 || $tickets[i]['0']['app_type']==5){
-                    otherCount++;
-                    taskRow+= '<tr style="text-align:center">'
-
-    					+'<td >'+otherCount+'</td>'
-
-    					+'<td>'
-                        +$tickets[i]['0']['nick_name']
-    					+'</td>'
-
-    					+'<td>'
-                        +'<a target="_blank" href="{{asset(app()->getLocale())}}'+link+'">'
-                            +'<span class="hideMob" >'+ $tickets[i]['config']['ticket_name'] +' ('+$tickets[i]['0']['app_no'] +')' +'</span>'
-                        +'</a>'
-    					+'</td>'
-
-    					+'<td>'
-                        +$tickets[i]['0']['created_at'].substring(0,10) +'&nbsp;&nbsp;&nbsp;'+$tickets[i]['0']['created_at'].substring(11,16)
-    					+'</td>'
-
-    					+'<td>'
-                        +($tickets[i]['trans']['s_note'] ??'')
-    					+'</td>'
-
-    		            +'</tr>'
-    		        $('#cMyTask4').append(taskRow);
-		        }
-            }
-
-            $('#ctabCnt1').html(engCount);
-            $('#ctabCnt2').html(elecCount);
-            $('#ctabCnt3').html(waterCount);
-            $('#ctabCnt4').html(otherCount);
-
-            $('.tasktbl1').DataTable({
-                dom: 'Bfltip',
-                buttons: [{
-                        extend: 'excel',
-                        tag: 'img',
-                        title: '',
-                        attr: {
-                            title: 'excel',
-                            src: '{{ asset('assets/images/ico/excel.png') }}',
-                            style: 'cursor:pointer;height: 32px;',
-                        },
-
-                    },
-                    {
-                        extend: 'print',
-                        tag: 'img',
-                        title: '',
-                        attr: {
-                            title: 'print',
-                            src: '{{ asset('assets/images/ico/Printer.png') }} ',
-                            style: 'cursor:pointer;height: 32px;',
-                            class: "fa fa-print"
-                        },
-                        customize: function(win) {
-
-
-                            $(win.document.body).find('table').find('tbody')
-                                .css('font-size', '20pt');
-                        }
-                    },
-                ],
-
-                "language": {
-                    "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
-                    "sLoadingRecords": "جارٍ التحميل...",
-                    "sProcessing": "جارٍ التحميل...",
-                    "sLengthMenu": "أظهر _MENU_ مدخلات",
-                    "sZeroRecords": "لم يعثر على أية سجلات",
-                    "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
-                    "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
-                    "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
-                    "sInfoPostFix": "",
-                    "sSearch": "ابحث:",
-                    "sUrl": "",
-                    "oPaginate": {
-                        "sFirst": "الأول",
-                        "sPrevious": "السابق",
-                        "sNext": "التالي",
-                        "sLast": "الأخير"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
-                        "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
-                    }
-                }
-            });
-            $('.tasktbl2').DataTable({
-                dom: 'Bfltip',
-                buttons: [{
-                        extend: 'excel',
-                        tag: 'img',
-                        title: '',
-                        attr: {
-                            title: 'excel',
-                            src: '{{ asset('assets/images/ico/excel.png') }}',
-                            style: 'cursor:pointer;height: 32px;',
-                        },
-
-                    },
-                    {
-                        extend: 'print',
-                        tag: 'img',
-                        title: '',
-                        attr: {
-                            title: 'print',
-                            src: '{{ asset('assets/images/ico/Printer.png') }} ',
-                            style: 'cursor:pointer;height: 32px;',
-                            class: "fa fa-print"
-                        },
-                        customize: function(win) {
-
-
-                            $(win.document.body).find('table').find('tbody')
-                                .css('font-size', '20pt');
-                        }
-                    },
-                ],
-
-                "language": {
-                    "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
-                    "sLoadingRecords": "جارٍ التحميل...",
-                    "sProcessing": "جارٍ التحميل...",
-                    "sLengthMenu": "أظهر _MENU_ مدخلات",
-                    "sZeroRecords": "لم يعثر على أية سجلات",
-                    "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
-                    "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
-                    "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
-                    "sInfoPostFix": "",
-                    "sSearch": "ابحث:",
-                    "sUrl": "",
-                    "oPaginate": {
-                        "sFirst": "الأول",
-                        "sPrevious": "السابق",
-                        "sNext": "التالي",
-                        "sLast": "الأخير"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
-                        "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
-                    }
-                }
-            });
-            $('.tasktbl3').DataTable({
-                dom: 'Bfltip',
-                buttons: [{
-                        extend: 'excel',
-                        tag: 'img',
-                        title: '',
-                        attr: {
-                            title: 'excel',
-                            src: '{{ asset('assets/images/ico/excel.png') }}',
-                            style: 'cursor:pointer;height: 32px;',
-                        },
-
-                    },
-                    {
-                        extend: 'print',
-                        tag: 'img',
-                        title: '',
-                        attr: {
-                            title: 'print',
-                            src: '{{ asset('assets/images/ico/Printer.png') }} ',
-                            style: 'cursor:pointer;height: 32px;',
-                            class: "fa fa-print"
-                        },
-                        customize: function(win) {
-
-
-                            $(win.document.body).find('table').find('tbody')
-                                .css('font-size', '20pt');
-                        }
-                    },
-                ],
-
-                "language": {
-                    "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
-                    "sLoadingRecords": "جارٍ التحميل...",
-                    "sProcessing": "جارٍ التحميل...",
-                    "sLengthMenu": "أظهر _MENU_ مدخلات",
-                    "sZeroRecords": "لم يعثر على أية سجلات",
-                    "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
-                    "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
-                    "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
-                    "sInfoPostFix": "",
-                    "sSearch": "ابحث:",
-                    "sUrl": "",
-                    "oPaginate": {
-                        "sFirst": "الأول",
-                        "sPrevious": "السابق",
-                        "sNext": "التالي",
-                        "sLast": "الأخير"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
-                        "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
-                    }
-                }
-            });
-            $('.tasktbl4').DataTable({
-                dom: 'Bfltip',
-                buttons: [{
-                        extend: 'excel',
-                        tag: 'img',
-                        title: '',
-                        attr: {
-                            title: 'excel',
-                            src: '{{ asset('assets/images/ico/excel.png') }}',
-                            style: 'cursor:pointer;height: 32px;',
-                        },
-
-                    },
-                    {
-                        extend: 'print',
-                        tag: 'img',
-                        title: '',
-                        attr: {
-                            title: 'print',
-                            src: '{{ asset('assets/images/ico/Printer.png') }} ',
-                            style: 'cursor:pointer;height: 32px;',
-                            class: "fa fa-print"
-                        },
-                        customize: function(win) {
-
-
-                            $(win.document.body).find('table').find('tbody')
-                                .css('font-size', '20pt');
-                        }
-                    },
-                ],
-
-                "language": {
-                    "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
-                    "sLoadingRecords": "جارٍ التحميل...",
-                    "sProcessing": "جارٍ التحميل...",
-                    "sLengthMenu": "أظهر _MENU_ مدخلات",
-                    "sZeroRecords": "لم يعثر على أية سجلات",
-                    "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
-                    "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
-                    "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
-                    "sInfoPostFix": "",
-                    "sSearch": "ابحث:",
-                    "sUrl": "",
-                    "oPaginate": {
-                        "sFirst": "الأول",
-                        "sPrevious": "السابق",
-                        "sNext": "التالي",
-                        "sLast": "الأخير"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
-                        "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
-                    }
-                }
-            });
+          $('#cMyTask1').empty();
 
         }
-</script>
+        if ($.fn.DataTable.isDataTable('.tasktbl2')) {
+
+          $(".tasktbl2").dataTable().fnDestroy();
+
+          $('#cMyTask2').empty();
+
+        }
+        if ($.fn.DataTable.isDataTable('.tasktbl3')) {
+
+          $(".tasktbl3").dataTable().fnDestroy();
+
+          $('#cMyTask3').empty();
+
+        }
+        if ($.fn.DataTable.isDataTable('.tasktbl4')) {
+
+          $(".tasktbl4").dataTable().fnDestroy();
+
+          $('#cMyTask4').empty();
+
+        }
+
+        engCount = 0;
+        waterCount = 0;
+        elecCount = 0;
+        otherCount = 0;
+
+        for (i = 0; i < $tickets.length; i++) {
+          taskRow = '';
+          link = '/admin/viewTicket/' + $tickets[i]['trans']['ticket_id'] + '/' + $tickets[i]['trans']['related'];
+          if ($tickets[i]['0']['app_type'] == 1) {
+            elecCount++;
+            taskRow += '<tr style="text-align:center">'
+
+              + '<td >' + elecCount + '</td>'
+
+              + '<td>'
+              + $tickets[i]['0']['nick_name']
+              + '</td>'
+
+              + '<td>'
+              + '<a target="_blank" href="{{asset(app()->getLocale())}}' + link + '">'
+              + '<span class="hideMob" >' + $tickets[i]['config']['ticket_name'] + ' (' + $tickets[i]['0']['app_no'] + ')' + '</span>'
+              + '</a>'
+              + '</td>'
+
+              + '<td>'
+              + $tickets[i]['0']['created_at'].substring(0, 10) + '&nbsp;&nbsp;&nbsp;' + $tickets[i]['0']['created_at'].substring(11, 16)
+              + '</td>'
+
+              + '<td>'
+              + ($tickets[i]['trans']['s_note'] ?? '')
+              + '</td>'
+
+              + '</tr>'
+            $('#cMyTask2').append(taskRow);
+          }
+          if ($tickets[i]['0']['app_type'] == 2) {
+            waterCount++;
+            taskRow += '<tr style="text-align:center">'
+
+              + '<td >' + waterCount + '</td>'
+
+              + '<td>'
+              + $tickets[i]['0']['nick_name']
+              + '</td>'
+
+              + '<td>'
+              + '<a target="_blank" href="{{asset(app()->getLocale())}}' + link + '">'
+              + '<span class="hideMob" >' + $tickets[i]['config']['ticket_name'] + ' (' + $tickets[i]['0']['app_no'] + ')' + '</span>'
+              + '</a>'
+              + '</td>'
+
+              + '<td>'
+              + $tickets[i]['0']['created_at'].substring(0, 10) + '&nbsp;&nbsp;&nbsp;' + $tickets[i]['0']['created_at'].substring(11, 16)
+              + '</td>'
+
+              + '<td>'
+              + ($tickets[i]['trans']['s_note'] ?? '')
+              + '</td>'
+
+              + '</tr>'
+            $('#cMyTask3').append(taskRow);
+          }
+          if ($tickets[i]['0']['app_type'] == 3) {
+            engCount++;
+            taskRow += '<tr style="text-align:center">'
+
+              + '<td >' + engCount + '</td>'
+
+              + '<td>'
+              + $tickets[i]['0']['nick_name']
+              + '</td>'
+
+              + '<td>'
+              + '<a target="_blank" href="{{asset(app()->getLocale())}}' + link + '">'
+              + '<span class="hideMob" >' + $tickets[i]['config']['ticket_name'] + ' (' + $tickets[i]['0']['app_no'] + ')' + '</span>'
+              + '</a>'
+              + '</td>'
+
+              + '<td>'
+              + $tickets[i]['0']['created_at'].substring(0, 10) + '&nbsp;&nbsp;&nbsp;' + $tickets[i]['0']['created_at'].substring(11, 16)
+              + '</td>'
+
+              + '<td>'
+              + ($tickets[i]['trans']['s_note'] ?? '')
+              + '</td>'
+
+              + '</tr>'
+            $('#cMyTask1').append(taskRow);
+          }
+          if ($tickets[i]['0']['app_type'] == 4 || $tickets[i]['0']['app_type'] == 5) {
+            otherCount++;
+            taskRow += '<tr style="text-align:center">'
+
+              + '<td >' + otherCount + '</td>'
+
+              + '<td>'
+              + $tickets[i]['0']['nick_name']
+              + '</td>'
+
+              + '<td>'
+              + '<a target="_blank" href="{{asset(app()->getLocale())}}' + link + '">'
+              + '<span class="hideMob" >' + $tickets[i]['config']['ticket_name'] + ' (' + $tickets[i]['0']['app_no'] + ')' + '</span>'
+              + '</a>'
+              + '</td>'
+
+              + '<td>'
+              + $tickets[i]['0']['created_at'].substring(0, 10) + '&nbsp;&nbsp;&nbsp;' + $tickets[i]['0']['created_at'].substring(11, 16)
+              + '</td>'
+
+              + '<td>'
+              + ($tickets[i]['trans']['s_note'] ?? '')
+              + '</td>'
+
+              + '</tr>'
+            $('#cMyTask4').append(taskRow);
+          }
+        }
+
+        $('#ctabCnt1').html(engCount);
+        $('#ctabCnt2').html(elecCount);
+        $('#ctabCnt3').html(waterCount);
+        $('#ctabCnt4').html(otherCount);
+
+        $('.tasktbl1').DataTable({
+          dom: 'Bfltip',
+          buttons: [{
+            extend: 'excel',
+            tag: 'img',
+            title: '',
+            attr: {
+              title: 'excel',
+              src: '{{ asset('assets/images/ico/excel.png') }}',
+              style: 'cursor:pointer;height: 32px;',
+            },
+
+          },
+            {
+              extend: 'print',
+              tag: 'img',
+              title: '',
+              attr: {
+                title: 'print',
+                src: '{{ asset('assets/images/ico/Printer.png') }} ',
+                style: 'cursor:pointer;height: 32px;',
+                class: "fa fa-print"
+              },
+              customize: function (win) {
+
+
+                $(win.document.body).find('table').find('tbody')
+                  .css('font-size', '20pt');
+              }
+            },
+          ],
+
+          "language": {
+            "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
+            "sLoadingRecords": "جارٍ التحميل...",
+            "sProcessing": "جارٍ التحميل...",
+            "sLengthMenu": "أظهر _MENU_ مدخلات",
+            "sZeroRecords": "لم يعثر على أية سجلات",
+            "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+            "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
+            "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+            "sInfoPostFix": "",
+            "sSearch": "ابحث:",
+            "sUrl": "",
+            "oPaginate": {
+              "sFirst": "الأول",
+              "sPrevious": "السابق",
+              "sNext": "التالي",
+              "sLast": "الأخير"
+            },
+            "oAria": {
+              "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
+              "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
+            }
+          }
+        });
+        $('.tasktbl2').DataTable({
+          dom: 'Bfltip',
+          buttons: [{
+            extend: 'excel',
+            tag: 'img',
+            title: '',
+            attr: {
+              title: 'excel',
+              src: '{{ asset('assets/images/ico/excel.png') }}',
+              style: 'cursor:pointer;height: 32px;',
+            },
+
+          },
+            {
+              extend: 'print',
+              tag: 'img',
+              title: '',
+              attr: {
+                title: 'print',
+                src: '{{ asset('assets/images/ico/Printer.png') }} ',
+                style: 'cursor:pointer;height: 32px;',
+                class: "fa fa-print"
+              },
+              customize: function (win) {
+
+
+                $(win.document.body).find('table').find('tbody')
+                  .css('font-size', '20pt');
+              }
+            },
+          ],
+
+          "language": {
+            "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
+            "sLoadingRecords": "جارٍ التحميل...",
+            "sProcessing": "جارٍ التحميل...",
+            "sLengthMenu": "أظهر _MENU_ مدخلات",
+            "sZeroRecords": "لم يعثر على أية سجلات",
+            "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+            "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
+            "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+            "sInfoPostFix": "",
+            "sSearch": "ابحث:",
+            "sUrl": "",
+            "oPaginate": {
+              "sFirst": "الأول",
+              "sPrevious": "السابق",
+              "sNext": "التالي",
+              "sLast": "الأخير"
+            },
+            "oAria": {
+              "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
+              "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
+            }
+          }
+        });
+        $('.tasktbl3').DataTable({
+          dom: 'Bfltip',
+          buttons: [{
+            extend: 'excel',
+            tag: 'img',
+            title: '',
+            attr: {
+              title: 'excel',
+              src: '{{ asset('assets/images/ico/excel.png') }}',
+              style: 'cursor:pointer;height: 32px;',
+            },
+
+          },
+            {
+              extend: 'print',
+              tag: 'img',
+              title: '',
+              attr: {
+                title: 'print',
+                src: '{{ asset('assets/images/ico/Printer.png') }} ',
+                style: 'cursor:pointer;height: 32px;',
+                class: "fa fa-print"
+              },
+              customize: function (win) {
+
+
+                $(win.document.body).find('table').find('tbody')
+                  .css('font-size', '20pt');
+              }
+            },
+          ],
+
+          "language": {
+            "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
+            "sLoadingRecords": "جارٍ التحميل...",
+            "sProcessing": "جارٍ التحميل...",
+            "sLengthMenu": "أظهر _MENU_ مدخلات",
+            "sZeroRecords": "لم يعثر على أية سجلات",
+            "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+            "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
+            "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+            "sInfoPostFix": "",
+            "sSearch": "ابحث:",
+            "sUrl": "",
+            "oPaginate": {
+              "sFirst": "الأول",
+              "sPrevious": "السابق",
+              "sNext": "التالي",
+              "sLast": "الأخير"
+            },
+            "oAria": {
+              "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
+              "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
+            }
+          }
+        });
+        $('.tasktbl4').DataTable({
+          dom: 'Bfltip',
+          buttons: [{
+            extend: 'excel',
+            tag: 'img',
+            title: '',
+            attr: {
+              title: 'excel',
+              src: '{{ asset('assets/images/ico/excel.png') }}',
+              style: 'cursor:pointer;height: 32px;',
+            },
+
+          },
+            {
+              extend: 'print',
+              tag: 'img',
+              title: '',
+              attr: {
+                title: 'print',
+                src: '{{ asset('assets/images/ico/Printer.png') }} ',
+                style: 'cursor:pointer;height: 32px;',
+                class: "fa fa-print"
+              },
+              customize: function (win) {
+
+
+                $(win.document.body).find('table').find('tbody')
+                  .css('font-size', '20pt');
+              }
+            },
+          ],
+
+          "language": {
+            "sEmptyTable": "ليست هناك بيانات متاحة في الجدول",
+            "sLoadingRecords": "جارٍ التحميل...",
+            "sProcessing": "جارٍ التحميل...",
+            "sLengthMenu": "أظهر _MENU_ مدخلات",
+            "sZeroRecords": "لم يعثر على أية سجلات",
+            "sInfo": "إظهار _START_ إلى _END_ من أصل _TOTAL_ مدخل",
+            "sInfoEmpty": "يعرض 0 إلى 0 من أصل 0 سجل",
+            "sInfoFiltered": "(منتقاة من مجموع _MAX_ مُدخل)",
+            "sInfoPostFix": "",
+            "sSearch": "ابحث:",
+            "sUrl": "",
+            "oPaginate": {
+              "sFirst": "الأول",
+              "sPrevious": "السابق",
+              "sNext": "التالي",
+              "sLast": "الأخير"
+            },
+            "oAria": {
+              "sSortAscending": ": تفعيل لترتيب العمود تصاعدياً",
+              "sSortDescending": ": تفعيل لترتيب العمود تنازلياً"
+            }
+          }
+        });
+
+      }
+    </script>
 @stop
 
