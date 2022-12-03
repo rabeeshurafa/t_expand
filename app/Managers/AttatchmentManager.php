@@ -44,7 +44,7 @@ class AttatchmentManager
             Storage::disk('ftp')->put(('expand/texpand/' . $imageName), fopen($file, 'r+'));
             // Storage::disk('s3')->put($imageName, fopen($file, 'r+'));
 //            Storage::disk('s3')->put($imageName, Storage::disk('ftp')->get('expand/texpand/' . $imageName));
-            $res = Storage::disk('dropbox')->put(('texpand/' . $imageName), Storage::disk('ftp')->get('expand/texpand/' . $imageName));
+            $res = Storage::disk('dropbox')->put(('texpand/' . $imageName), fopen($file, 'r+'));
             $dropbox = ('texpand/' . $imageName);
             if ($res) {
                 $fileLinks['dropbox'] = $dropbox;
@@ -99,7 +99,7 @@ class AttatchmentManager
         }
         $ftp = Storage::disk('ftp')->url(('texpand/' . $name . '.' . $type));
 //        $s3 = Storage::disk('s3')->url(($name . '.' . $type));
-        $size = Storage::disk('ftp')->size(('texpand/' . $name . '.' . $type));
+        $size = Storage::disk('ftp')->size(('expand/texpand/' . $name . '.' . $type));
 //        $fileLinks['s3'] = $s3;
         $fileLinks['ftp'] = $ftp;
         $file = new File();
@@ -132,6 +132,7 @@ class AttatchmentManager
             $fileLinks['dropbox'] = $dropbox;
         }
         $ftp = Storage::disk('ftp')->url(('texpand/' . $name . '.pdf'));
+        $size = Storage::disk('ftp')->size(('expand/texpand/' . $name . '.pdf'));
 //        $s3 = Storage::disk('s3')->url(($name . '.pdf'));
 
 //        $fileLinks['s3'] = $s3;
@@ -142,6 +143,7 @@ class AttatchmentManager
         $file->extension = 'pdf';
         $file->url = 'storage/' . $name . '.pdf';
         $file->type = '2';
+        $file->size = $size;
         $file->file_links = $fileLinks;
         $file->save();
         return $file;

@@ -1,8 +1,9 @@
 @extends('layouts.admin')
 @section('search')
-<li class="dropdown dropdown-language nav-item hideMob">
-            <input id="searchContent" name="searchContent" class="form-control SubPagea round full_search" placeholder="بحث" style="text-align: center;width: 350px; margin-top: 15px !important;">
-          </li>
+    <li class="dropdown dropdown-language nav-item hideMob">
+        <input id="searchContent" name="searchContent" class="form-control SubPagea round full_search" placeholder="بحث"
+               style="text-align: center;width: 350px; margin-top: 15px !important;">
+    </li>
 @endsection
 @section('content')
 
@@ -56,7 +57,7 @@
             cursor: pointer;
         }
 
-        .rate:not(:checked)>label {
+        .rate:not(:checked) > label {
             font-size: 30px !important;
         }
 
@@ -96,7 +97,7 @@
 
 
     <link rel="stylesheet" type="text/css"
-        href="https://template.expand.ps/app-assets/global/plugins/jquery-multi-select/css/multi-select-rtl.css" />
+          href="https://template.expand.ps/app-assets/global/plugins/jquery-multi-select/css/multi-select-rtl.css"/>
 
     <script src="https://db.expand.ps/assets/jquery.min.js" type="text/javascript"></script>
 
@@ -108,7 +109,7 @@
 
                 <div class="col-sm-12 col-md-6">
                     <div class="card leftSide">
-                        
+
                         @include('dashboard.component.ticketHeader',['ticketInfo'=>$ticketInfo])
                         <div class="card-content collapse show">
                             <div class="card-body" style="padding-bottom: 0px;">
@@ -117,21 +118,23 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group paddmob">
-                                                <div class="input-group" >
+                                                <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text" id="basic-addon1">
                                                             {{ 'اسم المركبة' }}
                                                         </span>
                                                     </div>
-                                                    <input type="hidden" id="vehicle_name"  name="vehicle_name" value="0">
-                                                    
-                                                    <select class="form-control" name="vehicle_id" id="vehicle_id" onchange="putVehiclName();">
+                                                    <input type="hidden" id="vehicle_name" name="vehicle_name"
+                                                           value="0">
+
+                                                    <select class="form-control" name="vehicle_id" id="vehicle_id"
+                                                            onchange="putVehiclName();">
                                                         <option value="">{{ 'اختر' }} </option>
                                                         @foreach($vehicles as $vehicle)
                                                             <option value="{{$vehicle->id}}">{{$vehicle->name}}</option>
                                                         @endforeach
                                                     </select>
-                                                    
+
                                                 </div>
                                             </div>
                                         </div>
@@ -143,16 +146,17 @@
                                                             {{ 'رقم المركبة' }}
                                                         </span>
                                                     </div>
-                                                    <input type="text" id="vehicle_no" 
-                                                        class="form-control numFeild" placeholder="{{ 'رقم المركبة' }}"
-                                                        name="vehicle_no">
+                                                    <input type="text" id="vehicle_no"
+                                                           class="form-control numFeild"
+                                                           placeholder="{{ 'رقم المركبة' }}"
+                                                           name="vehicle_no">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <input type="hidden" id="app_type"  name="app_type" value="5">
-                                    <input type="hidden" id="dept_id"  name="dept_id" value="{{$ticketInfo->dept_id}}">
-                                    
+                                    <input type="hidden" id="app_type" name="app_type" value="5">
+                                    <input type="hidden" id="dept_id" name="dept_id" value="{{$ticketInfo->dept_id}}">
+
                                     @include('dashboard.includes.maldesc_ticket',['name_maldesc'=>'وصف الصيانة المطلوبة'])
                                 </div>
                             </div>
@@ -164,11 +168,6 @@
                 </div>
                 @include('dashboard.includes.forward')
             </div>
-            </div>
-
-
-
-
         </form>
     </section>
 
@@ -180,150 +179,155 @@
 
 
 
-<script>
-    function putVehiclName(){
-        document.getElementById("vehicle_name").value =$("#vehicle_id option:selected").text();
-        
-        $.ajax({
-    
-                    type: 'get', // the method (could be GET btw)
-    
-                    url: "vehcile_info",
-    
-                    data: {
-    
-                        vehcile_id: $("#vehicle_id").val(),
-    
-                    },
-    
-                    success:function(response){
-                      
-                    $("#vehicle_no").val(response.info.serial_number)
-                },
-    
-            });
-    }
-    $(document).ready(function () {
+    <script>
+      function putVehiclName() {
+        document.getElementById("vehicle_name").value = $("#vehicle_id option:selected").text();
 
-    $( "#vehicle_name" ).autocomplete({
-		source:'vehicle_auto_complete',
-		minLength: 1,
-        select: function( event, ui ) {
+        $.ajax({
+
+          type: 'get', // the method (could be GET btw)
+
+          url: "vehcile_info",
+
+          data: {
+
+            vehcile_id: $("#vehicle_id").val(),
+
+          },
+
+          success: function (response) {
+
+            $("#vehicle_no").val(response.info.serial_number)
+          },
+
+        });
+      }
+
+      $(document).ready(function () {
+
+        $("#vehicle_name").autocomplete({
+          source: 'vehicle_auto_complete',
+          minLength: 1,
+          select: function (event, ui) {
             $("#vehicle_id").val(ui.item.id)
             $("#vehicle_no").val(ui.item.serial_number)
-		}
-	});
-	
-   
-    $('#ticketFrm').submit(function(e) {
-            
-        e.preventDefault();
-        $(".loader").removeClass('hide');
-        $(".form-actions").addClass('hide');
-        $( "#vehicle_name" ).removeClass( "error" );
-        $( "#vehicle_id" ).removeClass( "error" );
-        $( "#malDesc" ).removeClass( "error" );
-      let formData = new FormData(this);
-      $.ajax({
-          type:'POST',
-          url: "saveTicket37",
-          data: formData,
-          contentType: false,
-          processData: false,
-          success: (response) => {
-            $(".form-actions").removeClass('hide');
-            $('.wtbl').DataTable().ajax.reload();  
-            // console.log('response');
-            if (response.success!=null) {
+          }
+        });
+
+
+        $('#ticketFrm').submit(function (e) {
+
+          e.preventDefault();
+          if (validateAttachments()) {
+            return false;
+          }
+          $(".loader").removeClass('hide');
+          $(".form-actions").addClass('hide');
+          $("#vehicle_name").removeClass("error");
+          $("#vehicle_id").removeClass("error");
+          $("#malDesc").removeClass("error");
+          let formData = new FormData(this);
+          $.ajax({
+            type: 'POST',
+            url: "saveTicket37",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: (response) => {
+              $(".form-actions").removeClass('hide');
+              $('.wtbl').DataTable().ajax.reload();
+              // console.log('response');
+              if (response.success != null) {
                 $(".loader").addClass('hide');
-			    Swal.fire({
-				position: 'top-center',
-				icon: 'success',
-				title: '{{trans('admin.data_added')}}',
-				showConfirmButton: false,
-				timer: 1500
-				})
-				
-				writeUserData('viewTicket/'+response.app_id+'/'+response.app_type)
-                if(print==true){
-                let url=`{{ route('admin.dashboard') }}/printTicket/${response.app_id}/${response.app_type}`
-                window.open(url, '_blank');
-                print=false;
-				}
-				setTimeout(function(){self.location='{{asset('/ar/admin')}}'},1500)
-               this.reset();
-				// if(print==true){
-    //             self.location=`{{ route('admin.dashboard') }}/printTicket/${response.app_id}/${response.app_type}`
-    //             print=false;
-				// }
-    //             writeUserData('viewTicket/'+response.app_id+'/'+response.app_type)
-    //     				setTimeout(function(){self.location='{{asset('/ar/admin')}}'},1500)
-    //           this.reset();
-             }else{
-                 console.log(response.error);
-                 if(response.error=='no_attatch'){
-                     
-                     $(".attachName").addClass('error');
-                    Swal.fire({
-    				position: 'top-center',
-    				icon: 'error',
-    				title: 'أدخل المرفقات',
-    				showConfirmButton: true,
-    				timer: 2000
-    				})
-                    $(".loader").addClass('hide');
-    				return false;
-                 }
-                 $(".loader").addClass('hide');
+                Swal.fire({
+                  position: 'top-center',
+                  icon: 'success',
+                  title: '{{trans('admin.data_added')}}',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
 
-    			Swal.fire({
-    				position: 'top-center',
-    				icon: 'error',
-    				title: '{{trans('admin.error_save')}}',
-    				showConfirmButton: false,
-    				timer: 1500
-    				})
-                 }
-             //location.reload();
+                writeUserData('viewTicket/' + response.app_id + '/' + response.app_type)
+                if (print == true) {
+                  let url = `{{ route('admin.dashboard') }}/printTicket/${response.app_id}/${response.app_type}`
+                  window.open(url, '_blank');
+                  print = false;
+                }
+                setTimeout(function () {
+                  self.location = '{{asset('/ar/admin')}}'
+                }, 1500)
+                this.reset();
+                // if(print==true){
+                //             self.location=`{{ route('admin.dashboard') }}/printTicket/${response.app_id}/${response.app_type}`
+                //             print=false;
+                // }
+                //             writeUserData('viewTicket/'+response.app_id+'/'+response.app_type)
+                //     				setTimeout(function(){self.location='{{asset('/ar/admin')}}'},1500)
+                //           this.reset();
+              } else {
+                console.log(response.error);
+                if (response.error == 'no_attatch') {
 
-           },
-           error: function(response){
-            $(".loader").addClass('hide');
-            $(".form-actions").removeClass('hide');
-			if(response.responseJSON.errors.vehicle_name){
-                $( "#vehicle_name" ).addClass( "error" );
-                $( "#vehicle_name" ).get(0).setCustomValidity('أدخل اسم معرف مسبقا ');
-                $( "#vehicle_name" ).on('input',function(){
-                    this.setCustomValidity('')
+                  $(".attachName").addClass('error');
+                  Swal.fire({
+                    position: 'top-center',
+                    icon: 'error',
+                    title: 'أدخل المرفقات',
+                    showConfirmButton: true,
+                    timer: 2000
+                  })
+                  $(".loader").addClass('hide');
+                  return false;
+                }
+                $(".loader").addClass('hide');
+
+                Swal.fire({
+                  position: 'top-center',
+                  icon: 'error',
+                  title: '{{trans('admin.error_save')}}',
+                  showConfirmButton: false,
+                  timer: 1500
                 })
-            }
-            if(response.responseJSON.errors.vehicle_id){
-                $( "#vehicle_name" ).addClass( "error" );
-                $( "#vehicle_name" ).get(0).setCustomValidity('أدخل اسم معرف مسبقا ');
-                $( "#vehicle_name" ).on('input',function(){
-                    this.setCustomValidity('')
+              }
+              //location.reload();
+
+            },
+            error: function (response) {
+              $(".loader").addClass('hide');
+              $(".form-actions").removeClass('hide');
+              if (response.responseJSON.errors.vehicle_name) {
+                $("#vehicle_name").addClass("error");
+                $("#vehicle_name").get(0).setCustomValidity('أدخل اسم معرف مسبقا ');
+                $("#vehicle_name").on('input', function () {
+                  this.setCustomValidity('')
                 })
-            }
-            if(response.responseJSON.errors.malDesc){
-                $( "#malDesc" ).addClass( "error" );
-                $( "#malDesc" ).get(0).setCustomValidity('أدخل سبب الاجازة ');
-                $( "#malDesc" ).on('blur',function(){
-                    this.setCustomValidity('')
+              }
+              if (response.responseJSON.errors.vehicle_id) {
+                $("#vehicle_name").addClass("error");
+                $("#vehicle_name").get(0).setCustomValidity('أدخل اسم معرف مسبقا ');
+                $("#vehicle_name").on('input', function () {
+                  this.setCustomValidity('')
                 })
+              }
+              if (response.responseJSON.errors.malDesc) {
+                $("#malDesc").addClass("error");
+                $("#malDesc").get(0).setCustomValidity('أدخل سبب الاجازة ');
+                $("#malDesc").on('blur', function () {
+                  this.setCustomValidity('')
+                })
+              }
+              Swal.fire({
+                position: 'top-center',
+                icon: 'error',
+                title: 'يرجى تعبئة الحقول الاجبارية',
+                showConfirmButton: false,
+                timer: 1500
+              })
             }
-			Swal.fire({
-				position: 'top-center',
-				icon: 'error',
-				title: 'يرجى تعبئة الحقول الاجبارية',
-				showConfirmButton: false,
-				timer: 1500
-				})
-           }
+          });
+        });
       });
-  });
-}); 
-    
-    
-</script>
+
+    </script>
 @stop
 

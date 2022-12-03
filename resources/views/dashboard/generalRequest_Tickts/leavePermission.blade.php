@@ -1,12 +1,13 @@
 @extends('layouts.admin')
 @section('search')
-<li class="dropdown dropdown-language nav-item hideMob">
-            <input id="searchContent" name="searchContent" class="form-control SubPagea round full_search" placeholder="بحث" style="text-align: center;width: 350px; margin-top: 15px !important;">
-          </li>
+    <li class="dropdown dropdown-language nav-item hideMob">
+        <input id="searchContent" name="searchContent" class="form-control SubPagea round full_search" placeholder="بحث"
+               style="text-align: center;width: 350px; margin-top: 15px !important;">
+    </li>
 @endsection
 @section('content')
 
-<style>
+    <style>
         /* The Modal (background) */
         .modal1 {
             display: none;
@@ -56,7 +57,7 @@
             cursor: pointer;
         }
 
-        .rate:not(:checked)>label {
+        .rate:not(:checked) > label {
             font-size: 30px !important;
         }
 
@@ -84,7 +85,7 @@
 
 
     <link rel="stylesheet" type="text/css"
-        href="https://template.expand.ps/app-assets/global/plugins/jquery-multi-select/css/multi-select-rtl.css" />
+          href="https://template.expand.ps/app-assets/global/plugins/jquery-multi-select/css/multi-select-rtl.css"/>
 
     <script src="https://db.expand.ps/assets/jquery.min.js" type="text/javascript"></script>
 
@@ -96,7 +97,7 @@
 
                 <div class="col-sm-12 col-md-6">
                     <div class="card leftSide">
-                        
+
                         @include('dashboard.component.ticketHeader',['ticketInfo'=>$ticketInfo])
                         <div class="card-content collapse show">
                             <div class="card-body" style="padding-bottom: 0px;">
@@ -118,7 +119,7 @@
                                                         @endforeach
                                                     </select>
                                                     <div class="input-group-append hideMob"
-                                                        onclick="ShowConstantModal(6055,'vac_type','نوع المغادرة')">
+                                                         onclick="ShowConstantModal(6055,'vac_type','نوع المغادرة')">
                                                         <span class="input-group-text input-group-text2">
                                                             <i class="fa fa-external-link"></i>
                                                         </span>
@@ -127,8 +128,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <input type="hidden" id="app_type"  name="app_type" value="5">
-                                    <input type="hidden" id="dept_id"  name="dept_id" value="{{$ticketInfo->dept_id}}">
+                                    <input type="hidden" id="app_type" name="app_type" value="5">
+                                    <input type="hidden" id="dept_id" name="dept_id" value="{{$ticketInfo->dept_id}}">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group paddmob">
@@ -138,12 +139,13 @@
                                                             {{ 'اسم الموظف' }}
                                                         </span>
                                                     </div>
-                                                    <input type="text" id="subscriber_name" 
-                                                        class="form-control alphaFeild cac ui-autocomplete-input"
-                                                        name="subscriber_name" autocomplete="off">
+                                                    <input type="text" id="subscriber_name"
+                                                           class="form-control alphaFeild cac ui-autocomplete-input"
+                                                           name="subscriber_name" autocomplete="off">
                                                     <input type="hidden" name="subscriber_id" id="subscriber_id"
-                                                        class="form-control alphaFeild cac ui-autocomplete-input" value="0"
-                                                        autocomplete="off">
+                                                           class="form-control alphaFeild cac ui-autocomplete-input"
+                                                           value="0"
+                                                           autocomplete="off">
                                                 </div>
                                             </div>
                                         </div>
@@ -155,17 +157,18 @@
                                                             {{ 'تاريخ اليوم' }}
                                                         </span>
                                                     </div>
-                                                    <input type="text" id="date" maxlength="10" data-mask="00/00/0000" 
-                                                    name="date" class="form-control singledate " placeholder="dd/mm/yyyy" 
-                                                    aria-describedby="basic-addon1" aria-invalid="false" 
-                                                    value="<?php echo date('d/m/Y')?>" autocomplete="off">
+                                                    <input type="text" id="date" maxlength="10" data-mask="00/00/0000"
+                                                           name="date" class="form-control singledate "
+                                                           placeholder="dd/mm/yyyy"
+                                                           aria-describedby="basic-addon1" aria-invalid="false"
+                                                           value="<?php echo date('d/m/Y')?>" autocomplete="off">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-md-3" >
+                                        <div class="col-md-3">
                                             <div class="form-group paddmob">
                                                 <div class="input-group w-s-87 mt-s-6">
                                                     <div class="input-group-prepend">
@@ -174,9 +177,10 @@
                                                         </span>
                                                     </div>
                                                     <input type="text" id="start" onblur="calcDuration()"
-                                                        data-mask="00:00" 
-                                                        class="form-control "
-                                                        placeholder="hh:mm" name="start" maxlength="5" value="<?php echo date("h:i")?>">
+                                                           data-mask="00:00"
+                                                           class="form-control "
+                                                           placeholder="hh:mm" name="start" maxlength="5"
+                                                           value="<?php echo date("h:i")?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -189,9 +193,9 @@
                                                         </span>
                                                     </div>
                                                     <input type="text" onblur="calcDuration()" value="14:00"
-                                                        id="endDior" data-mask="00:00" 
-                                                        class="form-control "
-                                                        placeholder="hh:mm" name="endDior" maxlength="5">
+                                                           id="endDior" data-mask="00:00"
+                                                           class="form-control "
+                                                           placeholder="hh:mm" name="endDior" maxlength="5">
                                                 </div>
                                             </div>
                                         </div>
@@ -203,15 +207,14 @@
                                                             {{ 'المدة الزمنية للمغادرة' }}
                                                         </span>
                                                     </div>
-                                                    <input type="text"  
-                                                        id="totalPeriod"
-                                                        class="form-control "
-                                                        placeholder="hh:mm" name="totalPeriod" maxlength="5">
+                                                    <input type="text"
+                                                           id="totalPeriod"
+                                                           class="form-control "
+                                                           placeholder="hh:mm" name="totalPeriod" maxlength="5">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
 
                                     @include('dashboard.includes.maldesc_ticket',['name_maldesc'=>'سبب الخروج'])
 
@@ -226,11 +229,6 @@
                 </div>
                 @include('dashboard.includes.forward')
             </div>
-            </div>
-
-
-
-
         </form>
     </section>
 
@@ -240,204 +238,208 @@
 
 
 
-<script>
-calcDuration();
-$(document).ready(function () {
-    $( "#subscriber_name" ).val('{{Auth()->user()->nick_name}}');
-    $("#subscriber_id").val({{Auth()->user()->id}});
-    getArchive({{Auth()->user()->id}});
+    <script>
+      calcDuration();
+      $(document).ready(function () {
+        $("#subscriber_name").val('{{Auth()->user()->nick_name}}');
+        $("#subscriber_id").val({{Auth()->user()->id}});
+        getArchive({{Auth()->user()->id}});
 
 
-    $( "#subscriber_name" ).autocomplete({
-		source:'emp_auto_complete',
-		minLength: 1,
-        select: function( event, ui ) {
+        $("#subscriber_name").autocomplete({
+          source: 'emp_auto_complete',
+          minLength: 1,
+          select: function (event, ui) {
             $("#subscriber_id").val(ui.item.id);
             getArchive(ui.item.id);
-		}
-	});
-   
-    $('#ticketFrm').submit(function(e) {
-         e.preventDefault();
-        $(".loader").removeClass('hide');
-        $(".form-actions").addClass('hide');
-    $( "#subscriber_name" ).removeClass( "error" );
-    $( "#subscriber_id" ).removeClass( "error" );
-    $( "#desc" ).removeClass( "error" );
-    $( "#vac_type" ).removeClass( "error" );
-      let formData = new FormData(this);
-      $.ajax({
-          type:'POST',
-          url: "saveTicket28",
-          data: formData,
-          contentType: false,
-          processData: false,
-          success: (response) => {
+          }
+        });
+
+        $('#ticketFrm').submit(function (e) {
+          e.preventDefault();
+          if (validateAttachments()) {
+            return false;
+          }
+          $(".loader").removeClass('hide');
+          $(".form-actions").addClass('hide');
+          $("#subscriber_name").removeClass("error");
+          $("#subscriber_id").removeClass("error");
+          $("#desc").removeClass("error");
+          $("#vac_type").removeClass("error");
+          let formData = new FormData(this);
+          $.ajax({
+            type: 'POST',
+            url: "saveTicket28",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: (response) => {
               $(".form-actions").removeClass('hide');
-            $('.wtbl').DataTable().ajax.reload();  
-            // console.log('response');
-             if (response.success!=null) {
+              $('.wtbl').DataTable().ajax.reload();
+              // console.log('response');
+              if (response.success != null) {
                 $(".loader").addClass('hide');
-			    Swal.fire({
-				position: 'top-center',
-				icon: 'success',
-				title: '{{trans('admin.data_added')}}',
-				showConfirmButton: false,
-				timer: 1500
-				})
-				
-				writeUserData('viewTicket/'+response.app_id+'/'+response.app_type)
-                if(print==true){
-                let url=`{{ route('admin.dashboard') }}/printTicket/${response.app_id}/${response.app_type}`
-                window.open(url, '_blank');
-                print=false;
-				}
-				setTimeout(function(){self.location='{{asset('/ar/admin')}}'},1500)
-               this.reset();
-				
-				// if(print==true){
-    //             self.location=`{{ route('admin.dashboard') }}/printTicket/${response.app_id}/${response.app_type}`
-    //             print=false;
-				// }
-    //             writeUserData('viewTicket/'+response.app_id+'/'+response.app_type)
-    //     				setTimeout(function(){self.location='{{asset('/ar/admin')}}'},1500)
-    //           this.reset();
-             }else{
-                 console.log(response.error);
-                 if(response.error=='no_attatch'){
-                     
-                     $(".attachName").addClass('error');
-                    Swal.fire({
-    				position: 'top-center',
-    				icon: 'error',
-    				title: 'أدخل المرفقات',
-    				showConfirmButton: true,
-    				timer: 2000
-    				})
-                    $(".loader").addClass('hide');
-    				return false;
-                 }
-                 $(".loader").addClass('hide');
+                Swal.fire({
+                  position: 'top-center',
+                  icon: 'success',
+                  title: '{{trans('admin.data_added')}}',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
 
-    			Swal.fire({
-    				position: 'top-center',
-    				icon: 'error',
-    				title: '{{trans('admin.error_save')}}',
-    				showConfirmButton: false,
-    				timer: 1500
-    				})
-                 }
-             //location.reload();
+                writeUserData('viewTicket/' + response.app_id + '/' + response.app_type)
+                if (print == true) {
+                  let url = `{{ route('admin.dashboard') }}/printTicket/${response.app_id}/${response.app_type}`
+                  window.open(url, '_blank');
+                  print = false;
+                }
+                setTimeout(function () {
+                  self.location = '{{asset('/ar/admin')}}'
+                }, 1500)
+                this.reset();
 
-           },
-           error: function(response){
-            $(".loader").addClass('hide');
-            $(".form-actions").removeClass('hide');
-			if(response.responseJSON.errors.subscriber_name){
-                $( "#subscriber_name" ).addClass( "error" );
-                $( "#subscriber_name" ).get(0).setCustomValidity('أدخل اسم معرف مسبقا ');
-                $( "#subscriber_name" ).on('input',function(){
-                    this.setCustomValidity('')
+                // if(print==true){
+                //             self.location=`{{ route('admin.dashboard') }}/printTicket/${response.app_id}/${response.app_type}`
+                //             print=false;
+                // }
+                //             writeUserData('viewTicket/'+response.app_id+'/'+response.app_type)
+                //     				setTimeout(function(){self.location='{{asset('/ar/admin')}}'},1500)
+                //           this.reset();
+              } else {
+                console.log(response.error);
+                if (response.error == 'no_attatch') {
+
+                  $(".attachName").addClass('error');
+                  Swal.fire({
+                    position: 'top-center',
+                    icon: 'error',
+                    title: 'أدخل المرفقات',
+                    showConfirmButton: true,
+                    timer: 2000
+                  })
+                  $(".loader").addClass('hide');
+                  return false;
+                }
+                $(".loader").addClass('hide');
+
+                Swal.fire({
+                  position: 'top-center',
+                  icon: 'error',
+                  title: '{{trans('admin.error_save')}}',
+                  showConfirmButton: false,
+                  timer: 1500
                 })
-            }
-            if(response.responseJSON.errors.subscriber_id){
-                $( "#subscriber_name" ).addClass( "error" );
-                $( "#subscriber_name" ).get(0).setCustomValidity('أدخل اسم معرف مسبقا ');
-                $( "#subscriber_name" ).on('input',function(){
-                    this.setCustomValidity('')
+              }
+              //location.reload();
+
+            },
+            error: function (response) {
+              $(".loader").addClass('hide');
+              $(".form-actions").removeClass('hide');
+              if (response.responseJSON.errors.subscriber_name) {
+                $("#subscriber_name").addClass("error");
+                $("#subscriber_name").get(0).setCustomValidity('أدخل اسم معرف مسبقا ');
+                $("#subscriber_name").on('input', function () {
+                  this.setCustomValidity('')
                 })
-            }
-            if(response.responseJSON.errors.malDesc){
-                $( "#malDesc" ).addClass( "error" );
-                $( "#malDesc" ).get(0).setCustomValidity('أدخل سبب المغادرة ');
-                $( "#malDesc" ).on('blur',function(){
-                    this.setCustomValidity('')
+              }
+              if (response.responseJSON.errors.subscriber_id) {
+                $("#subscriber_name").addClass("error");
+                $("#subscriber_name").get(0).setCustomValidity('أدخل اسم معرف مسبقا ');
+                $("#subscriber_name").on('input', function () {
+                  this.setCustomValidity('')
                 })
-            }
-            if(response.responseJSON.errors.vac_type){
-                $( "#vac_type" ).addClass( "error" );
-                $( "#vac_type" ).get(0).setCustomValidity('يرجى اختيار نوع المغادرة ');
-                $( "#vac_type" ).on('input',function(){
-                    this.setCustomValidity('')
+              }
+              if (response.responseJSON.errors.malDesc) {
+                $("#malDesc").addClass("error");
+                $("#malDesc").get(0).setCustomValidity('أدخل سبب المغادرة ');
+                $("#malDesc").on('blur', function () {
+                  this.setCustomValidity('')
                 })
+              }
+              if (response.responseJSON.errors.vac_type) {
+                $("#vac_type").addClass("error");
+                $("#vac_type").get(0).setCustomValidity('يرجى اختيار نوع المغادرة ');
+                $("#vac_type").on('input', function () {
+                  this.setCustomValidity('')
+                })
+              }
+              Swal.fire({
+                position: 'top-center',
+                icon: 'error',
+                title: 'يرجى تعبئة الحقول الاجبارية',
+                showConfirmButton: false,
+                timer: 1500
+              })
             }
-			Swal.fire({
-				position: 'top-center',
-				icon: 'error',
-				title: 'يرجى تعبئة الحقول الاجبارية',
-				showConfirmButton: false,
-				timer: 1500
-				})
-           }
+          });
+        });
       });
-  });
-});  
 
-function getArchive($id)
-    {           
+      function getArchive($id) {
 
-    let emp_id = $id;
-    $.ajax({
-        type: 'get', // the method (could be GET btw)
-        url: "emp_info",
-        data: {
+        let emp_id = $id;
+        $.ajax({
+          type: 'get', // the method (could be GET btw)
+          url: "emp_info",
+          data: {
             emp_id: emp_id,
-        },
-        success:function(response){
-            if (response.status!=false) {
-                
-                @can('empContractArchive')    
-                getContractArchive(response.info.id,response.contractArchiveCount);
-                // $archiveCount+=response.contractArchiveCount;
+          },
+          success: function (response) {
+            if (response.status != false) {
+
+                @can('empContractArchive')
+                getContractArchive(response.info.id, response.contractArchiveCount);
+              // $archiveCount+=response.contractArchiveCount;
                 @endcan
-                
+
                 @can('empOutArchive')
-                getOutArchive(response.info.id,response.outArchiveCount);
-                // $archiveCount+=response.outArchiveCount;
+                getOutArchive(response.info.id, response.outArchiveCount);
+              // $archiveCount+=response.outArchiveCount;
                 @endcan
-                
+
                 @can('empInArchive')
-                getInArchive(response.info.id,response.inArchiveCount);
-                // $archiveCount+=response.inArchiveCount;
+                getInArchive(response.info.id, response.inArchiveCount);
+              // $archiveCount+=response.inArchiveCount;
                 @endcan
-                
+
                 @can('empOtherArchive')
-                getOtherArchive(response.info.id,response.otherArchiveCount);
-                // $archiveCount+=response.otherArchiveCount;
+                getOtherArchive(response.info.id, response.otherArchiveCount);
+              // $archiveCount+=response.otherArchiveCount;
                 @endcan
-                
+
                 @can('empCopyArchive')
-                getCopyArchive(response.info.id,response.copyToCount);
-                // $archiveCount+=response.copyToCount;
+                getCopyArchive(response.info.id, response.copyToCount);
+              // $archiveCount+=response.copyToCount;
                 @endcan
-                
-                @can('empJalArchive') 
-                getJalArchive(response.info.id,response.linkToCount);
-                // $archiveCount+=response.linkToCount;
+
+                @can('empJalArchive')
+                getJalArchive(response.info.id, response.linkToCount);
+              // $archiveCount+=response.linkToCount;
                 @endcan
-                    
-                
-            }else{
-                // window.location = "{{route('deptNotAllowed')}}";
+
+
+            } else {
+              // window.location = "{{route('deptNotAllowed')}}";
             }
-        },
-    });
-}
+          },
+        });
+      }
 
-function calcDuration(){
-    compareDate1=new Date(('10/10/2010 '+ $('#start').val()+':00'));
-    compareDate2=new Date(('10/10/2010 '+ $('#endDior').val()+':00'));
+      function calcDuration() {
+        compareDate1 = new Date(('10/10/2010 ' + $('#start').val() + ':00'));
+        compareDate2 = new Date(('10/10/2010 ' + $('#endDior').val() + ':00'));
 
-    var diff = Math.abs(compareDate2 - compareDate1)/(1000 * 3600);
-    diffSplit=diff.toString().split('.');
-    hours=diffSplit[0];
-    min=((diffSplit.length>1) ? (diffSplit[1]*60):'00');
-    
-    finalTime=hours+':'+min.toString().substring(0,2);
-    
-    $('#totalPeriod').val(finalTime);
+        var diff = Math.abs(compareDate2 - compareDate1) / (1000 * 3600);
+        diffSplit = diff.toString().split('.');
+        hours = diffSplit[0];
+        min = ((diffSplit.length > 1) ? (diffSplit[1] * 60) : '00');
 
-}
-</script>
+        finalTime = hours + ':' + min.toString().substring(0, 2);
+
+        $('#totalPeriod').val(finalTime);
+
+      }
+    </script>
 @stop
 

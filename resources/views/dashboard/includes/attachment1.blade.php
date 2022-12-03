@@ -12,17 +12,18 @@
             <li style="font-size: 17px !important;color:#000000">
                 <div class="row">
                     <div class="col-sm-6 attmob">
-                        <input type="text" id="attachName1[]" name="attachName1[]" class="form-control attachName1"
-                               placeholder="أخل اسم المرفق"
+                        <input type="text" id="attachName1_1" key="1" name="attachName1[]"
+                               class="form-control attachName1"
+                               placeholder="أدخل اسم المرفق"
                                value="">
                     </div>
                     <div class=" attdocmob col-sm-5 attach_row1_1">
-
+                        <input type="hidden" id="attach_ids1_1" name="attach_ids[]" value="">
                     </div>
                     <div class="attdelmob">
                         <img src="{{ asset('assets/images/ico/upload.png') }}" width="40"
                              height="40" style="cursor:pointer"
-                             onclick="$('#currFile1').val(1);$('#attachfile1').trigger('click');">
+                             onclick="$('#currFile1').val(1);validateName1(1);">
                     </div>
                 </div>
             </li>
@@ -34,238 +35,263 @@
 </div>
 
 <script>
-    function scanToJpg1() {
-        scanner.scan(displayImagesOnPage1,
+  function scanToJpg1() {
+    scanner.scan(displayImagesOnPage1,
+      {
+        "output_settings":
+          [
             {
-                "output_settings":
-                    [
-                        {
-                            "type": "return-base64",
-                            "format": "png"
-                        }
-                    ]
+              "type": "return-base64",
+              "format": "png"
             }
-        );
+          ]
+      }
+    );
+  }
+
+  /** Processes the scan result */
+  function displayImagesOnPage1(successful, mesg, response) {
+    if (!successful) { // On error
+      console.error('Failed: ' + mesg);
+      return;
     }
 
-    /** Processes the scan result */
-    function displayImagesOnPage1(successful, mesg, response) {
-        if (!successful) { // On error
-            console.error('Failed: ' + mesg);
-            return;
-        }
-
-        if (successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
-            console.info('User canceled');
-            return;
-        }
-        var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
-        for (var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
-            var scannedImage = scannedImages[i];
-            uploadScannedfile1(scannedImage);
-            // processScannedImage(scannedImage);
-        }
+    if (successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
+      console.info('User canceled');
+      return;
     }
+    var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
+    for (var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
+      var scannedImage = scannedImages[i];
+      uploadScannedfile1(scannedImage);
+      // processScannedImage(scannedImage);
+    }
+  }
 
-    function scanTopdf1() {
-        scanner.scan(displayPdfOnPage1,
+  function scanTopdf1() {
+    scanner.scan(displayPdfOnPage1,
+      {
+        "output_settings":
+          [
             {
-                "output_settings":
-                    [
-                        {
-                            "type": "return-base64",
-                            "format": "pdf",
-                        }
-                    ]
+              "type": "return-base64",
+              "format": "pdf",
             }
-        );
+          ]
+      }
+    );
+  }
+
+  function displayPdfOnPage1(successful, mesg, response) {
+
+    if (!successful) { // On error
+      console.error('Failed: ' + mesg);
+      return;
     }
 
-    function displayPdfOnPage1(successful, mesg, response) {
-
-        if (!successful) { // On error
-            console.error('Failed: ' + mesg);
-            return;
-        }
-
-        if (successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
-            console.info('User canceled');
-            return;
-        }
-        var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
-        for (var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
-            var scannedImage = scannedImages[i];
-            uploadScannedfile1(scannedImage);
-        }
+    if (successful && mesg != null && mesg.toLowerCase().indexOf('user cancel') >= 0) { // User canceled.
+      console.info('User canceled');
+      return;
     }
-
-    function uploadScannedfile1(scannedImage) {
-        $(".loader").removeClass('hide');
-        $(".form-actions").addClass('hide');
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
-                'ContentType': 'application/json'
-            }
-        });
-
-        $.ajax({
-            type: 'post',
-            url: '{{route('saveScanedFile')}}',
-            data: {
-                scannedData: scannedImage.src,
-                type: scannedImage.mimeType,
-
-            },
-            dataType: "json",
-            async: true,
-            success: (response) => {
-                $(".form-actions").removeClass('hide');
-                $(".loader").addClass('hide');
-                $(".archive_type").removeClass("error");
-
-                const row = scannedReplayAttache(response.file, attach_index);
-                attach_index++
-
-                const list = document.getElementById("olAttacmentID1");
-                list.children[(list.children.length - 1)].insertAdjacentHTML('beforeBegin', row);
-
-            },
-
-            error: function (response) {
-                $(".form-actions").removeClass('hide');
-                $(".loader").addClass('hide');
-
-                Swal.fire({
-                    position: 'top-center',
-                    icon: 'error',
-                    title: '{{trans('admin.error_save')}}',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-
-                // $(".formDataaaFilesArea").html('');
-
-                if (response.responseJSON.errors.customerName) {
-
-                    $("#customerName").addClass("error");
-
-                }
-
-            }
-
-        });
-        return true;
+    var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
+    for (var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
+      var scannedImage = scannedImages[i];
+      uploadScannedfile1(scannedImage);
     }
+  }
 
+  function uploadScannedfile1(scannedImage) {
+    $(".loader").removeClass('hide');
+    $(".form-actions").addClass('hide');
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
+        'ContentType': 'application/json'
+      }
+    });
 
-    var attach_index1 = 2;
+    $.ajax({
+      type: 'post',
+      url: '{{route('saveScanedFile')}}',
+      data: {
+        scannedData: scannedImage.src,
+        type: scannedImage.mimeType,
 
-    function addNewAttatch1() {
+      },
+      dataType: "json",
+      async: true,
+      success: (response) => {
+        $(".form-actions").removeClass('hide');
+        $(".loader").addClass('hide');
+        $(".archive_type").removeClass("error");
 
-        // if($(".attachName1").last().val().length>0){
-        var row = '<li style="font-size: 17px !important;color:#000000">' +
-            '<div class="row">' +
-            '<div class="col-sm-6 attmob ">' +
-            '<input type="text" id="attachName1[]" name="attachName1[]" class="form-control attachName1">' +
-            '</div>' +
-            '<div class=" attdocmob col-sm-5 attach_row1_' + attach_index1 + '">' +
-            //'<input type="text" name="feesValue2" class="form-control" disabled="disabled">' +
-            '</div>' +
-            '<div class="attdelmob">' +
-            '<img src="{{ asset('assets/images/ico/upload.png') }}" width="40" height="40" style="cursor:pointer" onclick="$(\'#currFile1\').val(' + attach_index1 + ');$(\'#attachfile1\').trigger(\'click\');  return false">' +
-
-            '</div>' +
-            '<div class="attdelmob">' +
-            '<i class="fa fa-trash" id="plusElement1" style="padding-top:10px;position: relative;left: 3%;cursor: pointer;  color:#1E9FF2;font-size: 15pt; " onclick="$(this).parent().parent().parent().remove()"></i>' +
-            '</div>' +
-            ' </div>' +
-
-            ' </li>'
+        const row = scannedReplayAttache(response.file, attach_index1);
         attach_index1++
-        $(".addAttatch1").append(row)
-        // }
 
+        const list = document.getElementById("olAttacmentID1");
+        list.children[(list.children.length - 1)].insertAdjacentHTML('beforeBegin', row);
+
+      },
+
+      error: function (response) {
+        $(".form-actions").removeClass('hide');
+        $(".loader").addClass('hide');
+
+        Swal.fire({
+          position: 'top-center',
+          icon: 'error',
+          title: '{{trans('admin.error_save')}}',
+          showConfirmButton: false,
+          timer: 1500
+        })
+
+        // $(".formDataaaFilesArea").html('');
+
+        if (response.responseJSON.errors.customerName) {
+
+          $("#customerName").addClass("error");
+
+        }
+
+      }
+
+    });
+    return true;
+  }
+
+
+  var attach_index1 = 2;
+
+  function validateName1(key) {
+    const name = $(`#attachName1_${key}`).val()
+    if (name.trim().length > 0) {
+      $(`#attachName1_${key}`).removeClass('error')
+      $('#attachfile1').trigger('click');
+    } else {
+      $(`#attachName1_${key}`).addClass('error')
     }
+  }
 
-    function resetAttach() {
+  function validateAllAttachmentNames1() {
+    let error = false
+    for (let i = 1; i < attach_index1; i++) {
+      const name = $(`#attachName1_${i}`).val()
+      const id = $(`#attach_ids1_${i}`).val()
+      if (name?.trim()?.length <= 0 && id?.trim()?.length > 0) {
+        $(`#attachName1_${i}`).addClass('error')
+        error = true;
+      } else {
+        $(`#attachName1_${i}`).removeClass('error')
+      }
+    }
+    return error;
+  }
 
-        $(".addAttatch1").html(' ');
-        attach_index1 = 2;
-        let firstRow = `<li style="font-size: 17px !important;color:#000000">
+  function addNewAttatch1() {
+
+    // if($(".attachName1").last().val().length>0){
+    var row = '<li style="font-size: 17px !important;color:#000000">' +
+      '<div class="row">' +
+      '<div class="col-sm-6 attmob ">' +
+      `<input type="text" id="attachName1_${attach_index1}" key="${attach_index1}"  name="attachName1[]" class="form-control attachName1">` +
+      '</div>' +
+      '<div class=" attdocmob col-sm-5 attach_row1_' + attach_index1 + '">' +
+      `<input type="hidden" id="attach_ids1_${attach_index1}" name="attach_ids[]" value="">`+
+      '</div>' +
+      '<div class="attdelmob">' +
+      `<img src="{{ asset('assets/images/ico/upload.png') }}" width="40" height="40" style="cursor:pointer" onclick="$('#currFile1').val(${attach_index1});validateName1(${attach_index1});">` +
+
+      '</div>' +
+      '<div class="attdelmob">' +
+      '<i class="fa fa-trash" id="plusElement1" style="padding-top:10px;position: relative;left: 3%;cursor: pointer;  color:#1E9FF2;font-size: 15pt; " onclick="$(this).parent().parent().parent().remove()"></i>' +
+      '</div>' +
+      ' </div>' +
+
+      ' </li>'
+    attach_index1++
+    $(".addAttatch1").append(row)
+    // }
+
+  }
+
+  function resetAttach() {
+
+    $(".addAttatch1").html(' ');
+    attach_index1 = 2;
+    let firstRow = `<li style="font-size: 17px !important;color:#000000">
             <div class="row">
                 <div class="col-sm-6 attmob">
-                    <input type="text" id="attachName1[]" name="attachName1[]" class="form-control attachName1" placeholder="أخل اسم المرفق"
+                    <input type="text" id="attachName1" key="1" name="attachName1[]" class="form-control attachName1" placeholder="أدخل اسم المرفق"
                       value="">
                 </div>
                 <div class=" attdocmob col-sm-5 attach_row1_1">
-
+                    <input type="hidden" id="attach_ids1_1" name="attach_ids[]" value="">
                 </div>
                 <div class="attdelmob">
                     <img src="{{ asset('assets/images/ico/upload.png') }}" width="40"
                         height="40" style="cursor:pointer"
-                        onclick="$('#currFile1').val(1);$('#attachfile1').trigger('click');">
+                        onclick="$('#currFile1').val(1);validateName1(1);">
                 </div>
             </div>
         </li>`;
-        $(".addAttatch1").append(firstRow)
-    }
+    $(".addAttatch1").append(firstRow)
+  }
 
-    function startUpload1(formDataStr) {
-        id = $("#currFile1").val()
-        // $('#feesText'+id).val($('#attachfile').val().split('\\').pop())
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $(".loader").removeClass('hide');
-        // $(".form-actions").addClass('hide');
-        var formData = new FormData($("#" + formDataStr)[0]);
-        $.ajax({
-            url: '{{url('ar/admin/uploadTicketAttach')}}',
-            type: 'POST',
-            data: formData,
-            dataType: "json",
-            async: true,
-            success: function (data) {
-                row = '';
-                console.log(data.all_files);
-                if (data.all_files) {
-                    addNewAttatch1()
-                    var j = 0;
-                    $actionBtn = '';
-                    for (j = 0; j < data.all_files.length; j++) {
-                        $(".attach_row1_" + id).html('')
-                        $actionBtn += replayNormalAttache(data.all_files[j])
-                        $actionBtn += '</div>';
-                    }
-                    $(".alert-danger").addClass("hide");
-                    $(".alert-success").removeClass('hide');
-                    $(".attach_row1_" + id).append($actionBtn)
-                    $(".loader").addClass('hide');
-                    $("#attachfile").val('');
-                    $(".group1").colorbox({rel: 'group1'});
-                    setTimeout(function () {
-                        $(".alert-danger").addClass("hide");
-                        $(".alert-success").addClass("hide");
-                    }, 2000)
-                } else {
-                    $(".alert-success").addClass("hide");
-                    $(".alert-danger").removeClass('hide');
-                }
-                $(".loader").addClass('hide');
-                // $(".form-actions").removeClass('hide');
-            },
-            error: function () {
-                $(".alert-success").addClass("hide");
-                $(".alert-danger").removeClass('hide');
-                $(".loader").addClass('hide');
-                // $(".form-actions").removeClass('hide');
-            },
-            cache: false,
-            contentType: false,
-            processData: false
-        });
-    }
+  function startUpload1(formDataStr) {
+    id = $("#currFile1").val()
+    // $('#feesText'+id).val($('#attachfile').val().split('\\').pop())
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
+      }
+    });
+    $(".loader").removeClass('hide');
+    // $(".form-actions").addClass('hide');
+    var formData = new FormData($("#" + formDataStr)[0]);
+    $.ajax({
+      url: '{{url('ar/admin/uploadTicketAttach')}}',
+      type: 'POST',
+      data: formData,
+      dataType: "json",
+      async: true,
+      success: function (data) {
+        row = '';
+        console.log(data.all_files);
+        if (data.all_files) {
+          addNewAttatch1()
+          var j = 0;
+          $actionBtn = '';
+          for (j = 0; j < data.all_files.length; j++) {
+            $(".attach_row1_" + id).html('')
+            $actionBtn += replayNormalAttache(data.all_files[j],id)
+            $actionBtn += '</div>';
+          }
+          $(".alert-danger").addClass("hide");
+          $(".alert-success").removeClass('hide');
+          $(".attach_row1_" + id).append($actionBtn)
+          $(".loader").addClass('hide');
+          $("#attachfile").val('');
+          $(".group1").colorbox({rel: 'group1'});
+          setTimeout(function () {
+            $(".alert-danger").addClass("hide");
+            $(".alert-success").addClass("hide");
+          }, 2000)
+        } else {
+          $(".alert-success").addClass("hide");
+          $(".alert-danger").removeClass('hide');
+        }
+        $(".loader").addClass('hide');
+        // $(".form-actions").removeClass('hide');
+      },
+      error: function () {
+        $(".alert-success").addClass("hide");
+        $(".alert-danger").removeClass('hide');
+        $(".loader").addClass('hide');
+        // $(".form-actions").removeClass('hide');
+      },
+      cache: false,
+      contentType: false,
+      processData: false
+    });
+  }
 </script>
