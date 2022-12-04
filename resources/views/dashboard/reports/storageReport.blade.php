@@ -426,6 +426,9 @@
                         "assetsArchive": '{{ trans('archive.assets_archive') }}',
                         "citArchive": '{{ trans('archive.cit_archive') }}',
                         "licArchive": '{{ trans('archive.lic_archive') }}',
+                        "specialEmpArchive": '{{ trans('archive.specialEmpArchive') }}',
+                        "contractArchive": '{{ trans('archive.dep_archive') }}',
+                        "financeArchive": '{{ trans('archive.financeArchive') }}',
                         "licFileArchive": '{{ trans('archive.licFile_archive') }}'
                     };
                     if (response.type == "lic") {
