@@ -123,13 +123,16 @@ class ArchieveController extends Controller
 
     public function recoverArchive(Request $request)
     {
-
-        $archive = Archive::find($request['archive_id']);
-        $copyTo = CopyTo::where('archive_id', $archive->id)->get();
-        foreach ($copyTo as $copy) {
-            $copy->deleted_by = 0;
-            $copy->enabled = 1;
-            $copy->save();
+        if ($request->type == 'tradeArchive') {
+            $archive = TradeArchive::find($request['archive_id']);
+        } else {
+            $archive = Archive::find($request['archive_id']);
+            $copyTo = CopyTo::where('archive_id', $archive->id)->get();
+            foreach ($copyTo as $copy) {
+                $copy->deleted_by = 0;
+                $copy->enabled = 1;
+                $copy->save();
+            }
         }
         $archive->deleted_by = 0;
         $archive->enabled = 1;
@@ -138,7 +141,6 @@ class ArchieveController extends Controller
             ->performedOn($archive)
             ->log('restore');
         if ($archive) {
-
             return response()->json(['success' => trans('admin.subscriber_added')]);
         }
 
@@ -1946,7 +1948,29 @@ class ArchieveController extends Controller
         $archive->json_feild = json_encode($attach);
         $archive->add_by = Auth()->user()->id;
         $archive->save();
-
+        $sum = 0;
+        $countAttachments = 0;
+        if ($attachIds) {
+            foreach ($attachIds as $id) {
+                $file = File::find($id);
+                $file->archive_id = $archive->id;
+                $file->model_name = "App\Models\ArchiveLicense";
+                if ($file && $file->size) {
+                    $size = $file->size;
+                    if ($size && $size != '0') {
+                        $countAttachments++;
+                    }
+                    if (str_contains($size, 'mb')) {
+                        $size = (float)$size * 1000;
+                    }
+                    $sum = $sum +  (float)$size;
+                }
+                $file->save();
+            }
+        }
+        $archive->sizeAttachments = $sum;
+        $archive->countAttachments = $countAttachments;
+        $archive->save();
         if ($archive) {
             if ($new) {
                 activity()
@@ -2089,6 +2113,7 @@ class ArchieveController extends Controller
                 if ($i < $count) {
                     $temp['id'] = $attachIds[$i];
                     $temp['file_links'] = $rawFiles[$i]->file_links;
+                    $temp['size'] = $rawFiles[$i]->size;
                     $i++;
                 } else {
                     $temp['id'] = 0;

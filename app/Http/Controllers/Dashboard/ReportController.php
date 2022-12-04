@@ -73,6 +73,7 @@ use App\Models\Smslog;
 use App\Models\Region;
 use Illuminate\Support\Str;
 use App\Models\Setting;
+use App\Models\TradeArchive;
 use Spatie\Activitylog\Models\Activity;
 
 
@@ -219,53 +220,120 @@ class ReportController extends Controller
 
         return response()->json($activity);
     }
+    public function getTradeArchive(Request $request)
+    {
+        $archive['data'] = TradeArchive::query()->with('Admin');
+        $archive['type'] = "tradeArchive";
+
+        if ($request->get('start') && $request->get('end')) {
+            $from = date_create(($request->get('start')));
+            $from = explode('/', ($request->get('start')));
+            $from = $from[2] . '-' . $from[1] . '-' . $from[0];
+            $to = date_create(($request->get('end')));
+            $to = explode('/', ($request->get('end')));
+            $to = $to[2] . '-' . $to[1] . '-' . $to[0];
+            $archive['data']->whereRaw('CAST(trade_archives.created_at AS DATE) between ? and ?', [$from, $to]);
+        }
+        $archive['data'] = $archive['data']->select('trade_archives.*', 'trade_archives.trade_no as serisal', 't_constant.name as title')
+            ->where('trade_archives.enabled', 1)
+            ->selectRaw('DATE_FORMAT(trade_archives.created_at, "%Y-%m-%d") as date')
+            ->leftJoin('t_constant', 't_constant.id', 'trade_archives.trade_type')
+            ->with('Admin')
+            ->orderBy('id', 'DESC')->get();
+        $archive['attachmentSize'] = 0;
+        $index = 1;
+
+        foreach ($archive['data'] as $row) {
+            $row->setAttribute('rowId', $index++);
+            $sum = 0;
+            $attach = json_decode($row->json_feild);
+            $attachIds = json_decode($row->attach_ids) ?? array();
+            $rawFiles = File::whereIn('id', $attachIds)->get();
+            $count = sizeof($attachIds);
+            $i = 0;
+            $files = array();
+            foreach ($attach as $key => $value) {
+                foreach ((array) $value as $key => $val) {
+                    $temp = array();
+                    if ($i < $count) {
+                        if ($rawFiles[$i] && $rawFiles[$i]->size) {
+                            $size = $rawFiles[$i]->size;
+                            if (str_contains($size, 'kb')) {
+                                $size = (float)$size / 1000;
+                            }
+                            $sum = round($sum +  (float)$size, 3);
+                        }
+                        $temp['id'] = $attachIds[$i];
+                        $temp['file_links'] = $rawFiles[$i]->file_links;
+                        $temp['size'] = $rawFiles[$i]->size;
+                        $temp['extension'] = $rawFiles[$i]->extension;
+                        $i++;
+                    } else {
+                        $temp['id'] = 0;
+                        $temp['file_links'] = [];
+                    }
+                    $temp['real_name'] = $key;
+                    $temp['url'] = $val;
+                }
+                array_push($files, $temp);
+            }
+            $row->setAttribute('attachSize', $sum);
+            $archive['attachmentSize'] += $sum;
+            $row['files'] = $files;
+        }
+        return $archive;
+    }
+    public function getLicArchive(Request $request)
+    {
+        $archive['type'] = "lic";
+        $archive['attachmentSize'] = 0;
+        $archive['data'] = ArchiveLicense::query();
+        if ($request->get('start') && $request->get('end')) {
+
+            $from = date_create(($request->get('start')));
+
+            $from = explode('/', ($request->get('start')));
+
+            $from = $from[2] . '-' . $from[1] . '-' . $from[0];
+
+            $to = date_create(($request->get('end')));
+
+            $to = explode('/', ($request->get('end')));
+
+            $to = $to[2] . '-' . $to[1] . '-' . $to[0];
+
+            $archive['data']->whereRaw('CAST(archive_licenses.created_at AS DATE) between ? and ?', [$from, $to]);
+        }
+        $archive['data'] = $archive['data']->select(
+            'archive_licenses.*',
+            't_constant.name as license_type_name',
+            't_constant.name as title'
+        )
+            ->selectRaw('DATE_FORMAT(archive_licenses.created_at, "%Y-%m-%d") as date')
+            ->leftJoin('t_constant', 't_constant.id', 'archive_licenses.license_id')
+            ->with('files','Admin')->get();
+        foreach ($archive['data'] as $row) {
+            $sum = 0;
+            foreach ($row->files as $file) {
+                if ($file && $file['size']) {
+                    $size = $file['size'];
+                    if (str_contains($size, 'kb')) {
+                        $size = (float)$size / 1000;
+                    }
+                    $sum = round($sum +  (float)$size, 3);
+                }
+            }
+            $row->setAttribute('attachSize', $sum);
+            $archive['attachmentSize'] += $sum;
+        }
+        return $archive;
+    }
     public function storageReport(Request $request)
     {
         if ($request->get('arcType') == "licArchive" || $request->get('arcType') == "licFileArchive") {
-
-            $archive['type'] = "lic";
-            $archive['attachmentSize'] = 0;
-            $archive['data'] = ArchiveLicense::query();
-            if ($request->get('arcType')) {
-                $archive['data']->where('type', '=', $request->get('arcType'));
-            }
-            if ($request->get('start') && $request->get('end')) {
-
-                $from = date_create(($request->get('start')));
-
-                $from = explode('/', ($request->get('start')));
-
-                $from = $from[2] . '-' . $from[1] . '-' . $from[0];
-
-                $to = date_create(($request->get('end')));
-
-                $to = explode('/', ($request->get('end')));
-
-                $to = $to[2] . '-' . $to[1] . '-' . $to[0];
-
-                $archive['data']->whereRaw('CAST(archive_licenses.created_at AS DATE) between ? and ?', [$from, $to]);
-            }
-            $archive['data'] = $archive['data']->select(
-                'archive_licenses.*',
-                't_constant.name as license_type_name'
-            )
-                ->selectRaw('DATE_FORMAT(archive_licenses.created_at, "%Y-%m-%d") as date')
-                ->leftJoin('t_constant', 't_constant.id', 'archive_licenses.license_id')
-                ->with('files')->get();
-            foreach ($archive['data'] as $row) {
-                $sum = 0;
-                foreach ($row->files as $file) {
-                    if ($file && $file['size']) {
-                        $size = $file['size'];
-                        if (str_contains($size, 'kb')) {
-                            $size = (float)$size / 1000;
-                        }
-                        $sum = round($sum +  (float)$size, 3);
-                    }
-                }
-                $row->setAttribute('attachSize', $sum);
-                $archive['attachmentSize'] += $sum;
-            }
+            $archive = $this->getLicArchive($request);
+        } else if ($request->get('arcType') == "tradeArchive") {
+            $archive = $this->getTradeArchive($request);
         } else {
             $archive['arcType'] = $request->get('arcType') ? $request->get('arcType') : 'all';
             $archive['data'] = Archive::query();
@@ -296,6 +364,7 @@ class ReportController extends Controller
             $archive['attachmentSize'] = 0;
             $archive['data'] = $archive['data']->where('enabled', 1)->orderBy('id', 'DESC')->with('archiveType', 'Admin', 'copyTo', 'files')->get();
             $index = 1;
+
             foreach ($archive['data'] as $row) {
                 $row->setAttribute('rowId', $index++);
                 $sum = 0;
@@ -311,6 +380,17 @@ class ReportController extends Controller
                 $row->setAttribute('attachSize', $sum);
                 $archive['attachmentSize'] += $sum;
             }
+            $tradeArchive = $this->getTradeArchive($request);
+            $archive['attachmentSize'] += $tradeArchive['attachmentSize'];
+            $archive['data'] = $archive['data']->mergeRecursive($tradeArchive['data']);
+
+            $licArchive = $this->getLicArchive($request);
+            $archive['attachmentSize'] += $licArchive['attachmentSize'];
+            $archive['data'] = $archive['data']->mergeRecursive($licArchive['data']);
+            $archive['licArchive'] = $licArchive;
+            $archive['tradeArchive'] = $tradeArchive;
+            $archive['data'] = $archive['data']->sortByDesc('updated_at');
+            $archive['data'] = $archive['data']->values();
         }
         activity()
             ->log('storage-report');
@@ -1448,20 +1528,40 @@ class ReportController extends Controller
             }
             $row->files = $files;
         }
-        //        foreach($licArchive as $row){
-        //            $attach=json_decode($row->json_feild);
-        //            foreach($attach as $key=>$value){
-        //                foreach((array) $value as $key=>$val){
-        //                    $temp=array();
-        //                    $temp['real_name']=$key;
-        //                    $temp['url']=$val;
-        //                }
-        //                //dd($temp);
-        //                $row->files[]=$temp;
-        //            }
-        //        }
-
+        $tradeArchive = TradeArchive::select('trade_archives.*', 't_constant.name as title')
+            ->whereRaw('CAST(trade_archives.updated_at AS DATE) between ? and ?', [$from, $to])
+            ->where('trade_archives.enabled', 0)
+            ->leftJoin('t_constant', 't_constant.id', 'trade_archives.trade_type')
+            ->with('deleted_by', 'Admin')
+            ->orderBy('id', 'DESC')->get();
+        foreach ($tradeArchive as $row) {
+            $attach = json_decode($row->json_feild);
+            $attachIds = json_decode($row->attach_ids) ?? array();
+            $rawFiles = File::whereIn('id', $attachIds)->get();
+            $count = sizeof($attachIds);
+            $i = 0;
+            $files = array();
+            foreach ($attach as $key => $value) {
+                foreach ((array) $value as $key => $val) {
+                    $temp = array();
+                    if ($i < $count) {
+                        $temp['id'] = $attachIds[$i];
+                        $temp['file_links'] = $rawFiles[$i]->file_links;
+                        $temp['extension'] = $rawFiles[$i]->extension;
+                        $i++;
+                    } else {
+                        $temp['id'] = 0;
+                        $temp['file_links'] = [];
+                    }
+                    $temp['real_name'] = $key;
+                    $temp['url'] = $val;
+                }
+                array_push($files, $temp);
+            }
+            $row['files'] = $files;
+        }
         $archive = $archive->mergeRecursive($licArchive);
+        $archive = $archive->mergeRecursive($tradeArchive);
         $archive = $archive->sortByDesc('updated_at');
         foreach ($archive as $row) {
             if ($row->model_name) {
@@ -1541,6 +1641,13 @@ class ReportController extends Controller
 
             $archive = Archive::select('archives.*')->whereRaw('CAST(archives.created_at AS DATE) between ? and ?', [$from, $to])
                 ->where('archives.enabled', '1')->orderBy('id', 'DESC')->with('archiveType')->with('Admin')->with('copyTo')->with('files')->get();
+            $tradeArchive = TradeArchive::select('trade_archives.*', 't_constant.name as title')
+                ->whereRaw('CAST(trade_archives.created_at AS DATE) between ? and ?', [$from, $to])
+                ->where('trade_archives.enabled', 1)
+                ->selectRaw('DATE_FORMAT(trade_archives.created_at, "%Y-%m-%d") as date')
+                ->leftJoin('t_constant', 't_constant.id', 'trade_archives.trade_type')
+                ->with('Admin')
+                ->orderBy('id', 'DESC')->get();
             // dd($archive->all());
             $licArchive = ArchiveLicense::select('archive_licenses.*')->whereRaw('CAST(archive_licenses.created_at AS DATE) between ? and ?', [$from, $to])
                 ->where('archive_licenses.enabled', '1')->orderBy('id', 'DESC')->with('Admin')->get();
@@ -1555,7 +1662,34 @@ class ReportController extends Controller
                 }
                 $row->files = $files;
             }
+            foreach ($tradeArchive as $row) {
+                $attach = json_decode($row->json_feild);
+                $attachIds = json_decode($row->attach_ids) ?? array();
+                $rawFiles = File::whereIn('id', $attachIds)->get();
+                $count = sizeof($attachIds);
+                $i = 0;
+                $files = array();
+                foreach ($attach as $key => $value) {
+                    foreach ((array) $value as $key => $val) {
+                        $temp = array();
+                        if ($i < $count) {
+                            $temp['id'] = $attachIds[$i];
+                            $temp['file_links'] = $rawFiles[$i]->file_links;
+                            $temp['extension'] = $rawFiles[$i]->extension;
+                            $i++;
+                        } else {
+                            $temp['id'] = 0;
+                            $temp['file_links'] = [];
+                        }
+                        $temp['real_name'] = $key;
+                        $temp['url'] = $val;
+                    }
+                    array_push($files, $temp);
+                }
+                $row['files'] = $files;
+            }
             $archive = $archive->mergeRecursive($licArchive);
+            $archive = $archive->mergeRecursive($tradeArchive);
             $archive = $archive->sortByDesc('created_at');
 
             foreach ($archive as $row) {
@@ -1568,10 +1702,12 @@ class ReportController extends Controller
                         $url = 'special_assets';
                     }
                     //$row->files[]=$temp;
-                    $uu = DB::select('select url from ' . $url . ' where id=' . $row->model_id);
-                    if ($uu != []) {
-                        $uu = $uu[0];
-                    }
+                    if ($row->model_id) {
+                        $uu = DB::select('select url from ' . $url . ' where id=' . $row->model_id);
+                        if ($uu != []) {
+                            $uu = $uu[0];
+                        }
+                    } else $uu = '';
                     $row->setAttribute('url', $uu);
                 } else {
                     $row->setAttribute('url', array());
@@ -1630,7 +1766,8 @@ class ReportController extends Controller
 
             $archive['empArchiveCount'] = count(Archive::whereRaw('CAST(archives.created_at AS DATE) between ? and ?', [$from, $to])
                 ->where('archives.enabled', '1')->where('type', 'empArchive')->get());
-
+            $archive['tradeArchive'] = TradeArchive::whereRaw('CAST(trade_archives.created_at AS DATE) between ? and ?', [$from, $to])
+                ->where('trade_archives.enabled', 1)->count();
             $archive['contractArchiveCount'] = count(Archive::whereRaw('CAST(archives.created_at AS DATE) between ? and ?', [$from, $to])
                 ->where('archives.enabled', '1')->where('type', 'contractArchive')->get());
 
