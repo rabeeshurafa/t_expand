@@ -1144,6 +1144,22 @@ class ReportController extends Controller
         return $arr;
     }
 
+    function getTaskTransaction($from,$to) {
+       $transactions= AppTrans::select('app_trans.*', \DB::raw('"تحويل الطلب" AS transaction_type'))->whereBetween('created_at',[$from,$to])->with(['Admin'])->get();
+       foreach($transactions as $transaction) {
+           $transaction->ticket=$transaction->ticket();
+           if($transaction->ticket->created_at==$transaction->created_at){
+               $transaction->transaction_type='انشاء الطلب';
+           }
+       }
+
+       $responses= AppResponse::select('app_responses.*', \DB::raw('"اضافة رد" AS transaction_type'))->whereBetween('created_at',[$from,$to])->with(['Admin'])->get();
+       foreach($responses as $response) {
+           $response->ticket=$response->ticket();
+       }
+        return $transactions->mergeRecursive($responses);
+    }
+
     function searchDailyTask(Request $request)
     {
 
@@ -1165,34 +1181,24 @@ class ReportController extends Controller
                 $to = $to[2] . '-' . $to[1] . '-' . ($to[0] + 1);
         }
 
-        $Cert = Cert::whereRaw('CAST(t_farfromcenter.created_at AS DATE) between ? and ?', [$from, $to])->select('t_farfromcenter.*', 't_certification.s_name_ar as cer_name')
-            ->leftJoin('t_certification', 't_certification.pk_i_id', 't_farfromcenter.msgTitle')
-            ->with('Admin')
-            ->get();
-        // dd($Cert);
-        $arr = $this->searchTasks($request, true);
-        // dd($arr);
-        $result = array_merge($arr, $Cert->toArray());
-
-        usort($result, function ($a, $b) {
-            if (count($a) <= 8 && count($a) > 1) {
-                $date1 = strtotime($a[0]->created_at);
-            } else {
-                $date1 = strtotime($a['created_at']);
-            }
-
-            if (count($b) <= 8 && count($b) > 1) {
-                $date2 = strtotime($b[0]->created_at);
-            } else {
-                $date2 = strtotime($b['created_at']);
-            }
-            return $date1 - $date2; // $v2 - $v1 to reverse direction
-        });
-        activity()
-            ->log('daily-work-report');
-        // dd($result);
-
-        return $result;
+        $Cert = Cert::whereRaw('CAST(t_farfromcenter.created_at AS DATE) between ? and ?', [$from, $to])
+                ->select('t_farfromcenter.*', 't_certification.s_name_ar as cer_name',
+                        \DB::raw('(CASE 
+                        WHEN t_farfromcenter.e_type = "1" THEN "إصدار شهادة" 
+                        WHEN t_farfromcenter.e_type = "2" THEN "مراسلات خارجية" 
+                        WHEN t_farfromcenter.e_type = "3" THEN "تعهد والتزام" 
+                        WHEN t_farfromcenter.e_type = "4" THEN "اخطار" 
+                        WHEN t_farfromcenter.e_type = "5" THEN "نماذج" 
+                        WHEN t_farfromcenter.e_type = "6" THEN "مراسلات عامة" 
+                        ELSE "شهادات ومراسلات" 
+                        END) AS transaction_type'))
+                ->leftJoin('t_certification', 't_certification.pk_i_id', 't_farfromcenter.msgTitle')
+                ->with('Admin')
+                ->get();
+        $tickets = $this->getTaskTransaction($from,$to);
+        $result = $tickets->mergeRecursive($Cert)->sortByDesc('created_at');
+        activity()->log('daily-work-report');
+        return response()->json([...$result]);
     }
 
     function selectMasterQuery($where = '', $ticketFiltter = '', $tickets)

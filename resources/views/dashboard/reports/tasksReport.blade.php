@@ -745,7 +745,7 @@
                 $time2 = '';
                 totaldior = '';
                 if (response[$i]['0']['ticket_status'] == 5003) {
-                  $rowDateTime2 = response[$i]['trans']['created_at'].split(' ');
+                  $rowDateTime2 = response[$i]['response'][0]['created_at'].split(' ');
                   $rowDate2 = $rowDateTime2[0].split('-');
                   $date2 = $rowDate2[2] + '/' + $rowDate2[1] + '/' + $rowDate2[0];
                   $time2 = $rowDateTime2[1].substring(0, 5);
@@ -788,19 +788,15 @@
                       strr += txt1
 
                   }
-
-                  compareDate1 = new Date(('10/10/2010 ' + $time + ':00'));
-                  compareDate2 = new Date(('10/10/2010 ' + $time2 + ':00'));
-
-                  let diff2 = Math.abs(compareDate2 - compareDate1) / (1000 * 3600);
-                  console.log(diff2)
-                  diffSplit = diff2.toString().split('.');
-                  hours = diffSplit[0];
-                  min = ((diffSplit.length > 1) ? (diffSplit[1] * 60) : '00');
-
+                  compareDate1 = new Date(('01/01/2007 ' + $time + ':00')).getMinutes();
+                  compareDate2 = new Date(('01/01/2007 ' + $time2 + ':00')).getMinutes();
+                  hours1 = new Date(('01/01/2007 ' + $time + ':00')).getHours();
+                  hours2 = new Date(('01/01/2007 ' + $time2 + ':00')).getHours();
+                  let diffMinutes2 = Math.abs(compareDate2 - compareDate1);
+                  let diffHours2 = Math.abs(hours2 - hours1);
+                  hours = diffHours2;
+                  min = diffMinutes2;
                   finalTime = hours + ':' + min.toString().substring(0, 2);
-
-
                   temp = (strr + Math.floor(day) + '&nbsp;&nbsp;' + 'يوم');
                   totaldior = finalTime + '&nbsp;&nbsp;' + 'ساعة و' + '&nbsp;&nbsp;' + temp;
                 }
