@@ -663,7 +663,7 @@
                             $('#recListaa').append($row)
                             c++;
                         });
-                    } else if ('tradeArchive') {
+                    } else if (response.type == 'tradeArchive') {
                         response.result.forEach(elem => {
                             $row = "<tr>" +
                                 "<td>" + c + "</td>" +
