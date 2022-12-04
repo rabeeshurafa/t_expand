@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Awobaz\Compoships\Compoships;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 class TicketConfig extends Model
 {
+    use Compoships;
     //
     public function debtSettings(): Attribute
     {
