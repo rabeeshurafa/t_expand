@@ -358,6 +358,8 @@
                             }else if(elem.type=='financeArchive'){
                                 $row+= "<td>" + 'أرشيف قسم المالية' + "</td>" ;
 
+                            } else if(elem.type=='tradeArchive'){
+                                $row+= "<td>" + 'أرشيف المعاملات' + "</td>" ;
                             }else{
                                 $row+= "<td>" + 'بدون تصنيف' + "</td>" ;
                             }
@@ -443,7 +445,7 @@
                                         +"</td>" ;
                             }else{
                                 $row+= "</td> <td>"
-                                        +'<a onclick="recover_archive('+elem.id+')" style="margin-right:17px;" onclick="" class="btn btn-info"><i style="color:#ffffff;" class="fa fa-refresh"></i> </a>'
+                                        +'<a onclick="recover_archive('+elem.id+',\''+elem.type+'\')" style="margin-right:17px;" onclick="" class="btn btn-info"><i style="color:#ffffff;" class="fa fa-refresh"></i> </a>'
                                         +"</td>" ;
                             }
                             $row += "</tr>";
@@ -544,7 +546,7 @@
 
         }
 
-        function recover_archive($id) {
+        function recover_archive($id,$type) {
         
             $(".loader").removeClass('hide');
             let archive_id = $id;
@@ -560,6 +562,7 @@
                 data: {
 
                     archive_id: archive_id,
+                    type:$type,
                     _token: _token,
                 },
 
