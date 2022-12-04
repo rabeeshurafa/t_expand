@@ -356,10 +356,18 @@
                   link = `{{asset(app()->getLocale())}}/admin/generalCert?id=${response[i].pk_i_id}`;
                 }
               }
+              const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+              let dateTime = new Date(response[i].created_at).toLocaleString("en-US", { timeZone })
+              // console.log(dateTime);
+              dateTime = dateTime.split(',')
+              const splinted = dateTime[0].split('/')
+              const date = `${splinted[1]}/${splinted[0]}/${splinted[2]}`
+              const time = dateTime[1]
+
               const rowDateTime = response[i].created_at.split('T');
               const rowDate = rowDateTime[0].split('-');
-              const date = rowDate[0] + '/' + rowDate[1] + '/' + rowDate[2];
-              const time = rowDateTime[1].substring(0, 5);
+              // const date = rowDate[0] + '/' + rowDate[1] + '/' + rowDate[2];
+              // const time = rowDateTime[1].substring(0, 5);
               const empName = response[i]?.admin?.nick_name;
               row += `<tr style="text-align:center">
                         <td width="50px">
