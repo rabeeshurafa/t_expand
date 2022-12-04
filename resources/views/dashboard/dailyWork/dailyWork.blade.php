@@ -684,6 +684,7 @@
               $('#attachfile').trigger('click');
             } else {
               $(`#attachName${key}`).addClass('error')
+              $('#attachfile').trigger('click');
             }
           }
 

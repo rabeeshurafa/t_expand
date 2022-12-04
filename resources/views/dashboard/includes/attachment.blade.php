@@ -183,6 +183,7 @@
           $('#attachfile').trigger('click');
         } else {
           $(`#attachName${key}`).addClass('error')
+          $('#attachfile').trigger('click');
         }
       }
 
@@ -197,6 +198,16 @@
           } else {
             $(`#attachName${i}`).removeClass('error')
           }
+        }
+        if (error) {
+          $(".attachName").addClass('error');
+          Swal.fire({
+            position: 'top-center',
+            icon: 'error',
+            title: 'أدخل اسماء المرفقات',
+            showConfirmButton: true,
+            timer: 2000
+          })
         }
         return error;
       }
