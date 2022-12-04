@@ -87,6 +87,7 @@
                                                         </option>
                                                         <option value="financeArchive">ارشيف قسم المالية</option>
                                                         <option value="lawArchieve">ارشيف القوانين والاجراءات</option>
+                                                        <option value="tradeArchive">ارشيف المعاملات</option>
                                                         <option value="taskArchive">ارشيف الطلبات</option>
                                                         <option value="certArchive">ارشيف الشهادات</option>
                                                     </select>
@@ -429,6 +430,7 @@
                         "specialEmpArchive": '{{ trans('archive.specialEmpArchive') }}',
                         "contractArchive": '{{ trans('archive.dep_archive') }}',
                         "financeArchive": '{{ trans('archive.financeArchive') }}',
+                        "tradeArchive": '{{ trans('archive.tradeArchive') }}',
                         "licFileArchive": '{{ trans('archive.licFile_archive') }}'
                     };
                     if (response.type == "lic") {

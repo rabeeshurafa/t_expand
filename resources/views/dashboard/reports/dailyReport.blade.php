@@ -559,7 +559,14 @@
                             "<td>" + response.licArchiveCount + "</td>";
                         $row += "</tr>";
                         c++;
-                        
+
+                        $row += "<tr>" +
+                            "<td>" + c + "</td>" +
+                            "<td>" + 'ارشيف المعاملات ' + "</td>" +
+                            "<td>" + response.tradeArchive + "</td>";
+                        $row += "</tr>";
+                        c++;
+
                         $('#totalBody').append($row)
                         c++;
                     }
