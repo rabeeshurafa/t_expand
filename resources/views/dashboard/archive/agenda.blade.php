@@ -491,13 +491,13 @@
                                             <li style="font-size: 17px !important;color:#000000">
                                                 <div class="row">
                                                     <div class="col-sm-6 attmob">
-                                                        <input type="text" id="attachName[]" name="attachName[]"
+                                                        <input type="text" id="attachName1" key="1" name="attachName[]"
                                                                class="form-control attachName"
-                                                               placeholder="أخل اسم المرفق"
+                                                               placeholder="أدخل اسم المرفق"
                                                                value="">
                                                     </div>
                                                     <div class="attdocmob col-sm-5 attach_row_1 ">
-
+                                                        <input type="hidden" id="attach_ids1" name="attach_ids[]" value="">
                                                     </div>
                                                     <div>
                                                         <img src="{{ asset('assets/images/ico/upload.png') }}"
@@ -769,13 +769,13 @@
                 var row = '<li style="font-size: 17px !important;color:#000000">' +
                     '<div class="row">' +
                     '<div class="col-sm-6 attmob">' +
-                    '<input type="text" id="attachName[]" name="attachName[]" class="form-control attachName">' +
+                    `<input type="text" id="attachName${attach_index}" key="${attach_index}" name="attachName[]" class="form-control attachName">` +
                     '</div>' +
                     '<div class="attdocmob col-sm-5 attach_row_' + attach_index + '">' +
-                    //'<input type="text" name="feesValue2" class="form-control" disabled="disabled">' +
+                   `<input type="hidden" id="attach_ids${attach_index}" name="attach_ids[]" value="">`+
                     '</div>' +
                     '<div class="attdelmob attachs">' +
-                    '<img src="{{ asset('assets/images/ico/upload.png') }}" width="40" height="40" style="cursor:pointer" onclick="$(\'#currFile\').val(' + attach_index + ');$(\'#attachfile\').trigger(\'click\'); addNewAttatch(); return false">' +
+                    `<img src="{{ asset('assets/images/ico/upload.png') }}" width="40" height="40" style="cursor:pointer" onclick="$('#currFile').val(${attach_index});validateName(${attach_index})">` +
                     '</div>' +
                     '<div class="attdelmob attachs">' +
                     '<i class="fa fa-trash" id="plusElement1" style="padding-top:10px;position: relative;left: 3%;cursor: pointer;  color:#1E9FF2;font-size: 15pt; " onclick="$(this).parent().parent().parent().remove()"></i>' +
@@ -813,7 +813,7 @@
                         $actionBtn = '';
                         for (j = 0; j < data.all_files.length; j++) {
                             $(".attach_row_" + id).html('')
-                            $actionBtn +=attacheViewWithIcon(data.all_files[j], 12, null)
+                            $actionBtn +=attacheViewWithIcon(data.all_files[j], 12, null,id)
                         }
                         $(".alert-danger").addClass("hide");
                         $(".alert-success").removeClass('hide');
@@ -843,6 +843,32 @@
                 contentType: false,
                 processData: false
             });
+        }
+
+        function validateName(key) {
+          const name = $(`#attachName${key}`).val()
+          if (name.trim().length > 0) {
+            $(`#attachName${key}`).removeClass('error')
+            $('#attachfile').trigger('click');
+          } else {
+            $(`#attachName${key}`).addClass('error')
+            $('#attachfile').trigger('click');
+          }
+        }
+
+        function validateAllAttachmentNames() {
+          let error = false
+          for (let i = 1; i < attach_index; i++) {
+            const name = $(`#attachName${i}`).val()
+            const id = $(`#attach_ids${i}`).val()
+            if (name?.trim()?.length <= 0 && id?.trim()?.length > 0) {
+              $(`#attachName${i}`).addClass('error')
+              error = true;
+            } else {
+              $(`#attachName${i}`).removeClass('error')
+            }
+          }
+          return error;
         }
     </script>
     <script>
@@ -1091,7 +1117,6 @@
             $(".allDec").html('');
 
             var formData = new FormData($("#formData")[0]);
-            ;
             $.ajax({
                 url: 'C_agenda/ajaxReplay',
                 type: 'POST',
@@ -1205,15 +1230,15 @@
                                 attach_template += `<li style="font-size: 17px !important;color:#000000">
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <input type="text" id="attachName[]" name="attachName[]" class="form-control attachName" placeholder="أدخل اسم المرفق" value="">
+                                            <input type="text" id="attachName${i + 1}" key="${i + 1}" name="attachName[]" class="form-control attachName" placeholder="أدخل اسم المرفق" value="">
                                         </div>
                                         <div class="col-sm-5 attach_row_${i + 1}">
-
+                                            <input type="hidden" id="attach_ids${i + 1}" name="attach_ids[]" value="">
                                         </div>
                                         <div class="col-sm-1">
                                             <img src="{{ asset('assets/images/ico/upload.png') }}" width="40"
                                                 height="40" style="cursor:pointer" class="attachs"
-                                                onclick="$('#currFile').val(${i + 1});$('#attachfile').trigger('click');">
+                                                onclick="$('#currFile').val(${i + 1});validateName(${i + 1})">
                                         </div>
                                     </div>
                                 </li>`
@@ -1575,6 +1600,9 @@
 
         function saveAttachMeeting() {
             //$("#topicToEdit").val(id);
+          if(validateAllAttachmentNames()){
+            return false
+          }
             $(".loader").removeClass('hide');
             var formData = new FormData($("#formData")[0]);
             ;
