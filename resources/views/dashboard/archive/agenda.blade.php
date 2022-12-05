@@ -503,7 +503,7 @@
                                                         <img src="{{ asset('assets/images/ico/upload.png') }}"
                                                              width="40" class="attachs"
                                                              height="40" style="cursor:pointer"
-                                                             onclick="$('#currFile').val(1);$('#attachfile').trigger('click');">
+                                                             onclick="$('#currFile').val(1);validateName(1)">
 
                                                     </div>
                                                 </div>
