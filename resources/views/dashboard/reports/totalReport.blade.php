@@ -600,11 +600,10 @@
                   + '</td>'
                   + '<td >'
                   + '<a target="_blank" href="{{asset(app()->getLocale())}}' + link + '">'
-                  + (statusID == 5003 ? '<img src="{{asset('assets/images/ico/lock.png')}}" style="height: 18px">'
+                  + (+statusID === 5003 ? '<img src="{{asset('assets/images/ico/lock.png')}}" style="height: 18px">'
                     : '<img src="{{asset('assets/images/ico/greenlook.png')}}" style="height: 18px">')
                   + '<span class="hideMob" >' + taskname + '</span>'
                   + '</a>'
-
                   + '</td>'
                   + '<td style="color:' + color + ';">'
                   // +(response[$i]['0']['ticket_status']==5003?'<img src="{{asset('assets/images/ico/lock.png')}}" style="height: 18px">':'')
@@ -619,7 +618,7 @@
                   + date1
                   + '</td>'
                   + '<td >'
-                  + (statusID == 5003 ? (date2) : '')
+                  + (+statusID === 5003 ? (date2) : '')
                   + '</td>'
                   + '<td >'
                   + totaldior
