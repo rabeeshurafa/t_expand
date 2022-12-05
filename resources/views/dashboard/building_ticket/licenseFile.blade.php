@@ -279,7 +279,7 @@
 
         $('#ticketFrm').submit(function (e) {
           e.preventDefault();
-          if (validateAttachments()) {
+          if ((validateAttachments()??false)) {
             return false;
           }
           $(".loader").removeClass('hide');

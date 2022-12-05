@@ -1,9 +1,12 @@
 <?php
 namespace App\Models;
 use App\Casts\Json;
+use Awobaz\Compoships\Compoships;
 use Illuminate\Database\Eloquent\Model;
 class AppTicket39 extends Model
 {
+    use Compoships;
+
     public function Admin(){
 
         return $this->belongsTo(Admin::class,'created_by');
@@ -21,10 +24,11 @@ class AppTicket39 extends Model
         return $this->belongsTo(AppTrans::class,'active_trans');
 
     }
-    // public function ticketConfig(){
 
-    //     return $this->belongsTo(TicketConfig::class, ['ticket_no', 'app_type'], ['app_type', '1']);
-
-    // }
+    public function ticketConfig()
+    {
+        return $this->belongsTo(TicketConfig::class, ['app_type'],
+                ['app_type'])->select(['ticket_name', 'app_type', 'ticket_no'])->where('ticket_no', 39);
+    }
 }
 

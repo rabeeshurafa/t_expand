@@ -1,30 +1,40 @@
 <?php
 namespace App\Models;
+
 use App\Casts\Json;
+use Awobaz\Compoships\Compoships;
 use Illuminate\Database\Eloquent\Model;
+
 class AppTicket1 extends Model
 {
-    public function Admin(){
+    use Compoships;
 
-        return $this->belongsTo(Admin::class,'created_by');
+    public function Admin()
+    {
 
-    }
-    
-    public function ticketStatus(){
-
-        return $this->belongsTo(Constant::class,'ticket_status');
+        return $this->belongsTo(Admin::class, 'created_by');
 
     }
-    
-    public function activeTrans(){
 
-        return $this->belongsTo(AppTrans::class,'active_trans');
+    public function ticketStatus()
+    {
+
+        return $this->belongsTo(Constant::class, 'ticket_status');
 
     }
-    // public function ticketConfig(){
 
-    //     return $this->belongsTo(TicketConfig::class, ['ticket_no', 'app_type'], ['app_type', '1']);
+    public function activeTrans()
+    {
 
-    // }
+        return $this->belongsTo(AppTrans::class, 'active_trans');
+
+    }
+
+    public function ticketConfig()
+    {
+        return $this->belongsTo(TicketConfig::class, ['app_type'],
+                ['app_type'])->select(['ticket_name', 'app_type', 'ticket_no'])->where('ticket_no', 1);
+    }
+
 }
 

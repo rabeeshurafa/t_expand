@@ -1511,7 +1511,7 @@ order by created_at asc");
     {
         $files_ids = $request->attach_ids;
         foreach ($request->notArchived ?? [] as $notArchivedId) {
-            if ($notArchivedId != null) {
+            if ($notArchivedId != null && $notArchivedId != "undefined") {
                 $index = array_search($notArchivedId, $files_ids ?? []);
                 $archive = new Archive();
                 $archive->model_id = $request->subscriber_id;
@@ -1543,7 +1543,7 @@ order by created_at asc");
     ) {
         $files_ids = $request->attach_ids;
         foreach ($request->notArchived1 ?? [] as $notArchivedId) {
-            if ($notArchivedId != null) {
+            if ($notArchivedId != null && $notArchivedId != "undefined") {
                 $index = array_search($notArchivedId, $files_ids ?? []);
                 $archive = new Archive();
                 $archive->model_id = $request->subscriberId1;

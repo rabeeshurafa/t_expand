@@ -80,21 +80,22 @@ use Spatie\Activitylog\Models\Activity;
 class ReportController extends Controller
 {
     var $archiveNames = array(
-        'out_archieve' => 'صادر',
-        'in_archieve' => 'وارد',
-        'mun_archieve' => 'المؤسسة',
-        'proj_archieve' => 'المشاريع',
-        'assets_archieve' => 'الاصول',
-        'emp_archieve' => 'الموظفين',
-        'cit_archieve' => 'المواطنين',
-        'law_archieve' => 'قوانين واجراءات',
-        'dep_archieve' => 'اتفاقيات وعقود',
-        'contractArchive' => 'اتفاقيات وعقود',
-        'contract_archieve' => 'اتفاقيات وعقود',
-        'finance_archive' => 'قسم المالية',
-        'trade_archive' => 'المعاملات',
-        'agenda_archieve' => 'الجلسات',
+            'out_archieve' => 'صادر',
+            'in_archieve' => 'وارد',
+            'mun_archieve' => 'المؤسسة',
+            'proj_archieve' => 'المشاريع',
+            'assets_archieve' => 'الاصول',
+            'emp_archieve' => 'الموظفين',
+            'cit_archieve' => 'المواطنين',
+            'law_archieve' => 'قوانين واجراءات',
+            'dep_archieve' => 'اتفاقيات وعقود',
+            'contractArchive' => 'اتفاقيات وعقود',
+            'contract_archieve' => 'اتفاقيات وعقود',
+            'finance_archive' => 'قسم المالية',
+            'trade_archive' => 'المعاملات',
+            'agenda_archieve' => 'الجلسات',
     );
+
     public function DailyReport()
     {
         // $city = City::get();
@@ -105,31 +106,37 @@ class ReportController extends Controller
         $type = 'DailyReport';
         return view('dashboard.reports.dailyReport', compact('type'));
     }
+
     public function dailyTaskReport()
     {
         $type = 'dailyTaskReport';
         return view('dashboard.reports.dailyTaskReport', compact('type'));
     }
+
     public function messagesReport()
     {
         $type = 'messagesReport';
         return view('dashboard.reports.messagesReports', compact('type'));
     }
+
     public function deletedArchiveReport()
     {
         $type = 'DeletedArchiveReport';
         return view('dashboard.reports.deletedArchiveReport', compact('type'));
     }
+
     public function deletedDefinitionsReport()
     {
         $type = 'deletedDefinitionsReport';
         return view('dashboard.reports.deletedDefinitions', compact('type'));
     }
+
     public function logReport()
     {
         $type = 'logReport';
         return view('dashboard.reports.logReport', compact('type'));
     }
+
     public function customerReport()
     {
         $type = 'customerReport';
@@ -140,8 +147,10 @@ class ReportController extends Controller
         $use_elec = Constant::where('parent', 6032)->where('status', 1)->get();
         $use_water = Constant::where('parent', 6032)->where('status', 1)->get();
         $use_desc = Constant::where('parent', 6214)->where('status', 1)->get();
-        return view('dashboard.reports.customerReport', compact('type', 'regions', 'job', 'use_desc', 'use_elec', 'use_water'));
+        return view('dashboard.reports.customerReport',
+                compact('type', 'regions', 'job', 'use_desc', 'use_elec', 'use_water'));
     }
+
     public function tasksReport()
     {
         $type = 'tasksReport';
@@ -151,6 +160,7 @@ class ReportController extends Controller
         $admins = Admin::where('enabled', 1)->get();
         return view('dashboard.reports.tasksReport', compact('type', 'region', 'appStatus', 'admins'));
     }
+
     public function storage_report()
     {
         $type = 'storage_report';
@@ -163,8 +173,8 @@ class ReportController extends Controller
         // $license_type = LicenseType::get();
 
         return view(
-            'dashboard.reports.storageReport',
-            compact('type', 'attachment_type', 'archive_type_mun', 'license_type', 'url')
+                'dashboard.reports.storageReport',
+                compact('type', 'attachment_type', 'archive_type_mun', 'license_type', 'url')
         );
     }
 
@@ -173,6 +183,7 @@ class ReportController extends Controller
         $type = 'vacationReport';
         return view('dashboard.reports.vacationReport', compact('type'));
     }
+
     // where ticket_status in(1,5002)
     public function totalReport()
     {
@@ -182,11 +193,13 @@ class ReportController extends Controller
         $type = 'totalReport';
         return view('dashboard.reports.totalReport', compact('type', 'departments', 'ticketStatuses', 'admins'));
     }
+
     public function taskArchiveReport()
     {
         $type = 'taskArchiveReport';
         return view('dashboard.reports.tasksArchiveReport', compact('type'));
     }
+
     public function report_logs(Request $request)
     {
         // activity()
@@ -198,28 +211,31 @@ class ReportController extends Controller
 
             $from = explode('/', ($request->get('from')));
 
-            $from = $from[2] . '-' . $from[1] . '-' . $from[0];
+            $from = $from[2].'-'.$from[1].'-'.$from[0];
 
             $to = date_create(($request->get('to')));
 
             $to = explode('/', ($request->get('to')));
 
-            $to = $to[2] . '-' . $to[1] . '-' . $to[0];
-            $from = $from . ' ' . '00:00:00';
-            $to = $to . ' ' . '23:00:00';
+            $to = $to[2].'-'.$to[1].'-'.$to[0];
+            $from = $from.' '.'00:00:00';
+            $to = $to.' '.'23:00:00';
         }
         if ($from && $to) {
             $activity->whereBetween('activity_log.created_at', [$from, $to]);
         }
-        $withString = ['causer' => function ($query) {
-            $query->select('id', 'name', 'nick_name');
-        }, 'subject'];
-        $activity =  $activity->with($withString)->orderBy('created_at', 'DESC')->get()->each(function ($row, $index) {
+        $withString = [
+                'causer' => function ($query) {
+                    $query->select('id', 'name', 'nick_name');
+                }, 'subject'
+        ];
+        $activity = $activity->with($withString)->orderBy('created_at', 'DESC')->get()->each(function ($row, $index) {
             $row->rowId = $index + 1;
         });
 
         return response()->json($activity);
     }
+
     public function getTradeArchive(Request $request)
     {
         $archive['data'] = TradeArchive::query()->with('Admin');
@@ -228,18 +244,19 @@ class ReportController extends Controller
         if ($request->get('start') && $request->get('end')) {
             $from = date_create(($request->get('start')));
             $from = explode('/', ($request->get('start')));
-            $from = $from[2] . '-' . $from[1] . '-' . $from[0];
+            $from = $from[2].'-'.$from[1].'-'.$from[0];
             $to = date_create(($request->get('end')));
             $to = explode('/', ($request->get('end')));
-            $to = $to[2] . '-' . $to[1] . '-' . $to[0];
+            $to = $to[2].'-'.$to[1].'-'.$to[0];
             $archive['data']->whereRaw('CAST(trade_archives.created_at AS DATE) between ? and ?', [$from, $to]);
         }
-        $archive['data'] = $archive['data']->select('trade_archives.*', 'trade_archives.trade_no as serisal', 't_constant.name as title')
-            ->where('trade_archives.enabled', 1)
-            ->selectRaw('DATE_FORMAT(trade_archives.created_at, "%Y-%m-%d") as date')
-            ->leftJoin('t_constant', 't_constant.id', 'trade_archives.trade_type')
-            ->with('Admin')
-            ->orderBy('id', 'DESC')->get();
+        $archive['data'] = $archive['data']->select('trade_archives.*', 'trade_archives.trade_no as serisal',
+                't_constant.name as title')
+                ->where('trade_archives.enabled', 1)
+                ->selectRaw('DATE_FORMAT(trade_archives.created_at, "%Y-%m-%d") as date')
+                ->leftJoin('t_constant', 't_constant.id', 'trade_archives.trade_type')
+                ->with('Admin')
+                ->orderBy('id', 'DESC')->get();
         $archive['attachmentSize'] = 0;
         $index = 1;
 
@@ -259,9 +276,9 @@ class ReportController extends Controller
                         if ($rawFiles[$i] && $rawFiles[$i]->size) {
                             $size = $rawFiles[$i]->size;
                             if (str_contains($size, 'kb')) {
-                                $size = (float)$size / 1000;
+                                $size = (float) $size / 1000;
                             }
-                            $sum = round($sum +  (float)$size, 3);
+                            $sum = round($sum + (float) $size, 3);
                         }
                         $temp['id'] = $attachIds[$i];
                         $temp['file_links'] = $rawFiles[$i]->file_links;
@@ -283,6 +300,7 @@ class ReportController extends Controller
         }
         return $archive;
     }
+
     public function getLicArchive(Request $request)
     {
         $archive['type'] = "lic";
@@ -294,33 +312,33 @@ class ReportController extends Controller
 
             $from = explode('/', ($request->get('start')));
 
-            $from = $from[2] . '-' . $from[1] . '-' . $from[0];
+            $from = $from[2].'-'.$from[1].'-'.$from[0];
 
             $to = date_create(($request->get('end')));
 
             $to = explode('/', ($request->get('end')));
 
-            $to = $to[2] . '-' . $to[1] . '-' . $to[0];
+            $to = $to[2].'-'.$to[1].'-'.$to[0];
 
             $archive['data']->whereRaw('CAST(archive_licenses.created_at AS DATE) between ? and ?', [$from, $to]);
         }
         $archive['data'] = $archive['data']->select(
-            'archive_licenses.*',
-            't_constant.name as license_type_name',
-            't_constant.name as title'
+                'archive_licenses.*',
+                't_constant.name as license_type_name',
+                't_constant.name as title'
         )
-            ->selectRaw('DATE_FORMAT(archive_licenses.created_at, "%Y-%m-%d") as date')
-            ->leftJoin('t_constant', 't_constant.id', 'archive_licenses.license_id')
-            ->with('files','Admin')->get();
+                ->selectRaw('DATE_FORMAT(archive_licenses.created_at, "%Y-%m-%d") as date')
+                ->leftJoin('t_constant', 't_constant.id', 'archive_licenses.license_id')
+                ->with('files', 'Admin')->get();
         foreach ($archive['data'] as $row) {
             $sum = 0;
             foreach ($row->files as $file) {
                 if ($file && $file['size']) {
                     $size = $file['size'];
                     if (str_contains($size, 'kb')) {
-                        $size = (float)$size / 1000;
+                        $size = (float) $size / 1000;
                     }
-                    $sum = round($sum +  (float)$size, 3);
+                    $sum = round($sum + (float) $size, 3);
                 }
             }
             $row->setAttribute('attachSize', $sum);
@@ -328,6 +346,7 @@ class ReportController extends Controller
         }
         return $archive;
     }
+
     public function storageReport(Request $request)
     {
         if ($request->get('arcType') == "licArchive" || $request->get('arcType') == "licFileArchive") {
@@ -351,18 +370,19 @@ class ReportController extends Controller
 
                 $from = explode('/', ($request->get('start')));
 
-                $from = $from[2] . '-' . $from[1] . '-' . $from[0];
+                $from = $from[2].'-'.$from[1].'-'.$from[0];
 
                 $to = date_create(($request->get('end')));
 
                 $to = explode('/', ($request->get('end')));
 
-                $to = $to[2] . '-' . $to[1] . '-' . $to[0];
+                $to = $to[2].'-'.$to[1].'-'.$to[0];
 
                 $archive['data']->whereBetween('date', [$from, $to])->where('enabled', 1);
             }
             $archive['attachmentSize'] = 0;
-            $archive['data'] = $archive['data']->where('enabled', 1)->orderBy('id', 'DESC')->with('archiveType', 'Admin', 'copyTo', 'files')->get();
+            $archive['data'] = $archive['data']->where('enabled', 1)->orderBy('id', 'DESC')->with('archiveType',
+                    'Admin', 'copyTo', 'files')->get();
             $index = 1;
 
             foreach ($archive['data'] as $row) {
@@ -372,9 +392,9 @@ class ReportController extends Controller
                     if ($file && $file['size']) {
                         $size = $file['size'];
                         if (str_contains($size, 'kb')) {
-                            $size = (float)$size / 1000;
+                            $size = (float) $size / 1000;
                         }
-                        $sum = round($sum +  (float)$size, 3);
+                        $sum = round($sum + (float) $size, 3);
                     }
                 }
                 $row->setAttribute('attachSize', $sum);
@@ -393,11 +413,12 @@ class ReportController extends Controller
             $archive['data'] = $archive['data']->values();
         }
         activity()
-            ->log('storage-report');
+                ->log('storage-report');
         $archive['attachmentSize'] = round($archive['attachmentSize'], 3);
         $archive['type'] = $request->get('arcType');
         return response()->json($archive);
     }
+
     public function subscriberReport(Request $request)
     {
 
@@ -406,9 +427,12 @@ class ReportController extends Controller
             $elec = Elec::where('enabled', '1')->with('User')->with('Region')->orderBy('elecs.user_id')->get();
             $water = Water::where('enabled', '1')->with('User')->with('Region')->orderBy('waters.user_id')->get();
         } else {
-            $license = License::where('enabled', '1')->where('region', $request->region)->with('User')->with('Region')->orderBy('licenses.user_id')->get();
-            $elec = Elec::where('enabled', '1')->where('region', $request->region)->with('User')->with('Region')->orderBy('elecs.user_id')->get();
-            $water = water::where('enabled', '1')->where('region', $request->region)->with('User')->with('Region')->orderBy('waters.user_id')->get();
+            $license = License::where('enabled', '1')->where('region',
+                    $request->region)->with('User')->with('Region')->orderBy('licenses.user_id')->get();
+            $elec = Elec::where('enabled', '1')->where('region',
+                    $request->region)->with('User')->with('Region')->orderBy('elecs.user_id')->get();
+            $water = water::where('enabled', '1')->where('region',
+                    $request->region)->with('User')->with('Region')->orderBy('waters.user_id')->get();
         }
 
         $res = array();
@@ -557,8 +581,9 @@ class ReportController extends Controller
         if ($request->job != 0) {
             for ($i = 0; $i < sizeof($tempRes1); $i++) {
                 if ($tempRes1[$i]['user_job'] != null) {
-                    if ($tempRes1[$i]['user_job']->id == $request->job)
+                    if ($tempRes1[$i]['user_job']->id == $request->job) {
                         array_push($tempRes2, $tempRes1[$i]);
+                    }
                 }
             }
         } else {
@@ -570,8 +595,9 @@ class ReportController extends Controller
                 // dd($tempRes2[$i]);
                 // dd($tempRes2[$i]['user_subType']->id== $request->subType);
                 if ($tempRes2[$i]['user_subType'] != null) {
-                    if ($tempRes2[$i]['user_subType']->id == $request->subType)
+                    if ($tempRes2[$i]['user_subType']->id == $request->subType) {
                         array_push($res, $tempRes2[$i]);
+                    }
                 }
             }
         }
@@ -582,12 +608,9 @@ class ReportController extends Controller
         }
 
         activity()
-            ->log('subscriber-report');
+                ->log('subscriber-report');
         return DataTables::of($res)->addIndexColumn()->make(true);
     }
-
-
-
 
 
     public function smsReport(Request $request)
@@ -601,27 +624,28 @@ class ReportController extends Controller
 
             $from = explode('/', ($request->get('from')));
 
-            $from = $from[2] . '-' . $from[1] . '-' . $from[0] . ' ' . '00:00:00';
+            $from = $from[2].'-'.$from[1].'-'.$from[0].' '.'00:00:00';
 
             $to = date_create(($request->get('to')));
 
             $to = explode('/', ($request->get('to')));
-            if ($to[0] == 31)
-                $to = $to[2] . '-' . $to[1] . '-' . ($to[0]) . ' ' . '00:00:00';
-            else
-                $to = $to[2] . '-' . $to[1] . '-' . ($to[0] + 1) . ' ' . '00:00:00';
+            if ($to[0] == 31) {
+                $to = $to[2].'-'.$to[1].'-'.($to[0]).' '.'00:00:00';
+            } else {
+                $to = $to[2].'-'.$to[1].'-'.($to[0] + 1).' '.'00:00:00';
+            }
         }
 
         $messages = Smslog::select('smslogs.*', 'admins.nick_name as nick_name')
-            ->whereBetween('smslogs.created_at', [$from, $to])
-            ->where('app_ticket', '!=', null)
-            ->leftJoin('admins', 'admins.id', 'smslogs.sender')
-            ->orderBy('smslogs.created_at', 'DESC')->get();
+                ->whereBetween('smslogs.created_at', [$from, $to])
+                ->where('app_ticket', '!=', null)
+                ->leftJoin('admins', 'admins.id', 'smslogs.sender')
+                ->orderBy('smslogs.created_at', 'DESC')->get();
         // dd($messages);
         foreach ($messages as $message) {
             if ($message->app_ticket != 1000) {
-                $ticketname =  DB::select("SELECT `ticket_name` FROM `ticket_configs` where ticket_no = " . $message->app_ticket . " and app_type = " . $message->app_type);
-                $ticketNo  = DB::select("SELECT `app_no` FROM `app_ticket" . $message->app_ticket . "s` where id = " . $message->app_id);
+                $ticketname = DB::select("SELECT `ticket_name` FROM `ticket_configs` where ticket_no = ".$message->app_ticket." and app_type = ".$message->app_type);
+                $ticketNo = DB::select("SELECT `app_no` FROM `app_ticket".$message->app_ticket."s` where id = ".$message->app_id);
 
                 // dd($ticketname);
                 // dd($ticketNo);
@@ -634,7 +658,7 @@ class ReportController extends Controller
             }
         }
         activity()
-            ->log('sms-report');
+                ->log('sms-report');
         // dd($messages);
         // return $messages;
         return DataTables::of($messages)->addIndexColumn()->make(true);
@@ -651,85 +675,86 @@ class ReportController extends Controller
 
             $from = explode('/', ($request->get('from')));
 
-            $from = $from[2] . '-' . $from[1] . '-' . $from[0] . ' ' . '00:00:00';
+            $from = $from[2].'-'.$from[1].'-'.$from[0].' '.'00:00:00';
 
             $to = date_create(($request->get('to')));
 
             $to = explode('/', ($request->get('to')));
-            if ($to[0] == 31)
-                $to = $to[2] . '-' . $to[1] . '-' . ($to[0]) . ' ' . '00:00:00';
-            else
-                $to = $to[2] . '-' . $to[1] . '-' . ($to[0] + 1) . ' ' . '00:00:00';
+            if ($to[0] == 31) {
+                $to = $to[2].'-'.$to[1].'-'.($to[0]).' '.'00:00:00';
+            } else {
+                $to = $to[2].'-'.$to[1].'-'.($to[0] + 1).' '.'00:00:00';
+            }
         }
         $emp_id = '0';
         if ($request->emp_id != null) {
             $emp_id = $request->emp_id;
         }
         activity()
-            ->log('vacations-report');
+                ->log('vacations-report');
         if ($request->vacType == 1) {
             if ($emp_id != 0) {
                 $vac = AppTicket32::select('app_ticket32s.*', 't_constant.name as vac_name')
-                    ->where('customer_id', $emp_id)
-                    ->whereBetween('app_ticket32s.created_at', [$from, $to])
-                    ->leftJoin('t_constant', 't_constant.id', 'app_ticket32s.vac_type')
-                    ->orderBy('app_ticket32s.created_at', 'DESC')->get();
+                        ->where('customer_id', $emp_id)
+                        ->whereBetween('app_ticket32s.created_at', [$from, $to])
+                        ->leftJoin('t_constant', 't_constant.id', 'app_ticket32s.vac_type')
+                        ->orderBy('app_ticket32s.created_at', 'DESC')->get();
 
                 $leav = AppTicket28::select('app_ticket28s.*', 't_constant.name as leave_name')
-                    ->where('customer_id', $emp_id)
-                    ->whereBetween('app_ticket28s.created_at', [$from, $to])
-                    ->leftJoin('t_constant', 't_constant.id', 'app_ticket28s.leave_type')
-                    ->orderBy('app_ticket28s.created_at', 'DESC')->get();
+                        ->where('customer_id', $emp_id)
+                        ->whereBetween('app_ticket28s.created_at', [$from, $to])
+                        ->leftJoin('t_constant', 't_constant.id', 'app_ticket28s.leave_type')
+                        ->orderBy('app_ticket28s.created_at', 'DESC')->get();
 
                 $res = $vac->mergeRecursive($leav);
                 $res = $res->sortByDesc('created_at');
                 return DataTables::of($res)->addIndexColumn()->make(true);
             } else {
                 $vac = AppTicket32::select('app_ticket32s.*', 't_constant.name as vac_name')
-                    ->whereBetween('app_ticket32s.created_at', [$from, $to])
-                    ->leftJoin('t_constant', 't_constant.id', 'app_ticket32s.vac_type')
-                    ->orderBy('app_ticket32s.created_at', 'DESC')->get();
+                        ->whereBetween('app_ticket32s.created_at', [$from, $to])
+                        ->leftJoin('t_constant', 't_constant.id', 'app_ticket32s.vac_type')
+                        ->orderBy('app_ticket32s.created_at', 'DESC')->get();
 
                 $leav = AppTicket28::select('app_ticket28s.*', 't_constant.name as leave_name')
-                    ->whereBetween('app_ticket28s.created_at', [$from, $to])
-                    ->leftJoin('t_constant', 't_constant.id', 'app_ticket28s.leave_type')
-                    ->orderBy('app_ticket28s.created_at', 'DESC')->get();
+                        ->whereBetween('app_ticket28s.created_at', [$from, $to])
+                        ->leftJoin('t_constant', 't_constant.id', 'app_ticket28s.leave_type')
+                        ->orderBy('app_ticket28s.created_at', 'DESC')->get();
 
                 $res = $vac->mergeRecursive($leav);
                 $res = $res->sortByDesc('created_at');
                 return DataTables::of($res)->addIndexColumn()->make(true);
             }
-        } elseif ($request->vacType == 2) {
+        } else if ($request->vacType == 2) {
             if ($emp_id != 0) {
                 $res = AppTicket32::select('app_ticket32s.*', 't_constant.name as vac_name')
-                    ->where('customer_id', $emp_id)
-                    ->whereBetween('app_ticket32s.created_at', [$from, $to])
-                    ->leftJoin('t_constant', 't_constant.id', 'app_ticket32s.vac_type')
-                    ->orderBy('app_ticket32s.created_at', 'DESC')->get();
+                        ->where('customer_id', $emp_id)
+                        ->whereBetween('app_ticket32s.created_at', [$from, $to])
+                        ->leftJoin('t_constant', 't_constant.id', 'app_ticket32s.vac_type')
+                        ->orderBy('app_ticket32s.created_at', 'DESC')->get();
 
                 return DataTables::of($res)->addIndexColumn()->make(true);
             } else {
                 $res = AppTicket32::select('app_ticket32s.*', 't_constant.name as vac_name')
-                    ->whereBetween('app_ticket32s.created_at', [$from, $to])
-                    ->leftJoin('t_constant', 't_constant.id', 'app_ticket32s.vac_type')
-                    ->orderBy('app_ticket32s.created_at', 'DESC')->get();
+                        ->whereBetween('app_ticket32s.created_at', [$from, $to])
+                        ->leftJoin('t_constant', 't_constant.id', 'app_ticket32s.vac_type')
+                        ->orderBy('app_ticket32s.created_at', 'DESC')->get();
 
                 return DataTables::of($res)->addIndexColumn()->make(true);
             }
         } else {
             if ($emp_id != 0) {
                 $res = AppTicket28::select('app_ticket28s.*', 't_constant.name as leave_name')
-                    ->where('customer_id', $emp_id)
-                    ->whereBetween('app_ticket28s.created_at', [$from, $to])
-                    ->leftJoin('t_constant', 't_constant.id', 'app_ticket28s.leave_type')
-                    ->orderBy('app_ticket28s.created_at', 'DESC')->get();
+                        ->where('customer_id', $emp_id)
+                        ->whereBetween('app_ticket28s.created_at', [$from, $to])
+                        ->leftJoin('t_constant', 't_constant.id', 'app_ticket28s.leave_type')
+                        ->orderBy('app_ticket28s.created_at', 'DESC')->get();
 
                 return DataTables::of($res)->addIndexColumn()->make(true);
             } else {
                 $res = AppTicket28::select('app_ticket28s.*', 't_constant.name as leave_name')
-                    ->whereBetween('app_ticket28s.created_at', [$from, $to])
-                    ->leftJoin('t_constant', 't_constant.id', 'app_ticket28s.leave_type')
-                    ->orderBy('app_ticket28s.created_at', 'DESC')->get();
+                        ->whereBetween('app_ticket28s.created_at', [$from, $to])
+                        ->leftJoin('t_constant', 't_constant.id', 'app_ticket28s.leave_type')
+                        ->orderBy('app_ticket28s.created_at', 'DESC')->get();
 
                 return DataTables::of($res)->addIndexColumn()->make(true);
             }
@@ -742,13 +767,16 @@ class ReportController extends Controller
         $sql = "";
         $lastTicket = LastTicket::find(1);
         for ($i = 1; $i <= $lastTicket->last_ticket; $i++) {
-            if ($i == 3) continue;
-            if ($i == 1)
-                $sql .= " SELECT `id`, 1 related, `active_trans`, `ticket_status` FROM `app_ticket" . $i . "s` $ticketFiltter";
-            else
-                $sql .= " UNION SELECT `id`, 2 related, `active_trans`, `ticket_status` FROM `app_ticket" . $i . "s` $ticketFiltter";
+            if ($i == 3) {
+                continue;
+            }
+            if ($i == 1) {
+                $sql .= " SELECT `id`, 1 related, `active_trans`, `ticket_status` FROM `app_ticket".$i."s` $ticketFiltter";
+            } else {
+                $sql .= " UNION SELECT `id`, 2 related, `active_trans`, `ticket_status` FROM `app_ticket".$i."s` $ticketFiltter";
+            }
         }
-        return "select * from (" . $sql . ") a " . $where;
+        return "select * from (".$sql.") a ".$where;
     }
 
     function masterAuthQuery($where = '', $ticketFiltter = '', $ticketConfigs)
@@ -756,14 +784,15 @@ class ReportController extends Controller
         $sql = "";
         $lastTicket = LastTicket::find(1);
         for ($i = 0; $i < sizeof($ticketConfigs); $i++) {
-            $rowticketFiltter = $ticketFiltter . ' and app_type = ' . $ticketConfigs[$i]->app_type;
+            $rowticketFiltter = $ticketFiltter.' and app_type = '.$ticketConfigs[$i]->app_type;
             // if($i==3) continue;
-            if ($i == 0)
-                $sql .= " SELECT `id`, 1 related, `active_trans`, `ticket_status` FROM `app_ticket" . $ticketConfigs[$i]->ticket_no . "s` $rowticketFiltter";
-            else
-                $sql .= " UNION SELECT `id`, 2 related, `active_trans`, `ticket_status` FROM `app_ticket" . $ticketConfigs[$i]->ticket_no . "s` $rowticketFiltter";
+            if ($i == 0) {
+                $sql .= " SELECT `id`, 1 related, `active_trans`, `ticket_status` FROM `app_ticket".$ticketConfigs[$i]->ticket_no."s` $rowticketFiltter";
+            } else {
+                $sql .= " UNION SELECT `id`, 2 related, `active_trans`, `ticket_status` FROM `app_ticket".$ticketConfigs[$i]->ticket_no."s` $rowticketFiltter";
+            }
         }
-        return "select * from (" . $sql . ") a " . $where;
+        return "select * from (".$sql.") a ".$where;
     }
 
 
@@ -771,303 +800,347 @@ class ReportController extends Controller
     {
         // dd($request->all());
 
-        $ticket1 = AppTicket1::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket2 = AppTicket2::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket4 = AppTicket4::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket5 = AppTicket5::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket6 = AppTicket6::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket7 = AppTicket7::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket8 = AppTicket8::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket9 = AppTicket9::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket10 = AppTicket10::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket11 = AppTicket11::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket12 = AppTicket12::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket13 = AppTicket13::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket14 = AppTicket14::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket15 = AppTicket15::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket16 = AppTicket16::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket17 = AppTicket17::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket18 = AppTicket18::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket19 = AppTicket19::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket20 = AppTicket20::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket21 = AppTicket21::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket22 = AppTicket22::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket23 = AppTicket23::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'task_type')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket24 = AppTicket24::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket25 = AppTicket25::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket26 = AppTicket26::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket27 = AppTicket27::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket28 = AppTicket28::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket29 = AppTicket29::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket30 = AppTicket30::select('id', 'dept_id', 'app_no', 'network_type', 'malDesc', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket31 = AppTicket31::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket32 = AppTicket32::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket33 = AppTicket33::select('id', 'dept_id', 'app_no', 'amount', 'receipt_no', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket34 = AppTicket34::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket35 = AppTicket35::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket36 = AppTicket36::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket37 = AppTicket37::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket38 = AppTicket38::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket39 = AppTicket39::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket40 = AppTicket40::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket42 = AppTicket42::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket44 = AppTicket44::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'topic as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
-        $ticket46 = AppTicket46::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by', 'active_trans', 'ticket_status', 'created_at', 'updated_at', 'archive_type as temp')
-            ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket1 = AppTicket1::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket2 = AppTicket2::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket4 = AppTicket4::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket5 = AppTicket5::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket6 = AppTicket6::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket7 = AppTicket7::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket8 = AppTicket8::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket9 = AppTicket9::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket10 = AppTicket10::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket11 = AppTicket11::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket12 = AppTicket12::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket13 = AppTicket13::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket14 = AppTicket14::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket15 = AppTicket15::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket16 = AppTicket16::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket17 = AppTicket17::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket18 = AppTicket18::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket19 = AppTicket19::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket20 = AppTicket20::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket21 = AppTicket21::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket22 = AppTicket22::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket23 = AppTicket23::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'task_type')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket24 = AppTicket24::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket25 = AppTicket25::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket26 = AppTicket26::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket27 = AppTicket27::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket28 = AppTicket28::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket29 = AppTicket29::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket30 = AppTicket30::select('id', 'dept_id', 'app_no', 'network_type', 'malDesc', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket31 = AppTicket31::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket32 = AppTicket32::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket33 = AppTicket33::select('id', 'dept_id', 'app_no', 'amount', 'receipt_no', 'created_by', 'active_trans',
+                'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket34 = AppTicket34::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket35 = AppTicket35::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket36 = AppTicket36::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket37 = AppTicket37::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket38 = AppTicket38::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket39 = AppTicket39::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket40 = AppTicket40::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket42 = AppTicket42::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'ticket_status as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket44 = AppTicket44::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'topic as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
+        $ticket46 = AppTicket46::select('id', 'dept_id', 'app_no', 'customer_name', 'customer_id', 'created_by',
+                'active_trans', 'ticket_status', 'created_at', 'updated_at', 'archive_type as temp')
+                ->with('activeTrans')->with('ticketStatus')->with('Admin')->where('active_trans', '!=', null);
 
         if ($request->taskState != 1) {
-            $ticket1 =  $ticket1->where('ticket_status', $request->taskState);
-            $ticket2 =  $ticket2->where('ticket_status', $request->taskState);
-            $ticket4 =  $ticket4->where('ticket_status', $request->taskState);
-            $ticket5 =  $ticket5->where('ticket_status', $request->taskState);
-            $ticket6 =  $ticket6->where('ticket_status', $request->taskState);
-            $ticket7 =  $ticket7->where('ticket_status', $request->taskState);
-            $ticket8 =  $ticket8->where('ticket_status', $request->taskState);
-            $ticket9 =  $ticket9->where('ticket_status', $request->taskState);
-            $ticket10 =  $ticket10->where('ticket_status', $request->taskState);
-            $ticket11 =  $ticket11->where('ticket_status', $request->taskState);
-            $ticket12 =  $ticket12->where('ticket_status', $request->taskState);
-            $ticket13 =  $ticket13->where('ticket_status', $request->taskState);
-            $ticket14 =  $ticket14->where('ticket_status', $request->taskState);
-            $ticket15 =  $ticket15->where('ticket_status', $request->taskState);
-            $ticket16 =  $ticket16->where('ticket_status', $request->taskState);
-            $ticket17 =  $ticket17->where('ticket_status', $request->taskState);
-            $ticket18 =  $ticket18->where('ticket_status', $request->taskState);
-            $ticket19 =  $ticket19->where('ticket_status', $request->taskState);
-            $ticket20 =  $ticket20->where('ticket_status', $request->taskState);
-            $ticket21 =  $ticket21->where('ticket_status', $request->taskState);
-            $ticket22 =  $ticket22->where('ticket_status', $request->taskState);
-            $ticket23 =  $ticket23->where('ticket_status', $request->taskState);
-            $ticket24 =  $ticket24->where('ticket_status', $request->taskState);
-            $ticket25 =  $ticket25->where('ticket_status', $request->taskState);
-            $ticket26 =  $ticket26->where('ticket_status', $request->taskState);
-            $ticket27 =  $ticket27->where('ticket_status', $request->taskState);
-            $ticket28 =  $ticket28->where('ticket_status', $request->taskState);
-            $ticket29 =  $ticket29->where('ticket_status', $request->taskState);
-            $ticket30 =  $ticket30->where('ticket_status', $request->taskState);
-            $ticket31 =  $ticket31->where('ticket_status', $request->taskState);
-            $ticket32 =  $ticket32->where('ticket_status', $request->taskState);
-            $ticket33 =  $ticket33->where('ticket_status', $request->taskState);
-            $ticket34 =  $ticket34->where('ticket_status', $request->taskState);
-            $ticket35 =  $ticket35->where('ticket_status', $request->taskState);
-            $ticket36 =  $ticket36->where('ticket_status', $request->taskState);
-            $ticket37 =  $ticket37->where('ticket_status', $request->taskState);
-            $ticket38 =  $ticket38->where('ticket_status', $request->taskState);
-            $ticket39 =  $ticket39->where('ticket_status', $request->taskState);
-            $ticket40 =  $ticket40->where('ticket_status', $request->taskState);
-            $ticket42 =  $ticket42->where('ticket_status', $request->taskState);
-            $ticket44 =  $ticket44->where('ticket_status', $request->taskState);
-            $ticket46 =  $ticket46->where('ticket_status', $request->taskState);
+            $ticket1 = $ticket1->where('ticket_status', $request->taskState);
+            $ticket2 = $ticket2->where('ticket_status', $request->taskState);
+            $ticket4 = $ticket4->where('ticket_status', $request->taskState);
+            $ticket5 = $ticket5->where('ticket_status', $request->taskState);
+            $ticket6 = $ticket6->where('ticket_status', $request->taskState);
+            $ticket7 = $ticket7->where('ticket_status', $request->taskState);
+            $ticket8 = $ticket8->where('ticket_status', $request->taskState);
+            $ticket9 = $ticket9->where('ticket_status', $request->taskState);
+            $ticket10 = $ticket10->where('ticket_status', $request->taskState);
+            $ticket11 = $ticket11->where('ticket_status', $request->taskState);
+            $ticket12 = $ticket12->where('ticket_status', $request->taskState);
+            $ticket13 = $ticket13->where('ticket_status', $request->taskState);
+            $ticket14 = $ticket14->where('ticket_status', $request->taskState);
+            $ticket15 = $ticket15->where('ticket_status', $request->taskState);
+            $ticket16 = $ticket16->where('ticket_status', $request->taskState);
+            $ticket17 = $ticket17->where('ticket_status', $request->taskState);
+            $ticket18 = $ticket18->where('ticket_status', $request->taskState);
+            $ticket19 = $ticket19->where('ticket_status', $request->taskState);
+            $ticket20 = $ticket20->where('ticket_status', $request->taskState);
+            $ticket21 = $ticket21->where('ticket_status', $request->taskState);
+            $ticket22 = $ticket22->where('ticket_status', $request->taskState);
+            $ticket23 = $ticket23->where('ticket_status', $request->taskState);
+            $ticket24 = $ticket24->where('ticket_status', $request->taskState);
+            $ticket25 = $ticket25->where('ticket_status', $request->taskState);
+            $ticket26 = $ticket26->where('ticket_status', $request->taskState);
+            $ticket27 = $ticket27->where('ticket_status', $request->taskState);
+            $ticket28 = $ticket28->where('ticket_status', $request->taskState);
+            $ticket29 = $ticket29->where('ticket_status', $request->taskState);
+            $ticket30 = $ticket30->where('ticket_status', $request->taskState);
+            $ticket31 = $ticket31->where('ticket_status', $request->taskState);
+            $ticket32 = $ticket32->where('ticket_status', $request->taskState);
+            $ticket33 = $ticket33->where('ticket_status', $request->taskState);
+            $ticket34 = $ticket34->where('ticket_status', $request->taskState);
+            $ticket35 = $ticket35->where('ticket_status', $request->taskState);
+            $ticket36 = $ticket36->where('ticket_status', $request->taskState);
+            $ticket37 = $ticket37->where('ticket_status', $request->taskState);
+            $ticket38 = $ticket38->where('ticket_status', $request->taskState);
+            $ticket39 = $ticket39->where('ticket_status', $request->taskState);
+            $ticket40 = $ticket40->where('ticket_status', $request->taskState);
+            $ticket42 = $ticket42->where('ticket_status', $request->taskState);
+            $ticket44 = $ticket44->where('ticket_status', $request->taskState);
+            $ticket46 = $ticket46->where('ticket_status', $request->taskState);
         }
         if ($request->Deptid != 0) {
-            $ticket1 =  $ticket1->where('dept_id', $request->Deptid);
-            $ticket2 =  $ticket2->where('dept_id', $request->Deptid);
-            $ticket4 =  $ticket4->where('dept_id', $request->Deptid);
-            $ticket5 =  $ticket5->where('dept_id', $request->Deptid);
-            $ticket6 =  $ticket6->where('dept_id', $request->Deptid);
-            $ticket7 =  $ticket7->where('dept_id', $request->Deptid);
-            $ticket8 =  $ticket8->where('dept_id', $request->Deptid);
-            $ticket9 =  $ticket9->where('dept_id', $request->Deptid);
-            $ticket10 =  $ticket10->where('dept_id', $request->Deptid);
-            $ticket11 =  $ticket11->where('dept_id', $request->Deptid);
-            $ticket12 =  $ticket12->where('dept_id', $request->Deptid);
-            $ticket13 =  $ticket13->where('dept_id', $request->Deptid);
-            $ticket14 =  $ticket14->where('dept_id', $request->Deptid);
-            $ticket15 =  $ticket15->where('dept_id', $request->Deptid);
-            $ticket16 =  $ticket16->where('dept_id', $request->Deptid);
-            $ticket17 =  $ticket17->where('dept_id', $request->Deptid);
-            $ticket18 =  $ticket18->where('dept_id', $request->Deptid);
-            $ticket19 =  $ticket19->where('dept_id', $request->Deptid);
-            $ticket20 =  $ticket20->where('dept_id', $request->Deptid);
-            $ticket21 =  $ticket21->where('dept_id', $request->Deptid);
-            $ticket22 =  $ticket22->where('dept_id', $request->Deptid);
-            $ticket23 =  $ticket23->where('dept_id', $request->Deptid);
-            $ticket24 =  $ticket24->where('dept_id', $request->Deptid);
-            $ticket25 =  $ticket25->where('dept_id', $request->Deptid);
-            $ticket26 =  $ticket26->where('dept_id', $request->Deptid);
-            $ticket27 =  $ticket27->where('dept_id', $request->Deptid);
-            $ticket28 =  $ticket28->where('dept_id', $request->Deptid);
-            $ticket29 =  $ticket29->where('dept_id', $request->Deptid);
-            $ticket30 =  $ticket30->where('dept_id', $request->Deptid);
-            $ticket31 =  $ticket31->where('dept_id', $request->Deptid);
-            $ticket32 =  $ticket32->where('dept_id', $request->Deptid);
-            $ticket33 =  $ticket33->where('dept_id', $request->Deptid);
-            $ticket34 =  $ticket34->where('dept_id', $request->Deptid);
-            $ticket35 =  $ticket35->where('dept_id', $request->Deptid);
-            $ticket36 =  $ticket36->where('dept_id', $request->Deptid);
-            $ticket37 =  $ticket37->where('dept_id', $request->Deptid);
-            $ticket38 =  $ticket38->where('dept_id', $request->Deptid);
-            $ticket39 =  $ticket39->where('dept_id', $request->Deptid);
-            $ticket40 =  $ticket40->where('dept_id', $request->Deptid);
-            $ticket42 =  $ticket42->where('dept_id', $request->Deptid);
-            $ticket44 =  $ticket44->where('dept_id', $request->Deptid);
-            $ticket46 =  $ticket46->where('dept_id', $request->Deptid);
+            $ticket1 = $ticket1->where('dept_id', $request->Deptid);
+            $ticket2 = $ticket2->where('dept_id', $request->Deptid);
+            $ticket4 = $ticket4->where('dept_id', $request->Deptid);
+            $ticket5 = $ticket5->where('dept_id', $request->Deptid);
+            $ticket6 = $ticket6->where('dept_id', $request->Deptid);
+            $ticket7 = $ticket7->where('dept_id', $request->Deptid);
+            $ticket8 = $ticket8->where('dept_id', $request->Deptid);
+            $ticket9 = $ticket9->where('dept_id', $request->Deptid);
+            $ticket10 = $ticket10->where('dept_id', $request->Deptid);
+            $ticket11 = $ticket11->where('dept_id', $request->Deptid);
+            $ticket12 = $ticket12->where('dept_id', $request->Deptid);
+            $ticket13 = $ticket13->where('dept_id', $request->Deptid);
+            $ticket14 = $ticket14->where('dept_id', $request->Deptid);
+            $ticket15 = $ticket15->where('dept_id', $request->Deptid);
+            $ticket16 = $ticket16->where('dept_id', $request->Deptid);
+            $ticket17 = $ticket17->where('dept_id', $request->Deptid);
+            $ticket18 = $ticket18->where('dept_id', $request->Deptid);
+            $ticket19 = $ticket19->where('dept_id', $request->Deptid);
+            $ticket20 = $ticket20->where('dept_id', $request->Deptid);
+            $ticket21 = $ticket21->where('dept_id', $request->Deptid);
+            $ticket22 = $ticket22->where('dept_id', $request->Deptid);
+            $ticket23 = $ticket23->where('dept_id', $request->Deptid);
+            $ticket24 = $ticket24->where('dept_id', $request->Deptid);
+            $ticket25 = $ticket25->where('dept_id', $request->Deptid);
+            $ticket26 = $ticket26->where('dept_id', $request->Deptid);
+            $ticket27 = $ticket27->where('dept_id', $request->Deptid);
+            $ticket28 = $ticket28->where('dept_id', $request->Deptid);
+            $ticket29 = $ticket29->where('dept_id', $request->Deptid);
+            $ticket30 = $ticket30->where('dept_id', $request->Deptid);
+            $ticket31 = $ticket31->where('dept_id', $request->Deptid);
+            $ticket32 = $ticket32->where('dept_id', $request->Deptid);
+            $ticket33 = $ticket33->where('dept_id', $request->Deptid);
+            $ticket34 = $ticket34->where('dept_id', $request->Deptid);
+            $ticket35 = $ticket35->where('dept_id', $request->Deptid);
+            $ticket36 = $ticket36->where('dept_id', $request->Deptid);
+            $ticket37 = $ticket37->where('dept_id', $request->Deptid);
+            $ticket38 = $ticket38->where('dept_id', $request->Deptid);
+            $ticket39 = $ticket39->where('dept_id', $request->Deptid);
+            $ticket40 = $ticket40->where('dept_id', $request->Deptid);
+            $ticket42 = $ticket42->where('dept_id', $request->Deptid);
+            $ticket44 = $ticket44->where('dept_id', $request->Deptid);
+            $ticket46 = $ticket46->where('dept_id', $request->Deptid);
         }
         if ($request->customerid != 0) {
-            $ticket1 =  $ticket1->where('customer_id', $request->customerid);
-            $ticket2 =  $ticket2->where('customer_id', $request->customerid);
-            $ticket4 =  $ticket4->where('customer_id', $request->customerid);
-            $ticket5 =  $ticket5->where('customer_id', $request->customerid);
-            $ticket6 =  $ticket6->where('customer_id', $request->customerid);
-            $ticket7 =  $ticket7->where('customer_id', $request->customerid);
-            $ticket8 =  $ticket8->where('customer_id', $request->customerid);
-            $ticket9 =  $ticket9->where('customer_id', $request->customerid);
-            $ticket10 =  $ticket10->where('customer_id', $request->customerid);
-            $ticket11 =  $ticket11->where('customer_id', $request->customerid);
-            $ticket12 =  $ticket12->where('customer_id', $request->customerid);
-            $ticket13 =  $ticket13->where('customer_id', $request->customerid);
-            $ticket14 =  $ticket14->where('customer_id', $request->customerid);
-            $ticket15 =  $ticket15->where('customer_id', $request->customerid);
-            $ticket16 =  $ticket16->where('customer_id', $request->customerid);
-            $ticket17 =  $ticket17->where('customer_id', $request->customerid);
-            $ticket18 =  $ticket18->where('customer_id', $request->customerid);
-            $ticket19 =  $ticket19->where('customer_id', $request->customerid);
-            $ticket20 =  $ticket20->where('customer_id', $request->customerid);
-            $ticket21 =  $ticket21->where('customer_id', $request->customerid);
-            $ticket22 =  $ticket22->where('customer_id', $request->customerid);
-            $ticket23 =  $ticket23->where('customer_id', $request->customerid);
-            $ticket24 =  $ticket24->where('customer_id', $request->customerid);
-            $ticket25 =  $ticket25->where('customer_id', $request->customerid);
-            $ticket26 =  $ticket26->where('customer_id', $request->customerid);
-            $ticket27 =  $ticket27->where('customer_id', $request->customerid);
-            $ticket28 =  $ticket28->where('customer_id', $request->customerid);
-            $ticket29 =  $ticket29->where('customer_id', $request->customerid);
+            $ticket1 = $ticket1->where('customer_id', $request->customerid);
+            $ticket2 = $ticket2->where('customer_id', $request->customerid);
+            $ticket4 = $ticket4->where('customer_id', $request->customerid);
+            $ticket5 = $ticket5->where('customer_id', $request->customerid);
+            $ticket6 = $ticket6->where('customer_id', $request->customerid);
+            $ticket7 = $ticket7->where('customer_id', $request->customerid);
+            $ticket8 = $ticket8->where('customer_id', $request->customerid);
+            $ticket9 = $ticket9->where('customer_id', $request->customerid);
+            $ticket10 = $ticket10->where('customer_id', $request->customerid);
+            $ticket11 = $ticket11->where('customer_id', $request->customerid);
+            $ticket12 = $ticket12->where('customer_id', $request->customerid);
+            $ticket13 = $ticket13->where('customer_id', $request->customerid);
+            $ticket14 = $ticket14->where('customer_id', $request->customerid);
+            $ticket15 = $ticket15->where('customer_id', $request->customerid);
+            $ticket16 = $ticket16->where('customer_id', $request->customerid);
+            $ticket17 = $ticket17->where('customer_id', $request->customerid);
+            $ticket18 = $ticket18->where('customer_id', $request->customerid);
+            $ticket19 = $ticket19->where('customer_id', $request->customerid);
+            $ticket20 = $ticket20->where('customer_id', $request->customerid);
+            $ticket21 = $ticket21->where('customer_id', $request->customerid);
+            $ticket22 = $ticket22->where('customer_id', $request->customerid);
+            $ticket23 = $ticket23->where('customer_id', $request->customerid);
+            $ticket24 = $ticket24->where('customer_id', $request->customerid);
+            $ticket25 = $ticket25->where('customer_id', $request->customerid);
+            $ticket26 = $ticket26->where('customer_id', $request->customerid);
+            $ticket27 = $ticket27->where('customer_id', $request->customerid);
+            $ticket28 = $ticket28->where('customer_id', $request->customerid);
+            $ticket29 = $ticket29->where('customer_id', $request->customerid);
             // $ticket30=  $ticket30->where('customer_id',$request->customerid);
-            $ticket31 =  $ticket31->where('customer_id', $request->customerid);
-            $ticket32 =  $ticket32->where('customer_id', $request->customerid);
+            $ticket31 = $ticket31->where('customer_id', $request->customerid);
+            $ticket32 = $ticket32->where('customer_id', $request->customerid);
             // $ticket33=  $ticket33->where('customer_id',$request->customerid);
-            $ticket34 =  $ticket34->where('customer_id', $request->customerid);
-            $ticket35 =  $ticket35->where('customer_id', $request->customerid);
-            $ticket36 =  $ticket36->where('customer_id', $request->customerid);
-            $ticket37 =  $ticket37->where('customer_id', $request->customerid);
-            $ticket38 =  $ticket38->where('customer_id', $request->customerid);
-            $ticket39 =  $ticket39->where('customer_id', $request->customerid);
-            $ticket40 =  $ticket40->where('customer_id', $request->customerid);
-            $ticket42 =  $ticket42->where('customer_id', $request->customerid);
+            $ticket34 = $ticket34->where('customer_id', $request->customerid);
+            $ticket35 = $ticket35->where('customer_id', $request->customerid);
+            $ticket36 = $ticket36->where('customer_id', $request->customerid);
+            $ticket37 = $ticket37->where('customer_id', $request->customerid);
+            $ticket38 = $ticket38->where('customer_id', $request->customerid);
+            $ticket39 = $ticket39->where('customer_id', $request->customerid);
+            $ticket40 = $ticket40->where('customer_id', $request->customerid);
+            $ticket42 = $ticket42->where('customer_id', $request->customerid);
             // $ticket44=  $ticket44->where('customer_id',$request->customerid);
         }
-        if ($request->from != '' && $request->from != null  && $request->to != '' && $request->to != null) {
+        if ($request->from != '' && $request->from != null && $request->to != '' && $request->to != null) {
 
             $from = date_create(($request->get('from')));
 
             $from = explode('/', ($request->get('from')));
 
-            $from = $from[2] . '-' . $from[1] . '-' . $from[0] . ' ' . '00:00:00';
+            $from = $from[2].'-'.$from[1].'-'.$from[0].' '.'00:00:00';
 
             $to = date_create(($request->get('to')));
 
             $to = explode('/', ($request->get('to')));
-            if ($to[0] == 31)
-                $to = $to[2] . '-' . $to[1] . '-' . ($to[0]) . ' ' . '00:00:00';
-            else
-                $to = $to[2] . '-' . $to[1] . '-' . ($to[0] + 1) . ' ' . '00:00:00';
+            if ($to[0] == 31) {
+                $to = $to[2].'-'.$to[1].'-'.($to[0]).' '.'00:00:00';
+            } else {
+                $to = $to[2].'-'.$to[1].'-'.($to[0] + 1).' '.'00:00:00';
+            }
 
-            $ticket1 =  $ticket1->whereBetween('created_at', [$from, $to]);
-            $ticket2 =  $ticket2->whereBetween('created_at', [$from, $to]);
-            $ticket4 =  $ticket4->whereBetween('created_at', [$from, $to]);
-            $ticket5 =  $ticket5->whereBetween('created_at', [$from, $to]);
-            $ticket6 =  $ticket6->whereBetween('created_at', [$from, $to]);
-            $ticket7 =  $ticket7->whereBetween('created_at', [$from, $to]);
-            $ticket8 =  $ticket8->whereBetween('created_at', [$from, $to]);
-            $ticket9 =  $ticket9->whereBetween('created_at', [$from, $to]);
-            $ticket10 =  $ticket10->whereBetween('created_at', [$from, $to]);
-            $ticket11 =  $ticket11->whereBetween('created_at', [$from, $to]);
-            $ticket12 =  $ticket12->whereBetween('created_at', [$from, $to]);
-            $ticket13 =  $ticket13->whereBetween('created_at', [$from, $to]);
-            $ticket14 =  $ticket14->whereBetween('created_at', [$from, $to]);
-            $ticket15 =  $ticket15->whereBetween('created_at', [$from, $to]);
-            $ticket16 =  $ticket16->whereBetween('created_at', [$from, $to]);
-            $ticket17 =  $ticket17->whereBetween('created_at', [$from, $to]);
-            $ticket18 =  $ticket18->whereBetween('created_at', [$from, $to]);
-            $ticket19 =  $ticket19->whereBetween('created_at', [$from, $to]);
-            $ticket20 =  $ticket20->whereBetween('created_at', [$from, $to]);
-            $ticket21 =  $ticket21->whereBetween('created_at', [$from, $to]);
-            $ticket22 =  $ticket22->whereBetween('created_at', [$from, $to]);
-            $ticket23 =  $ticket23->whereBetween('created_at', [$from, $to]);
-            $ticket24 =  $ticket24->whereBetween('created_at', [$from, $to]);
-            $ticket25 =  $ticket25->whereBetween('created_at', [$from, $to]);
-            $ticket26 =  $ticket26->whereBetween('created_at', [$from, $to]);
-            $ticket27 =  $ticket27->whereBetween('created_at', [$from, $to]);
-            $ticket28 =  $ticket28->whereBetween('created_at', [$from, $to]);
-            $ticket29 =  $ticket29->whereBetween('created_at', [$from, $to]);
-            $ticket30 =  $ticket30->whereBetween('created_at', [$from, $to]);
-            $ticket31 =  $ticket31->whereBetween('created_at', [$from, $to]);
-            $ticket32 =  $ticket32->whereBetween('created_at', [$from, $to]);
-            $ticket33 =  $ticket33->whereBetween('created_at', [$from, $to]);
-            $ticket34 =  $ticket34->whereBetween('created_at', [$from, $to]);
-            $ticket35 =  $ticket35->whereBetween('created_at', [$from, $to]);
-            $ticket36 =  $ticket36->whereBetween('created_at', [$from, $to]);
-            $ticket37 =  $ticket37->whereBetween('created_at', [$from, $to]);
-            $ticket38 =  $ticket38->whereBetween('created_at', [$from, $to]);
-            $ticket39 =  $ticket39->whereBetween('created_at', [$from, $to]);
-            $ticket40 =  $ticket40->whereBetween('created_at', [$from, $to]);
-            $ticket42 =  $ticket42->whereBetween('created_at', [$from, $to]);
-            $ticket44 =  $ticket44->whereBetween('created_at', [$from, $to]);
-            $ticket46 =  $ticket46->whereBetween('created_at', [$from, $to]);
+            $ticket1 = $ticket1->whereBetween('created_at', [$from, $to]);
+            $ticket2 = $ticket2->whereBetween('created_at', [$from, $to]);
+            $ticket4 = $ticket4->whereBetween('created_at', [$from, $to]);
+            $ticket5 = $ticket5->whereBetween('created_at', [$from, $to]);
+            $ticket6 = $ticket6->whereBetween('created_at', [$from, $to]);
+            $ticket7 = $ticket7->whereBetween('created_at', [$from, $to]);
+            $ticket8 = $ticket8->whereBetween('created_at', [$from, $to]);
+            $ticket9 = $ticket9->whereBetween('created_at', [$from, $to]);
+            $ticket10 = $ticket10->whereBetween('created_at', [$from, $to]);
+            $ticket11 = $ticket11->whereBetween('created_at', [$from, $to]);
+            $ticket12 = $ticket12->whereBetween('created_at', [$from, $to]);
+            $ticket13 = $ticket13->whereBetween('created_at', [$from, $to]);
+            $ticket14 = $ticket14->whereBetween('created_at', [$from, $to]);
+            $ticket15 = $ticket15->whereBetween('created_at', [$from, $to]);
+            $ticket16 = $ticket16->whereBetween('created_at', [$from, $to]);
+            $ticket17 = $ticket17->whereBetween('created_at', [$from, $to]);
+            $ticket18 = $ticket18->whereBetween('created_at', [$from, $to]);
+            $ticket19 = $ticket19->whereBetween('created_at', [$from, $to]);
+            $ticket20 = $ticket20->whereBetween('created_at', [$from, $to]);
+            $ticket21 = $ticket21->whereBetween('created_at', [$from, $to]);
+            $ticket22 = $ticket22->whereBetween('created_at', [$from, $to]);
+            $ticket23 = $ticket23->whereBetween('created_at', [$from, $to]);
+            $ticket24 = $ticket24->whereBetween('created_at', [$from, $to]);
+            $ticket25 = $ticket25->whereBetween('created_at', [$from, $to]);
+            $ticket26 = $ticket26->whereBetween('created_at', [$from, $to]);
+            $ticket27 = $ticket27->whereBetween('created_at', [$from, $to]);
+            $ticket28 = $ticket28->whereBetween('created_at', [$from, $to]);
+            $ticket29 = $ticket29->whereBetween('created_at', [$from, $to]);
+            $ticket30 = $ticket30->whereBetween('created_at', [$from, $to]);
+            $ticket31 = $ticket31->whereBetween('created_at', [$from, $to]);
+            $ticket32 = $ticket32->whereBetween('created_at', [$from, $to]);
+            $ticket33 = $ticket33->whereBetween('created_at', [$from, $to]);
+            $ticket34 = $ticket34->whereBetween('created_at', [$from, $to]);
+            $ticket35 = $ticket35->whereBetween('created_at', [$from, $to]);
+            $ticket36 = $ticket36->whereBetween('created_at', [$from, $to]);
+            $ticket37 = $ticket37->whereBetween('created_at', [$from, $to]);
+            $ticket38 = $ticket38->whereBetween('created_at', [$from, $to]);
+            $ticket39 = $ticket39->whereBetween('created_at', [$from, $to]);
+            $ticket40 = $ticket40->whereBetween('created_at', [$from, $to]);
+            $ticket42 = $ticket42->whereBetween('created_at', [$from, $to]);
+            $ticket44 = $ticket44->whereBetween('created_at', [$from, $to]);
+            $ticket46 = $ticket46->whereBetween('created_at', [$from, $to]);
         }
         $tickets = $ticket1->unionAll($ticket2)->unionAll($ticket4)->unionAll($ticket5)->unionAll($ticket6)->unionAll($ticket7)->unionAll($ticket8)->unionAll($ticket9)->unionAll($ticket10)
-            ->unionAll($ticket11)->unionAll($ticket12)->unionAll($ticket13)->unionAll($ticket14)->unionAll($ticket15)->unionAll($ticket16)->unionAll($ticket17)->unionAll($ticket18)->unionAll($ticket19)
-            ->unionAll($ticket20)->unionAll($ticket21)->unionAll($ticket22)->unionAll($ticket23)->unionAll($ticket24)->unionAll($ticket25)->unionAll($ticket26)->unionAll($ticket27)->unionAll($ticket28)
-            ->unionAll($ticket29)->unionAll($ticket30)->unionAll($ticket31)->unionAll($ticket32)->unionAll($ticket33)->unionAll($ticket34)->unionAll($ticket35)->unionAll($ticket36)->unionAll($ticket37)
-            ->unionAll($ticket38)->unionAll($ticket39)->unionAll($ticket40)->unionAll($ticket42)->unionAll($ticket44)->unionAll($ticket46);
+                ->unionAll($ticket11)->unionAll($ticket12)->unionAll($ticket13)->unionAll($ticket14)->unionAll($ticket15)->unionAll($ticket16)->unionAll($ticket17)->unionAll($ticket18)->unionAll($ticket19)
+                ->unionAll($ticket20)->unionAll($ticket21)->unionAll($ticket22)->unionAll($ticket23)->unionAll($ticket24)->unionAll($ticket25)->unionAll($ticket26)->unionAll($ticket27)->unionAll($ticket28)
+                ->unionAll($ticket29)->unionAll($ticket30)->unionAll($ticket31)->unionAll($ticket32)->unionAll($ticket33)->unionAll($ticket34)->unionAll($ticket35)->unionAll($ticket36)->unionAll($ticket37)
+                ->unionAll($ticket38)->unionAll($ticket39)->unionAll($ticket40)->unionAll($ticket42)->unionAll($ticket44)->unionAll($ticket46);
         // dd($ticket);
         $tickets = $tickets->get();
         $res = array();
         foreach ($tickets as $ticket) {
             if ($ticket->activeTrans != null) {
                 // dd($ticket);
-                $config = TicketConfig::where('app_type', $ticket->activeTrans->ticket_type)->where('ticket_no', $ticket->activeTrans->related)->first();
+                $config = TicketConfig::where('app_type', $ticket->activeTrans->ticket_type)->where('ticket_no',
+                        $ticket->activeTrans->related)->first();
                 if ($ticket->activeTrans->related == 23) {
 
                     $task_type = Constant::where('id', $ticket->temp)->first();
                     if ($task_type != null) {
                         $config->ticket_name = $task_type->name;
                     }
-                } elseif ($ticket->activeTrans->related == 44) {
+                } else if ($ticket->activeTrans->related == 44) {
                     $config->ticket_name = $ticket->temp;
                 } else if ($ticket->activeTrans->related == 46) {
-                    $config->ticket_name .= ' ' . $this->archiveNames[$ticket->temp];
+                    $config->ticket_name .= ' '.$this->archiveNames[$ticket->temp];
                 }
                 $admin = Admin::where('id', $ticket->activeTrans->reciver_id)->first();
                 $ticket['TicketConfig'] = $config;
@@ -1083,7 +1156,7 @@ class ReportController extends Controller
             }
         }
         activity()
-            ->log('system-ticket-report');
+                ->log('system-ticket-report');
         return $res;
     }
 
@@ -1101,27 +1174,28 @@ class ReportController extends Controller
 
             $from = explode('/', ($request->get('from')));
 
-            $from = $from[2] . '-' . $from[1] . '-' . $from[0] . 'T' . '00:00:00.000000Z';
+            $from = $from[2].'-'.$from[1].'-'.$from[0].'T'.'00:00:00.000000Z';
 
             $to = date_create(($request->get('to')));
 
             $to = explode('/', ($request->get('to')));
-            if ($to[0] == 31)
-                $to = $to[2] . '-' . $to[1] . '-' . ($to[0]) . 'T' . '00:00:00.000000Z';
-            else
-                $to = $to[2] . '-' . $to[1] . '-' . ($to[0] + 1) . 'T' . '00:00:00.000000Z';
+            if ($to[0] == 31) {
+                $to = $to[2].'-'.$to[1].'-'.($to[0]).'T'.'00:00:00.000000Z';
+            } else {
+                $to = $to[2].'-'.$to[1].'-'.($to[0] + 1).'T'.'00:00:00.000000Z';
+            }
         }
         if ($from != '' && $to != '') {
-            $ticketFiltter .=  ' and created_at between  "' . $from . '"  and  "' . $to . '" ';
+            $ticketFiltter .= ' and created_at between  "'.$from.'"  and  "'.$to.'" ';
         }
         if ($request->customerid != 0) {
-            $ticketFiltter .= ' and customer_id=' . $request->customerid;
+            $ticketFiltter .= ' and customer_id='.$request->customerid;
         }
         if ($request->taskState != 1 && $request->taskState != null) {
-            $filters .= ' and ticket_status =' . $request->taskState;
+            $filters .= ' and ticket_status ='.$request->taskState;
         }
         if ($request->Deptid != 0) {
-            $ticketFiltter .= ' and dept_id=' . $request->Deptid;
+            $ticketFiltter .= ' and dept_id='.$request->Deptid;
         }
 
         $activeRec = '';
@@ -1130,20 +1204,21 @@ class ReportController extends Controller
 
             $emp = Auth()->user()->id;;
             $emp = (string) json_encode($emp);
-            $emp = '"' . $emp . '"';
+            $emp = '"'.$emp.'"';
 
-            $ticketConfigs = DB::select("SELECT * FROM `ticket_configs` where json_contains(`emp_to_report_ticket`,'" . $emp . "','$')=1");
+            $ticketConfigs = DB::select("SELECT * FROM `ticket_configs` where json_contains(`emp_to_report_ticket`,'".$emp."','$')=1");
             $rowticketFiltter = $ticketFiltter;
             if (sizeof($ticketConfigs) > 0) {
-                $activeRec = $this->masterAuthQuery(" where app_trans.id = a.active_trans " . $filters, $ticketFiltter, $ticketConfigs);
+                $activeRec = $this->masterAuthQuery(" where app_trans.id = a.active_trans ".$filters, $ticketFiltter,
+                        $ticketConfigs);
             } else {
                 $arr = array();
                 $arr = ['false'];
-                return  $arr;
+                return $arr;
             }
         } else {
 
-            $activeRec = $this->masterQuery(" where app_trans.id = a.active_trans " . $filters, $ticketFiltter);
+            $activeRec = $this->masterQuery(" where app_trans.id = a.active_trans ".$filters, $ticketFiltter);
         }
         // dd($activeRec);
 
@@ -1159,7 +1234,7 @@ class ReportController extends Controller
         }
         for ($i = 0; $i < count($res); $i++) {
 
-            $ticket = DB::select("SELECT * FROM `app_ticket" . $res[$i]->related . "s` where  id=" . $res[$i]->ticket_id);
+            $ticket = DB::select("SELECT * FROM `app_ticket".$res[$i]->related."s` where  id=".$res[$i]->ticket_id);
             if ($i == 0) {
                 $ticket['dept'] = Department::where('id', $request->Deptid)->first();
                 $ticket['taskState'] = Constant::where('id', $request->taskState)->first();
@@ -1202,26 +1277,47 @@ class ReportController extends Controller
                                     on a.sender_id=sender_tbl.id
                                     left join  admins receive_tbl
                                     on a.reciver_id=receive_tbl.id
-                                    WHERE `ticket_id`=" . $ticket['0']->id . " 
-                                    and `related`=" . $ticket['trans']->related . '
-                                     and a.`created_at` between "' . $from . '" and "' . $to .
-                    '" order by created_at asc');
-                $ticket['config'] = DB::select("SELECT * FROM `ticket_configs` where ticket_no=" . $res[$i]->related . " and app_type=" . $res[$i]->ticket_type)[0];
-                $ticket['response'] = DB::select("SELECT app_responses.*,admins.nick_name,admins.image,t_constant.name FROM `app_responses` join admins join t_constant on app_responses.created_by=admins.id and app_responses.i_status=t_constant.id  where trans_id=" . $res[$i]->id . " order by id desc limit 1");
+                                    WHERE `ticket_id`=".$ticket['0']->id." 
+                                    and `related`=".$ticket['trans']->related.'
+                                     and a.`created_at` between "'.$from.'" and "'.$to.
+                        '" order by created_at asc');
+                $ticket['config'] = DB::select("SELECT * FROM `ticket_configs` where ticket_no=".$res[$i]->related." and app_type=".$res[$i]->ticket_type)[0];
+                $ticket['response'] = DB::select("SELECT app_responses.*,admins.nick_name,admins.image,t_constant.name FROM `app_responses` join admins join t_constant on app_responses.created_by=admins.id and app_responses.i_status=t_constant.id  where trans_id=".$res[$i]->id." order by id desc limit 1");
 
                 if ($res[$i]->related == 23 && $res[$i]->ticket_type == 4) {
                     $ticket['tiketName'] = Constant::where('id', $ticket['0']->task_type)->first();
-                } elseif ($res[$i]->related == 44) {
+                } else if ($res[$i]->related == 44) {
                     $ticket['config']->ticket_name = $ticket[0]->topic;
-                } elseif ($res[$i]->related == 16) {
+                } else if ($res[$i]->related == 16) {
                     $ticket['tiketName'] = Constant::where('id', $ticket['0']->task_type)->first();
                 } else if ($res[$i]->related == 46) {
-                    $ticket['config']->ticket_name .= ' ' . $this->archiveNames[$ticket[0]->archive_type];
+                    $ticket['config']->ticket_name .= ' '.$this->archiveNames[$ticket[0]->archive_type];
                 }
                 $arr[] = $ticket;
             }
         }
         return $arr;
+    }
+
+    function getTaskTransaction($from, $to)
+    {
+        $transactions = AppTrans::select('app_trans.*',
+                \DB::raw('"تحويل الطلب" AS transaction_type'))->whereBetween('created_at',
+                [$from, $to])->with(['Admin'])->get();
+        foreach ($transactions as $transaction) {
+            $transaction->ticket = $transaction->ticket();
+            if ($transaction->ticket->created_at == $transaction->created_at) {
+                $transaction->transaction_type = 'انشاء الطلب';
+            }
+        }
+
+        $responses = AppResponse::select('app_responses.*',
+                \DB::raw('"اضافة رد" AS transaction_type'))->whereBetween('created_at',
+                [$from, $to])->with(['Admin'])->get();
+        foreach ($responses as $response) {
+            $response->ticket = $response->ticket();
+        }
+        return $transactions->mergeRecursive($responses);
     }
 
     function searchDailyTask(Request $request)
@@ -1233,46 +1329,37 @@ class ReportController extends Controller
 
             $from = explode('/', ($request->get('from')));
 
-            $from = $from[2] . '-' . $from[1] . '-' . $from[0];
+            $from = $from[2].'-'.$from[1].'-'.$from[0];
 
             $to = date_create(($request->get('to')));
 
             $to = explode('/', ($request->get('to')));
 
-            if ($to[0] == 31)
-                $to = $to[2] . '-' . $to[1] . '-' . ($to[0]);
-            else
-                $to = $to[2] . '-' . $to[1] . '-' . ($to[0] + 1);
+            if ($to[0] == 31) {
+                $to = $to[2].'-'.$to[1].'-'.($to[0]);
+            } else {
+                $to = $to[2].'-'.$to[1].'-'.($to[0] + 1);
+            }
         }
 
-        $Cert = Cert::whereRaw('CAST(t_farfromcenter.created_at AS DATE) between ? and ?', [$from, $to])->select('t_farfromcenter.*', 't_certification.s_name_ar as cer_name')
-            ->leftJoin('t_certification', 't_certification.pk_i_id', 't_farfromcenter.msgTitle')
-            ->with('Admin')
-            ->get();
-        // dd($Cert);
-        $arr = $this->searchTasks($request, true);
-        // dd($arr);
-        $result = array_merge($arr, $Cert->toArray());
-
-        usort($result, function ($a, $b) {
-            if (count($a) <= 8 && count($a) > 1) {
-                $date1 = strtotime($a[0]->created_at);
-            } else {
-                $date1 = strtotime($a['created_at']);
-            }
-
-            if (count($b) <= 8 && count($b) > 1) {
-                $date2 = strtotime($b[0]->created_at);
-            } else {
-                $date2 = strtotime($b['created_at']);
-            }
-            return $date1 - $date2; // $v2 - $v1 to reverse direction
-        });
-        activity()
-            ->log('daily-work-report');
-        // dd($result);
-
-        return $result;
+        $Cert = Cert::whereRaw('CAST(t_farfromcenter.created_at AS DATE) between ? and ?', [$from, $to])
+                ->select('t_farfromcenter.*', 't_certification.s_name_ar as cer_name',
+                        \DB::raw('(CASE 
+                        WHEN t_farfromcenter.e_type = "1" THEN "إصدار شهادة" 
+                        WHEN t_farfromcenter.e_type = "2" THEN "مراسلات خارجية" 
+                        WHEN t_farfromcenter.e_type = "3" THEN "تعهد والتزام" 
+                        WHEN t_farfromcenter.e_type = "4" THEN "اخطار" 
+                        WHEN t_farfromcenter.e_type = "5" THEN "نماذج" 
+                        WHEN t_farfromcenter.e_type = "6" THEN "مراسلات عامة" 
+                        ELSE "شهادات ومراسلات" 
+                        END) AS transaction_type'))
+                ->leftJoin('t_certification', 't_certification.pk_i_id', 't_farfromcenter.msgTitle')
+                ->with('Admin')
+                ->get();
+        $tickets = $this->getTaskTransaction($from, $to);
+        $result = $tickets->mergeRecursive($Cert)->sortByDesc('created_at');
+        activity()->log('daily-work-report');
+        return response()->json([...$result]);
     }
 
     function selectMasterQuery($where = '', $ticketFiltter = '', $tickets)
@@ -1283,14 +1370,17 @@ class ReportController extends Controller
         for ($i = 0; $i < sizeof($tickets); $i++) {
 
             $ticketinfo = explode("_", $tickets[$i]);
-            $ticketFiltter = $rawticketFiltter . ' and app_type =  ' . $ticketinfo[0];
-            if ($ticketinfo[1] == 3) continue;
-            if ($i == 0)
-                $sql .= " SELECT `id`, 1 related, `active_trans`, `ticket_status` FROM `app_ticket" . $ticketinfo[1] . "s` $ticketFiltter";
-            else
-                $sql .= " UNION SELECT `id`, 2 related, `active_trans`, `ticket_status` FROM `app_ticket" . $ticketinfo[1] . "s` $ticketFiltter";
+            $ticketFiltter = $rawticketFiltter.' and app_type =  '.$ticketinfo[0];
+            if ($ticketinfo[1] == 3) {
+                continue;
+            }
+            if ($i == 0) {
+                $sql .= " SELECT `id`, 1 related, `active_trans`, `ticket_status` FROM `app_ticket".$ticketinfo[1]."s` $ticketFiltter";
+            } else {
+                $sql .= " UNION SELECT `id`, 2 related, `active_trans`, `ticket_status` FROM `app_ticket".$ticketinfo[1]."s` $ticketFiltter";
+            }
         }
-        return "select * from (" . $sql . ") a " . $where;
+        return "select * from (".$sql.") a ".$where;
     }
 
     public function searchByTask(Request $request)
@@ -1304,25 +1394,26 @@ class ReportController extends Controller
 
             $from = explode('/', ($request->get('from')));
 
-            $from = $from[2] . '-' . $from[1] . '-' . $from[0] . ' ' . '00:00:00';
+            $from = $from[2].'-'.$from[1].'-'.$from[0].' '.'00:00:00';
 
             $to = date_create(($request->get('to')));
 
             $to = explode('/', ($request->get('to')));
 
-            if ($to[0] == 31)
-                $to = $to[2] . '-' . $to[1] . '-' . ($to[0]) . ' ' . '00:00:00';
-            else
-                $to = $to[2] . '-' . $to[1] . '-' . ($to[0] + 1) . ' ' . '00:00:00';
+            if ($to[0] == 31) {
+                $to = $to[2].'-'.$to[1].'-'.($to[0]).' '.'00:00:00';
+            } else {
+                $to = $to[2].'-'.$to[1].'-'.($to[0] + 1).' '.'00:00:00';
+            }
         }
         if ($from != '' && $to != '') {
-            $ticketFiltter .=  ' and created_at between  "' . $from . '"  and  "' . $to . '" ';
+            $ticketFiltter .= ' and created_at between  "'.$from.'"  and  "'.$to.'" ';
         }
 
         if ($request->empid != 0 && $request->opp_type == 1) {
-            $ticketFiltter .=  ' and created_by = ' . $request->empid . ' ';
-        } else if ($request->empid != 0  && $request->opp_type == 5) {
-            $ticketFiltter .=  ' and ticket_status = 5003 ';
+            $ticketFiltter .= ' and created_by = '.$request->empid.' ';
+        } else if ($request->empid != 0 && $request->opp_type == 5) {
+            $ticketFiltter .= ' and ticket_status = 5003 ';
         }
 
         $arr = array();
@@ -1339,46 +1430,49 @@ class ReportController extends Controller
             // ↑ Key which you want to delete
             // for()
 
-            $activeRec = $this->selectMasterQuery(" where app_trans.id = a.active_trans ", $ticketFiltter, $request->ticketType);
+            $activeRec = $this->selectMasterQuery(" where app_trans.id = a.active_trans ", $ticketFiltter,
+                    $request->ticketType);
             // dd($activeRec);
             $transQuery = '';
-            if ($request->empid != 0  && $request->opp_type == 2) {
-                $transQuery .= ' and app_trans.reciver_id = ' . $request->empid;
-                $activeRec .= " " . $transQuery;
-            } else if ($request->empid != 0  && $request->opp_type == 3) {
-                $transQuery .= ' and app_trans.sender_id = ' . $request->empid;
-                $activeRec .= " " . $transQuery;
-            } else if ($request->empid != 0  && $request->opp_type == 4) {
-                $emp = '"' . $request->empid . '"';
-                $transQuery =  "and JSON_CONTAINS(tagged_users, '" . $emp . "')";
-                $activeRec .= " " . $transQuery;
-            } else if ($request->empid != 0  && $request->opp_type == 5) {
-                $transQuery .= ' and app_trans.reciver_id = ' . $request->empid;
-                $activeRec .= " " . $transQuery;
+            if ($request->empid != 0 && $request->opp_type == 2) {
+                $transQuery .= ' and app_trans.reciver_id = '.$request->empid;
+                $activeRec .= " ".$transQuery;
+            } else if ($request->empid != 0 && $request->opp_type == 3) {
+                $transQuery .= ' and app_trans.sender_id = '.$request->empid;
+                $activeRec .= " ".$transQuery;
+            } else if ($request->empid != 0 && $request->opp_type == 4) {
+                $emp = '"'.$request->empid.'"';
+                $transQuery = "and JSON_CONTAINS(tagged_users, '".$emp."')";
+                $activeRec .= " ".$transQuery;
+            } else if ($request->empid != 0 && $request->opp_type == 5) {
+                $transQuery .= ' and app_trans.reciver_id = '.$request->empid;
+                $activeRec .= " ".$transQuery;
             }
 
             $res = DB::select("SELECT app_trans.*,admins.nick_name,admins.image FROM `app_trans` join admins on app_trans.reciver_id=admins.id WHERE  EXISTS ($activeRec )  order by id desc");
             // dd($res);
             $status = '';
             if ($request->app_status != 5001) {
-                $status = "ticket_status = " . $request->app_status . " and ";
+                $status = "ticket_status = ".$request->app_status." and ";
             }
-            if ($request->app_status == 5002)
+            if ($request->app_status == 5002) {
                 $status = 'ticket_status in (1,5002) and ';
+            }
             // add column region on all ticket
             $AreaID = '';
             if ($request->AreaID) {
-                $AreaID = 'region = ' . $request->AreaID . ' and ';
+                $AreaID = 'region = '.$request->AreaID.' and ';
             }
 
             // dd($status);
             $arr = array();
             for ($i = 0; $i < count($res); $i++) {
                 // dd($res[$i]->related);
-                if ($res[$i]->related != 21 && $res[$i]->related != 24 && $res[$i]->related != 25 && $res[$i]->related != 27 && $res[$i]->related != 11 && $res[$i]->related != 28 && $res[$i]->related != 32 && $res[$i]->related != 33 && $res[$i]->related != 31)
-                    $ticket = DB::select("SELECT * FROM `app_ticket" . $res[$i]->related . "s` where " . $status . $AreaID . " id=" . $res[$i]->ticket_id);
-                else
-                    $ticket = DB::select("SELECT * FROM `app_ticket" . $res[$i]->related . "s` where " . $status . " id=" . $res[$i]->ticket_id);
+                if ($res[$i]->related != 21 && $res[$i]->related != 24 && $res[$i]->related != 25 && $res[$i]->related != 27 && $res[$i]->related != 11 && $res[$i]->related != 28 && $res[$i]->related != 32 && $res[$i]->related != 33 && $res[$i]->related != 31) {
+                    $ticket = DB::select("SELECT * FROM `app_ticket".$res[$i]->related."s` where ".$status.$AreaID." id=".$res[$i]->ticket_id);
+                } else {
+                    $ticket = DB::select("SELECT * FROM `app_ticket".$res[$i]->related."s` where ".$status." id=".$res[$i]->ticket_id);
+                }
                 if ($ticket) {
                     $ticket['trans'] = $res[$i];
 
@@ -1418,21 +1512,21 @@ class ReportController extends Controller
                                         on a.sender_id=sender_tbl.id
                                         left join  admins receive_tbl
                                         on a.reciver_id=receive_tbl.id
-                                        WHERE `ticket_id`=" . $ticket['0']->id . " 
-                                        and `related`=" . $ticket['trans']->related . '
-                                         and a.`created_at` between "' . $from . '" and "' . $to .
-                        '" order by created_at asc');
-                    $ticket['config'] = DB::select("SELECT * FROM `ticket_configs` where ticket_no=" . $res[$i]->related . " and app_type=" . $res[$i]->ticket_type)[0];
-                    $ticket['response'] = DB::select("SELECT app_responses.*,admins.nick_name,admins.image,t_constant.name FROM `app_responses` join admins join t_constant on app_responses.created_by=admins.id and app_responses.i_status=t_constant.id  where trans_id=" . $res[$i]->id . " order by id desc limit 1");
+                                        WHERE `ticket_id`=".$ticket['0']->id." 
+                                        and `related`=".$ticket['trans']->related.'
+                                         and a.`created_at` between "'.$from.'" and "'.$to.
+                            '" order by created_at asc');
+                    $ticket['config'] = DB::select("SELECT * FROM `ticket_configs` where ticket_no=".$res[$i]->related." and app_type=".$res[$i]->ticket_type)[0];
+                    $ticket['response'] = DB::select("SELECT app_responses.*,admins.nick_name,admins.image,t_constant.name FROM `app_responses` join admins join t_constant on app_responses.created_by=admins.id and app_responses.i_status=t_constant.id  where trans_id=".$res[$i]->id." order by id desc limit 1");
 
                     if ($res[$i]->related == 23 && $res[$i]->ticket_type == 4) {
                         $ticket['tiketName'] = Constant::where('id', $ticket['0']->task_type)->first();
-                    } elseif ($res[$i]->related == 16) {
+                    } else if ($res[$i]->related == 16) {
                         $ticket['tiketName'] = Constant::where('id', $ticket['0']->task_type)->first();
                     } else if ($res[$i]->related == 44) {
                         $ticket['config']->ticket_name = $ticket[0]->topic;
                     } else if ($res[$i]->related == 46) {
-                        $ticket['config']->ticket_name .= ' ' . $this->archiveNames[$ticket[0]->archive_type];
+                        $ticket['config']->ticket_name .= ' '.$this->archiveNames[$ticket[0]->archive_type];
                     }
                     $arr[] = $ticket;
                 }
@@ -1443,35 +1537,43 @@ class ReportController extends Controller
         }
         $result = $arr;
         if ($request->cirtType1 != null) {
-            $Cert = Cert::whereRaw('CAST(t_farfromcenter.created_at AS DATE) between ? and ?', [$from, $to])->where('t_farfromcenter.e_type', '=', 1)->select('t_farfromcenter.*', 't_certification.s_name_ar as cer_name')
-                ->leftJoin('t_certification', 't_certification.pk_i_id', 't_farfromcenter.msgTitle')
-                ->with('Admin')
-                ->get();
+            $Cert = Cert::whereRaw('CAST(t_farfromcenter.created_at AS DATE) between ? and ?',
+                    [$from, $to])->where('t_farfromcenter.e_type', '=', 1)->select('t_farfromcenter.*',
+                    't_certification.s_name_ar as cer_name')
+                    ->leftJoin('t_certification', 't_certification.pk_i_id', 't_farfromcenter.msgTitle')
+                    ->with('Admin')
+                    ->get();
 
             $result = array_merge($arr, $Cert->toArray());
         }
         if ($request->cirtType2 != null) {
-            $Cert2 = Cert::whereRaw('CAST(t_farfromcenter.created_at AS DATE) between ? and ?', [$from, $to])->where('t_farfromcenter.e_type', '=', 2)->select('t_farfromcenter.*', 't_certification.s_name_ar as cer_name')
-                ->leftJoin('t_certification', 't_certification.pk_i_id', 't_farfromcenter.msgTitle')
-                ->with('Admin')
-                ->get();
-            $temp =  $result;
+            $Cert2 = Cert::whereRaw('CAST(t_farfromcenter.created_at AS DATE) between ? and ?',
+                    [$from, $to])->where('t_farfromcenter.e_type', '=', 2)->select('t_farfromcenter.*',
+                    't_certification.s_name_ar as cer_name')
+                    ->leftJoin('t_certification', 't_certification.pk_i_id', 't_farfromcenter.msgTitle')
+                    ->with('Admin')
+                    ->get();
+            $temp = $result;
             $result = array_merge($temp, $Cert2->toArray());
         }
         if ($request->cirtType3 != null) {
-            $Cert3 = Cert::whereRaw('CAST(t_farfromcenter.created_at AS DATE) between ? and ?', [$from, $to])->where('t_farfromcenter.e_type', '=', 3)->select('t_farfromcenter.*', 't_certification.s_name_ar as cer_name')
-                ->leftJoin('t_certification', 't_certification.pk_i_id', 't_farfromcenter.msgTitle')
-                ->with('Admin')
-                ->get();
-            $temp =  $result;
+            $Cert3 = Cert::whereRaw('CAST(t_farfromcenter.created_at AS DATE) between ? and ?',
+                    [$from, $to])->where('t_farfromcenter.e_type', '=', 3)->select('t_farfromcenter.*',
+                    't_certification.s_name_ar as cer_name')
+                    ->leftJoin('t_certification', 't_certification.pk_i_id', 't_farfromcenter.msgTitle')
+                    ->with('Admin')
+                    ->get();
+            $temp = $result;
             $result = array_merge($temp, $Cert3->toArray());
         }
         if ($request->cirtType4 != null) {
-            $Cert4 = Cert::whereRaw('CAST(t_farfromcenter.created_at AS DATE) between ? and ?', [$from, $to])->where('t_farfromcenter.e_type', '=', 4)->select('t_farfromcenter.*', 't_certification.s_name_ar as cer_name')
-                ->leftJoin('t_certification', 't_certification.pk_i_id', 't_farfromcenter.msgTitle')
-                ->with('Admin')
-                ->get();
-            $temp =  $result;
+            $Cert4 = Cert::whereRaw('CAST(t_farfromcenter.created_at AS DATE) between ? and ?',
+                    [$from, $to])->where('t_farfromcenter.e_type', '=', 4)->select('t_farfromcenter.*',
+                    't_certification.s_name_ar as cer_name')
+                    ->leftJoin('t_certification', 't_certification.pk_i_id', 't_farfromcenter.msgTitle')
+                    ->with('Admin')
+                    ->get();
+            $temp = $result;
             $result = array_merge($temp, $Cert4->toArray());
         }
 
@@ -1491,7 +1593,7 @@ class ReportController extends Controller
             return $date1 - $date2; // $v2 - $v1 to reverse direction
         });
         activity()
-            ->log('details-ticket-report');
+                ->log('details-ticket-report');
         return $result;
     }
 
@@ -1504,19 +1606,23 @@ class ReportController extends Controller
 
             $from = explode('/', ($request->get('from')));
 
-            $from = $from[2] . '-' . $from[1] . '-' . $from[0];
+            $from = $from[2].'-'.$from[1].'-'.$from[0];
 
             $to = date_create(($request->get('to')));
 
             $to = explode('/', ($request->get('to')));
 
-            $to = $to[2] . '-' . $to[1] . '-' . $to[0];
+            $to = $to[2].'-'.$to[1].'-'.$to[0];
         }
 
-        $archive = Archive::select('archives.*')->whereRaw('CAST(archives.updated_at AS DATE) between ? and ?', [$from, $to])
-            ->where('archives.enabled', '0')->orderBy('id', 'DESC')->with('archiveType')->with('deleted_by')->with('Admin')->with('copyTo')->with('files')->get();
+        $archive = Archive::select('archives.*')->whereRaw('CAST(archives.updated_at AS DATE) between ? and ?',
+                [$from, $to])
+                ->where('archives.enabled', '0')->orderBy('id',
+                        'DESC')->with('archiveType')->with('deleted_by')->with('Admin')->with('copyTo')->with('files')->get();
         // dd($archive->all());
-        $licArchive = ArchiveLicense::select('archive_licenses.*')->whereRaw('CAST(archive_licenses.updated_at AS DATE) between ? and ?', [$from, $to])->where('archive_licenses.enabled', '0')->orderBy('id', 'DESC')->with('deleted_by')->with('Admin')->get();
+        $licArchive = ArchiveLicense::select('archive_licenses.*')->whereRaw('CAST(archive_licenses.updated_at AS DATE) between ? and ?',
+                [$from, $to])->where('archive_licenses.enabled', '0')->orderBy('id',
+                'DESC')->with('deleted_by')->with('Admin')->get();
         foreach ($licArchive as $row) {
             $attach = json_decode($row->json_feild);
             $files = array();
@@ -1529,11 +1635,11 @@ class ReportController extends Controller
             $row->files = $files;
         }
         $tradeArchive = TradeArchive::select('trade_archives.*', 't_constant.name as title')
-            ->whereRaw('CAST(trade_archives.updated_at AS DATE) between ? and ?', [$from, $to])
-            ->where('trade_archives.enabled', 0)
-            ->leftJoin('t_constant', 't_constant.id', 'trade_archives.trade_type')
-            ->with('deleted_by', 'Admin')
-            ->orderBy('id', 'DESC')->get();
+                ->whereRaw('CAST(trade_archives.updated_at AS DATE) between ? and ?', [$from, $to])
+                ->where('trade_archives.enabled', 0)
+                ->leftJoin('t_constant', 't_constant.id', 'trade_archives.trade_type')
+                ->with('deleted_by', 'Admin')
+                ->orderBy('id', 'DESC')->get();
         foreach ($tradeArchive as $row) {
             $attach = json_decode($row->json_feild);
             $attachIds = json_decode($row->attach_ids) ?? array();
@@ -1568,12 +1674,12 @@ class ReportController extends Controller
                 $st = $row->model_name;
                 $url = explode('\\', ($st));
                 $url = Str::lower($url[2]);
-                $url = $url . "s";
+                $url = $url."s";
                 if ($url == 'specialassets') {
                     $url = 'special_assets';
                 }
                 //$row->files[]=$temp;
-                $uu = DB::select('select url from ' . $url . ' where id=' . $row->model_id);
+                $uu = DB::select('select url from '.$url.' where id='.$row->model_id);
                 if ($uu != []) {
                     $uu = $uu[0];
                 }
@@ -1583,39 +1689,40 @@ class ReportController extends Controller
             }
         }
         activity()
-            ->log('deleted-archive-report');
+                ->log('deleted-archive-report');
         return DataTables::of($archive)->addIndexColumn()
-            ->editColumn('date', function ($archive) {
-                if ($archive->date) {
+                ->editColumn('date', function ($archive) {
+                    if ($archive->date) {
 
-                    $actionBtn = " ";
-                    $from = explode('-', ($archive->date));
+                        $actionBtn = " ";
+                        $from = explode('-', ($archive->date));
 
-                    $from = $from[2] . '/' . $from[1] . '/' . $from[0];
-                    $actionBtn = $from;
-                    return $actionBtn;
-                } else {
+                        $from = $from[2].'/'.$from[1].'/'.$from[0];
+                        $actionBtn = $from;
+                        return $actionBtn;
+                    } else {
 
-                    return '';
-                }
-            })
-            ->addColumn('copyTo', function ($archive) {
-
-                if ($archive->copyTo) {
-
-                    $actionBtn = " ";
-
-                    foreach ($archive->copyTo as $copyTo) {
-                        if ($copyTo->enabled == 1)
-                            $actionBtn .= ' ' . $copyTo->name . ', ';
+                        return '';
                     }
+                })
+                ->addColumn('copyTo', function ($archive) {
 
-                    return $actionBtn;
-                } else {
+                    if ($archive->copyTo) {
 
-                    return '';
-                }
-            })->make(true);
+                        $actionBtn = " ";
+
+                        foreach ($archive->copyTo as $copyTo) {
+                            if ($copyTo->enabled == 1) {
+                                $actionBtn .= ' '.$copyTo->name.', ';
+                            }
+                        }
+
+                        return $actionBtn;
+                    } else {
+
+                        return '';
+                    }
+                })->make(true);
     }
 
     public function allArchive(Request $request)
@@ -1627,30 +1734,33 @@ class ReportController extends Controller
 
             $from = explode('/', ($request->get('from')));
 
-            $from = $from[2] . '-' . $from[1] . '-' . $from[0];
+            $from = $from[2].'-'.$from[1].'-'.$from[0];
 
             $to = date_create(($request->get('to')));
 
             $to = explode('/', ($request->get('to')));
 
-            $to = $to[2] . '-' . $to[1] . '-' . $to[0];
+            $to = $to[2].'-'.$to[1].'-'.$to[0];
         }
         activity()
-            ->log('daily-report');
+                ->log('daily-report');
         if ($request->get('arcType') == 1) {
 
-            $archive = Archive::select('archives.*')->whereRaw('CAST(archives.created_at AS DATE) between ? and ?', [$from, $to])
-                ->where('archives.enabled', '1')->orderBy('id', 'DESC')->with('archiveType')->with('Admin')->with('copyTo')->with('files')->get();
+            $archive = Archive::select('archives.*')->whereRaw('CAST(archives.created_at AS DATE) between ? and ?',
+                    [$from, $to])
+                    ->where('archives.enabled', '1')->orderBy('id',
+                            'DESC')->with('archiveType')->with('Admin')->with('copyTo')->with('files')->get();
             $tradeArchive = TradeArchive::select('trade_archives.*', 't_constant.name as title')
-                ->whereRaw('CAST(trade_archives.created_at AS DATE) between ? and ?', [$from, $to])
-                ->where('trade_archives.enabled', 1)
-                ->selectRaw('DATE_FORMAT(trade_archives.created_at, "%Y-%m-%d") as date')
-                ->leftJoin('t_constant', 't_constant.id', 'trade_archives.trade_type')
-                ->with('Admin')
-                ->orderBy('id', 'DESC')->get();
+                    ->whereRaw('CAST(trade_archives.created_at AS DATE) between ? and ?', [$from, $to])
+                    ->where('trade_archives.enabled', 1)
+                    ->selectRaw('DATE_FORMAT(trade_archives.created_at, "%Y-%m-%d") as date')
+                    ->leftJoin('t_constant', 't_constant.id', 'trade_archives.trade_type')
+                    ->with('Admin')
+                    ->orderBy('id', 'DESC')->get();
             // dd($archive->all());
-            $licArchive = ArchiveLicense::select('archive_licenses.*')->whereRaw('CAST(archive_licenses.created_at AS DATE) between ? and ?', [$from, $to])
-                ->where('archive_licenses.enabled', '1')->orderBy('id', 'DESC')->with('Admin')->get();
+            $licArchive = ArchiveLicense::select('archive_licenses.*')->whereRaw('CAST(archive_licenses.created_at AS DATE) between ? and ?',
+                    [$from, $to])
+                    ->where('archive_licenses.enabled', '1')->orderBy('id', 'DESC')->with('Admin')->get();
             foreach ($licArchive as $row) {
                 $attach = json_decode($row->json_feild);
                 $files = array();
@@ -1697,17 +1807,19 @@ class ReportController extends Controller
                     $st = $row->model_name;
                     $url = explode('\\', ($st));
                     $url = Str::lower($url[2]);
-                    $url = $url . "s";
+                    $url = $url."s";
                     if ($url == 'specialassets') {
                         $url = 'special_assets';
                     }
                     //$row->files[]=$temp;
                     if ($row->model_id) {
-                        $uu = DB::select('select url from ' . $url . ' where id=' . $row->model_id);
+                        $uu = DB::select('select url from '.$url.' where id='.$row->model_id);
                         if ($uu != []) {
                             $uu = $uu[0];
                         }
-                    } else $uu = '';
+                    } else {
+                        $uu = '';
+                    }
                     $row->setAttribute('url', $uu);
                 } else {
                     $row->setAttribute('url', array());
@@ -1715,73 +1827,86 @@ class ReportController extends Controller
             }
 
             return DataTables::of($archive)->addIndexColumn()
-                ->editColumn('date', function ($archive) {
-                    if ($archive->date) {
+                    ->editColumn('date', function ($archive) {
+                        if ($archive->date) {
 
-                        $actionBtn = " ";
-                        $from = explode('-', ($archive->date));
+                            $actionBtn = " ";
+                            $from = explode('-', ($archive->date));
 
-                        $from = $from[2] . '/' . $from[1] . '/' . $from[0];
-                        $actionBtn = $from;
-                        return $actionBtn;
-                    } else {
+                            $from = $from[2].'/'.$from[1].'/'.$from[0];
+                            $actionBtn = $from;
+                            return $actionBtn;
+                        } else {
 
-                        return '';
-                    }
-                })
-                ->addColumn('copyTo', function ($archive) {
-
-                    if ($archive->copyTo) {
-
-                        $actionBtn = " ";
-
-                        foreach ($archive->copyTo as $copyTo) {
-                            if ($copyTo->enabled == 1)
-                                $actionBtn .= ' ' . $copyTo->name . ', ';
+                            return '';
                         }
+                    })
+                    ->addColumn('copyTo', function ($archive) {
 
-                        return $actionBtn;
-                    } else {
+                        if ($archive->copyTo) {
 
-                        return '';
-                    }
-                })->make(true);
+                            $actionBtn = " ";
+
+                            foreach ($archive->copyTo as $copyTo) {
+                                if ($copyTo->enabled == 1) {
+                                    $actionBtn .= ' '.$copyTo->name.', ';
+                                }
+                            }
+
+                            return $actionBtn;
+                        } else {
+
+                            return '';
+                        }
+                    })->make(true);
         } else {
             $archive['type'] = 2;
 
-            $archive['outArchiveCount'] = count(Archive::whereRaw('CAST(archives.created_at AS DATE) between ? and ?', [$from, $to])
-                ->where('archives.enabled', '1')->where('type', 'outArchive')->get());
+            $archive['outArchiveCount'] = count(Archive::whereRaw('CAST(archives.created_at AS DATE) between ? and ?',
+                    [$from, $to])
+                    ->where('archives.enabled', '1')->where('type', 'outArchive')->get());
 
-            $archive['inArchiveCount'] = count(Archive::whereRaw('CAST(archives.created_at AS DATE) between ? and ?', [$from, $to])
-                ->where('archives.enabled', '1')->where('type', 'inArchive')->get());
+            $archive['inArchiveCount'] = count(Archive::whereRaw('CAST(archives.created_at AS DATE) between ? and ?',
+                    [$from, $to])
+                    ->where('archives.enabled', '1')->where('type', 'inArchive')->get());
 
-            $archive['munArchiveCount'] = count(Archive::whereRaw('CAST(archives.created_at AS DATE) between ? and ?', [$from, $to])
-                ->where('archives.enabled', '1')->where('type', 'munArchive')->get());
+            $archive['munArchiveCount'] = count(Archive::whereRaw('CAST(archives.created_at AS DATE) between ? and ?',
+                    [$from, $to])
+                    ->where('archives.enabled', '1')->where('type', 'munArchive')->get());
 
-            $archive['projArchiveCount'] = count(Archive::whereRaw('CAST(archives.created_at AS DATE) between ? and ?', [$from, $to])
-                ->where('archives.enabled', '1')->where('type', 'projArchive')->get());
+            $archive['projArchiveCount'] = count(Archive::whereRaw('CAST(archives.created_at AS DATE) between ? and ?',
+                    [$from, $to])
+                    ->where('archives.enabled', '1')->where('type', 'projArchive')->get());
 
-            $archive['assetsArchiveCount'] = count(Archive::whereRaw('CAST(archives.created_at AS DATE) between ? and ?', [$from, $to])
-                ->where('archives.enabled', '1')->where('type', 'assetsArchive')->get());
+            $archive['assetsArchiveCount'] = count(Archive::whereRaw('CAST(archives.created_at AS DATE) between ? and ?',
+                    [$from, $to])
+                    ->where('archives.enabled', '1')->where('type', 'assetsArchive')->get());
 
-            $archive['empArchiveCount'] = count(Archive::whereRaw('CAST(archives.created_at AS DATE) between ? and ?', [$from, $to])
-                ->where('archives.enabled', '1')->where('type', 'empArchive')->get());
-            $archive['tradeArchive'] = TradeArchive::whereRaw('CAST(trade_archives.created_at AS DATE) between ? and ?', [$from, $to])
-                ->where('trade_archives.enabled', 1)->count();
-            $archive['contractArchiveCount'] = count(Archive::whereRaw('CAST(archives.created_at AS DATE) between ? and ?', [$from, $to])
-                ->where('archives.enabled', '1')->where('type', 'contractArchive')->get());
+            $archive['empArchiveCount'] = count(Archive::whereRaw('CAST(archives.created_at AS DATE) between ? and ?',
+                    [$from, $to])
+                    ->where('archives.enabled', '1')->where('type', 'empArchive')->get());
+            $archive['tradeArchive'] = TradeArchive::whereRaw('CAST(trade_archives.created_at AS DATE) between ? and ?',
+                    [$from, $to])
+                    ->where('trade_archives.enabled', 1)->count();
+            $archive['contractArchiveCount'] = count(Archive::whereRaw('CAST(archives.created_at AS DATE) between ? and ?',
+                    [$from, $to])
+                    ->where('archives.enabled', '1')->where('type', 'contractArchive')->get());
 
-            $archive['financeArchiveCount'] = count(Archive::whereRaw('CAST(archives.created_at AS DATE) between ? and ?', [$from, $to])
-                ->where('archives.enabled', '1')->where('type', 'financeArchive')->get());
+            $archive['financeArchiveCount'] = count(Archive::whereRaw('CAST(archives.created_at AS DATE) between ? and ?',
+                    [$from, $to])
+                    ->where('archives.enabled', '1')->where('type', 'financeArchive')->get());
 
-            $archive['citArchiveCount'] = count(Archive::whereRaw('CAST(archives.created_at AS DATE) between ? and ?', [$from, $to])
-                ->where('archives.enabled', '1')->where('type', 'citArchive')->get());
+            $archive['citArchiveCount'] = count(Archive::whereRaw('CAST(archives.created_at AS DATE) between ? and ?',
+                    [$from, $to])
+                    ->where('archives.enabled', '1')->where('type', 'citArchive')->get());
 
-            $archive['lawArchieveCount'] = count(Archive::whereRaw('CAST(archives.created_at AS DATE) between ? and ?', [$from, $to])
-                ->where('archives.enabled', '1')->where('type', 'lawArchieve')->get());
+            $archive['lawArchieveCount'] = count(Archive::whereRaw('CAST(archives.created_at AS DATE) between ? and ?',
+                    [$from, $to])
+                    ->where('archives.enabled', '1')->where('type', 'lawArchieve')->get());
 
-            $archive['licArchiveCount'] = count(ArchiveLicense::whereRaw('CAST(created_at AS DATE) between ? and ?', [$from, $to])
-                ->where('enabled', '1')->where('type', 'licArchive')->get());
+            $archive['licArchiveCount'] = count(ArchiveLicense::whereRaw('CAST(created_at AS DATE) between ? and ?',
+                    [$from, $to])
+                    ->where('enabled', '1')->where('type', 'licArchive')->get());
 
             return response()->json($archive);
         }
@@ -1796,44 +1921,50 @@ class ReportController extends Controller
 
             $from = explode('/', ($request->get('from')));
 
-            $from = $from[2] . '-' . $from[1] . '-' . $from[0];
+            $from = $from[2].'-'.$from[1].'-'.$from[0];
 
             $to = date_create(($request->get('to')));
 
             $to = explode('/', ($request->get('to')));
 
-            $to = $to[2] . '-' . $to[1] . '-' . $to[0];
+            $to = $to[2].'-'.$to[1].'-'.$to[0];
         }
 
         activity()
-            ->log('deleted-definition-report');
+                ->log('deleted-definition-report');
 
         $res = Admin::select('admins.*')->whereRaw('CAST(admins.updated_at AS DATE) between ? and ?', [$from, $to])
-            ->where('admins.enabled', '0')->orderBy('updated_at', 'DESC')->with('deleted_by')->get();
+                ->where('admins.enabled', '0')->orderBy('updated_at', 'DESC')->with('deleted_by')->get();
 
-        $dept = Department::select('departments.*')->whereRaw('CAST(departments.updated_at AS DATE) between ? and ?', [$from, $to])
-            ->where('departments.enabled', '0')->orderBy('updated_at', 'DESC')->with('deleted_by')->get();
+        $dept = Department::select('departments.*')->whereRaw('CAST(departments.updated_at AS DATE) between ? and ?',
+                [$from, $to])
+                ->where('departments.enabled', '0')->orderBy('updated_at', 'DESC')->with('deleted_by')->get();
 
         $subscriber = User::select('users.*')->whereRaw('CAST(users.updated_at AS DATE) between ? and ?', [$from, $to])
-            ->where('users.enabled', '0')->orderBy('updated_at', 'DESC')->with('deleted_by')->get();
+                ->where('users.enabled', '0')->orderBy('updated_at', 'DESC')->with('deleted_by')->get();
 
         $assets = Equpment::whereRaw('CAST(equpments.updated_at AS DATE) between ? and ?', [$from, $to])
-            ->where('equpments.enabled', '0')->orderBy('updated_at', 'DESC')->with('deleted_by')->get();
+                ->where('equpments.enabled', '0')->orderBy('updated_at', 'DESC')->with('deleted_by')->get();
 
-        $vehicle = Vehicle::select('vehicles.*')->whereRaw('CAST(vehicles.updated_at AS DATE) between ? and ?', [$from, $to])
-            ->where('vehicles.enabled', '0')->orderBy('updated_at', 'DESC')->with('deleted_by')->get();
+        $vehicle = Vehicle::select('vehicles.*')->whereRaw('CAST(vehicles.updated_at AS DATE) between ? and ?',
+                [$from, $to])
+                ->where('vehicles.enabled', '0')->orderBy('updated_at', 'DESC')->with('deleted_by')->get();
 
-        $building = SpecialAsset::select('special_assets.*')->whereRaw('CAST(special_assets.updated_at AS DATE) between ? and ?', [$from, $to])
-            ->where('special_assets.enabled', '0')->orderBy('updated_at', 'DESC')->with('deleted_by')->get();
+        $building = SpecialAsset::select('special_assets.*')->whereRaw('CAST(special_assets.updated_at AS DATE) between ? and ?',
+                [$from, $to])
+                ->where('special_assets.enabled', '0')->orderBy('updated_at', 'DESC')->with('deleted_by')->get();
 
-        $spare_parts = spare_part::select('spare_parts.*')->whereRaw('CAST(spare_parts.updated_at AS DATE) between ? and ?', [$from, $to])
-            ->where('spare_parts.enabled', '0')->orderBy('updated_at', 'DESC')->with('deleted_by')->get();
+        $spare_parts = spare_part::select('spare_parts.*')->whereRaw('CAST(spare_parts.updated_at AS DATE) between ? and ?',
+                [$from, $to])
+                ->where('spare_parts.enabled', '0')->orderBy('updated_at', 'DESC')->with('deleted_by')->get();
 
-        $projects = Project::select('projects.*')->whereRaw('CAST(projects.updated_at AS DATE) between ? and ?', [$from, $to])
-            ->where('projects.enabled', '0')->orderBy('updated_at', 'DESC')->with('deleted_by')->get();
+        $projects = Project::select('projects.*')->whereRaw('CAST(projects.updated_at AS DATE) between ? and ?',
+                [$from, $to])
+                ->where('projects.enabled', '0')->orderBy('updated_at', 'DESC')->with('deleted_by')->get();
 
-        $orgnization = Orgnization::select('orgnizations.*')->whereRaw('CAST(orgnizations.updated_at AS DATE) between ? and ?', [$from, $to])
-            ->where('orgnizations.enabled', '0')->orderBy('updated_at', 'DESC')->with('deleted_by')->get();
+        $orgnization = Orgnization::select('orgnizations.*')->whereRaw('CAST(orgnizations.updated_at AS DATE) between ? and ?',
+                [$from, $to])
+                ->where('orgnizations.enabled', '0')->orderBy('updated_at', 'DESC')->with('deleted_by')->get();
 
         $res = $res->mergeRecursive($dept);
         $res = $res->mergeRecursive($subscriber);
@@ -1891,8 +2022,8 @@ class ReportController extends Controller
             $user->deleted_by = 0;
             $user->save();
             activity()
-                ->performedOn($user)
-                ->log('restore');
+                    ->performedOn($user)
+                    ->log('restore');
             if ($user) {
 
                 return response()->json(['success' => trans('admin.subscriber_added')]);

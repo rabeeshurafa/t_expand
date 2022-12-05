@@ -2883,7 +2883,7 @@ class ArchieveController extends Controller
                 $archive['result']->whereBetween('date', [$from, $to])->where('enabled', 1);
             }
 
-            $archive['result'] = $archive['result']->where('enabled', 1)->with('copyTo')->with('files')->get();
+            $archive['result'] = $archive['result']->where('enabled', 1)->with('copyTo')->with('files')->orderBy('created_at','DESC')->get();
         }
 
         return response()->json($archive);
