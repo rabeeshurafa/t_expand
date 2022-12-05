@@ -222,26 +222,16 @@ class AgendaArchieveController extends Controller
     function prepearAttach(Request $request)
     {
         $attach_ids = $request->attach_ids;
-        $attachNameTemp = $request->attachName ?? [];
-        $attachName = array();
-        foreach ($attachNameTemp as $name) {
-            if (!empty($name)) {
-                array_push($attachName, $name);
-            }
-        }
-        if (sizeof($attachName) < sizeof($attach_ids)) {
-            $deff = sizeof($attach_ids) - sizeof($attachName);
-            for ($i = 0; $i < $deff; $i++) {
-                array_push($attachName, '');
-            }
-        }
+        $attachName = $request->attachName ?? [];
         $attachArr = array();
         if ($attach_ids) {
             for ($i = 0; $i < sizeof($attach_ids); $i++) {
-                $temp = array();
-                $temp['attachName'] = trim($attachName[$i]);
-                $temp['attach_ids'] = trim($attach_ids[$i]);
-                $attachArr[] = $temp;
+                if($attach_ids[$i]!=null) {
+                    $temp = array();
+                    $temp['attachName'] = trim($attachName[$i]);
+                    $temp['attach_ids'] = trim($attach_ids[$i]);
+                    $attachArr[] = $temp;
+                }
             }
         }
         return $attachArr;

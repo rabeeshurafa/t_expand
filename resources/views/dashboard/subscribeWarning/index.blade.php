@@ -883,10 +883,9 @@
                       + '  <span class="attach-text">' + shortCutName + '</span>'
                       + '    <img style="width: 20px;"src="' + fileimage + '">'
                       + '</a>'
-                      + `<input type="hidden" id="attach_ids_${id}" name="attach_ids[]" value="${file.id}">`
+                      + `<input type="hidden" id="attach_ids1_${id}" name="attach_ids[]" value="${file.id}">`
                       + '</div>'
                       + '</div>';
-                    shortCutName = shortCutName.substring(0, 40)
                   }
                   $(".alert-danger").addClass("hide");
                   $(".alert-success").removeClass('hide');
