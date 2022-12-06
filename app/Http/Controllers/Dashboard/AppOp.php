@@ -1527,7 +1527,7 @@ order by created_at asc");
                 $archive->url = 'cit_archieve';
                 $archive->add_by = Auth()->user()->id;
                 $archive->save();
-                $file = File::find($index);
+                $file = File::find($notArchivedId);
                 $file->archive_id = $archive->id;
                 $file->model_name = "App\Models\Archive";
                 $file->save();
