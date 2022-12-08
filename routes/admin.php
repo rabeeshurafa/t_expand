@@ -200,6 +200,10 @@ Route::group([
         Route::get('getVacForEmployee/{id}', 'AppOp@getVacForEmployee')->name('getVacForEmployee');
         /****************************************/
 
+        Route::get('updateLicFiles', 'ArchieveController@updateLicFiles')->name('updateLicFiles');
+        Route::get('updateTradeFiles', 'ArchieveController@updateTradeFiles')->name('updateTradeFiles');
+        Route::get('updateFinanceFiles', 'ArchieveController@updateFinanceFiles')->name('updateFinanceFiles');
+
         Route::get('download_backup', 'BackupController@downloadBackup')->name('download_backup');
         Route::get('setFileUploaded', 'ArchieveController@setFileUploaded')->name('setFileUploaded');
 

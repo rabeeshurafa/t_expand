@@ -1608,7 +1608,7 @@
 
         <script type="text/javascript"
                 src="https://template.expand.ps/app-assets/vendors/js/ui/jquery.sticky.js"></script>
-
+        <script src="{{ asset('assets/js/jquery.dirty.js') }}"></script>
         <script src="https://template.expand.ps/app-assets/vendors/js/forms/select/select2.full.min.js"
                 type="text/javascript"></script>
 
@@ -1619,10 +1619,37 @@
                 type="text/javascript"></script>
 
         <script>
+          function setDirty(formId) {
+            const oldDefaults = $(`#${formId}`).dirty.defaults;
+            $(`#${formId}`).dirty.defaults = {
+              ...oldDefaults,
+              preventLeaving: true,
+              leavingMessage: "لم يتم حفظ التغيرات هل تريد المغادرة؟",
+            }
+            $(`#${formId}`).dirty();
+          }
+
+          function resetDirty(event) {
+            event.preventDefault();
+            const id = event.target.id
+            console.log(`reset : ${id}`)
+            $(`#${id}`).dirty("setAsClean");
+            setDirty(id)
+          }
+
+          $(document).ready(function () {
+            const forms = document.forms
+            for (let i = 0; i < forms?.length; i++) {
+              const id = forms[i]?.id
+              if (id !== 'store-Address' && id !== 'store-Constant' && id !== 'store-modal' && id !== 'SMSFormData' && id !== 'mergeForm') {
+                const form = document.getElementById(`${id}`);
+                form.addEventListener('reset', resetDirty);
+                setDirty(id)
+              }
+            }
+          })
 
           // the selection for menu search
-
-
           $(function () {
 
             $(".full_search").autocomplete({

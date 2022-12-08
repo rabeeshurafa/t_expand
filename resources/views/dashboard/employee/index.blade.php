@@ -923,10 +923,7 @@
               //     response.outArchiveCount,response.inArchiveCount,response.otherArchiveCount
               //     ,response.licFileArchiveCount
               //     ,response.licArchiveCount,response.copyToCount,response.linkToCount);
-              $("select#Position option")
-                .each(function () {
-                  this.selected = (this.text == response.job_title);
-                });
+              $$('#Position').val(response.info.job_title_id);
               $("select#JobType option")
                 .each(function () {
                   this.selected = (this.text == response.job_type);
