@@ -491,30 +491,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <div class="col-md-6">
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                            <span class="input-group-text" id="basic-addon1">
-                                                            {{trans('admin.permissions')}}
-
-                                        </span>
-                                </div>
-                                <select id="userGroup" name="userGroup" type="text" class="form-control" multiple>
-@foreach (config('global.permissions') as $name => $value)
-                                            <option value="{{$value}}"> {{$value}} </option>
-
-                                        @endforeach
-
-                                        </select>
-                                        <div class="input-group-append">
-                                            <span class="input-group-text input-group-text2">
-                                                <i class="fa fa-external-link-alt" style="color: #ffffff"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
                                     </div>
 
                                     <div class="row" id="userlogin">

@@ -3039,4 +3039,73 @@ class ArchieveController extends Controller
         $archives = $archive->unionAll($tradeArchive)->unionAll($financeArchive)->get();
         return response()->json($archives);
     }
+
+    public function updateLicFiles()
+    {
+        $archive = ArchiveLicense::get();
+        foreach ($archive as $row) {
+            $attachArr = array();
+            $attach = json_decode($row->json_feild);
+            foreach ($attach as $key => $value) {
+                $temp = array();
+                foreach ((array) $value as $key => $val) {
+                    $file = File::where('url', $val)->first();
+                    if($file) {
+                        $temp[$key] = $val;
+                        $temp['id'] = $file->id;
+                    }
+                }
+                $attachArr[] = $temp;
+            }
+            $row->json_feild = json_encode($attachArr);
+            $row->save();
+//            dd($row);
+        }
+    }
+
+    public function updateTradeFiles()
+    {
+        $archive = TradeArchive::get();
+        foreach ($archive as $row) {
+            $attachArr = array();
+            $attach = json_decode($row->json_feild);
+            foreach ($attach as $key => $value) {
+                $temp = array();
+                foreach ((array) $value as $key => $val) {
+                    $file = File::where('url', $val)->first();
+                    if($file) {
+                        $temp[$key] = $val;
+                        $temp['id'] = $file->id;
+                    }
+                }
+                $attachArr[] = $temp;
+            }
+            $row->json_feild = json_encode($attachArr);
+            $row->save();
+//            dd($row);
+        }
+    }
+
+    public function updateFinanceFiles()
+    {
+        $archive = Archive::where('url', 'finance_archive')->get();
+        foreach ($archive as $row) {
+            $attachArr = array();
+            $attach = json_decode($row->json_feild);
+            foreach ($attach as $key => $value) {
+                $temp = array();
+                foreach ((array) $value as $key => $val) {
+                    $file = File::where('url', $val)->first();
+                    if($file) {
+                        $temp[$key] = $val;
+                        $temp['id'] = $file->id;
+                    }
+                }
+                $attachArr[] = $temp;
+            }
+            $row->json_feild = json_encode($attachArr);
+            $row->save();
+//            dd($row);
+        }
+    }
 }
