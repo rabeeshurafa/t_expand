@@ -3048,10 +3048,22 @@ class ArchieveController extends Controller
             $attach = json_decode($row->json_feild);
             foreach ($attach as $key => $value) {
                 $temp = array();
+                $keyParent = $key;
                 foreach ((array) $value as $key => $val) {
                     $file = File::where('url', $val)->first();
-                    if($file) {
+                    if ($file) {
                         $temp[$key] = $val;
+                        $temp['id'] = $file->id;
+                    } else if (!empty($val)) {
+                        $file = new File();
+                        $file->url = 'storage/'.$val;
+                        $file->extension = explode(".", $val)[1];
+                        $file->real_name = $keyParent;
+                        $file->archive_id = $row->id;
+                        $file->model_name = "App\\Models\\ArchiveLicense";
+                        $file->type = 1;
+                        $file->save();
+                        $temp[$keyParent] = $val;
                         $temp['id'] = $file->id;
                     }
                 }
