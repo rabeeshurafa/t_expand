@@ -43,7 +43,7 @@ class LicenseController extends Controller
     public function store_license(Request $request){
 
 
-         //dd($request->licenseId);
+        //dd($request->licenseId);
         $license = new License();
         if($request->licenseId == null){
 
@@ -61,41 +61,41 @@ class LicenseController extends Controller
                 // dd($fileNo);
                 return response()->json(['status'=>false,'errors'=>array('fileNo'=>array('رقم ملف الترخيص مكرر'))]);
             }
-            
-            
+
+
             // $license->bSeatDateList = '';
-            
+
             if($request->bSeatDateList!=null && $request->bSeatDateList!=''){
 
                 $bSeatDateList = date_create(($request->bSeatDateList));
 
-                $bSeatDateList = explode('/', ($request->bSeatDateList)); 
+                $bSeatDateList = explode('/', ($request->bSeatDateList));
 
                 $bSeatDateList = $bSeatDateList[2].'-'.$bSeatDateList[1].'-'.$bSeatDateList[0];
 
                 $license->bSeatDateList = $bSeatDateList;
             }
-            
+
             // $license->license_date = '';
-            
+
             if($request->license_date !=null && $request->license_date!=''){
 
                 $from = date_create(($request->license_date));
 
-                $from = explode('/', ($request->license_date)); 
+                $from = explode('/', ($request->license_date));
 
                 $from = $from[2].'-'.$from[1].'-'.$from[0];
 
                 $license->license_date = $from;
             }
-            
+
             // $license->releas_date = '';
-            
+
             if($request->releas_date !=null && $request->releas_date!=''){
 
                 $releas_date = date_create(($request->releas_date));
 
-                $releas_date = explode('/', ($request->releas_date)); 
+                $releas_date = explode('/', ($request->releas_date));
 
                 $releas_date = $releas_date[2].'-'.$releas_date[1].'-'.$releas_date[0];
 
@@ -138,7 +138,7 @@ class LicenseController extends Controller
 
             $license->save();
 
-         }else{
+        }else{
 
             $licNo = license::where('licNo',$request->licNo)->where('enabled','1')->where('id', '!=' , $request->licenseId)->first();
             $fileNo = license::where('fileNo',$request->fileNo)->where('enabled','1')->where('id', '!=' , $request->licenseId)->first();
@@ -150,42 +150,42 @@ class LicenseController extends Controller
                 // if($request->licenseId!= $licNo->licenseId)
                 return response()->json(['status'=>false,'errors'=>array('fileNo'=>array('رقم ملف الترخيص مكرر'))]);
             }
-            
+
             $license = License::find($request->licenseId);
-            
+
             // $license->bSeatDateList = '';
-            
+
             if($request->bSeatDateList!=null && $request->bSeatDateList!=''){
 
                 $bSeatDateList = date_create(($request->bSeatDateList));
 
-                $bSeatDateList = explode('/', ($request->bSeatDateList)); 
+                $bSeatDateList = explode('/', ($request->bSeatDateList));
 
                 $bSeatDateList = $bSeatDateList[2].'-'.$bSeatDateList[1].'-'.$bSeatDateList[0];
 
                 $license->bSeatDateList = $bSeatDateList;
             }
-            
+
             // $license->license_date = '';
-            
+
             if($request->license_date !=null && $request->license_date!=''){
 
                 $from = date_create(($request->license_date));
 
-                $from = explode('/', ($request->license_date)); 
+                $from = explode('/', ($request->license_date));
 
                 $from = $from[2].'-'.$from[1].'-'.$from[0];
 
                 $license->license_date = $from;
             }
-            
+
             // $license->releas_date = '';
-            
+
             if($request->releas_date !=null && $request->releas_date!=''){
 
                 $releas_date = date_create(($request->releas_date));
 
-                $releas_date = explode('/', ($request->releas_date)); 
+                $releas_date = explode('/', ($request->releas_date));
 
                 $releas_date = $releas_date[2].'-'.$releas_date[1].'-'.$releas_date[0];
 
@@ -229,44 +229,44 @@ class LicenseController extends Controller
 
             $license->save();
 
-         }
+        }
 
-         ///dd($license);
+        ///dd($license);
 
-         if ($license) {
+        if ($license) {
 
             //return response()->json(['success'=>trans('admin.subscriber_added')]);
-            
+
             return response()->json(['status'=>true,'errors'=>array('fileNo'=>array('تمت الإضافة بنجاح'))]);
 
         }
 
-     
 
-         return response()->json(['errors'=>$validator->errors()->all()]);
+
+        return response()->json(['errors'=>$validator->errors()->all()]);
 
     }
 
-    
+
 
     public function license_info_all(Request $request)
 
     {
 
         $license= license::select('licenses.*','users.name')
-        ->where('licenses.enabled',1)
+                ->where('licenses.enabled',1)
 
-        ->leftJoin('users','users.id','licenses.user_id')
+                ->leftJoin('users','users.id','licenses.user_id')
 
-        ->orderBy('licenses.id', 'DESC')
+                ->orderBy('licenses.id', 'DESC')
 
-        ->get();
+                ->get();
 
         return DataTables::of($license)
 
-        ->addIndexColumn()
+                ->addIndexColumn()
 
-        ->make(true);
+                ->make(true);
 
     }
 
@@ -344,25 +344,25 @@ class LicenseController extends Controller
 
     {
 
-          // dd($request->all());
-          $lic= license::find($request['lic_id']);
-          $lic->deleted_by = Auth()->user()->id;
-          $lic->enabled=0;
-          // dd($user->all());
+        // dd($request->all());
+        $lic= license::find($request['lic_id']);
+        $lic->deleted_by = Auth()->user()->id;
+        $lic->enabled=0;
+        // dd($user->all());
 
-          $lic->save();
-          if ($lic) {
-  
-  
-  
-              return response()->json(['success'=>trans('admin.subscriber_added')]);
-  
-          }
-  
-  
-  
-          return response()->json(['error'=>$validator->errors()->all()]);
-  
+        $lic->save();
+        if ($lic) {
+
+
+
+            return response()->json(['success'=>trans('admin.subscriber_added')]);
+
+        }
+
+
+
+        return response()->json(['error'=>$validator->errors()->all()]);
+
 
 
 
@@ -372,7 +372,7 @@ class LicenseController extends Controller
 
     {
 
-        $license['info'] = license::where('user_id','=',$request['subscriber_id'])->where('licenses.enabled',1)->get();
+        $license['info'] = license::where('user_id','=',$request['subscriber_id'])->where('licenses.enabled',1)->with('use_desc')->get();
 
         $license['user']=User::find($request['subscriber_id']);
 

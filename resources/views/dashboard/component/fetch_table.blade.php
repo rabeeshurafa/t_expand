@@ -1478,8 +1478,7 @@
                 data.files.forEach(file => {
                   shortCutName = file.real_name;
                   shortCutName = shortCutName.substring(0, 20);
-                  urlfile = '{{ asset('') }}';
-                  urlfile += file.url;
+                  urlfile = getFileUrl(file);
                   if (file.extension == "jpg" || file.extension == "png" || file.extension == "jfif")
                     fileimage = '{{ asset('assets/images/ico/image.png') }}';
                   else if (file.extension == "pdf")

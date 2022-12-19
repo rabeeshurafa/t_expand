@@ -60,35 +60,45 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             $files = File::where('upload_s3', 0)->take(5)->get();
             foreach ($files as $file) {
-                try {
-                    $imageName = $file->url;
-                    Storage::disk('s3')->put($imageName, Storage::disk('ftp')->get('expand/texpand/'.$imageName));
-                    $s3 = Storage::disk('s3')->url($imageName);
-                    $file->file_links->s3 = $s3;
+                if (isset($file->file_links->ftp)) {
+                    try {
+                        $imageName = $file->url;
+                        Storage::disk('s3')->put($imageName, Storage::disk('ftp')->get('expand/texpand/'.$imageName));
+                        $s3 = Storage::disk('s3')->url($imageName);
+                        $file->file_links->s3 = $s3;
+                        $file->upload_s3 = 1;
+                        $file->save();
+                    } catch (\Exception $e) {
+                        Log::error($file);
+                        Log::error($e);
+                    }
+                } else {
                     $file->upload_s3 = 1;
                     $file->save();
-                } catch (\Exception $e) {
-                    Log::error($file);
-                    Log::error($e);
                 }
             }
-        })->everyTwoHours()->between('8:00','14:00');
+        })->everyTwoHours()->between('8:00', '14:00');
         $schedule->call(function () {
             $files = File::where('upload_s3', 0)->take(5)->get();
             foreach ($files as $file) {
-                try {
-                    $imageName = $file->url;
-                    Storage::disk('s3')->put($imageName, Storage::disk('ftp')->get('expand/texpand/'.$imageName));
-                    $s3 = Storage::disk('s3')->url($imageName);
-                    $file->file_links->s3 = $s3;
+                if (isset($file->file_links->ftp)) {
+                    try {
+                        $imageName = $file->url;
+                        Storage::disk('s3')->put($imageName, Storage::disk('ftp')->get('expand/texpand/'.$imageName));
+                        $s3 = Storage::disk('s3')->url($imageName);
+                        $file->file_links->s3 = $s3;
+                        $file->upload_s3 = 1;
+                        $file->save();
+                    } catch (\Exception $e) {
+                        Log::error($file);
+                        Log::error($e);
+                    }
+                } else {
                     $file->upload_s3 = 1;
                     $file->save();
-                } catch (\Exception $e) {
-                    Log::error($file);
-                    Log::error($e);
                 }
             }
-        })->everyThirtyMinutes()->between('14:00','8:00');
+        })->everyThirtyMinutes()->between('14:00', '8:00');
 //        $schedule->call(function () {
 //            $files = File::where('upload_dropbox', 0)->take(5)->get();
 //            foreach ($files as $file) {

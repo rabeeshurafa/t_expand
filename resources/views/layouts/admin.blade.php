@@ -1630,9 +1630,8 @@
           }
 
           function resetDirty(event) {
-            event.preventDefault();
+            // event.preventDefault();
             const id = event.target.id
-            console.log(`reset : ${id}`)
             $(`#${id}`).dirty("setAsClean");
             setDirty(id)
           }

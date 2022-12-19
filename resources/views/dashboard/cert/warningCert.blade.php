@@ -886,10 +886,10 @@
                     <li style="font-size: 17px !important;color:#000000">
                         <div class="row">
                             <div class="col-sm-6">
-                                <input type="text" id="attachName[]" name="attachName[]" class="form-control attachName" placeholder="أخل اسم المرفق"  value="">
+                                <input type="text" id="attachName1" key="1" name="attachName[]" class="form-control attachName" placeholder="أخل اسم المرفق"  value="">
                             </div>
                             <div class="col-sm-5 attach_row_1">
-                                
+                                <input type="hidden" id="attach_ids1" name="attach_ids[]" value="">
                             </div>
                             <div>
                                 <img src="{{ asset('assets/images/ico/upload.png') }}" width="40"
@@ -1456,7 +1456,7 @@
                 $tooltip = '<a data-toggle="tooltip" data-placement="top" data-original-title="' + ' تمت الإضافة بواسطة ' + data.admin.nick_name + ' بتاريخ ' + $date + '" >' + data.admin.nick_name + '</a>';
                 return $tooltip;
               },
-              earchable: false,
+              searchable: false,
 
             },
             {
@@ -1474,7 +1474,7 @@
 
               },
 
-              earchable: false,
+              searchable: false,
 
             },
 

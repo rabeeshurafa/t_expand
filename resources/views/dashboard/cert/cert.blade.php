@@ -1518,7 +1518,7 @@
                 $tooltip = '<a data-toggle="tooltip" data-placement="top" data-original-title="' + ' تمت الإضافة بواسطة ' + data.admin.nick_name + ' بتاريخ ' + $date + '" >' + data.admin.nick_name + '</a>';
                 return $tooltip;
               },
-              earchable: false,
+              searchable: false,
 
             },
             {
@@ -1536,7 +1536,7 @@
 
               },
 
-              earchable: false,
+              searchable: false,
 
             },
 

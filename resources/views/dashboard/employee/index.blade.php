@@ -405,7 +405,7 @@
                                                 <div class="input-group-prepend preW">
                                                         <span class="input-group-text" id="basic-addon1"
                                                               style=" width: 100%;">
-                                                           {{trans('admin.permission_emp_archive')}} 
+                                                           {{trans('admin.permission_emp_archive')}}
                                                         </span>
                                                 </div>
                                                 <select id="allowed_emp" name="allowed_emp[]"
@@ -923,20 +923,14 @@
               //     response.outArchiveCount,response.inArchiveCount,response.otherArchiveCount
               //     ,response.licFileArchiveCount
               //     ,response.licArchiveCount,response.copyToCount,response.linkToCount);
-              $$('#Position').val(response.info.job_title_id);
-              $("select#JobType option")
-                .each(function () {
-                  this.selected = (this.text == response.job_type);
-                });
+              $('#Position').val(response.info.job_title_id);
+              $("#JobType").val(response.info.job_type_id)
 
               $("select#DirectManager option")
                 .each(function () {
                   this.selected = (this.text == response.DirectManager);
                 });
-              $("select#DepartmentID option")
-                .each(function () {
-                  this.selected = (this.text == response.department_id);
-                });
+              $("#DepartmentID").val(response.info.department_id)
               $("select#CurrencyID option")
                 .each(function () {
                   this.selected = (this.text == response.Currency);

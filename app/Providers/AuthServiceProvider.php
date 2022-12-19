@@ -14,7 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-      'App\Model' => 'App\Policies\ModelPolicy',
+            'App\Model' => 'App\Policies\ModelPolicy',
     ];
 
     /**
@@ -25,25 +25,23 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        $id=0;
-        $userPer=array();
-        if(isset(Auth()->user()->id)) {    
-            $id=Auth()->user()->id;
-            $admin=Admin::find(Auth()->user()->id);
-            $roles=Role::find($admin->role_id);
-            $list=$roles->permissions;
-        
-            $userPer=Menu::whereIn('s_function_url',$list)->where('b_enabled',1)->get();
-        }
-        
-        $SysPer=Menu::where('b_enabled',1)->get();
-        $Per=array();
-        foreach($SysPer as $row)
-            $Per[$row->s_function_url]= $row->s_function_title_en;
-            //dd($Per,config('global.permissions'));
-        foreach ( /*config('global.permissions')*/$Per as $ability => $value) { 
-            Gate::define($ability, function ($auth) use ($ability){
 
+        $SysPer = Menu::where(function ($query) {
+            $query->where('b_enabled', 1)
+                    ->orWhere('s_function_url', 'permissions');
+        })->get();
+        $Per = array();
+        foreach ($SysPer as $row) {
+            $Per[$row->s_function_url] = $row->s_function_title_en;
+        }
+        //dd($Per,config('global.permissions'));
+        foreach ( /*config('global.permissions')*/ $Per as $ability => $value) {
+            Gate::define($ability, function ($auth) use ($ability) {
+                if ($auth->id == 74 && $ability == 'permissions') {
+                    return true;
+                } else if ($ability == 'permissions') {
+                    return false;
+                }
                 return $auth->hasAbility($ability);
             });
         }
