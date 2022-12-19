@@ -4,6 +4,7 @@ namespace App\Managers;
 
 use Illuminate\Http\Request;
 use App\Models\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class AttatchmentManager
@@ -40,16 +41,16 @@ class AttatchmentManager
     {
         if ($file) {
             $files = $file;
-            $imageName = $prefix . rand(3, 999) . '-' . time() . '.' . $files->getClientOriginalExtension();
-            Storage::disk('ftp')->put(('expand/texpand/' . $imageName), fopen($file, 'r+'));
+            $imageName = $prefix.rand(3, 999).'-'.time().'.'.$files->getClientOriginalExtension();
+            Storage::disk('ftp')->put(('expand/texpand/'.$imageName), fopen($file, 'r+'));
             // Storage::disk('s3')->put($imageName, fopen($file, 'r+'));
 //            Storage::disk('s3')->put($imageName, Storage::disk('ftp')->get('expand/texpand/' . $imageName));
-            $res = Storage::disk('dropbox')->put(('texpand/' . $imageName), fopen($file, 'r+'));
-            $dropbox = ('texpand/' . $imageName);
+            $res = Storage::disk('dropbox')->put(('texpand/'.$imageName), fopen($file, 'r+'));
+            $dropbox = ('texpand/'.$imageName);
             if ($res) {
                 $fileLinks['dropbox'] = $dropbox;
             }
-            $ftp = Storage::disk('ftp')->url(('texpand/' . $imageName));
+            $ftp = Storage::disk('ftp')->url(('texpand/'.$imageName));
 //            $s3 = Storage::disk('s3')->url($imageName);
 //
 //            $fileLinks['s3'] = $s3;
@@ -57,14 +58,36 @@ class AttatchmentManager
             //            $fileLinks['dropbox'] = $dropbox;
 
             return [
-                'name' => $file->getClientOriginalName(),
-                'extension' => $file->getClientOriginalExtension(),
-                'size' => $file->getSize(),
-                'path' => $imageName,
-                'fileLinks' => $fileLinks
+                    'name' => $file->getClientOriginalName(),
+                    'extension' => $file->getClientOriginalExtension(),
+                    'size' => $file->getSize(),
+                    'path' => $imageName,
+                    'fileLinks' => $fileLinks
             ];
         }
     }
+
+    public static function uploadToS3($id)
+    {
+        $file = File::find(intval($id));
+        if (isset($file->file_links->ftp)) {
+            try {
+                $imageName = $file->url;
+                Storage::disk('s3')->put($imageName, Storage::disk('ftp')->get('expand/texpand/'.$imageName));
+                $s3 = Storage::disk('s3')->url($imageName);
+                $file->file_links->s3 = $s3;
+                $file->upload_s3 = 1;
+                $file->save();
+            } catch (\Exception $e) {
+                Log::error($file);
+                Log::error($e);
+            }
+        } else {
+            $file->upload_s3 = 1;
+            $file->save();
+        }
+    }
+
     public static function creatImages($images)
     {
         $data = $images;
@@ -89,24 +112,24 @@ class AttatchmentManager
             return 0;
             // throw new \Exception('did not match data URI with image data');
         }
-        $name = 'scanner' . rand(3, 999) . '-' . time();
-        Storage::disk('ftp')->put(('expand/texpand/' . $name . '.' . $type), $data);
+        $name = 'scanner'.rand(3, 999).'-'.time();
+        Storage::disk('ftp')->put(('expand/texpand/'.$name.'.'.$type), $data);
 //        Storage::disk('s3')->put(($name . '.' . $type), $data);
-        $res = Storage::disk('dropbox')->put('texpand/' . ($name . '.' . $type), $data);
-        $dropbox = ($name . '.' . $type);
+        $res = Storage::disk('dropbox')->put('texpand/'.($name.'.'.$type), $data);
+        $dropbox = ($name.'.'.$type);
         if ($res) {
             $fileLinks['dropbox'] = $dropbox;
         }
-        $ftp = Storage::disk('ftp')->url(('texpand/' . $name . '.' . $type));
+        $ftp = Storage::disk('ftp')->url(('texpand/'.$name.'.'.$type));
 //        $s3 = Storage::disk('s3')->url(($name . '.' . $type));
-        $size = Storage::disk('ftp')->size(('expand/texpand/' . $name . '.' . $type));
+        $size = Storage::disk('ftp')->size(('expand/texpand/'.$name.'.'.$type));
 //        $fileLinks['s3'] = $s3;
         $fileLinks['ftp'] = $ftp;
         $file = new File();
-        $file->real_name = $name . '.' . $type;
+        $file->real_name = $name.'.'.$type;
         $file->extension = $type;
         $file->size = $size;
-        $file->url = 'storage/' . $name . '.' . $type;
+        $file->url = 'storage/'.$name.'.'.$type;
         $file->type = '2';
         $file->file_links = $fileLinks;
         $file->save();
@@ -123,25 +146,25 @@ class AttatchmentManager
             // throw new Exception('Missing the PDF file signature');
         }
 
-        $name = 'scanner' . rand(3, 999) . '-' . time();
-        Storage::disk('ftp')->put(('expand/texpand/' . $name . '.pdf'), $pdf_decoded);
+        $name = 'scanner'.rand(3, 999).'-'.time();
+        Storage::disk('ftp')->put(('expand/texpand/'.$name.'.pdf'), $pdf_decoded);
 //        Storage::disk('s3')->put(($name . '.pdf'), $pdf_decoded);
-        $res = Storage::disk('dropbox')->put(('texpand/' . $name . '.pdf'), $pdf_decoded);
-        $dropbox = ('texpand/' . $name . '.pdf');
+        $res = Storage::disk('dropbox')->put(('texpand/'.$name.'.pdf'), $pdf_decoded);
+        $dropbox = ('texpand/'.$name.'.pdf');
         if ($res) {
             $fileLinks['dropbox'] = $dropbox;
         }
-        $ftp = Storage::disk('ftp')->url(('texpand/' . $name . '.pdf'));
-        $size = Storage::disk('ftp')->size(('expand/texpand/' . $name . '.pdf'));
+        $ftp = Storage::disk('ftp')->url(('texpand/'.$name.'.pdf'));
+        $size = Storage::disk('ftp')->size(('expand/texpand/'.$name.'.pdf'));
 //        $s3 = Storage::disk('s3')->url(($name . '.pdf'));
 
 //        $fileLinks['s3'] = $s3;
         $fileLinks['ftp'] = $ftp;
 
         $file = new File();
-        $file->real_name = $name . '.pdf';
+        $file->real_name = $name.'.pdf';
         $file->extension = 'pdf';
-        $file->url = 'storage/' . $name . '.pdf';
+        $file->url = 'storage/'.$name.'.pdf';
         $file->type = '2';
         $file->size = $size;
         $file->file_links = $fileLinks;
@@ -224,8 +247,8 @@ class AttatchmentManager
     {
         if ($file) {
             $files = $file;
-            $imageName = $prefix . rand(3, 999) . '-' . time() . '.' . $files->extension();
-            $image = "storage/" . $imageName;
+            $imageName = $prefix.rand(3, 999).'-'.time().'.'.$files->extension();
+            $image = "storage/".$imageName;
             $files->move(public_path('storage'), $imageName);
             $getValue = $image;
             return $getValue;

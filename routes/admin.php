@@ -345,7 +345,7 @@ Route::group([
         Route::post('store_settings', 'SettingsController@store_settings')->name('store_settings');
         Route::post('state', 'SettingsController@state')->name('state');
         Route::post('area', 'SettingsController@area')->name('area');
-        Route::get('permissions', 'SettingsController@permissions')->name('permissions');
+        Route::get('permissions', 'SettingsController@permissions')->name('permissions')->middleware('can:permissions');
         Route::post('store_permission', 'SettingsController@store_permission')->name('store_permission');
         Route::get('Organization_info', 'SettingsController@Organization_info')->name('Organization_info');
         Route::get('Organization_law', 'SettingsController@Organization_law')->name('Organization_law');

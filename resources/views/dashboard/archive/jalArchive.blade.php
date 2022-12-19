@@ -400,7 +400,7 @@
 
                 shortCutID = response.file.id;
 
-                let urlFile = getFileUrl(response.file);
+                let urlfile = getFileUrl(response.file);
 
                 shortCutName = shortCutName.substring(0, 40)
 
