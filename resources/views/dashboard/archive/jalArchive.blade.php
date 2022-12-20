@@ -258,7 +258,7 @@
             </form>
         </section>
     </div>
-    @include('dashboard.component.fetch_table');
+    @include('dashboard.component.fetch_table')
     @section('script')
         <script>
 

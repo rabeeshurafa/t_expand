@@ -865,8 +865,6 @@
                     urlfile = getFileUrl(data.all_files[j])
                     shortCutName = file.real_name;
                     shortCutName = shortCutName.substring(0, 20);
-                    urlfile = 'https://t.expand.ps/expand_repov1/public/';
-                    urlfile += file.url;
                     if (file.extension == "jpg" || file.extension == "png")
                       fileimage = 'https://t.expand.ps/expand_repov1/public/assets/images/ico/image.png';
                     else if (file.extension == "pdf")

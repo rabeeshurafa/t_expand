@@ -601,11 +601,7 @@ function search(){
                                 id=elem.agenda_topic[i].id;
                                 attach='';
                                 for(j=0;j<elem.agenda_topic[i].files.length;j++){
-                                    if(elem.agenda_topic[i].files[j].type==1){
-                                        url= '{{asset('')}}'+elem.agenda_topic[i].files[j].url
-                                    }else {
-                                        url= elem.agenda_topic[i].files[j].url
-                                    }
+                                    url= getFileUrl(elem.agenda_topic[i].files[j])
                                     shortCutName=elem.agenda_topic[i].files[j].real_name;
                                     shortCutName=shortCutName.substring(0, 20)
                                     if(elem.agenda_topic[i].files[j].extension=="jpg"||elem.agenda_topic[i].files[j].extension=="png")

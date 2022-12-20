@@ -212,6 +212,7 @@
                                         {{trans('archive.decision')}}
                                     </th>
                                     <th scope="col" class=" th1" style="width:110px" ></th>
+                                    <th scope="col" class=" th1" style="width:110px" ></th>
                                 </tr>
                                 </thead>
                                 <tbody id="recList">
@@ -1202,32 +1203,32 @@
         }
 
         function drawAttach() {
-            // $('#feesText'+id).val($('#attachfile').val().split('\\').pop())
-            $(".loader").removeClass('hide');
-            $(".form-actions").addClass('hide');
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+          // $('#feesText'+id).val($('#attachfile').val().split('\\').pop())
+          $(".loader").removeClass('hide');
+          $(".form-actions").addClass('hide');
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+          });
+          let formData = {
+            'meetingID': $("#meetingID").val(),
+          };
+          $.ajax({
+            url: '{{route('meetingAttach')}}',
+            type: 'get',
+            data: formData,
+            dataType: "json",
+            async: true,
+            success: function (data) {
+              var attach_template = '';
+              // if (data.length > 0) {
+                $('.addAttatch').html(' ');
+                let i = 0;
+                for (i = 0; i < data?.length; i++) {
+                  attach_template +=meetingAttache(data[i],i)
                 }
-            });
-            let formData = {
-                'meetingID': $("#meetingID").val(),
-            };
-            $.ajax({
-                url: '{{route('meetingAttach')}}',
-                type: 'get',
-                data: formData,
-                dataType: "json",
-                async: true,
-                success: function (data) {
-                    var attach_template = '';
-                    if (data.length > 0) {
-                        $('.addAttatch').html(' ');
-                        let i = 0;
-                        for (i = 0; i <= data.length; i++) {
-
-                            if (i == data.length) {
-                                attach_template += `<li style="font-size: 17px !important;color:#000000">
+                attach_template += `<li style="font-size: 17px !important;color:#000000">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <input type="text" id="attachName${i + 1}" key="${i + 1}" name="attachName[]" class="form-control attachName" placeholder="أدخل اسم المرفق" value="">
@@ -1242,25 +1243,21 @@
                                         </div>
                                     </div>
                                 </li>`
-                                attach_index = i + 1;
-                            } else {
-                              attach_template +=meetingAttache(data[i],i)
-                            }
-                        }
-                        attach_index = i + 1;
-                    }
+                attach_index = i + 1;
+                attach_index = i + 1;
+              // }
 
-                    $('.addAttatch').append(attach_template);
-                    $(".loader").addClass('hide');
-                    $(".form-actions").removeClass('hide');
-                },
-                error: function () {
-                    $(".alert-success").addClass("hide");
-                    $(".alert-danger").removeClass('hide');
-                    $(".loader").addClass('hide');
-                    $(".form-actions").removeClass('hide');
-                },
-            });
+              $('.addAttatch').append(attach_template);
+              $(".loader").addClass('hide');
+              $(".form-actions").removeClass('hide');
+            },
+            error: function () {
+              $(".alert-success").addClass("hide");
+              $(".alert-danger").removeClass('hide');
+              $(".loader").addClass('hide');
+              $(".form-actions").removeClass('hide');
+            },
+          });
         }
 
         function drawTopics(topics){
@@ -1368,6 +1365,11 @@
                                 </span>
                             </span>
                         </td>
+                        <td scope="col">
+                        ${topics[i]?.trackLink ? `<a target="_blank" href="{{asset(app()->getLocale())}}/admin${topics[i]?.trackLink}"  style="margin-right:17px;" >
+                            <img title="تم تحويل الطلب الى ${topics[i]?.emp_receive} في قسم ${topics[i]?.dept_receive}" src="https://tf.palexpand.ps/assets/images/arrow.png " style="cursor:pointer;height: 32px;display:inline">
+                            </a>` :''}
+                        </td>
                     </tr>`
               $(".resize-ta").on("keyup", function () {
                 $(this).height(calcHeight($(this).val()) + "px");
@@ -1409,7 +1411,7 @@
                   //$("#recList").html('')
                   $("#meetingID").val(data.id)
                   $("#agenda_id").val(data.id)
-                  if (data.file_ids)
+                  // if (data.file_ids)
                     drawAttach();
                   $(".normal-topic").remove()
                   $(`.forwarded-subject${forwardedRowToBeDeleted}`).remove()
@@ -1795,6 +1797,7 @@
                 + '                                </span>'
                 + '                            </span>'
                 + '                    </td>'
+                +`<td scope="col"></td>`
                 + '                </tr>';
             $("#recList").prepend(template);
             $(".resize-ta").on("keyup", function () {

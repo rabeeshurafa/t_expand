@@ -1666,7 +1666,7 @@
                   url = 'financeArchive'
                 }
                 if (url === 'contract_archieve') {
-                  url = 'financeArchive'
+                  url = 'dep_archieve'
                 }
                 url = '{{ route('admin.dashboard') }}/' + url;
 
@@ -1698,7 +1698,7 @@
                   url = 'financeArchive'
                 }
                 if (url === 'contract_archieve') {
-                  url = 'financeArchive'
+                  url = 'dep_archieve'
                 }
                 var fullUrl = 'admin/' + url + '?id' + '=' + id;
 
@@ -1890,8 +1890,6 @@
               success: function (data) {
 
                 row = '';
-
-                console.log(data.all_files);
 
                 if (data.all_files) {
 
