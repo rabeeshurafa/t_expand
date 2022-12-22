@@ -35,12 +35,12 @@
 
     .go-right-90 {
         /*transform: translate3d(90px, -188px, 0px) !important;*/
-        right: -90px!important;
+        right: -90px !important;
     }
 
     .go-right-55 {
         /*transform: translate3d(56px, -145px, 0px) !important;*/
-        right: -56px!important;
+        right: -56px !important;
     }
 </style>
 
@@ -1113,10 +1113,26 @@
     "2080": '{{trans('archive.build_type2')}}',
     "2081": '{{trans('archive.build_type3')}}'
   };
+
+  function resetSearch() {
+    // console.log("hi");
+    if ($('#searchSupp').val().length == 0) {
+      $('#searchSuppId').val('');
+      reload();
+      // console.log("hi1");
+    }
+    if ($('#searchOrganization').val().length == 0) {
+      $('#searchOrganizationId').val('');
+      reload();
+      // console.log("hi2");
+    }
+  }
+
   function goToPrint(id) {
     let url = `{{ route('admin.dashboard') }}/printArchive/archive/${id}`
-              window.open(url, '_blank');
+    window.open(url, '_blank');
   }
+
   function archiveOperations(data) {
     let actionBtn = `<div class="row"><div class="dropdown">
                         <button class="btn btn-secondary" style="background-color: transparent !important; border-color: transparent !important;"
@@ -1134,22 +1150,22 @@
         '<i style="color:#1E9FF2;" class="fa fa-trash"></i>' +
         'حذف </a>';
       @endcan
-          console.log(data)
-          if(data.type && data.type!='tradeArchive' ) {
-            actionBtn += `<a onclick="goToPrint(${data.id})" class="dropdown-item">
+      console.log(data)
+    if (data.type && data.type != 'tradeArchive') {
+      actionBtn += `<a onclick="goToPrint(${data.id})" class="dropdown-item">
             <i style="color:#1E9FF2;" class="fa fa-print"></i>
             طباعة </a>`;
-          }
-      if(data.model != "App\\Models\\ArchiveTrade") {
-      actionBtn += `<a onclick="send_email_archive(${data.id??''})" class="dropdown-item">
+    }
+    if (data.model != "App\\Models\\ArchiveTrade") {
+      actionBtn += `<a onclick="send_email_archive(${data.id ?? ''})" class="dropdown-item">
         <i style="color:#1E9FF2;" class="fa fa-envelope"></i>
         ارسال ايميل </a>`;
-        if (data?.email_logs?.length != 0) {
-          actionBtn += `<a onclick="send_email_archive(${data.id??''},'detail','${data?.type??''}')" class="dropdown-item">
+      if (data?.email_logs?.length != 0) {
+        actionBtn += `<a onclick="send_email_archive(${data.id ?? ''},'detail','${data?.type ?? ''}')" class="dropdown-item">
           <i style="color:#1E9FF2;" class="fa fa-envelope"></i>
           الايميلات المرسلة </a>`;
-        }
       }
+    }
     /*$actionBtn += `
       <a target="_blank" href="{{asset(app()->getLocale())}}/admin/printArchive/archive/${data.id}" class="dropdown-item">
         <img class="fa fa-print" tabindex="0" title="print" src="https://c.palexpand.ps/assets/images/ico/Printer.png " style="cursor:pointer;height: 32px;display:inline">
@@ -1190,6 +1206,10 @@
       connectedList += `</div></div>`
     }
     return connectedList;
+  }
+
+  function reload() {
+    $('.wtbl').DataTable().ajax.reload();
   }
 
   var types = $('#type').val();
@@ -1243,8 +1263,18 @@
         @elseif ($type == 'equip')
         ajax: "{{ route('equip_info_all') }}",
         @elseif ($type == 'project')
-        ajax: "{{ route('project_info_all') }}",
-        @elseif ($type == 'volunteer')            ajax: "{{ route('volunteer_info_all') }}",
+        ajax: {
+          url: '{{ route('project_info_all') }}',
+          data: function (d) {
+            d.type = $('#type').val();
+            d.searchOrganizationId = $('#searchOrganizationId').val();
+            d.searchSuppId = $('#searchSuppId').val();
+            d.search_from = $('#search_from').val();
+            d.search_to = $('#search_to').val();
+          }
+        },
+        @elseif ($type == 'volunteer')
+        ajax: "{{ route('volunteer_info_all') }}",
         @elseif($type=="outArchive"||$type=="inArchive"||$type=='projArchive'||$type=='munArchive'||$type=='empArchive'||$type=='assetsArchive'||$type=='citArchive'||$type=='contractArchive' || $type=='lawArchieve' || $type == 'specialEmpArchive')
         ajax: {
           url: '{{ route('archieve_info_all') }}',
