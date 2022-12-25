@@ -1,2 +1,1 @@
-<script>self.location='https://t.palexpand.ps/ar/admin';</script>
-
+<script>self.location='{{env('APP_URL')}}'+'ar/admin';</script>
