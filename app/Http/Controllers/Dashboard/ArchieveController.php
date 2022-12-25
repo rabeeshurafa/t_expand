@@ -2507,11 +2507,15 @@ class ArchieveController extends Controller
                 't_constant.name as license_type_name',
                 'licenses.notes as notes'
         )
-                ->where('archive_licenses.type', $type)->where('archive_licenses.enabled', 1)->whereIn('add_by', $ids)
+                ->where('archive_licenses.type', $type)->where('archive_licenses.enabled', 1)
                 ->leftJoin('t_constant', 't_constant.id', 'archive_licenses.license_id')
                 ->leftJoin('licenses', 'licenses.fileNo', 'archive_licenses.fileNo')
                 ->with('Admin')
-                ->orderBy('id', 'DESC')->get();
+                ->orderBy('id', 'DESC');
+        if (Auth()->user()->id != 74) {
+            $archive = $archive->whereIn('add_by', $ids);
+        }
+        $archive = $archive->get();
         foreach ($archive as $row) {
             $attach = json_decode($row->json_feild);
             $files = array();

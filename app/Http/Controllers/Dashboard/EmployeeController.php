@@ -33,7 +33,7 @@ class EmployeeController extends Controller
 {
     public function index()
     {
-        $city = City::where('status',1)->get();
+        $city = City::where('status', 1)->get();
         $admin = Admin::where('enabled', '1')->get();
         $jobType = Constant::where('parent', 66)->where('status', 1)->get();
         $jobTitle = Constant::where('parent', 65)->where('status', 1)->get();
@@ -42,8 +42,8 @@ class EmployeeController extends Controller
         $role = Role::where('id', $setting->role_id)->first();
         //dd($role);
         $local_permissions = isset($role->permissions) ? $role->permissions : array();
-        $town = Town::where('status',1)->where('city_id', $setting->city_id)->get();
-        $region = Region::where('status',1)->where('town_id', $setting->town_id)->get();
+        $town = Town::where('status', 1)->where('city_id', $setting->city_id)->get();
+        $region = Region::where('status', 1)->where('town_id', $setting->town_id)->get();
         $type = 'employee';
         return view('dashboard.employee.index',
                 compact('local_permissions', 'type', 'city', 'admin', 'jobType', 'jobTitle', 'departments',
@@ -383,56 +383,25 @@ class EmployeeController extends Controller
         // $admin['Currency'] = trans('admin.'.$admin['info']->currency);
 
         //dd($admin['address']);
-
-        if (isset($admin['info']->city_id)) {
-
-            $admin['city'] = City::where('id', $admin['info']->city_id)->first()->name;
-
+        $city = City::where('id', $admin['info']->city_id)->first();
+        if ($city) {
+            $admin['city'] = $city->name;
         } else {
             $admin['city'] = '';
         }
-
-        if (isset($admin['info']->city_id)) {
-
-            $city = City::where('id', $admin['info']->city_id)->first();
-            if ($city != null) {
-                $admin['city'] = $city->name;
-            } else {
-                $admin['city'] = '';
-            }
-
-        } else {
-            $admin['city'] = '';
-        }
-
-        if (isset($admin['info']->town_id)) {
-
-            $town = Town::where('id', $admin['info']->town_id)->first();
-            if ($city != null) {
-                $admin['town'] = $town->name;
-            } else {
-                $admin['town'] = '';
-            }
+        $town = Town::where('id', $admin['info']->town_id)->first();
+        if ($town) {
+            $admin['town'] = $town->name;
         } else {
             $admin['town'] = '';
         }
-
-        if (isset($admin['info']->region_id)) {
-
-            $region = Region::where('id', $admin['info']->region_id)->first();
-            if ($city != null) {
-                $admin['region'] = $region->name;
-            } else {
-                $admin['region'] = '';
-            }
+        $region = Region::where('id', $admin['info']->region_id)->first();
+        if ($region) {
+            $admin['region'] = $region->name;
         } else {
             $admin['region'] = '';
         }
-
-
         return response()->json($admin);
-
-
     }
 
     public function emp_info(Request $request)

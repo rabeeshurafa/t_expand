@@ -467,7 +467,7 @@
                         getJalArchive(response.info.id, response.linkToCount);
                         $archiveCount += response.linkToCount;
                         @endcan
-
+                        $("#msgStatic").html("(" + $archiveCount + ")");
                         $('#project_id').val(response.info.id);
                         $('#ProjectNo').val(response.info.ProjectNo);
                         $('#ProjectName').val(response.info.name);

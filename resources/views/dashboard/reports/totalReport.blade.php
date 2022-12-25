@@ -618,7 +618,7 @@
                   + date1
                   + '</td>'
                   + '<td >'
-                  + (+statusID === 5003 ? (date2) : '')
+                  + (+statusID === 5003 ? ($date2) : '')
                   + '</td>'
                   + '<td >'
                   + totaldior
