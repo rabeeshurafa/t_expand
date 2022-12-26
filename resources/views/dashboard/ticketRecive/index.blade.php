@@ -213,17 +213,19 @@
                                     <div class="row">
                                         <div class="col-md attachs-section"
                                              style="margin-left: 25px; margin-right: 25px;">
-                                            <img src="{{ asset('assets/images/ico/cost.png') }}" width="40" height="40">
-                                            <span class="cost-header" style="font-size: 20px;">{{ 'ديون سابقه' }}
-
-                                                </span>
+                                            <img src="{{ asset('assets/images/ico/cost.png') }}"
+                                                 width="40" height="40">
+                                            <span class="cost-header" style="font-size: 20px;">
+                                                {{ 'براءة ذمة' }}
+                                            </span>
 
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="card-body">
                                             <div class="form-group col-md-12 tablescroll">
-                                                <table class="detailsTB table" style="margin-left: 15px;">
+                                                <table class="detailsTB table"
+                                                       style="margin-left: 15px;">
                                                     <thead>
                                                     <tr>
                                                         <th scope="col">
@@ -235,9 +237,13 @@
                                                         </th>
                                                         <th scope="col" class=" col-md-2 col-sm-4"
                                                             style="text-align: -webkit-center;color: white;">
-                                                            {{ 'المبغ المستحق' }}
+                                                            {{ 'المبلغ المستحق' }}
                                                         </th>
-                                                        <th scope="col" class=" col-md-2"
+                                                        <th scope="col" class=" col-md-2 col-sm-4"
+                                                            style="text-align: -webkit-center;color: white;">
+                                                            {{ 'الموظف' }}
+                                                        </th>
+                                                        <th scope="col" class="col-md-2"
                                                             style="text-align: -webkit-center;color: white;">
                                                             {{ 'المبلغ المدفوع' }}
                                                         </th>
@@ -245,11 +251,10 @@
                                                             style="text-align: -webkit-center;color: white;">
                                                             {{ 'رقم الوصل' }}
                                                         </th>
-                                                        <th scope="col" class=" col-md-3 col-sm-4"
+                                                        <th scope="col" class=" col-md-2 col-sm-4"
                                                             style="text-align: -webkit-center;color: white;">
                                                             {{ 'الموظف' }}
                                                         </th>
-                                                        <th scope="col"></th>
 
                                                     </tr>
                                                     </thead>
@@ -258,58 +263,100 @@
                                                         $arr = json_decode($ticket->debt_json);
                                                         $arr = is_array($arr) ? $arr : array(); ?>
                                                         <?php if (sizeof($arr) > 0){
-                                                        $i = 1; ?>
+                                                        $i = 1; $c = 0; ?>
                                                     @foreach($arr as $debt)
+                                                            <?php
+                                                            $readonly2 = 'readonly';
+                                                            $readonly3 = 'readonly';
+                                                            if(isset($config[0]->debt_settings[$c])) {
+                                                                $debtSettings = $config[0]->debt_settings[$c];
+                                                                if ($debtSettings->isDebtMandatory == 1 && ($debt->debtValue == '' || $debt->debtPayed == '') && $canPrint) {
+                                                                    $canPrint = false;
+                                                                }
+                                                                if (in_array(Auth()->user()->id,
+                                                                                $debtSettings->moneyResponsibleEmp) || sizeof($debtSettings->moneyResponsibleEmp) == 0) {
+                                                                    $readonly2 = '';
+                                                                }
+                                                                if (in_array(Auth()->user()->id,
+                                                                                $debtSettings->payedResponsibleEmp) || sizeof($debtSettings->payedResponsibleEmp) == 0) {
+                                                                    $readonly3 = '';
+                                                                }
+                                                                $c++;
+                                                            }else{
+                                                                $canPrint = false;
+                                                                $readonly2 = '';
+                                                                $readonly3 = '';
+                                                                $c++;
+                                                            }
+                                                            ?>
                                                         <tr class=>
                                                             <td style="color:#1E9FF2">{{$i++}}</td>
                                                             <td>
-                                                                <input {{ $readonly?"readonly":"" }} type="text"
+                                                                <input {{ $readonly2 }} type="text"
                                                                        class="w-100 form-control debtname"
-                                                                       name="debtname[]" value="{{$debt->debtName}}">
+                                                                       name="debtname[]"
+                                                                       value="{{$debt->debtName}}">
                                                             </td>
-                                                            <td class="" style="text-align: -webkit-center;">
-                                                                <input {{ $readonly?"readonly":"" }} type="number"
-                                                                       class=" form-control alphaFeild debtValue{{$i>=8?'2':''}}"
-                                                                       onblur="calcDebtTotal();" name="debtValue[]"
+                                                            <td class=""
+                                                                style="text-align: -webkit-center;">
+                                                                <input {{ $readonly2 }} type="number"
+                                                                       class=" form-control alphaFeild debtValue{{$i>=6?'2':''}} newDebtValue{{$i}}"
+                                                                       onblur="calcDebtTotal();defineNewEmp({{$i}});"
+                                                                       name="debtValue[]"
                                                                        value="{{$debt->debtValue}}">
                                                             </td>
-                                                            <td class="" style="text-align: -webkit-center;">
+                                                            <td style="text-align: -webkit-center;">
+                                                                <input type="text" readonly
+                                                                       class="w-100 form-control newDebtEmp newDebtEmp{{$i}}"
+                                                                       onclick="/*addDebt();*/"
+                                                                       name="newDebtEmp[]"
+                                                                       value="{{$debt->newDebtEmp??''}}">
+                                                                <input type="hidden"
+                                                                       class="form-control newDebtEmpID{{$i}}"
+                                                                       name="newDebtEmpID[]"
+                                                                       value="{{$debt->newDebtEmpID??''}}">
+                                                            </td>
+                                                            <td class=""
+                                                                style="text-align: -webkit-center;">
                                                                     <?php if (isset($debt->debtPayed)){ ?>
                                                                 <input type="number"
-                                                                       {{ $readonly?"readonly":"" }} class="form-control alphaFeild debtPayed{{$i>=8?'2':''}} payedDebt{{$i}}"
+                                                                       {{ $readonly3 }} class="form-control alphaFeild debtPayed{{$i>=6?'2':''}} payedDebt{{$i}}"
                                                                        onblur="calcDebtPayed();defineEmp({{$i}});"
-                                                                       name="debtPayed[]" value="{{$debt->debtPayed}}">
+                                                                       name="debtPayed[]"
+                                                                       value="{{$debt->debtPayed}}">
                                                                 <?php } else{ ?>
                                                                 <input type="number"
-                                                                       {{ $readonly?"readonly":"" }} class="form-control alphaFeild debtPayed{{$i>=8?'2':''}} payedDebt{{$i}}"
+                                                                       {{ $readonly3 }} class="form-control alphaFeild debtPayed{{$i>=6?'2':''}} payedDebt{{$i}}"
                                                                        onblur="calcDebtPayed();defineEmp({{$i}});"
                                                                        name="debtPayed[]" value="">
                                                                 <?php } ?>
                                                             </td>
-                                                            <td class="hidemob" style="text-align: -webkit-center;">
+                                                            <td class="hidemob"
+                                                                style="text-align: -webkit-center;">
                                                                     <?php if (isset($debt->debtVoucher)) { ?>
                                                                 <input type="text"
-                                                                       {{ $readonly?"readonly":"" }} class=" form-control alphaFeild debtVoucher{{$i}}"
+                                                                       {{ $readonly3 }} class=" form-control alphaFeild debtVoucher{{$i}}"
                                                                        onchange="setRequired({{$i}});"
                                                                        name="debtVoucher[]"
                                                                        value="{{$debt->debtVoucher}}">
                                                                 <?php } else{ ?>
                                                                 <input type="text"
-                                                                       {{ $readonly?"readonly":"" }} class=" form-control alphaFeild debtVoucher{{$i}}"
+                                                                       {{ $readonly3 }} class=" form-control alphaFeild debtVoucher{{$i}}"
                                                                        onchange="setRequired({{$i}});"
-                                                                       name="debtVoucher[]" value="">
+                                                                       name="debtVoucher[]"
+                                                                       value="">
                                                                 <?php } ?>
                                                             </td>
                                                             <td style="text-align: -webkit-center;">
-                                                                <input type="text"
-                                                                       {{ $readonly?"readonly":"" }} class="w-100 form-control debtEmp debtEmp{{$i}}"
-                                                                       onclick="/*addDebt();*/" name="debtEmp[]"
+                                                                <input type="text" readonly
+                                                                       class="w-100 form-control debtEmp debtEmp{{$i}}"
+                                                                       onclick="/*addDebt();*/"
+                                                                       name="debtEmp[]"
                                                                        value="{{$debt->debtEmp}}">
-                                                                <input type="hidden" class="form-control"
-                                                                       name="debtEmpID[]" value="">
-                                                            </td>
-                                                            <td>
-
+                                                                <input type="hidden"
+                                                                       class="form-control debtEmpID{{$i}}"
+                                                                       name="debtEmpID[]"
+                                                                       value="{{$debt->debtEmpID??0}}">
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -318,29 +365,32 @@
                                                         <td style="color:#1E9FF2">1</td>
                                                         <td>
                                                             <input {{ $readonly?"readonly":"" }} type="text"
-                                                                   class="w-100 form-control debtname" name="debtname[]"
-                                                                   value="">
+                                                                   class="w-100 form-control debtname"
+                                                                   name="debtname[]" value="">
                                                         </td>
-                                                        <td class="" style="text-align: -webkit-center;">
+                                                        <td class=""
+                                                            style="text-align: -webkit-center;">
                                                             <input {{ $readonly?"readonly":"" }} type="number"
                                                                    class="form-control alphaFeild debtValue"
-                                                                   onblur="calcDebtTotal();" name="debtValue[]"
-                                                                   value="">
+                                                                   onblur="calcDebtTotal();"
+                                                                   name="debtValue[]" value="">
                                                         </td>
-                                                        <td class="" style="text-align: -webkit-center;">
+                                                        <td class=""
+                                                            style="text-align: -webkit-center;">
                                                                 <?php if (isset($debt->debtPayed)){ ?>
                                                             <input type="number"
                                                                    {{ $readonly?"readonly":"" }} class="form-control alphaFeild debtPayed"
-                                                                   onblur="calcDebtPayed();" name="debtPayed[]"
-                                                                   value="">
+                                                                   onblur="calcDebtPayed();"
+                                                                   name="debtPayed[]" value="">
                                                             <?php } else{ ?>
                                                             <input type="number"
                                                                    {{ $readonly?"readonly":"" }} class="form-control alphaFeild debtPayed"
-                                                                   onblur="calcDebtPayed();" name="debtPayed[]"
-                                                                   value="">
+                                                                   onblur="calcDebtPayed();"
+                                                                   name="debtPayed[]" value="">
                                                             <?php } ?>
                                                         </td>
-                                                        <td class="hidemob" style="text-align: -webkit-center;">
+                                                        <td class="hidemob"
+                                                            style="text-align: -webkit-center;">
                                                             <input type="text"
                                                                    {{ $readonly?"readonly":"" }} class="form-control alphaFeild"
                                                                    name="debtVoucher[]" value="">
@@ -348,9 +398,11 @@
                                                         <td style="text-align: -webkit-center;">
                                                             <input type="text"
                                                                    {{ $readonly?"readonly":"" }} class="w-100 form-control debtEmp"
-                                                                   onclick="/*addDebt();*/" name="debtEmp[]" value="">
-                                                            <input type="hidden" class="form-control" name="debtEmpID[]"
-                                                                   value="">
+                                                                   onclick="/*addDebt();*/"
+                                                                   name="debtEmp[]" value="">
+                                                            <input type="hidden"
+                                                                   class="form-control"
+                                                                   name="debtEmpID[]" value="">
                                                         </td>
                                                         <td>
 
@@ -364,19 +416,24 @@
                                                         <td style="text-align: left;">
                                                             {{'المجموع الكلى شيقل'}}
                                                         </td>
-                                                        <td class="" style="text-align: -webkit-center;">
+                                                        <td class=""
+                                                            style="text-align: -webkit-center;">
                                                             <input type="number"
                                                                    {{ $readonly?"readonly":"" }} class="form-control alphaFeild"
-                                                                   id="debtTotal" onblur="calcDebtrest();"
-                                                                   name="debtTotal" value="{{$ticket->debt_total}}">
+                                                                   id="debtTotal"
+                                                                   onblur="calcDebtrest();"
+                                                                   name="debtTotal"
+                                                                   value="{{$ticket->debt_total}}">
                                                         </td>
                                                         <td style="text-align: left !important;">
                                                             {{'المجموع الكلى دينار'}}
                                                         </td>
-                                                        <td class="" style="text-align: -webkit-center;">
+                                                        <td class=""
+                                                            style="text-align: -webkit-center;">
                                                             <input type="number"
                                                                    {{ $readonly?"readonly":"" }} class="form-control alphaFeild"
-                                                                   id="debtTotal2" onblur="calcDebtrest();"
+                                                                   id="debtTotal2"
+                                                                   onblur="calcDebtrest();"
                                                                    name="debtTotal2" value="">
                                                         </td>
                                                         <td>
@@ -391,20 +448,24 @@
                                                         <td style="text-align: left;">
                                                             {{'المبلغ المدفوع شيقل'}}
                                                         </td>
-                                                        <td class="" style="text-align: -webkit-center;">
+                                                        <td class=""
+                                                            style="text-align: -webkit-center;">
                                                             <input type="number"
                                                                    {{ $readonly?"readonly":"" }} class="form-control alphaFeild"
-                                                                   onblur="calcDebtrest();" id="payment" name="payment"
+                                                                   onblur="calcDebtrest();"
+                                                                   id="payment" name="payment"
                                                                    value="{{$ticket->payment}}">
                                                         </td>
                                                         <td style="text-align: left !important;">
                                                             {{'المبلغ المدفوع دينار'}}
                                                         </td>
-                                                        <td class="" style="text-align: -webkit-center;">
+                                                        <td class=""
+                                                            style="text-align: -webkit-center;">
                                                             <input type="number"
                                                                    {{ $readonly?"readonly":"" }} class="form-control alphaFeild"
-                                                                   onblur="calcDebtrest();" id="payment2"
-                                                                   name="payment2" value="">
+                                                                   onblur="calcDebtrest();"
+                                                                   id="payment2" name="payment2"
+                                                                   value="">
                                                         </td>
                                                         <td>
 
@@ -418,16 +479,19 @@
                                                         <td style="text-align: left;">
                                                             {{'الباقى شيقل'}}
                                                         </td>
-                                                        <td class="" style="text-align: -webkit-center;">
+                                                        <td class=""
+                                                            style="text-align: -webkit-center;">
                                                             <input type="number"
                                                                    {{ $readonly?"readonly":"" }} class="form-control alphaFeild rest"
-                                                                   id="rest" name="rest" value="{{$ticket->rest}}">
+                                                                   id="rest" name="rest"
+                                                                   value="{{$ticket->rest}}">
                                                         </td>
 
                                                         <td style="text-align: left;">
                                                             {{'الباقى دينار'}}
                                                         </td>
-                                                        <td class="" style="text-align: -webkit-center;">
+                                                        <td class=""
+                                                            style="text-align: -webkit-center;">
                                                             <input type="number"
                                                                    {{ $readonly?"readonly":"" }} class="form-control alphaFeild rest2"
                                                                    id="rest2" name="rest2" value="">
@@ -442,8 +506,19 @@
                                                     </tbody>
                                                 </table>
                                             </div>
+                                            @if($readonly)
+                                                <input type="hidden" value="1" id="saveDebtOnly">
+                                                <div class="form-actions" style="border-top:0px;">
+                                                    <div class="text-right">
+                                                        <button type="submit" id="saveDebt"
+                                                                class="btn btn-primary">
+                                                            حفظ
+                                                            <i class="ft-thumbs-up position-right"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            @endif
                                         </div>
-
                                     </div>
                                 @endif
 
@@ -533,7 +608,7 @@
 
                                                         if ($fee->feesValue == '' || $fee->feesValue == null)
                                                             $fee->feesValue = 0;
-                                                        if ($fee->feesValue2 == '' || $fee->feesValue2 == null)
+                                                        if (!isset($fee->feesValue2) || $fee->feesValue2 == '' || $fee->feesValue2 == null)
                                                             $fee->feesValue2 = 0;
                                                         ?>
                                                     <li style="font-size: 17px !important;color:#000000">
@@ -3836,10 +3911,22 @@
       function defineEmp($id) {
         if ($(`.payedDebt${$id}`).val().length > 0) {
           $(`.debtEmp${$id}`).val("{{Auth()->user()->nick_name}}");
+          $(`.debtEmpID${$id}`).val("{{Auth()->user()->id}}");
         } else {
+          $(`.debtEmpID${$id}`).val("");
           $(`.debtEmp${$id}`).val("");
         }
         setRequired($id)
+      }
+
+      function defineNewEmp($id) {
+        if ($(`.newDebtValue${$id}`).val().length > 0) {
+          $(`.newDebtEmp${$id}`).val("{{Auth()->user()->nick_name}}");
+          $(`.newDebtEmpID${$id}`).val("{{Auth()->user()->id}}");
+        } else {
+          $(`.newDebtEmp${$id}`).val("");
+          $(`.newDebtEmpID${$id}`).val("");
+        }
       }
 
       function setRequired($id) {

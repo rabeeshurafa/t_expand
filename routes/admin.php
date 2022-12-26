@@ -405,6 +405,7 @@ Route::group([
         Route::post('store_archive_config', 'ArchieveController@store_archive_config')->name('store_archive_config');
         Route::post('saveScanedFile', 'ArchieveController@saveScanedFile')->name('saveScanedFile');
         Route::post('store_config', 'WaterTicketController@store_config')->name('store_config');
+        Route::post('storeDebtSittings', 'WaterTicketController@storeDebtSittings')->name('storeDebtSittings')->middleware('can:storeDebtSittings');
         Route::post('uploadTicketAttach', 'WaterTicketController@uploadTicketAttach')->name('uploadTicketAttach');
         Route::get('waterSubscription', 'WaterTicketController@WaterSubscription')->name('waterSubscription');
         Route::get('waterMalfunction', 'WaterTicketController@waterMalfunction')->name('waterMalfunction');

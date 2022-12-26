@@ -155,6 +155,9 @@ class AppOp extends Controller
         $debtName = $request->debtname;
         $debtValue = $request->debtValue;
         $debtEmp = $request->debtEmp;
+        $debtEmpID = $request->debtEmpID;
+        $newDebtEmp = $request->newDebtEmp;
+        $newDebtEmpID = $request->newDebtEmpID;
         $debtPayed = $request->debtPayed;
         $debtVoucher = $request->debtVoucher;
         $debtArr = array();
@@ -164,6 +167,9 @@ class AppOp extends Controller
                     $temp = array();
                     $temp['debtName'] = trim($debtName[$i]);
                     $temp['debtValue'] = trim($debtValue[$i]);
+                    $temp['newDebtEmpID'] = trim($newDebtEmpID[$i]);
+                    $temp['newDebtEmp'] = trim($newDebtEmp[$i]);
+                    $temp['debtEmpID'] = trim($debtEmpID[$i]);
                     $temp['debtEmp'] = trim($debtEmp[$i]);
                     $temp['debtPayed'] = trim($debtPayed[$i]);
                     $temp['debtVoucher'] = trim($debtVoucher[$i]);
