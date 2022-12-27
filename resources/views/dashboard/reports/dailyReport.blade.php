@@ -407,9 +407,12 @@
                             
                             }else if(elem.type=='depArchive'){
                                 $row+= "<td>" + 'أرشيف الأقسام' + "</td>" ;
-                            
+                            }else if(elem.type=='financeArchive'){
+                              $row+= "<td>" + 'أرشيف المالية' + "</td>" ;
+                            }else if(elem.type=='taskArchive'){
+                              $row+= "<td>" + elem?.task_name + "</td>" ;
                             }else{
-                                $row+= "<td>" + 'ارشيف معاملات' + "</td>" ;
+                              $row+= "<td>" + 'ارشيف معاملات' + "</td>" ;
                             }
                             $row+= "<td>" + (elem.name??'') + "</td>";
                             if(elem.type!='licArchive'){

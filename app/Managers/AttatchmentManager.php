@@ -129,7 +129,7 @@ class AttatchmentManager
         $file->real_name = $name.'.'.$type;
         $file->extension = $type;
         $file->size = $size;
-        $file->url = 'storage/'.$name.'.'.$type;
+        $file->url = $name.'.'.$type;
         $file->type = '2';
         $file->file_links = $fileLinks;
         $file->save();
@@ -164,7 +164,7 @@ class AttatchmentManager
         $file = new File();
         $file->real_name = $name.'.pdf';
         $file->extension = 'pdf';
-        $file->url = 'storage/'.$name.'.pdf';
+        $file->url = $name.'.pdf';
         $file->type = '2';
         $file->size = $size;
         $file->file_links = $fileLinks;

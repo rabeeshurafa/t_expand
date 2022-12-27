@@ -1748,8 +1748,8 @@ class ReportController extends Controller
 
             $archive = Archive::select('archives.*')->whereRaw('CAST(archives.created_at AS DATE) between ? and ?',
                     [$from, $to])
-                    ->where('archives.enabled', '1')->orderBy('id',
-                            'DESC')->with('archiveType')->with('Admin')->with('copyTo')->with('files')->get();
+                    ->where('archives.enabled', '1')->where('type','!=','specialEmpArchive')->orderBy('id',
+                            'DESC')->with(['archiveType','Admin','copyTo','files'])->get();
             $tradeArchive = TradeArchive::select('trade_archives.*', 't_constant.name as title')
                     ->whereRaw('CAST(trade_archives.created_at AS DATE) between ? and ?', [$from, $to])
                     ->where('trade_archives.enabled', 1)
