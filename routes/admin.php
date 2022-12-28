@@ -296,6 +296,9 @@ Route::group([
         Route::get('getTrashTickets', 'TasksTableController@getTrashTickets')->name('getTrashTickets');
         Route::get('getAmbulanceTickets', 'TasksTableController@getAmbulanceTickets')->name('getAmbulanceTickets');
 
+        Route::get('portalReport', 'PortalReportController@index')->name('portalReport')->middleware('can:portalReport');
+        Route::get('getPortalReport', 'PortalReportController@getReport')->name('getPortalReport')->middleware('can:portalReport');
+
         Route::get('/',
                 'DashboardController@index')->name('admin.dashboard');  // the first page admin visits if authenticated
         Route::get('getMyTaskAjax', 'DashboardController@getMyTaskAjax')->name('getMyTaskAjax');

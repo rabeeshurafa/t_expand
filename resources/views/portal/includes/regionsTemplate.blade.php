@@ -1,6 +1,6 @@
 <div class="row">
-    <div class="col-md-4 col-sm-12 formnoleft" >
-        <div class="form-group paddmob">
+    <div class="col-md-4 col-sm-12" >
+        <div class="form-group">
 
             <div class="input-group widthRegion" >
                 <div class="input-group-prepend">
@@ -27,7 +27,7 @@
     </div>
 
     <div class="col-md-7 col-sm-12" >
-        <div class="form-group paddmob">
+        <div class="form-group">
             <div class="input-group addressmob" >
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">

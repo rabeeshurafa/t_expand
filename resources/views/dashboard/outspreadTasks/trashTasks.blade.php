@@ -156,9 +156,7 @@
                                                     </div>
                                                     <textarea type="text" id="malDesc" class="form-control"
                                                               placeholder="وصف الطلب" name="malDesc"
-                                                              style="height: 35px;">@if(isset($ticket))
-                                                            {{ $ticket->malDesc }}
-                                                        @endif</textarea>
+                                                              style="height: 35px;">@if(isset($ticket)){{ $ticket->malDesc }}@endif</textarea>
 
                                                 </div>
                                             </div>

@@ -309,6 +309,34 @@ $(document).ready(function () {
 
            },
            error: function(response){
+             if(response.responseJSON.errors.subscriber_name1){
+               $( "#subscriber_name1" ).addClass( "error" );
+               $( "#subscriber_name1" ).get(0).setCustomValidity('أدخل الاسم الاول');
+               $( "#subscriber_name1" ).on('input',function(){
+                 this.setCustomValidity('')
+               })
+             }
+             if(response.responseJSON.errors.subscriber_name2){
+               $( "#subscriber_name2" ).addClass( "error" );
+               $( "#subscriber_name2" ).get(0).setCustomValidity('أدخل الاسم الثاني');
+               $( "#subscriber_name2" ).on('input',function(){
+                 this.setCustomValidity('')
+               })
+             }
+             if(response.responseJSON.errors.subscriber_name3){
+               $( "#subscriber_name3" ).addClass( "error" );
+               $( "#subscriber_name3" ).get(0).setCustomValidity('أدخل الاسم الثالث');
+               $( "#subscriber_name3" ).on('input',function(){
+                 this.setCustomValidity('')
+               })
+             }
+             if(response.responseJSON.errors.subscriber_name4){
+               $( "#subscriber_name4" ).addClass( "error" );
+               $( "#subscriber_name4" ).get(0).setCustomValidity('أدخل الاسم الرابع');
+               $( "#subscriber_name4" ).on('input',function(){
+                 this.setCustomValidity('')
+               })
+             }
             $(".loader").addClass('hide');
 
 			Swal.fire({

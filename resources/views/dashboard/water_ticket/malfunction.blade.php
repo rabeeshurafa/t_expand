@@ -222,9 +222,7 @@
                                                     <textarea type="text" id="malDesc" class="form-control"
                                                               placeholder="وصف العطل" name="malDesc"
                                                               style="width:100% ; border-radius:5px !important;height: 35px;"
-                                                              aria-invalid="false">@if(isset($ticket))
-                                                            {{$ticket->malDesc}}
-                                                        @endif</textarea>
+                                                              aria-invalid="false">@if(isset($ticket)){{$ticket->malDesc}}@endif</textarea>
 
                                                 </div>
                                             </div>

@@ -352,7 +352,8 @@ order by created_at asc");
     var $fees2=array();
     function loadDefaul($type=''){
         $screen=Menu::where('s_function_url','=',$type)->get()->first();
-        $ticket=TicketConfig::where('id','=',$screen->pk_i_id)->with('Admin')->get()->first();
+        $ticket=TicketConfig::where('id','=',$screen->pk_i_id)->with('Admin')->first();
+        $ticket->flows = json_decode($ticket->flow);
         $department=Department::where('enabled',1)->get();
         $this->fees=DB::select("select fees_json from app_ticket".$ticket->ticket_no."s where app_type=".$ticket->app_type." order by id desc limit 1");
         return $ticket;
@@ -388,13 +389,10 @@ order by created_at asc");
 		    $subsId=["0"];
 		    if($ticket->app_type==2)
             {
-                $subs = water::where('waters.enabled',1)->whereIn('waters.id',$subsId)->select('waters.*', 'users.name as user_name','a.name as subscription_Type_name','b.name as counter_Type_name','d.name as payType_name')
+                $subs = water::where('waters.enabled',1)->where('user_id',$ticket->customer_id)->select('waters.*', 'users.name as user_name','a.name as subscription_Type_name','b.name as counter_Type_name','d.name as payType_name')
                 ->leftJoin('t_constant as a', 'a.id', 'waters.subscription_Type')
-        
                 ->leftJoin('t_constant as b', 'b.id', 'waters.counter_Type')
-        
                 ->leftJoin('t_constant as d', 'd.id', 'waters.payType')
-        
                 ->leftJoin('users','users.id','waters.user_id')
                 ->get();
                 $ticket->setAttribute('subscription',$subs);
@@ -408,7 +406,7 @@ order by created_at asc");
                 return view('dashboard.water_ticket.malfunction', compact('ticket','type','ticketInfo','department','region','app_type','fees','archive_config','app_no'));
             }
             else{
-                $subs=elec::where('elecs.enabled',1)->whereIn('elecs.id',$subsId)->select('elecs.*', 'users.name as user_name','a.name as subscription_Type_name','b.name as counter_Type_name','d.name as payType_name')
+                $subs=elec::where('elecs.enabled',1)->where('user_id',$ticket->customer_id)->select('elecs.*', 'users.name as user_name','a.name as subscription_Type_name','b.name as counter_Type_name','d.name as payType_name')
                     ->leftJoin('t_constant as a', 'a.id', 'elecs.subscription_Type')
             
                     ->leftJoin('t_constant as b', 'b.id', 'elecs.counter_Type')

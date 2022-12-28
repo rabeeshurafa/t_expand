@@ -98,10 +98,41 @@
                                 <div class="form-body">
 
                                     <input type="hidden" name="subscriptionID" id="subscriptionID">
+                                    <input type="hidden" name="task_type" id="task_type" value="55">
                                     <input type="hidden" id="dept_id" name="dept_id" value="{{$ticketInfo->dept_id}}">
                                     <input type="hidden" id="app_type" name="app_type" value="4">
                                     <input type="hidden" id="rec_id"  name="rec_id" value="{{$ticketInfo->emp_to_access_portal}}">
                                     @include('portal.includes.subscriber')
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group ">
+                                                <div class="input-group subscribermob">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            {{ 'رقم الحوض' }}
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" id="hodNo"
+                                                           class="form-control numFeild"
+                                                           name="hodNo">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group ">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            {{ 'رقم القطعة' }}
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" id="pieceNo" name="pieceNo"
+                                                           class="form-control numFeild">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -136,15 +167,35 @@
             </div>
         </form>
     </section>
-
     <script>
       function validate() {
         let error = false;
-        if ($('#customer_name')?.val()?.trim()?.length <= 0) {
-          $('#customer_name').addClass('error');
+        if ($('#subscriber_name1')?.val()?.trim()?.length <= 0) {
+          $('#subscriber_name1').addClass('error');
           error = true;
         } else {
-          $('#customer_name').removeClass('error');
+          $('#subscriber_name1').removeClass('error');
+        }
+
+        if ($('#subscriber_name2')?.val()?.trim()?.length <= 0) {
+          $('#subscriber_name2').addClass('error');
+          error = true;
+        } else {
+          $('#subscriber_name2').removeClass('error');
+        }
+
+        if ($('#subscriber_name3')?.val()?.trim()?.length <= 0) {
+          $('#subscriber_name3').addClass('error');
+          error = true;
+        } else {
+          $('#subscriber_name3').removeClass('error');
+        }
+
+        if ($('#subscriber_name4')?.val()?.trim()?.length <= 0) {
+          $('#subscriber_name4').addClass('error');
+          error = true;
+        } else {
+          $('#subscriber_name4').removeClass('error');
         }
 
         if ($('#national_id')?.val()?.trim()?.length <= 0) {
@@ -174,6 +225,7 @@
 
           }
         });
+
 
         $('#ticketFrm').submit(function (e) {
           e.preventDefault();

@@ -541,7 +541,7 @@ class EmployeeController extends Controller
         // $emp = '"' . $emp . '"';
         // $emp = "'" . $emp . "'";
         // $portal_tickets = DB::select("SELECT * FROM `portal_tickets` where json_contains(`rec_id`,'".$emp."','$')=1");
-        $portal_tickets = PortalTicket::whereJsonContains('rec_id', strval($emp))->where('is_seen', 0)->get();
+        $portal_tickets = PortalTicket::whereJsonDoesntContain('is_seen', strval($emp))->whereJsonContains('rec_id', strval($emp))->get();
 
         foreach ($portal_tickets as $portal_ticket) {
             $ticket_config = TicketConfig::where('ticket_no', $portal_ticket->app_no)->where('app_type',

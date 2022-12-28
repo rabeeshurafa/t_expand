@@ -57,6 +57,11 @@ Route::group(['namespace' => 'Portal','prefix' =>'portal'], function () {
         Route::get('/requestSpareParts', 'PortalGeneral@requestSpareParts')->name('portal.requestSpareParts');
         Route::get('/PurchaseOrder', 'PortalGeneral@PurchaseOrder')->name('portal.PurchaseOrder');
         Route::get('/networkDevelopment', 'PortalGeneral@networkDevelopment')->name('portal.networkDevelopment');
+
+        Route::get('/buildingLicense', 'PortalBuilding@buildingLicense')->name('portal.buildingLicense');
+        Route::get('/sitePlan', 'PortalBuilding@sitePlan')->name('portal.sitePlan');
+        Route::get('/buildingComplaint', 'PortalBuilding@buildingComplaint')->name('portal.buildingComplaint');
+        Route::get('/piece_description', 'PortalBuilding@piece_description')->name('portal.piece_description');
         /************ ticket area ***************/
         Route::post('portal_saveTicket1', 'AppPortal@saveTicket1')->name('portal_saveTicket1');
         Route::post('portal_saveTicket2', 'AppPortal@saveTicket2')->name('portal_saveTicket2');
@@ -93,6 +98,7 @@ Route::group(['namespace' => 'Portal','prefix' =>'portal'], function () {
         Route::post('portal_saveTicket33', 'AppPortal@saveTicket33')->name('portal_saveTicket33');
         Route::post('portal_saveTicket34', 'AppPortal@saveTicket34')->name('portal_saveTicket34');
         Route::post('portal_saveTicket35', 'AppPortal@saveTicket35')->name('portal_saveTicket35');
+        Route::post('portal_saveTicket47', 'AppPortal@saveTicket47')->name('portal_saveTicket47');
         Route::post('addReplay', 'AppPortal@addReplay')->name('addReplay');
         Route::post('directAddSmsLog', 'AppPortal@directAddSmsLog')->name('directAddSmsLog');
         Route::post('addTrans', 'AppPortal@addTrans')->name('addTrans');

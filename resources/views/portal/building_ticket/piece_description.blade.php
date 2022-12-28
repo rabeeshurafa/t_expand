@@ -51,7 +51,7 @@
             cursor: pointer;
         }
 
-        .rate:not(:checked)>label {
+        .rate:not(:checked) > label {
             font-size: 30px !important;
         }
 
@@ -75,11 +75,15 @@
             font-size: 24px !important;
         }
 
+        .swal2-html-container {
+            font-size: 18px !important;
+
+        }
     </style>
 
 
     <link rel="stylesheet" type="text/css"
-          href="https://template.expand.ps/app-assets/global/plugins/jquery-multi-select/css/multi-select-rtl.css" />
+          href="https://template.expand.ps/app-assets/global/plugins/jquery-multi-select/css/multi-select-rtl.css"/>
 
     <script src="https://db.expand.ps/assets/jquery.min.js" type="text/javascript"></script>
 
@@ -95,29 +99,50 @@
                         <div class="card-content collapse show">
                             <div class="card-body" style="padding-bottom: 0px;">
                                 <div class="form-body">
-
                                     <div class="row">
-
-                                        <div class="col-md-12">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <div class="input-group" style="">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text " id="basic-addon1">
-                                                            {{ 'نوع الطلب' }}
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            الحوض
                                                         </span>
                                                     </div>
-                                                    <select id="task_type" name="task_type" type="text"
-                                                        class="form-control valid task_type" onchange="putDesc();" aria-invalid="false">
-                                                        <option value="" selected=""> {{ 'نوع الطلب' }} </option>
-                                                        @foreach($ticketTypeList as $ticketType)
-                                                        <option value="{{ $ticketType->id }}">{{ $ticketType->name }}</option>
-                                                        @endforeach
-                                                    </select>
+                                                    <input type="text" id="hod_no" class="form-control"
+                                                           name="hod_no">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <div class="input-group" style="">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            القطعة
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" id="piece_no" class="form-control"
+                                                           name="piece_no" >
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="input-group" style=" width: 90% !important;">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="basic-addon1">
+                                                        صادر إلى
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" id="send_to" class="form-control"
+                                                           name="send_to" >
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -135,7 +160,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     @include('portal.includes.regionsTemplate')
                                 </div>
                             </div>
@@ -152,10 +176,8 @@
                             </div>
 
                         </div>
-
-                        <input type="hidden" name="subscriptionID" id="subscriptionID">
-                        <input type="hidden" id="dept_id"  name="dept_id" value="{{$ticketInfo->dept_id}}">
-                        <input type="hidden" id="app_type"  name="app_type" value="4">
+                        <input type="hidden" id="dept_id" name="dept_id" value="{{$ticketInfo->dept_id}}">
+                        <input type="hidden" id="app_type" name="app_type" value="3">
                         <input type="hidden" id="rec_id"  name="rec_id" value="{{$ticketInfo->emp_to_access_portal}}">
                         <div style="padding-right:20px">
                             @include('portal.includes.subscriber')
@@ -164,54 +186,113 @@
                     </div>
                 </div>
             </div>
-            </div>
-
-
-
-
         </form>
     </section>
 
     <script>
 
-      function putDesc(){
-        document.getElementById("malDesc").value =$( "#task_type option:selected" ).text();
+      function validate() {
+        let error = false
+        if ($("#subscriber_id")?.val()?.trim()?.length === 0) {
+          error = true;
+          $("#subscriber_name").addClass('error')
+        } else {
+          $("#subscriber_name").removeClass('error')
+        }
 
+        if ($("#subscriber_name")?.val()?.trim()?.length === 0) {
+          error = true;
+          $("#subscriber_name").addClass('error')
+        } else {
+          $("#subscriber_name").removeClass('error')
+        }
+
+        if ($("#malDesc")?.val()?.trim()?.length === 0) {
+          error = true;
+          $("#malDesc").addClass('error')
+        } else {
+          $("#malDesc").removeClass('error')
+        }
+
+        if ($("#MobileNo")?.val()?.trim()?.length === 0) {
+          error = true;
+          $("#MobileNo").addClass('error')
+        } else {
+          $("#MobileNo").removeClass('error')
+        }
+
+        if ($("#national_id")?.val()?.trim()?.length === 0) {
+          error = true;
+          $("#national_id").addClass('error')
+        } else {
+          $("#national_id").removeClass('error')
+        }
+
+        if ($("#AreaID")?.val()?.trim()?.length === 0) {
+          error = true;
+          $("#AreaID").addClass('error')
+        } else {
+          $("#AreaID").removeClass('error')
+        }
+
+        if ($("#send_to")?.val()?.trim()?.length === 0) {
+          error = true;
+          $("#send_to").addClass('error')
+        } else {
+          $("#send_to").removeClass('error')
+        }
+
+        if ($("#piece_no")?.val()?.trim()?.length === 0) {
+          error = true;
+          $("#piece_no").addClass('error')
+        } else {
+          $("#piece_no").removeClass('error')
+        }
+
+        if ($("#hod_no")?.val()?.trim()?.length === 0) {
+          error = true;
+          $("#hod_no").addClass('error')
+        } else {
+          $("#hod_no").removeClass('error')
+        }
+        return error;
       }
+
       $(document).ready(function () {
 
-        $( "#subscriber_name" ).autocomplete({
-          source:'{{route("portal_auto_complete")}}',
+        $("#subscriber_name").autocomplete({
+          source: 'portal_auto_complete',
           minLength: 1,
-          select: function( event, ui ) {
+          select: function (event, ui) {
             $("#subscriber_id").val(ui.item.id)
-            // getFullData(ui.item.id)
           }
         });
 
 
-        $('#ticketFrm').submit(function(e) {
+        $('#ticketFrm').submit(function (e) {
+          e.preventDefault();
+          if (validate()) {
+            return false;
+          }
           $(".loader").removeClass('hide');
           $(".form-actions").addClass('hide');
-          e.preventDefault();
-          $( "#subscriber_name" ).removeClass( "error" );
-          $( "#subscriber_id" ).removeClass( "error" );
-          $( "#MobileNo" ).removeClass( "error" );
-          $( "#AreaID" ).removeClass( "error" );
-          $( "#malDesc" ).removeClass( "error" );
-          $( "#task_type" ).removeClass( "error" );
-          $( "#national_id" ).removeClass( "error" );
+          $("#subscriber_name").removeClass("error");
+          $("#subscriber_id").removeClass("error");
+          $("#MobileNo").removeClass("error");
+          $("#AreaID").removeClass("error");
+          $("#malDesc").removeClass("error");
+          $("#task_type").removeClass("error");
           let formData = new FormData(this);
           $.ajax({
-            type:'POST',
-            url: '{{route("portal_saveTicket23")}}',
+            type: 'POST',
+            url: "{{route('portal_saveTicket47')}}",
             data: formData,
             contentType: false,
             processData: false,
             success: (response) => {
               $(".form-actions").removeClass('hide');
               // console.log('response');
-              if (response.success!=null) {
+              if (response.success != null) {
                 $(".loader").addClass('hide');
                 Swal.fire({
                   position: 'top-center',
@@ -224,23 +305,8 @@
                 // setTimeout(function(){self.location='{{asset('/ar/admin')}}'},1500)
                 this.reset();
 
-              }else{
-                console.log(response.error);
-                if(response.error=='no_attatch'){
-
-                  $(".attachName").addClass('error');
-                  Swal.fire({
-                    position: 'top-center',
-                    icon: 'error',
-                    title: 'أدخل المرفقات',
-                    showConfirmButton: true,
-                    timer: 2000
-                  })
-                  $(".loader").addClass('hide');
-                  return false;
-                }
+              } else {
                 $(".loader").addClass('hide');
-
                 Swal.fire({
                   position: 'top-center',
                   icon: 'error',
@@ -252,58 +318,9 @@
               //location.reload();
 
             },
-            error: function(response){
+            error: function (response) {
               $(".loader").addClass('hide');
               $(".form-actions").removeClass('hide');
-              if(response.responseJSON.errors.customer_name){
-                $( "#customer_name" ).addClass( "error" );
-                $( "#customer_name" ).get(0).setCustomValidity('أدخل اسم معرف مسبقا ');
-                $( "#customer_name" ).on('input',function(){
-                  this.setCustomValidity('')
-                })
-              }
-              if(response.responseJSON.errors.subscriber_id){
-                $( "#subscriber_id" ).addClass( "error" );
-                $( "#subscriber_name" ).get(0).setCustomValidity('أدخل اسم معرف مسبقا ');
-                $( "#subscriber_name" ).on('input',function(){
-                  this.setCustomValidity('')
-                })
-              }
-              if(response.responseJSON.errors.national_id){
-                $( "#national_id" ).addClass( "error" );
-                $( "#national_id" ).get(0).setCustomValidity('أدخل رقم الهوية ');
-                $( "#national_id" ).on('input',function(){
-                  this.setCustomValidity('')
-                })
-              }
-              if(response.responseJSON.errors.MobileNo){
-                $( "#MobileNo" ).addClass( "error" );
-                $( "#MobileNo" ).get(0).setCustomValidity('أدخل رقم جوال ');
-                $( "#MobileNo" ).on('blur',function(){
-                  this.setCustomValidity('')
-                })
-              }
-              if(response.responseJSON.errors.AreaID){
-                $( "#AreaID" ).addClass( "error" );
-                $( "#AreaID" ).get(0).setCustomValidity('يرجى اختيار المنطقة ');
-                $( "#AreaID" ).on('blur',function(){
-                  this.setCustomValidity('')
-                })
-              }
-              if(response.responseJSON.errors.malDesc){
-                $( "#malDesc" ).addClass( "error" );
-                $( "#malDesc" ).get(0).setCustomValidity('يرجى ادخال سبب الطلب ');
-                $( "#malDesc" ).on('blur',function(){
-                  this.setCustomValidity('')
-                })
-              }
-              if(response.responseJSON.errors.task_type){
-                $( "#task_type" ).addClass( "error" );
-                $( "#task_type" ).get(0).setCustomValidity('يرجى اختيار نوع الاشتراك ');
-                $( "#task_type" ).on('blur',function(){
-                  this.setCustomValidity('')
-                })
-              }
               Swal.fire({
                 position: 'top-center',
                 icon: 'error',
@@ -315,52 +332,6 @@
           });
         });
       });
-
-      function getFullData(id){
-
-        $.ajaxSetup({
-
-          headers: {
-
-            'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
-
-          }
-
-        });
-        formData={'id':id}
-        $.ajax({
-          type:'POST',
-          url: '{{route("portal_appCustomer")}}',
-          data: formData,
-          /*contentType: false,
-          processData: false,*/
-          success: (response) => {
-            if (response) {
-              srch=response.phone_one==null?(response.phone_two==null?'':response.phone_two):response.phone_one
-              if(srch.search("056")>=0)
-                $('#mobImg').attr('src','{{asset('assets/images/w35.png')}}');
-              else
-                $('#mobImg').attr('src','{{asset('assets/images/jawwal35.png')}}');
-              $('#MobileNo').val(response.phone_one==null?(response.phone_two==null?'':response.phone_two):response.phone_one)
-              $(".loader").addClass('hide');
-
-
-            }
-
-          },
-          error: function(response){
-            $(".loader").addClass('hide');
-
-            Swal.fire({
-              position: 'top-center',
-              icon: 'error',
-              title: '{{trans('admin.error_save')}}',
-              showConfirmButton: false,
-              timer: 1500
-            })
-          }
-        });
-      }
-
     </script>
 @stop
+
