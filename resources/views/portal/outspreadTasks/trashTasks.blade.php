@@ -115,12 +115,12 @@
                                                             {{ 'نوع الطلب' }}
                                                         </span>
                                                     </div>
-                                                    <select id="task_type" name="task_type" type="text" class="form-control valid task_type" onchange="putDesc();" aria-invalid="false">
-                                                        <option value="6459">طلب حاوية نفايات</option>
-                                                        <option value="6460">تأخر جمع النفايات</option>
-                                                        <option value="6461">طلب الفاتور السنوية</option>
-                                                        <option value="6462">طلب كشف لديون النفايات</option>
-                                                        <option value="6463">شكوى / الحفر الاقتصادية</option>
+                                                    <select id="task_type" name="task_type" type="text"
+                                                            class="form-control valid task_type" onchange="putDesc();" aria-invalid="false">
+                                                        <option value="" selected=""> {{ 'نوع الطلب' }} </option>
+                                                        @foreach($ticketTypeList as $ticketType)
+                                                            <option value="{{ $ticketType->id }}">{{ $ticketType->name }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -264,13 +264,34 @@
                     error: function(response){
                         $(".loader").addClass('hide');
                         $(".form-actions").removeClass('hide');
-                        if(response.responseJSON.errors.subscriber_name){
-                            $( "#subscriber_name" ).addClass( "error" );
-                            $( "#subscriber_name" ).get(0).setCustomValidity('أدخل اسم معرف مسبقا ');
-                            $( "#subscriber_name" ).on('input',function(){
-                                this.setCustomValidity('')
-                            })
-                        }
+                      if(response.responseJSON.errors.customer_name){
+                        $( "#customer_name" ).addClass( "error" );
+                        $( "#customer_name" ).get(0).setCustomValidity('أدخل الاسم الاول');
+                        $( "#customer_name" ).on('input',function(){
+                          this.setCustomValidity('')
+                        })
+                      }
+                      if(response.responseJSON.errors.subscriber_name2){
+                        $( "#subscriber_name2" ).addClass( "error" );
+                        $( "#subscriber_name2" ).get(0).setCustomValidity('أدخل الاسم الثاني');
+                        $( "#subscriber_name2" ).on('input',function(){
+                          this.setCustomValidity('')
+                        })
+                      }
+                      if(response.responseJSON.errors.subscriber_name3){
+                        $( "#subscriber_name3" ).addClass( "error" );
+                        $( "#subscriber_name3" ).get(0).setCustomValidity('أدخل الاسم الثالث');
+                        $( "#subscriber_name3" ).on('input',function(){
+                          this.setCustomValidity('')
+                        })
+                      }
+                      if(response.responseJSON.errors.subscriber_name4){
+                        $( "#subscriber_name4" ).addClass( "error" );
+                        $( "#subscriber_name4" ).get(0).setCustomValidity('أدخل الاسم الرابع');
+                        $( "#subscriber_name4" ).on('input',function(){
+                          this.setCustomValidity('')
+                        })
+                      }
                         if(response.responseJSON.errors.subscriber_id){
                             $( "#subscriber_id" ).addClass( "error" );
                             $( "#subscriber_name" ).get(0).setCustomValidity('أدخل اسم معرف مسبقا ');

@@ -155,6 +155,9 @@ class AppOp extends Controller
         $debtName = $request->debtname;
         $debtValue = $request->debtValue;
         $debtEmp = $request->debtEmp;
+        $debtEmpID = $request->debtEmpID;
+        $newDebtEmp = $request->newDebtEmp;
+        $newDebtEmpID = $request->newDebtEmpID;
         $debtPayed = $request->debtPayed;
         $debtVoucher = $request->debtVoucher;
         $debtArr = array();
@@ -164,6 +167,9 @@ class AppOp extends Controller
                     $temp = array();
                     $temp['debtName'] = trim($debtName[$i]);
                     $temp['debtValue'] = trim($debtValue[$i]);
+                    $temp['newDebtEmpID'] = trim($newDebtEmpID[$i]);
+                    $temp['newDebtEmp'] = trim($newDebtEmp[$i]);
+                    $temp['debtEmpID'] = trim($debtEmpID[$i]);
                     $temp['debtEmp'] = trim($debtEmp[$i]);
                     $temp['debtPayed'] = trim($debtPayed[$i]);
                     $temp['debtVoucher'] = trim($debtVoucher[$i]);
@@ -1360,7 +1366,7 @@ order by created_at asc");
         $config = TicketConfig::where('ticket_no', $related)->where('app_type', $ticket->app_type)->get();
 
         $allFlows = json_decode($config[0]->flow);
-        if (sizeof($allFlows) > 1) {
+        if (sizeof($allFlows) > $ticket->flow_index) {
             $flows[] = $allFlows[$ticket->flow_index];
             $flowsDept[] = $allFlows[$ticket->flow_index]->nextDeptId;
             $flowsEmp[] = $allFlows[$ticket->flow_index]->nextDeptId;
@@ -1789,11 +1795,14 @@ order by created_at asc");
                 }
 
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
-                $txt = "تم استلام "
-                        .$config->ticket_name." ".$app->app_no
-                        ." بإسم ".$request->subscriber_name;
-                $this->addSmsLog(2, Auth()->user()->id, $txt, $request->MobileNo, $request->subscriber_name, $app->id,
-                        $request->app_type);
+                if ($request->portal_id == 0) {
+                    $txt = "تم استلام "
+                            .$config->ticket_name." ".$app->app_no
+                            ." بإسم ".$request->subscriber_name;
+                    $this->addSmsLog(2, Auth()->user()->id, $txt, $request->MobileNo, $request->subscriber_name,
+                            $app->id,
+                            $request->app_type);
+                }
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                 $link = 'viewTicket/'.$app->id.'/'.$config->ticket_no;
@@ -2101,11 +2110,14 @@ order by created_at asc");
                     $portal->save();
                 }
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
-                $txt = "تم استلام "
-                        .$config->ticket_name." ".$app->app_no
-                        ." بإسم ".$request->subscriber_name;
-                $this->addSmsLog(4, Auth()->user()->id, $txt, $request->MobileNo, $request->subscriber_name, $app->id,
-                        $request->app_type);
+                if ($request->portal_id == 0) {
+                    $txt = "تم استلام "
+                            .$config->ticket_name." ".$app->app_no
+                            ." بإسم ".$request->subscriber_name;
+                    $this->addSmsLog(4, Auth()->user()->id, $txt, $request->MobileNo, $request->subscriber_name,
+                            $app->id,
+                            $request->app_type);
+                }
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                 $link = 'viewTicket/'.$app->id.'/'.$config->ticket_no;
@@ -4575,17 +4587,16 @@ order by created_at asc");
             $app->active_trans = $this->saveTrans($app->id, $request->app_type, $request->AssignedToID, $request->note,
                     $request->AssDeptID, 1, $ticket_type, $request);
             $app->save();
-            /*
-    		$tag=$request->tags?$request->tags:array();
-    		foreach($tag as $row)
-    			$this->saveTrans($app->id,$ticket_type,$row,$request->note,$request->AssDeptID,2);*/
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
-                $txt = "تم استلام "
-                        .$config->ticket_name." ".$app->app_no
-                        ." بإسم ".$request->subscriber_name;
-                $this->addSmsLog(23, Auth()->user()->id, $txt, $request->MobileNo, $request->subscriber_name, $app->id,
-                        $request->app_type);
+                if ($request->portal_id == 0) {
+                    $txt = "تم استلام "
+                            .$config->ticket_name." ".$app->app_no
+                            ." بإسم ".$request->subscriber_name;
+                    $this->addSmsLog(23, Auth()->user()->id, $txt, $request->MobileNo, $request->subscriber_name,
+                            $app->id,
+                            $request->app_type);
+                }
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
                 if ($request->portal_id != 0) {
                     $portal = PortalTicket::where('id', $request->portal_id)->first();
@@ -4709,11 +4720,14 @@ order by created_at asc");
     			$this->saveTrans($app->id,$ticket_type,$row,$request->note,$request->AssDeptID,2);*/
             if ($app) {
                 ///////////////////////////////////////////////////////for Production///////////////////////////////////////
-                $txt = "تم استلام "
-                        .$config->ticket_name." ".$app->app_no
-                        ." بإسم ".$request->subscriber_name;
-                $this->addSmsLog(24, Auth()->user()->id, $txt, $request->MobileNo, $request->subscriber_name, $app->id,
-                        $request->app_type);
+                 if ($request->portal_id == 0) {
+                     $txt = "تم استلام "
+                             .$config->ticket_name." ".$app->app_no
+                             ." بإسم ".$request->subscriber_name;
+                     $this->addSmsLog(24, Auth()->user()->id, $txt, $request->MobileNo, $request->subscriber_name,
+                             $app->id,
+                             $request->app_type);
+                 }
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////
                 if ($request->portal_id != 0) {
                     $portal = PortalTicket::where('id', $request->portal_id)->first();

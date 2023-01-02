@@ -1,7 +1,7 @@
 <div class="row">
                                         
     <div class="col-md-6">
-        <div class="form-group paddmob">
+        <div class="form-group">
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">
@@ -14,8 +14,8 @@
             </div>
         </div>
     </div>
-    <div class="col-md-5 piceDiv">
-        <div class="form-group paddmob">
+    <div class="col-md-6">
+        <div class="form-group">
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">

@@ -25,8 +25,8 @@ class ProjectRequest extends FormRequest
     {
         return [
             'ProjectName' => 'required',
-            'dateStart' => 'required',
-            'dateEnd'  => 'required'
+//            'dateStart' => 'required',
+//            'dateEnd'  => 'required'
         ];
     }
 }

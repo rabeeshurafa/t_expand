@@ -249,7 +249,7 @@ class EmployeeController extends Controller
         $admin['inArchiveCount'] = count(Archive::where('model_id', $request['emp_id'])->where('enabled', '1')
                 ->where('model_name', $model)->where('type', 'inArchive')->get());
         $admin['otherArchiveCount'] = count(Archive::where('model_id', $request['emp_id'])->where('enabled', '1')
-                ->where('model_name', $model)->whereNotIn('type', ['outArchive', 'inArchive'])->get());
+                ->where('model_name', $model)->whereNotIn('type', ['outArchive', 'inArchive', 'contractArchive'])->get());
         $admin['licArchiveCount'] = 0;
         $admin['licFileArchiveCount'] = 0;
         $admin['copyToCount'] = count(CopyTo::where('model_id', $request['emp_id'])->where('enabled', '1')
@@ -541,7 +541,7 @@ class EmployeeController extends Controller
         // $emp = '"' . $emp . '"';
         // $emp = "'" . $emp . "'";
         // $portal_tickets = DB::select("SELECT * FROM `portal_tickets` where json_contains(`rec_id`,'".$emp."','$')=1");
-        $portal_tickets = PortalTicket::whereJsonContains('rec_id', strval($emp))->where('is_seen', 0)->get();
+        $portal_tickets = PortalTicket::whereJsonDoesntContain('is_seen', strval($emp))->whereJsonContains('rec_id', strval($emp))->get();
 
         foreach ($portal_tickets as $portal_ticket) {
             $ticket_config = TicketConfig::where('ticket_no', $portal_ticket->app_no)->where('app_type',
@@ -693,4 +693,3 @@ class EmployeeController extends Controller
 
 
 }
-

@@ -296,6 +296,9 @@ Route::group([
         Route::get('getTrashTickets', 'TasksTableController@getTrashTickets')->name('getTrashTickets');
         Route::get('getAmbulanceTickets', 'TasksTableController@getAmbulanceTickets')->name('getAmbulanceTickets');
 
+        Route::get('portalReport', 'PortalReportController@index')->name('portalReport')->middleware('can:portalReport');
+        Route::get('getPortalReport', 'PortalReportController@getReport')->name('getPortalReport')->middleware('can:portalReport');
+
         Route::get('/',
                 'DashboardController@index')->name('admin.dashboard');  // the first page admin visits if authenticated
         Route::get('getMyTaskAjax', 'DashboardController@getMyTaskAjax')->name('getMyTaskAjax');
@@ -405,6 +408,7 @@ Route::group([
         Route::post('store_archive_config', 'ArchieveController@store_archive_config')->name('store_archive_config');
         Route::post('saveScanedFile', 'ArchieveController@saveScanedFile')->name('saveScanedFile');
         Route::post('store_config', 'WaterTicketController@store_config')->name('store_config');
+        Route::post('storeDebtSittings', 'WaterTicketController@storeDebtSittings')->name('storeDebtSittings')->middleware('can:storeDebtSittings');
         Route::post('uploadTicketAttach', 'WaterTicketController@uploadTicketAttach')->name('uploadTicketAttach');
         Route::get('waterSubscription', 'WaterTicketController@WaterSubscription')->name('waterSubscription');
         Route::get('waterMalfunction', 'WaterTicketController@waterMalfunction')->name('waterMalfunction');

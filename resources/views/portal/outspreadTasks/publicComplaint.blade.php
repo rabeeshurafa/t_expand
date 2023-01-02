@@ -51,7 +51,7 @@
             cursor: pointer;
         }
 
-        .rate:not(:checked)>label {
+        .rate:not(:checked) > label {
             font-size: 30px !important;
         }
 
@@ -79,7 +79,7 @@
 
 
     <link rel="stylesheet" type="text/css"
-        href="https://template.expand.ps/app-assets/global/plugins/jquery-multi-select/css/multi-select-rtl.css" />
+          href="https://template.expand.ps/app-assets/global/plugins/jquery-multi-select/css/multi-select-rtl.css"/>
 
     <script src="https://db.expand.ps/assets/jquery.min.js" type="text/javascript"></script>
 
@@ -91,50 +91,17 @@
 
                 <div class="col-sm-12 col-md-12">
                     <div class="card leftSide">
-                        
+
                         @include('portal.includes.ticketHeader')
                         <div class="card-content collapse show">
                             <div class="card-body" style="padding-bottom: 0px;">
                                 <div class="form-body">
 
                                     <input type="hidden" name="subscriptionID" id="subscriptionID">
-                                    <div class="row" style="position: relative;">
-                                        <div class="col-md-8" style="padding-left: 0px;">
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text" id="basic-addon1">
-                                                            {{ 'اسم المشتكى' }}
-                                                        </span>
-                                                    </div>
-                                                    <input type="text" id="subscriber_name"
-                                                        class="form-control numFeild" placeholder="{{ 'اسم المشتكى' }}"
-                                                        name="subscriber_name">
-                                                    <input type="hidden" id="subscriber_id" name="subscriber_id" value="0">
-                                                    <input type="hidden" name="subscriptionID" id="subscriptionID">
-                                                    <input type="hidden" id="dept_id"  name="dept_id" value="{{$ticketInfo->dept_id}}">
-                                                    <input type="hidden" id="app_type"  name="app_type" value="4">
-                                                    <input type="hidden" id="rec_id"  name="rec_id" value="{{$ticketInfo->emp_to_access_portal}}">
-                                                    <input type="hidden" id="app_no"  name="app_no" value="{{$app_no}}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4" style="padding-left: 48px;">
-                                            <div class="form-group">
-                                                <div class="input-group" style="width: 97% !important; ">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text input-group-text1" id="basic-addon1">
-                                                            <img id="mobImg" src="https://db.expand.ps/images/jawwal35.png">
-                                                        </span>
-                                                    </div>
-                                                    <input type="text" id="MobileNo" maxlength="10" name="MobileNo"
-                                                        class="form-control noleft numFeild" placeholder="0590000000"
-                                                        aria-describedby="basic-addon1"
-                                                        onblur="$('#username').val($(this).val())">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <input type="hidden" id="dept_id" name="dept_id" value="{{$ticketInfo->dept_id}}">
+                                    <input type="hidden" id="app_type" name="app_type" value="4">
+                                    <input type="hidden" id="rec_id"  name="rec_id" value="{{$ticketInfo->emp_to_access_portal}}">
+                                    @include('portal.includes.subscriber')
                                 </div>
                             </div>
                         </div>
@@ -156,209 +123,246 @@
                                 <div class="form-group">
                                     <div class="input-group" style="width: 100% !important;">
                                         <textarea type="text" id="malDesc" class="form-control"
-                                            placeholder="ضع نص المشكلة هنا" name="malDesc"
-                                            style="width:100% ; border-radius:5px !important;height: 100px;"
-                                            aria-invalid="false"></textarea>
+                                                  placeholder="ضع نص المشكلة هنا" name="malDesc"
+                                                  style="width:100% ; border-radius:5px !important;height: 100px;"
+                                                  aria-invalid="false"></textarea>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        @include('portal.includes.forward') 
+                        @include('portal.includes.forward')
                     </div>
                 </div>
             </div>
-            </div>
-
-
-
-
         </form>
     </section>
 
+    <script>
+      function validate() {
+        let error = false;
+        if ($('#customer_name')?.val()?.trim()?.length <= 0) {
+          $('#customer_name').addClass('error');
+          error = true;
+        } else {
+          $('#customer_name').removeClass('error');
+        }
 
+        if ($('#national_id')?.val()?.trim()?.length <= 0) {
+          $('#national_id').addClass('error');
+          error = true;
+        } else {
+          $('#national_id').removeClass('error');
+        }
 
+        if ($('#MobileNo')?.val()?.trim()?.length <= 0) {
+          $('#MobileNo').addClass('error');
+          error = true;
+        } else {
+          $('#MobileNo').removeClass('error');
+        }
+        return error;
+      }
 
-<script>
-    $(document).ready(function () {
+      $(document).ready(function () {
 
-    $( "#subscriber_name" ).autocomplete({
-		source:'{{route("portal_auto_complete")}}',
-		minLength: 1,
-        select: function( event, ui ) {
+        $("#subscriber_name").autocomplete({
+          source: '{{route("portal_auto_complete")}}',
+          minLength: 1,
+          select: function (event, ui) {
             $("#subscriber_id").val(ui.item.id)
             // getFullData(ui.item.id)
-            
-		}
-	});
 
+          }
+        });
 
-    $('#ticketFrm').submit(function(e) {
-        $(".loader").removeClass('hide');
-        $(".form-actions").addClass('hide'); 
-       e.preventDefault();
-       $( "#subscriber_name" ).removeClass( "error" );
-        $( "#subscriber_id" ).removeClass( "error" );
-        $( "#MobileNo" ).removeClass( "error" );
-        $( "#malDesc" ).removeClass( "error" );
-        $( "#national_id" ).removeClass( "error" );
+        $('#ticketFrm').submit(function (e) {
+          e.preventDefault();
+          if (validate()) {
+            return false;
+          }
+          $(".loader").removeClass('hide');
+          $(".form-actions").addClass('hide');
+          $("#subscriber_name").removeClass("error");
+          $("#subscriber_id").removeClass("error");
+          $("#MobileNo").removeClass("error");
+          $("#malDesc").removeClass("error");
+          $("#national_id").removeClass("error");
 
-       let formData = new FormData(this);
-       $.ajax({
-          type:'POST',
-          url: '{{route("portal_saveTicket24")}}',
-           data: formData,
-           contentType: false,
-           processData: false,
-           success: (response) => {
-            $(".form-actions").removeClass('hide');   
-            // console.log('response');
-             if (response.success!=null) {
+          let formData = new FormData(this);
+          $.ajax({
+            type: 'POST',
+            url: '{{route("portal_saveTicket24")}}',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: (response) => {
+              $(".form-actions").removeClass('hide');
+              // console.log('response');
+              if (response.success != null) {
                 $(".loader").addClass('hide');
-			    Swal.fire({
-				position: 'top-center',
-				icon: 'success',
-				title: '{{trans('admin.data_added')}}',
-				showConfirmButton: false,
-				timer: 1500
-				})
-
-				// setTimeout(function(){self.location='{{asset('/ar/admin')}}'},1500)
-               this.reset();
-
-             }else{
-                 console.log(response.error);
-                 if(response.error=='no_attatch'){
-                     
-                     $(".attachName").addClass('error');
-                    Swal.fire({
-    				position: 'top-center',
-    				icon: 'error',
-    				title: 'أدخل المرفقات',
-    				showConfirmButton: true,
-    				timer: 2000
-    				})
-                    $(".loader").addClass('hide');
-    				return false;
-                 }
-                 $(".loader").addClass('hide');
-
-    			Swal.fire({
-    				position: 'top-center',
-    				icon: 'error',
-    				title: '{{trans('admin.error_save')}}',
-    				showConfirmButton: false,
-    				timer: 1500
-    				})
-                 }
-             //location.reload();
-
-           },
-           error: function(response){
-            $(".loader").addClass('hide');
-            $(".form-actions").removeClass('hide');
-			if(response.responseJSON.errors.subscriber_name){
-                $( "#subscriber_name" ).addClass( "error" );
-                $( "#subscriber_name" ).get(0).setCustomValidity('أدخل اسم معرف مسبقا ');
-                $( "#subscriber_name" ).on('input',function(){
-                    this.setCustomValidity('')
+                Swal.fire({
+                  position: 'top-center',
+                  icon: 'success',
+                  title: '{{trans('admin.data_added')}}',
+                  showConfirmButton: false,
+                  timer: 1500
                 })
-            }
-            if(response.responseJSON.errors.subscriber_id){
-                $( "#subscriber_id" ).addClass( "error" );
-                $( "#subscriber_name" ).get(0).setCustomValidity('أدخل اسم معرف مسبقا ');
-                $( "#subscriber_name" ).on('input',function(){
-                    this.setCustomValidity('')
-                })
-            }
-            if(response.responseJSON.errors.MobileNo){
-                $( "#MobileNo" ).addClass( "error" );
-                $( "#MobileNo" ).get(0).setCustomValidity('أدخل رقم جوال ');
-                $( "#MobileNo" ).on('blur',function(){
-                    this.setCustomValidity('')
-                })
-            }
-            if(response.responseJSON.errors.malDesc){
-                $( "#malDesc" ).addClass( "error" );
-                $( "#malDesc" ).get(0).setCustomValidity('يرجى ادخال محتوى المشكلة  ');
-                $( "#malDesc" ).on('input',function(){
-                    this.setCustomValidity('')
-                })
-            }
-            if(response.responseJSON.errors.national_id){
-                $( "#national_id" ).addClass( "error" );
-                $( "#national_id" ).get(0).setCustomValidity('أدخل رقم الهوية ');
-                $( "#national_id" ).on('input',function(){
-                    this.setCustomValidity('')
-                })
-            }
-			Swal.fire({
-				position: 'top-center',
-				icon: 'error',
-				title: 'يرجى تعبئة الحقول الاجبارية',
-				showConfirmButton: false,
-				timer: 1500
-				})
-           }
-       });
-  });
-});
 
-function getFullData(id){
-    
+                // setTimeout(function(){self.location='{{asset('/ar/admin')}}'},1500)
+                this.reset();
+
+              } else {
+                console.log(response.error);
+                if (response.error == 'no_attatch') {
+
+                  $(".attachName").addClass('error');
+                  Swal.fire({
+                    position: 'top-center',
+                    icon: 'error',
+                    title: 'أدخل المرفقات',
+                    showConfirmButton: true,
+                    timer: 2000
+                  })
+                  $(".loader").addClass('hide');
+                  return false;
+                }
+                $(".loader").addClass('hide');
+
+                Swal.fire({
+                  position: 'top-center',
+                  icon: 'error',
+                  title: '{{trans('admin.error_save')}}',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+              }
+              //location.reload();
+
+            },
+            error: function (response) {
+              $(".loader").addClass('hide');
+              $(".form-actions").removeClass('hide');
+              if (response.responseJSON.errors.subscriber_name1) {
+                $("#subscriber_name1").addClass("error");
+                $("#subscriber_name1").get(0).setCustomValidity('أدخل الاسم الاول');
+                $("#subscriber_name1").on('input', function () {
+                  this.setCustomValidity('')
+                })
+              }
+              if (response.responseJSON.errors.subscriber_name2) {
+                $("#subscriber_name2").addClass("error");
+                $("#subscriber_name2").get(0).setCustomValidity('أدخل الاسم الثاني');
+                $("#subscriber_name2").on('input', function () {
+                  this.setCustomValidity('')
+                })
+              }
+              if (response.responseJSON.errors.subscriber_name3) {
+                $("#subscriber_name3").addClass("error");
+                $("#subscriber_name3").get(0).setCustomValidity('أدخل الاسم الثالث');
+                $("#subscriber_name3").on('input', function () {
+                  this.setCustomValidity('')
+                })
+              }
+              if (response.responseJSON.errors.subscriber_name4) {
+                $("#subscriber_name4").addClass("error");
+                $("#subscriber_name4").get(0).setCustomValidity('أدخل الاسم الرابع');
+                $("#subscriber_name4").on('input', function () {
+                  this.setCustomValidity('')
+                })
+              }
+              if (response.responseJSON.errors.subscriber_id) {
+                $("#subscriber_id").addClass("error");
+                $("#subscriber_name").get(0).setCustomValidity('أدخل اسم معرف مسبقا ');
+                $("#subscriber_name").on('input', function () {
+                  this.setCustomValidity('')
+                })
+              }
+              if (response.responseJSON.errors.MobileNo) {
+                $("#MobileNo").addClass("error");
+                $("#MobileNo").get(0).setCustomValidity('أدخل رقم جوال ');
+                $("#MobileNo").on('blur', function () {
+                  this.setCustomValidity('')
+                })
+              }
+              if (response.responseJSON.errors.malDesc) {
+                $("#malDesc").addClass("error");
+                $("#malDesc").get(0).setCustomValidity('يرجى ادخال محتوى المشكلة  ');
+                $("#malDesc").on('input', function () {
+                  this.setCustomValidity('')
+                })
+              }
+              if (response.responseJSON.errors.national_id) {
+                $("#national_id").addClass("error");
+                $("#national_id").get(0).setCustomValidity('أدخل رقم الهوية ');
+                $("#national_id").on('input', function () {
+                  this.setCustomValidity('')
+                })
+              }
+              Swal.fire({
+                position: 'top-center',
+                icon: 'error',
+                title: 'يرجى تعبئة الحقول الاجبارية',
+                showConfirmButton: false,
+                timer: 1500
+              })
+            }
+          });
+        });
+      });
+
+      function getFullData(id) {
+
         $.ajaxSetup({
 
-            headers: {
+          headers: {
 
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',//$('meta[name="csrf-token"]').attr('content')
+
+          }
+
+        });
+        formData = {'id': id}
+        $.ajax({
+          type: 'POST',
+          url: '{{route("portal_appCustomer")}}',
+          data: formData,
+          /*contentType: false,
+          processData: false,*/
+          success: (response) => {
+            if (response) {
+              srch = response.phone_one == null ? (response.phone_two == null ? '' : response.phone_two) : response.phone_one
+              if (srch.search("056") >= 0)
+                $('#mobImg').attr('src', '{{asset('assets/images/w35.png')}}');
+              else
+                $('#mobImg').attr('src', '{{asset('assets/images/jawwal35.png')}}');
+              $('#MobileNo').val(response.phone_one == null ? (response.phone_two == null ? '' : response.phone_two) : response.phone_one)
+              $(".loader").addClass('hide');
+              console.log(response.errorList.length)
+              if (response.errorList.length == 0) {
+                $(".btnArea").removeClass("hide");
+              } else {
+
+
+              }
+
 
             }
 
-        });
-    formData={'id':id}
-       $.ajax({
-          type:'POST',
-          url: '{{route("portal_appCustomer")}}',
-           data: formData,
-           /*contentType: false,
-           processData: false,*/
-           success: (response) => {
-             if (response) {
-                 srch=response.phone_one==null?(response.phone_two==null?'':response.phone_two):response.phone_one
-                if(srch.search("056")>=0)
-                    $('#mobImg').attr('src','{{asset('assets/images/w35.png')}}');
-                else
-                    $('#mobImg').attr('src','{{asset('assets/images/jawwal35.png')}}');
-                $('#MobileNo').val(response.phone_one==null?(response.phone_two==null?'':response.phone_two):response.phone_one)
-                $(".loader").addClass('hide');
-                console.log(response.errorList.length)
-                if(response.errorList.length==0){
-                    $(".btnArea").removeClass("hide");
-                }
-                else
-                {
-                    
-                       
-                }
-                
-                
-             }
-
-           },
-           error: function(response){
+          },
+          error: function (response) {
             $(".loader").addClass('hide');
 
-			Swal.fire({
-				position: 'top-center',
-				icon: 'error',
-				title: '{{trans('admin.error_save')}}',
-				showConfirmButton: false,
-				timer: 1500
-				})
-           }
-       });
-}
+            Swal.fire({
+              position: 'top-center',
+              icon: 'error',
+              title: '{{trans('admin.error_save')}}',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }
+        });
+      }
 
-
-</script>
+    </script>
 @stop
 

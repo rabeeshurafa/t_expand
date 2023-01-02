@@ -97,7 +97,15 @@
           href="https://template.expand.ps/app-assets/global/plugins/jquery-multi-select/css/multi-select-rtl.css"/>
 
     <script src="https://db.expand.ps/assets/jquery.min.js" type="text/javascript"></script>
-
+    <?php
+    $debt0Setting=$ticketInfo->debt_settings[0];
+    $debt1Setting=$ticketInfo->debt_settings[1];
+    $debt2Setting=$ticketInfo->debt_settings[2];
+    $debt3Setting=$ticketInfo->debt_settings[3];
+    $debt4Setting=$ticketInfo->debt_settings[4];
+    $debt5Setting=$ticketInfo->debt_settings[5];
+    ?>
+    @include('dashboard.component.dept_config',['ticketInfo'=>$ticketInfo])
     <section class="horizontal-grid " id="horizontal-grid">
 
         <form method="post" id="ticketFrm" enctype="multipart/form-data">

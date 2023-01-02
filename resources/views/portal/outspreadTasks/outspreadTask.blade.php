@@ -106,27 +106,13 @@
                                                             {{ 'نوع الطلب' }}
                                                         </span>
                                                     </div>
-                                                    <select id="task_type" name="task_type" type="text" class="form-control valid task_type" onchange="putDesc();" aria-invalid="false">
-                                                        <option value="6030">طلب مطب</option>
-                                                        <option value="6053">إثبات مهنه</option>
-                                                        <option value="6079">استغلال شارع عام لحفله</option>
-                                                        <option value="6226">طلب رخصة حرف</option>
-                                                        <option value="6227">اغلاق رخصة حرف وصناعات</option>
-                                                        <option value="6452">إثبات سكن</option>
-                                                        <option value="6453">إثبات ورثة</option>
-                                                        <option value="6454">طلب حالة إنسانية</option>
-                                                        <option value="6455">طلب مساعدة</option>
-                                                        <option value="6456">طلب براءة ذمة للطابو</option>
-                                                        <option value="6457">طلب براءة ذمة عن الديون</option>
-                                                    </select>
-                                                    <!--                                                    <select id="task_type" name="task_type" type="text"
+                                                    <select id="task_type" name="task_type" type="text"
                                                         class="form-control valid task_type" onchange="putDesc();" aria-invalid="false">
                                                         <option value="" selected=""> {{ 'نوع الطلب' }} </option>
                                                         @foreach($ticketTypeList as $ticketType)
                                                         <option value="{{ $ticketType->id }}">{{ $ticketType->name }}</option>
                                                         @endforeach
-                                                    </select>-->
-
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -269,10 +255,10 @@
             error: function(response){
               $(".loader").addClass('hide');
               $(".form-actions").removeClass('hide');
-              if(response.responseJSON.errors.subscriber_name){
-                $( "#subscriber_name" ).addClass( "error" );
-                $( "#subscriber_name" ).get(0).setCustomValidity('أدخل اسم معرف مسبقا ');
-                $( "#subscriber_name" ).on('input',function(){
+              if(response.responseJSON.errors.customer_name){
+                $( "#customer_name" ).addClass( "error" );
+                $( "#customer_name" ).get(0).setCustomValidity('أدخل اسم معرف مسبقا ');
+                $( "#customer_name" ).on('input',function(){
                   this.setCustomValidity('')
                 })
               }
@@ -378,4 +364,3 @@
 
     </script>
 @stop
-
