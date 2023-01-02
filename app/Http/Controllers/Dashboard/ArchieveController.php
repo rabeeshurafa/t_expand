@@ -1749,6 +1749,8 @@ class ArchieveController extends Controller
                     ->log('updated');
             $archive->model_id = $request->supplierid;
             $archive->type_id = $request->financeType;
+            $archive->money = $request->money;
+            $archive->currency = $request->currency;
             $archive->name = $request->suppliername == '0' ? '' : $request->suppliername;
             $archive->model_name = $request->supplierType;
             if ($request->date) {
@@ -1823,6 +1825,8 @@ class ArchieveController extends Controller
             $archive = new Archive();
             $archive->model_id = $request->supplierid;
             $archive->type_id = $request->financeType;
+            $archive->money = $request->money;
+            $archive->currency = $request->currency;
             $archive->name = $request->suppliername == '0' ? '' : $request->suppliername;
             $archive->model_name = $request->supplierType;
             if ($request->date) {

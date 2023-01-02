@@ -249,7 +249,7 @@ class EmployeeController extends Controller
         $admin['inArchiveCount'] = count(Archive::where('model_id', $request['emp_id'])->where('enabled', '1')
                 ->where('model_name', $model)->where('type', 'inArchive')->get());
         $admin['otherArchiveCount'] = count(Archive::where('model_id', $request['emp_id'])->where('enabled', '1')
-                ->where('model_name', $model)->whereNotIn('type', ['outArchive', 'inArchive'])->get());
+                ->where('model_name', $model)->whereNotIn('type', ['outArchive', 'inArchive', 'contractArchive'])->get());
         $admin['licArchiveCount'] = 0;
         $admin['licFileArchiveCount'] = 0;
         $admin['copyToCount'] = count(CopyTo::where('model_id', $request['emp_id'])->where('enabled', '1')
@@ -693,4 +693,3 @@ class EmployeeController extends Controller
 
 
 }
-

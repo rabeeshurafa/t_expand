@@ -1366,7 +1366,7 @@ order by created_at asc");
         $config = TicketConfig::where('ticket_no', $related)->where('app_type', $ticket->app_type)->get();
 
         $allFlows = json_decode($config[0]->flow);
-        if (sizeof($allFlows) > 1) {
+        if (sizeof($allFlows) > $ticket->flow_index) {
             $flows[] = $allFlows[$ticket->flow_index];
             $flowsDept[] = $allFlows[$ticket->flow_index]->nextDeptId;
             $flowsEmp[] = $allFlows[$ticket->flow_index]->nextDeptId;

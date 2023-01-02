@@ -51,7 +51,7 @@
 
                                     <div class="row">
 
-                                        <div class="col-lg-8 col-md-12 pr-0 pr-s-12">
+                                        <div class="col-lg-4 col-md-12 pr-0 pr-s-12">
 
                                             <div class="form-group">
 
@@ -60,7 +60,92 @@
                                                     <div class="input-group-prepend">
 
                                                         <span class="input-group-text" id="basic-addon1">
-                                                            
+                                                            {{trans('archive.deal_type')}}
+                                                        </span>
+
+                                                    </div>
+
+                                                    <select class="form-control financeType" name="financeType"
+                                                            id="financeType">
+
+                                                        <option value="">{{trans('admin.select')}}</option>
+
+                                                        @foreach($license_type as $license)
+
+                                                            <option value="{{$license->id}}"> {{$license->name}}   </option>
+
+                                                        @endforeach
+
+                                                    </select>
+
+                                                    <div class="input-group-append"
+                                                         onclick="ShowConstantModal(105,'financeType','نوع المعاملة')"
+                                                         style="cursor:pointer;max-width: 15px;
+
+                                                    margin-left: 0px !important;
+
+                                                    padding-left: 0px !important;
+
+                                                    padding-right: 0px !important;
+
+                                                    margin-right:15px;
+
+                                                     ">
+
+                                                        <span class="input-group-text input-group-text2">
+
+                                                            <i class="fa fa-external-link"></i>
+
+                                                        </span>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-4 col-md-12 pr-0 pr-s-12">
+
+                                            <div class="form-group">
+
+                                                <div class="input-group w-s-87">
+
+                                                    <div class="input-group-prepend">
+
+                                                        <span class="input-group-text" id="basic-addon1">
+                                                            المبلغ
+                                                        </span>
+
+                                                    </div>
+                                                    <input type="text" id="money" name="money"
+                                                           class="form-control"
+                                                           placeholder=""
+                                                           autocomplete="off">
+                                                    <select class="form-control" name="currency"
+                                                            id="currency">
+                                                        <option value="0">العملة</option>
+                                                        <option value="1">دينار</option>
+                                                        <option value="2">شيكل</option>
+                                                        <option value="3">دولار</option>
+                                                        <option value="4">يورو</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-lg-8 col-md-12 pr-0 pr-s-12">
+
+                                            <div class="form-group">
+
+                                                <div class="input-group w-s-87" style="width: 95.5% !important;">
+
+                                                    <div class="input-group-prepend">
+
+                                                        <span class="input-group-text" id="basic-addon1">
+
                                                             {{trans('archive.supp_name')}}
                                                         </span>
 
@@ -119,66 +204,11 @@
 
                                     <div class="row">
 
-                                        <div class="col-lg-4 col-md-12 pr-0 pr-s-12">
+                                        <div class="col-lg-8 col-md-12 pr-0 pr-s-12">
 
                                             <div class="form-group">
 
-                                                <div class="input-group w-s-87">
-
-                                                    <div class="input-group-prepend">
-
-                                                        <span class="input-group-text" id="basic-addon1">
-                                                            {{trans('archive.deal_type')}}
-                                                        </span>
-
-                                                    </div>
-
-                                                    <select class="form-control financeType" name="financeType"
-                                                            id="financeType">
-
-                                                        <option value="">{{trans('admin.select')}}</option>
-
-                                                        @foreach($license_type as $license)
-
-                                                            <option value="{{$license->id}}"> {{$license->name}}   </option>
-
-                                                        @endforeach
-
-                                                    </select>
-
-                                                    <div class="input-group-append"
-                                                         onclick="ShowConstantModal(6485,'financeType','نوع المعاملة')"
-                                                         style="cursor:pointer;max-width: 15px;
-
-                                                    margin-left: 0px !important;
-
-                                                    padding-left: 0px !important;
-
-                                                    padding-right: 0px !important;
-
-                                                    margin-right:15px;
-
-                                                     ">
-
-                                                        <span class="input-group-text input-group-text2">
-
-                                                            <i class="fa fa-external-link"></i>
-
-                                                        </span>
-
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-                                        <div class="col-lg-8 col-md-12 pr-0 pr-s-12" style="min-width: 21%">
-
-                                            <div class="form-group">
-
-                                                <div class="input-group w-s-87" style="width:97.5% !important">
+                                                <div class="input-group w-s-87" style="width:95.5% !important">
 
                                                     <div class="input-group-prepend">
 
@@ -198,11 +228,7 @@
 
                                         </div>
 
-                                    </div>
-
-                                    <div class="row">
-
-                                        <div class="col-lg-10 col-md-12 pr-0 pr-s-12">
+                                        <div class="col-lg-4 col-md-12 pr-0 pr-s-12">
 
                                             <div class="form-group">
 
@@ -253,40 +279,6 @@
 
                                         </div>
 
-                                        <div class="col-lg-2 col-md-12 pr-0 pr-s-12" style="padding-right: 0px;">
-
-                                            <div class="form-group">
-
-                                                <div class="input-group w-s-87">
-
-                                                    <div class="input-group-prepend">
-
-                                                        <img src="{{asset('assets/images/ico/upload.png')}}" width="40"
-                                                             height="40" style="cursor:pointer;float: left;"
-                                                             onclick="document.getElementById('formDataaaupload-file[]').click(); return false">
-                                                        <img src="https://t.palexpand.ps/assets/images/ico/scanner.png"
-                                                             style="cursor:pointer;    float: left;"
-                                                             onclick="scanToJpg();">
-
-                                                        <img src="https://t.palexpand.ps/assets/images/ico/scannerpdf.png"
-                                                             style="cursor:pointer;    float: left;"
-                                                             onclick="scanTopdf();">
-                                                    </div>
-
-                                                    <input type="hidden" name="fromname" value="formDataaa">
-
-                                                    <input type="file" class="form-control-file"
-                                                           id="formDataaaupload-file[]" name="formDataaaUploadFile[]"
-                                                           onchange="doUploadAttach1('formDataaa')"
-
-                                                           style="display: none">
-
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
@@ -301,18 +293,6 @@
 
                                         </button>
 
-                                        @can('trackingArchive')
-                                            <input type="hidden" id="track" name="track" value="0">
-                                            <button onclick="$('#track').val(1);save();" type="button"
-                                                    class="btn btn-primary save" id="saveBtn" style="">
-                                                حفظ ومتابعة
-                                            </button>
-                                        @endcan
-                                        <input type="hidden" id="send_email" name="send_email" value="0">
-                                        <button onclick="$('#send_email').val(1);save();" type="button"
-                                                class="btn btn-primary save" id="saveBtn" style="">
-                                            حفظ وارسال
-                                        </button>
                                     </div>
 
                                 </div>
@@ -325,7 +305,7 @@
 
                     <div class="col-xl-6 col-lg-6">
 
-                        <div class="card lSide" style="min-height:302.2px;">
+                        <div class="card lSide" style="min-height: 339px;">
 
                             <div class="card-header">
 
@@ -338,16 +318,34 @@
 
                             <div class="card-body" id="attachList">
 
-                                <div class="row formDataaaFilesArea" style="margin-left: 0px;">
+                                <div class="row" style="margin-left: 0px;">
 
+                                    <div class="col-lg-11 col-md-12 pr-0 pr-s-12 formDataaaFilesArea"
+                                         style="padding-right: 0px;">
+
+                                    </div>
+                                    <div class="col-lg-1 col-md-12 pr-0 pr-s-12" style="padding-right: 0px;">
+                                        <img src="{{asset('assets/images/ico/upload.png')}}" width="40"
+                                             height="40" style="cursor:pointer;float: left;"
+                                             onclick="document.getElementById('formDataaaupload-file[]').click(); return false">
+                                        <img src="https://t.palexpand.ps/assets/images/ico/scanner.png"
+                                             style="cursor:pointer;    float: left;"
+                                             onclick="scanToJpg();">
+                                        <img src="https://t.palexpand.ps/assets/images/ico/scannerpdf.png"
+                                             style="cursor:pointer;    float: left;"
+                                             onclick="scanTopdf();">
+                                    </div>
+                                    <input type="hidden" name="fromname" value="formDataaa">
+                                    <input type="file" class="form-control-file"
+                                           id="formDataaaupload-file[]" name="formDataaaUploadFile[]"
+                                           onchange="doUploadAttach1('formDataaa')"
+
+                                           style="display: none">
                                 </div>
 
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
             </form>
         </section>
@@ -493,7 +491,7 @@
             $('#editBtn').css('display', 'none');
             $(".loader").addClass('hide');
             $(".archive_type").removeClass("error");
-            row=attacheWithAttachName(response.file, $("#AttahType option:selected").text())
+            row = attacheWithAttachName(response.file, $("#AttahType option:selected").text())
             $(".formDataaaFilesArea").append(row)
           },
 
@@ -783,7 +781,9 @@
             $('#notes').val(response.info.title);
 
             $('#financeType').val(response.info.type_id);
-            setConnected(response?.connect_to??[]);
+            $('#money').val(response.info.money);
+            $('#currency').val(response.info.currency);
+            setConnected(response?.connect_to ?? []);
             let date = (response.info.date)
 
             dates = ""
@@ -887,7 +887,7 @@
             row = '';
             if (data.all_files) {
               for (j = 0; j < data.all_files.length; j++) {
-                row=attacheWithAttachName(data.all_files[j], $("#AttahType option:selected").text())
+                row = attacheWithAttachName(data.all_files[j], $("#AttahType option:selected").text())
               }
 
               $(".alert-danger").addClass("hide");

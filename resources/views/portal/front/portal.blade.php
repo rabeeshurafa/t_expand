@@ -52,8 +52,8 @@
             <a class="dropdown-item" href="{{route('portal')}}/outspreadTasks" style="padding-top: 0.5rem">
 			<span style="display: inline;" class="float-left">
 				<img src="{{asset('assets/images/TaskIcons8.png')}}" style="padding:5px; ;height: 64px;">
-				<span class="show-mobile" style="color: #000000;">مهام متفرقة</span>
-				<div class="show-comp" style="color: #000000;">مهام متفرقة</div>
+				<span class="show-mobile" style="color: #000000;">خدمات متفرقة</span>
+				<div class="show-comp" style="color: #000000;">خدمات متفرقة</div>
 			</span>
             </a>
         </div>
