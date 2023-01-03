@@ -1122,7 +1122,7 @@ order by created_at asc");
         $request->subscriber_name = $request->customer_name;
         $request->subscriber_id = SubscriberManager::add_UpdateSubscriber($request->subscriber_name, $request->MobileNo,
                 $request->national_id, $request->subscriber_id);
-        $config = TicketConfig::where('ticket_no', 4)->where('app_type', $request->app_type)->first();
+        $config = TicketConfig::where('ticket_no', 2)->where('app_type', $request->app_type)->first();
 
         $app = new PortalTicket();
         $app->app_no = 2;
@@ -1143,8 +1143,8 @@ order by created_at asc");
         if ($app) {
             $txt = "تم استلام "
                     .$config->ticket_name
-                    ." بإسم ".$request->subscriber_name;
-            $this->addSmsLog(2,0, $txt, $request->MobileNo, $request->subscriber_name, $app->id,
+                    ." بإسم ".$request->customer_name;
+            $this->addSmsLog(2,0, $txt, $request->MobileNo, $request->customer_name, $app->id,
                     $request->app_type);
             return response()->json([
                     'app_id' => $app->id, 'app_type' => $ticket_type, 'success' => trans('تم الحفظ')
@@ -1314,8 +1314,8 @@ order by created_at asc");
             if ($app) {
                 $txt = "تم استلام "
                         .$config->ticket_name
-                        ." بإسم ".$request->subscriber_name;
-                $this->addSmsLog(2,0, $txt, $request->MobileNo, $request->subscriber_name, $app->id,
+                        ." بإسم ".$request->customer_name;
+                $this->addSmsLog(4,0, $txt, $request->MobileNo, $request->customer_name, $app->id,
                         $request->app_type);
                 return response()->json([
                         'app_id' => $app->id, 'app_type' => $ticket_type, 'success' => trans('تم الحفظ')
@@ -2651,7 +2651,7 @@ order by created_at asc");
         $request->subscriber_id = SubscriberManager::add_UpdateSubscriber($request->customer_name, $request->MobileNo,
                 $request->national_id, $request->subscriber_id);
 
-        $config = TicketConfig::where('ticket_no', 4)->where('app_type', $request->app_type)->first();
+        $config = TicketConfig::where('ticket_no', 23)->where('app_type', $request->app_type)->first();
 
         if (!$app_id) {
             $app = new PortalTicket();
@@ -2674,8 +2674,8 @@ order by created_at asc");
             if ($app) {
                 $txt = "تم استلام "
                         .$config->ticket_name
-                        ." بإسم ".$request->subscriber_name;
-                $this->addSmsLog(2,0, $txt, $request->MobileNo, $request->subscriber_name, $app->id,
+                        ." بإسم ".$request->customer_name;
+                $this->addSmsLog(23,0, $txt, $request->MobileNo, $request->customer_name, $app->id,
                         $request->app_type);
                 return response()->json([
                         'app_id' => $app->id, 'app_type' => $ticket_type, 'success' => trans('تم الحفظ')
@@ -2693,7 +2693,7 @@ order by created_at asc");
         $request->subscriber_id = SubscriberManager::add_UpdateSubscriber($request->customer_name, $request->MobileNo,
                 $request->national_id, $request->subscriber_id);
 
-        $config = TicketConfig::where('ticket_no', 4)->where('app_type', $request->app_type)->first();
+        $config = TicketConfig::where('ticket_no', 24)->where('app_type', $request->app_type)->first();
 
         $app = new PortalTicket();
         $app->app_no = 24;
@@ -2715,8 +2715,8 @@ order by created_at asc");
         if ($app) {
             $txt = "تم استلام "
                     .$config->ticket_name
-                    ." بإسم ".$request->subscriber_name;
-            $this->addSmsLog(2,0, $txt, $request->MobileNo, $request->subscriber_name, $app->id,
+                    ." بإسم ".$request->customer_name;
+            $this->addSmsLog(23,0, $txt, $request->MobileNo, $request->customer_name, $app->id,
                     $request->app_type);
             return response()->json([
                     'app_id' => $app->id, 'app_type' => $ticket_type, 'success' => trans('تم الحفظ')
