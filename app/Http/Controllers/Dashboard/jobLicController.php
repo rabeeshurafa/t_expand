@@ -198,9 +198,9 @@ class jobLicController extends Controller
     
     public function jobLic_info_all(Request $request)
     {
-        $jobLic= jobLic::select('jobLic.*','users.name')
-        ->leftJoin('users','users.id','jobLic.user_id')
-        ->orderBy('jobLic.id', 'DESC')
+        $jobLic= jobLic::select('joblic.*','users.name')
+        ->leftJoin('users','users.id','joblic.user_id')
+        ->orderBy('joblic.id', 'DESC')
         ->get();
         return DataTables::of($jobLic)
         ->addIndexColumn()
@@ -284,13 +284,13 @@ class jobLicController extends Controller
             
         }
         
-        $jobLic= jobLic::select('jobLic.*','users.name')
-        ->leftJoin('users','users.id','jobLic.user_id')
-        ->orderBy('jobLic.start_date', 'DESC');
+        $jobLic= jobLic::select('joblic.*','users.name')
+        ->leftJoin('users','users.id','joblic.user_id')
+        ->orderBy('joblic.start_date', 'DESC');
 
         if($request->statuse==3){
             if($from != '' && $to != ''){
-                $jobLic=$jobLic->whereBetween('jobLic.start_date',[$from,$to]);
+                $jobLic=$jobLic->whereBetween('joblic.start_date',[$from,$to]);
             }
             $jobLic=$jobLic->where('is_stoped',1)->get();
             
@@ -321,7 +321,7 @@ class jobLicController extends Controller
         }else if($request->statuse==2){
             if($request->years != '' && $request->years != 0){
                 $date=Carbon::now()->subYears(intval($request->years));
-                $jobLic=$jobLic->whereBetween('jobLic.end_date',[$date,Carbon::now()]);
+                $jobLic=$jobLic->whereBetween('joblic.end_date',[$date,Carbon::now()]);
             }
             $jobLic=$jobLic->get();
             
@@ -348,7 +348,7 @@ class jobLicController extends Controller
             ->addIndexColumn()->make(true);
         }else if($request->statuse==1){
             if($from != '' && $to != ''){
-                $jobLic=$jobLic->whereBetween('jobLic.start_date',[$from,$to]);
+                $jobLic=$jobLic->whereBetween('joblic.start_date',[$from,$to]);
             }
             $jobLic=$jobLic->where('is_stoped',0)->get();
             return DataTables::of($jobLic)
@@ -377,7 +377,7 @@ class jobLicController extends Controller
             ->make(true);
         }else{
             if($from != '' && $to != ''){
-                $jobLic=$jobLic->whereBetween('jobLic.start_date',[$from,$to]);
+                $jobLic=$jobLic->whereBetween('joblic.start_date',[$from,$to]);
             }
             $jobLic=$jobLic->get();
             return DataTables::of($jobLic)

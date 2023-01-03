@@ -377,7 +377,7 @@
                                                             }  else if (isset($file['file_links']->dropbox)) {
                                                                 $urlFile = $file['file_links']->dropbox;
                                                             } else {
-                                                                $urlFile = asset('') . $file['file_links']->url;
+                                                                $urlFile = asset('') . $file->url;
                                                             }
                                                             ?>
                                                         <div id="attach" class=" col-md-6">

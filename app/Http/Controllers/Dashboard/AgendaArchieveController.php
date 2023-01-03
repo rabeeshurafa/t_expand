@@ -37,7 +37,7 @@ class AgendaArchieveController extends Controller
                 $agenda->employee = json_encode(array());
             }
         }
-        $type = 'agArchive';
+        $type = 'agenda_archieve';
 
         $url = "agenda_archieve";
 

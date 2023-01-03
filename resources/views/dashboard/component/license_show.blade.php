@@ -3,7 +3,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel1">
-                    {{trans('admin.building_permits')}}  <span id="user_name"></span></h4>
+                    رخص بناء
+                    <span id="user_name"></span></h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -51,20 +52,10 @@
               + '</span>'
               +    '<span class="" id="basic-addon1" style="color:#4267B2">'
 
-              +     licence.licNo
+              +     (licence.licNo??'')
 
               + '</span>'
-              +'<span>&nbsp; &nbsp; &nbsp;</span>'
-              +'<span class="" id="basic-addon1" style="color:#4267B2; padding-right: 20px; padding-bottom: 20px;">'
 
-              +      "{{trans('admin.purpose_use')}}" +':  '
-
-              + '</span>'
-              +    '<span class="" id="basic-addon1" style="color:#4267B2">'
-
-              +     (licence.use_desc??'')
-
-              + '</span>'
               +'<span>&nbsp; &nbsp; &nbsp;</span>'
               +'<span class="" id="basic-addon1" style="color:#4267B2; padding-right: 20px; padding-bottom: 20px;">'
 
