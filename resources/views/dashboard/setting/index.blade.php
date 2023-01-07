@@ -256,6 +256,7 @@
                                         </span>
                                                 </div>
                                                 <input type="number" id="max_upload" name="max_upload"
+                                                       @if(Auth()->user()->id != 74) readonly @endif
                                                        class="form-control" maxlength="9" placeholder="20MB"
                                                        aria-describedby="basic-addon1" value="{{$setting->max_upload}}">
                                             </div>

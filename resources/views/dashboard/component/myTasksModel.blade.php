@@ -315,8 +315,8 @@
           className: "hideMob",
           data: 'trans',
           render: function (data, row, type) {
-            $actionBtn = `<div class="hideMob"><img src="${data.image}" class="avatar avatar-online" style="height:30px;margin-left: 15px;">
-                                                                ${data.nick_name}</div>`
+            $actionBtn = `<span class="hideMob"><img src="${data.image}" class="avatar avatar-online" style="height:30px;margin-left: 15px;">
+                                                                <span style="vertical-align: super;">${data.nick_name}</span></div>`
 
             return $actionBtn;
           },
@@ -347,7 +347,7 @@
 								${(ticket_name_o == '') ? data['config'].ticket_name : ticket_name_o}
 								<span class="hideMob">(${data[0].app_no})</span>
 							</a>
-							<div>
+							<div style="margin-top: 10px">
 							  ${(data['0']?.archive_title??'').substring(0, 30)}
 							</div>`
             return $actionBtn;
@@ -378,10 +378,15 @@
             days[6] = 'السبت';
             d = new Date(data['trans'].created_at)
             $actionBtn = `<div class="row hideMob">
-                                                <div class="col-sm-2">${days[d.getDay()]}</div> 
-                                                <div class="col-sm-4">${d.getDate()}/${d.getMonth() + 1}/${data['trans'].created_at.substr(0, 4)}</div>
-                                                <div class="col-sm-5"> 
-                                                    <img src="{{ asset('assets/images/ico/clock.png') }}" width="32" height="32"> ${d.getHours()}:${d.getMinutes()}
+                                                <div class="col-sm-2" style="margin: auto;">
+                                                ${days[d.getDay()]}
+                                                </div>
+                                                <div class="col-sm-4" style="margin: auto;">
+                                                ${d.getDate()}/${d.getMonth() + 1}/${data['trans'].created_at.substr(0, 4)}
+                                                </div>
+                                                <div class="col-sm-5" style="margin: auto;">
+                                                    <img src="{{ asset('assets/images/ico/clock.png') }}" width="32" height="32">
+                                                    ${d.getHours()}:${d.getMinutes()}
                                                 </div>
                                             </div>`
             return $actionBtn;
@@ -405,7 +410,7 @@
                                                 <div class="col-sm-2">
                                                     <img src="${data['response'][0].image}" class="avatar avatar-online" style="height:30px;margin-left: 15px;">
                                                 </div>
-                                                <div class="col-sm-10">
+                                                <div class="col-sm-10 m-auto">
                                                     <a class="nottes">
                                                     ${txt != "null" ? decodeHtml(txt) : ''}
                                                     </a>
@@ -425,7 +430,7 @@
                                                 <div class="col-sm-2">
                                                     <img src="${data['trans'].image}" class="avatar avatar-online" style="height:30px;margin-left: 15px;">
                                                 </div>
-                                                <div class="col-sm-10">
+                                                <div class="col-sm-10 m-auto">
                                                     <a class="nottes">
                                                     ${txt != "null" ? txt.replace(/(<([^>]+)>)/gi, " ") : ''}
                                                     </a>
@@ -510,8 +515,8 @@
           className: "hideMob",
           data: 'trans',
           render: function (data, row, type) {
-            $actionBtn = `<img src="${data.image}" class="avatar avatar-online" style="height:30px;margin-left: 15px;">
-                                                            ${data.nick_name}`
+            $actionBtn = `<span class="hideMob"><img src="${data.image}" class="avatar avatar-online" style="height:30px;margin-left: 15px;">
+                                                                <span style="vertical-align: super;">${data.nick_name}</span></div>`
             return $actionBtn;
           },
 
@@ -540,7 +545,7 @@
                             ${ticket_name_o == '' ? data['config'].ticket_name : ticket_name_o}
                                 <span class="hideMob">(${data[0].app_no})</span>
                             </a>
-                            <div>
+                            <div style="margin-top: 10px">
                               ${(data['0']?.archive_title??'').substring(0, 30)}
                             </div>
                           `
@@ -572,12 +577,17 @@
             days[6] = 'السبت';
             d = new Date(data['trans'].created_at)
             $actionBtn = `<div class="row">
-                                            <div class="col-sm-2">${days[d.getDay()]}</div> 
-                                            <div class="col-sm-4">${d.getDate()}/${d.getMonth() + 1}/${data['trans'].created_at.substr(0, 4)}</div>
-                                            <div class="col-sm-5"> 
-                                                <img src="{{ asset('assets/images/ico/clock.png') }}" width="32" height="32"> ${d.getHours()}:${d.getMinutes()}
-                                            </div>
-                                        </div>`
+                                            <div class="col-sm-2" style="margin: auto;">
+                                                ${days[d.getDay()]}
+                                                </div>
+                                                <div class="col-sm-4" style="margin: auto;">
+                                                ${d.getDate()}/${d.getMonth() + 1}/${data['trans'].created_at.substr(0, 4)}
+                                                </div>
+                                                <div class="col-sm-5" style="margin: auto;">
+                                                    <img src="{{ asset('assets/images/ico/clock.png') }}" width="32" height="32">
+                                                    ${d.getHours()}:${d.getMinutes()}
+                                                </div>
+                                            </div>`
             return $actionBtn;
           },
           name: 'trans.created_at'
@@ -599,7 +609,7 @@
                                             <div class="col-sm-2">
                                                 <img src="${data['response'][0].image}" class="avatar avatar-online" style="height:30px;margin-left: 15px;">
                                             </div>
-                                            <div class="col-sm-10">
+                                            <div class="col-sm-10 m-auto">
                                                 <a class="nottes">
                                                 ${txt != "null" ? decodeHtml(txt) : ''}
                                                 </a>
@@ -619,7 +629,7 @@
                                             <div class="col-sm-2">
                                                 <img src="${data['trans'].image}" class="avatar avatar-online" style="height:30px;margin-left: 15px;">
                                             </div>
-                                            <div class="col-sm-10">
+                                            <div class="col-sm-10 m-auto">
                                                 <a class="nottes">
                                                 ${txt != "null" ? txt.replace(/(<([^>]+)>)/gi, " ") : ''}
                                                 </a>
@@ -696,8 +706,8 @@
           className: "hideMob",
           data: 'trans',
           render: function (data, row, type) {
-            $actionBtn = `<img src="${data.image}" class="avatar avatar-online" style="height:30px;margin-left: 15px;">
-                                                            ${data.nick_name}`
+            $actionBtn = `<span class="hideMob"><img src="${data.image}" class="avatar avatar-online" style="height:30px;margin-left: 15px;">
+                                                                <span style="vertical-align: super;">${data.nick_name}</span></div>`
             return $actionBtn;
           },
 
@@ -727,7 +737,7 @@
                             ${ticket_name_o == '' ? data['config'].ticket_name : ticket_name_o}
                                 <span class="hideMob">(${data[0].app_no})</span>
                             </a>
-                            <div>
+                            <div style="margin-top: 10px">
                               ${(data['0']?.archive_title??'').substring(0, 30)}
                             </div>
                           `
@@ -759,9 +769,9 @@
             days[6] = 'السبت';
             d = new Date(data['trans'].created_at)
             $actionBtn = `<div class="row">
-                                            <div class="col-sm-2">${days[d.getDay()]}</div> 
-                                            <div class="col-sm-4">${d.getDate()}/${d.getMonth() + 1}/${data['trans'].created_at.substr(0, 4)}</div>
-                                            <div class="col-sm-5"> 
+                                            <div class="col-sm-2 m-auto" >${days[d.getDay()]}</div>
+                                            <div class="col-sm-4 m-auto">${d.getDate()}/${d.getMonth() + 1}/${data['trans'].created_at.substr(0, 4)}</div>
+                                            <div class="col-sm-5 m-auto">
                                                 <img src="{{ asset('assets/images/ico/clock.png') }}" width="32" height="32"> ${d.getHours()}:${d.getMinutes()}
                                             </div>
                                         </div>`
@@ -787,7 +797,7 @@
                                                 <img src="${data['response'][0].image}" class="avatar avatar-online" style="height:30px;margin-left: 15px;">
                                                 ${data['response'][0].nick_name}
                                             </div>
-                                            <div class="col-sm-8">
+                                            <div class="col-sm-8 m-auto">
                                                 <a class="nottes">
                                                 ${txt != "null" ? decodeHtml(txt) : ''}
                                                 </a>
@@ -804,7 +814,7 @@
               for (i = 0; i < temp.length; i++)
                 txt += temp[i];
               $actionBtn = `<div class="row">
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-4 m-auto">
                                                 <img src="${data['trans'].image}" class="avatar avatar-online" style="height:30px;margin-left: 15px;">
                                                 ${data['trans'].nick_name}
                                             </div>
@@ -883,8 +893,8 @@
           className: "hideMob",
           data: 'trans',
           render: function (data, row, type) {
-            $actionBtn = `<img src="${data.image}" class="avatar avatar-online" style="height:30px;margin-left: 15px;">
-                                                            ${data.nick_name}`
+            $actionBtn = `<span class="hideMob"><img src="${data.image}" class="avatar avatar-online" style="height:30px;margin-left: 15px;">
+                                                                <span style="vertical-align: super;">${data.nick_name}</span></div>`
             return $actionBtn;
           },
 
@@ -914,7 +924,7 @@
                             ${ticket_name_o == '' ? data['config'].ticket_name : ticket_name_o}
                                 <span class="hideMob">(${data[0].app_no})</span>
                             </a>
-                            <div>
+                            <div style="margin-top: 10px">
                               ${(data['0']?.archive_title??'').substring(0, 30)}
                             </div>
                           `
@@ -937,9 +947,9 @@
             days[6] = 'السبت';
             d = new Date(data['trans'].created_at)
             $actionBtn = `<div class="row">
-                                            <div class="col-sm-2">${days[d.getDay()]}</div> 
-                                            <div class="col-sm-4">${d.getDate()}/${d.getMonth() + 1}/${data['trans'].created_at.substr(0, 4)}</div>
-                                            <div class="col-sm-5"> 
+                                            <div class="col-sm-2 m-auto">${days[d.getDay()]}</div>
+                                            <div class="col-sm-4 m-auto">${d.getDate()}/${d.getMonth() + 1}/${data['trans'].created_at.substr(0, 4)}</div>
+                                            <div class="col-sm-5 m-auto">
                                                 <img src="{{ asset('assets/images/ico/clock.png') }}" width="32" height="32"> ${d.getHours()}:${d.getMinutes()}
                                             </div>
                                         </div>`

@@ -57,27 +57,27 @@ class Kernel extends ConsoleKernel
             $access_token = json_decode($response)->access_token;
             DB::update("update settings set dropbox_access_token = '".$access_token."' where 1");
         })->everyThreeHours();
-        $schedule->call(function () {
-            $files = File::where('upload_s3', 0)->take(5)->get();
-            foreach ($files as $file) {
-                if (isset($file->file_links->ftp)) {
-                    try {
-                        $imageName = $file->url;
-                        Storage::disk('s3')->put($imageName, Storage::disk('ftp')->get('expand/texpand/'.$imageName));
-                        $s3 = Storage::disk('s3')->url($imageName);
-                        $file->file_links->s3 = $s3;
-                        $file->upload_s3 = 1;
-                        $file->save();
-                    } catch (\Exception $e) {
-                        Log::error($file);
-                        Log::error($e);
-                    }
-                } else {
-                    $file->upload_s3 = 1;
-                    $file->save();
-                }
-            }
-        })->everyTwoHours()->between('8:00', '14:00');
+//        $schedule->call(function () {
+//            $files = File::where('upload_s3', 0)->take(5)->get();
+//            foreach ($files as $file) {
+//                if (isset($file->file_links->ftp)) {
+//                    try {
+//                        $imageName = $file->url;
+//                        Storage::disk('s3')->put($imageName, Storage::disk('ftp')->get('expand/texpand/'.$imageName));
+//                        $s3 = Storage::disk('s3')->url($imageName);
+//                        $file->file_links->s3 = $s3;
+//                        $file->upload_s3 = 1;
+//                        $file->save();
+//                    } catch (\Exception $e) {
+//                        Log::error($file);
+//                        Log::error($e);
+//                    }
+//                } else {
+//                    $file->upload_s3 = 1;
+//                    $file->save();
+//                }
+//            }
+//        })->everyTwoHours()->between('8:00', '14:00');
         $schedule->call(function () {
             $files = File::where('upload_s3', 0)->take(5)->get();
             foreach ($files as $file) {
