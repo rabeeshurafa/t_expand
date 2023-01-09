@@ -2506,15 +2506,19 @@ class ArchieveController extends Controller
         }
         array_push($ids, (int) $my_id);
 
-        $archive = ArchiveLicense::select(
-                'archive_licenses.*',
-                't_constant.name as license_type_name',
-                'licenses.notes as notes'
-        )
+//        $archive = ArchiveLicense::select(
+//                'archive_licenses.*',
+//                't_constant.name as license_type_name',
+//                'licenses.notes as notes'
+//        )
+//                ->where('archive_licenses.type', $type)->where('archive_licenses.enabled', 1)
+//                ->leftJoin('t_constant', 't_constant.id', 'archive_licenses.license_id')
+//                ->leftJoin('licenses', 'licenses.fileNo', 'archive_licenses.fileNo')
+//                ->with('Admin')
+//                ->orderBy('id', 'DESC');
+        $archive = ArchiveLicense::select('archive_licenses.*')
                 ->where('archive_licenses.type', $type)->where('archive_licenses.enabled', 1)
-                ->leftJoin('t_constant', 't_constant.id', 'archive_licenses.license_id')
-                ->leftJoin('licenses', 'licenses.fileNo', 'archive_licenses.fileNo')
-                ->with('Admin')
+                ->with('Admin','License')
                 ->orderBy('id', 'DESC');
         if (Auth()->user()->id != 74) {
             $archive = $archive->whereIn('add_by', $ids);

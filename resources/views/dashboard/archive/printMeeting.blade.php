@@ -168,7 +168,7 @@
                                     <input id="chairmanName" name="chairmanName"
                                            onchange="modifyChairmanName();"
                                            style="width:100%;text-align:right;"
-                                           value="{{$data['adminData']->name}}"/>
+                                           value="{{$data['adminData']?$data['adminData']->name:''}}"/>
                                 </td>
                             </tr>
                             <tr class="border">

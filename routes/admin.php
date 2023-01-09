@@ -434,8 +434,6 @@ Route::group([
                 'FinaicalRequestController@innerFinancial_info_all')->name('innerFinancial_info_all');
         Route::get('financialReport', 'FinaicalRequestController@financialReport')->name('financialReport');
         Route::get('financial_info_all', 'FinaicalRequestController@financial_info_all')->name('financial_info_all');
-        Route::get('reporth', 'Reporth@index')->name('reporth');
-        Route::get('searchReport', 'Reporth@searchReport')->name('searchReport');
         Route::get('spareParts', 'SparePartsController@spareParts')->name('spareParts');
         Route::post('store_spareParts', 'SparePartsController@store_spareParts')->name('store_spareParts');
         Route::get('sparePart_auto_complete',
