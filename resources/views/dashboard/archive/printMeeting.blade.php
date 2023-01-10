@@ -336,7 +336,7 @@
                                     رئيس اللجنة :
                                 </td>
                                 <td class="border chairmanName font-14" colspan="6" style="text-align:right; ">
-                                    {{$data['adminData']->name}}
+                                    {{$data['adminData']?$data['adminData']->name:''}}
                                 </td>
                             </tr>
                             @for($i=0; $i<sizeof(($data['employeeNameArr']??[]));($i+=3))
